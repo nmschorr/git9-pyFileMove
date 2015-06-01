@@ -12,28 +12,28 @@
  * Maven pom.xml file to specify dependencies.  The entire suite was written 
  * in and runs with Eclipse on a Windows 7 PC. 
  *
- * Please see Readme.rtf or Readme.txt for more information.
+ * Please see README.md for more information.
  * 
  */
 
 package com.nmschorr.zackstest;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.*;
 
 import org.junit.runners.MethodSorters;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.Select;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 // note: you need to have an account and password at zacks.com
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ZacksTest extends ZacksUtil {
 	ZacksUtil zutil = new ZacksUtil();
+
 	@Before  //run only once before all tests
 	public void setUp() throws Exception {		
 		createProperties();
@@ -42,7 +42,7 @@ public class ZacksTest extends ZacksUtil {
 		initStrings();
 	}
 
-	//@Test
+	@Test
 	public void Test1LoginZacks() throws Exception {
 		// eClass is an empty class there just for returning the local method name
 		// test logging in only	    
@@ -52,11 +52,12 @@ public class ZacksTest extends ZacksUtil {
 		logoutZacks();
 	}
 
-	//@Test
+	@Test
 	public void Test2ZacksAddPortfolio() throws Exception {
-		// login, add portfolio
+		// test adding a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
+
 		loginZacks(zacksMainUrl);
 		zacksAddPortfolio();	    
 		logoutZacks();
@@ -64,9 +65,10 @@ public class ZacksTest extends ZacksUtil {
 
 	@Test
 	public void Test3ZacksModifyPortfolio() throws Exception {
-		// test modifying portfolio
+		// test modifying a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
+
 		loginZacks(zacksMainUrl);
 		modifyPort();
 		logoutZacks();
@@ -74,17 +76,18 @@ public class ZacksTest extends ZacksUtil {
 
 	@Test
 	public void Test4ZacksDeletePortfolio() throws Exception {
-		// test modifying portfolio
+		// test deleting a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
-		
+
 		loginZacks(zacksMainUrl);
 		deletePortfolio();
 		logoutZacks();
 	} 
-	/// end of tests
-	/// beginning of methods to support tests
-	
+	// end of tests
+
+	// beginning of methods to support tests
+
 	public static void loginZacks(String localUrl) {  
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
@@ -100,21 +103,21 @@ public class ZacksTest extends ZacksUtil {
 		zDriver.findElement(By.xpath(signinval)).click();
 		assertEquals("Testing Signin",theTitle, zDriver.getTitle());	
 		//assertThat(zDriver.getTitle(), containsString("Zacks Investment Research:"));
-	            //  <title>Zacks Investment Research: Stock Research, Analysis, &amp; Recommendations</title>
+		//  <title>Zacks Investment Research: Stock Research, Analysis, &amp; Recommendations</title>
 	}
-	
+
 	public static void zacksAddPortfolio() throws Exception {
 		// method to add portfolio, must be logged in first
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod()); 		
-  	
+
 		zDriver.get(portfolioUrl);
 		assertEquals("Testing Portfolio Url Title", portfolioTitle, zDriver.getTitle());    
 		zDriver.findElement(By.linkText("Create a New Portfolio")).click(); 
-		
+
 		String expectedTitle = "Stock Portfolio Management - Zacks Investment Research";
 		assertEquals(expectedTitle, zDriver.getTitle());
-		
+
 		// add new portfolio entries
 		zDriver.findElement(By.name("port_name")).clear();
 		zDriver.findElement(By.name("port_name")).sendKeys(PF_NAME);
@@ -123,7 +126,7 @@ public class ZacksTest extends ZacksUtil {
 		zDriver.findElement(By.id("submit")).click();
 		zDriver.findElement(By.xpath("//input[@value='Modify Portfolio Buys']")).click();  
 	}
-	
+
 	public static void modifyPort() throws Exception {
 		// modify portfolio - add shares
 		class eClass {};	    
@@ -133,7 +136,7 @@ public class ZacksTest extends ZacksUtil {
 		String expectedTitle = "Stock Portfolio Management - Zacks Investment Research";
 		System.out.println("Expected title is: " + zDriver.getTitle());
 		assertEquals("Testing Portfolio Url Title", expectedTitle, zDriver.getTitle());    
-				
+
 		zDriver.findElement(By.linkText("Modify Previous Buys")).click();
 		zDriver.findElement(By.name("position[0][shares]")).clear();
 		zDriver.findElement(By.name("position[0][shares]")).sendKeys("22");
@@ -149,12 +152,10 @@ public class ZacksTest extends ZacksUtil {
 	}
 
 	public void deletePortfolio ()  {
-		// make sure it's there before we delete it
+		// need to add check to sure the portfolio is there to delete
 		zDriver.get(portfolioUrl);
 		new Select(zDriver.findElement(By.id("port_id"))).selectByVisibleText(PF_NAME);;
-		// need to add check to sure the portfolio is there to delete
-		// assertEquals("testportfolio", zDriver.findElement(By.cssSelector("option[value=\"1222826\"]")).getText());
-		//	assertThat(zDriver.getTitle(), containsString("xxx"));			
+
 		mySleep(2);
 		zDriver.findElement(By.linkText("Delete this Portfolio")).click();
 		zDriver.findElement(By.id("chk")).click();
@@ -176,5 +177,5 @@ public class ZacksTest extends ZacksUtil {
 		//  String verificationErrorString = verificationErrors.toString();
 		//	  if (!"".equals(verificationErrorString)) {
 		//		  fail(verificationErrorString);
-  }
+	}
 }

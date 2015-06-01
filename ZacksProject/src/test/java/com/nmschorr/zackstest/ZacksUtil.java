@@ -84,7 +84,7 @@ public class ZacksUtil {
 	static FileInputStream fiStream;
 
 	class AlertThread extends Thread {  
-			// This inner class will dismiss the Firefox crash alert
+		// This inner class will dismiss the Firefox crash alert
 		@Override
 		public void run(){  
 			System.out.println("2nd thread is running...");  
@@ -92,9 +92,9 @@ public class ZacksUtil {
 				Robot robot = new Robot();
 				robot.delay(1000);		
 				Thread.sleep(7000);
-				//System.out.println("!!! Running 2nd Thread...");
+
 				dismissFirefoxCrashAlert();  // closes Firefox error alerts
-				
+
 				Thread.sleep(2000);
 				//		following is alternate method
 				//				robot.mouseMove(855, 351);    
@@ -109,16 +109,16 @@ public class ZacksUtil {
 		int screen_height;
 		int screen_width;
 		Toolkit localToolkit = Toolkit.getDefaultToolkit();
-		
+
 		screen_width = (int) localToolkit.getScreenSize().getWidth();
 		screen_height = (int) localToolkit.getScreenSize().getHeight()-222;  // make it shorter so we have some room
-		
+
 		Dimension screenResolution = new Dimension(screen_width, screen_height );	
 		zDriver.manage().window().setPosition(new Point(0,0));
 		zDriver.manage().window().setSize(screenResolution);
 		mySleep(1);
 	}
-	
+
 	protected WebDriver createDriver() throws AWTException, InterruptedException {
 		System.out.println("Just entered createDriver()");
 		ffoxProfile =  new FirefoxProfile(); 	
@@ -136,14 +136,14 @@ public class ZacksUtil {
 		return localDriver;
 	}
 
-	 Logger createLogger()  {
+	Logger createLogger()  {
 		Logger aLogger = LogManager.getLogger(ZacksTest.class.getName());
 		verificationErrors = new StringBuffer();
 		aLogger.entry();
 		aLogger.info("Logger has been set up.");
 		return aLogger;
 	}
-	
+
 	protected static  void  initStrings()  {
 		signinval = initValue("signinval");
 		usernameval = initValue("usernameval");
@@ -156,15 +156,15 @@ public class ZacksUtil {
 		gLogger.info("?!!! The property value for " + val + " is " + newVal );    	
 		return newVal;
 	}
-	
+
 	protected static void printMethodName (Method aMethod) {
 		gLogger.info("Running Method: " + aMethod.getName());	    		
 	}	
-	
+
 	protected static void mySleep(int timewait) {
 		try {
-		gLogger.info("Inside mySleep() " + "and waiting " + timewait);	
-		Thread.sleep(timewait * 1000);	//sleep is in milliseconds
+			gLogger.info("Inside mySleep() " + "and waiting " + timewait);	
+			Thread.sleep(timewait * 1000);	//sleep is in milliseconds
 		} catch (Exception e) {
 			System.out.println(e);
 		} 
@@ -205,7 +205,7 @@ public class ZacksUtil {
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
 		deleteCookies();		
-	    zDriver.findElement(By.id("logout")).click();
+		zDriver.findElement(By.id("logout")).click();
 		assertEquals("Testing Log Out", "Log Out - Zacks.com", zDriver.getTitle());
 	}
 
@@ -213,8 +213,8 @@ public class ZacksUtil {
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
 		gLogger.info("Deleting Zacks Cookies");
-		
-	    Set<Cookie> cookies = zDriver.manage().getCookies();
+
+		Set<Cookie> cookies = zDriver.manage().getCookies();
 		Iterator<Cookie> itr = cookies.iterator();
 
 		while (itr.hasNext()){
@@ -234,23 +234,23 @@ public class ZacksUtil {
 		fp.setPreference("webdriver.log.driver", "DEBUG");
 		fp.setPreference("webdriver.log.file", outfileName);
 	}
-	
+
 	protected static void dismissFirefoxCrashAlert() {
 		HWND hwnd = User32.INSTANCE.FindWindow
-		       (null, "Firefox"); // window title
+				(null, "Firefox"); // window title
 		HWND hwndcontainer= User32.INSTANCE.FindWindow
-			       (null, "Plugin Container for Firefox"); // window title
-		
+				(null, "Plugin Container for Firefox"); // window title
+
 		if (hwnd == null) {
 			System.out.println("Firefoxdialog is not showing");
 		}
 		else{
-				System.out.println("Firefoxdialog !!! IS showing. Closing it now.");
-				User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null); 			
-			}
-		
+			System.out.println("Firefoxdialog !!! IS showing. Closing it now.");
+			User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null); 			
+		}
+
 		if (hwndcontainer == null) {
-				System.out.println("FirefoxContainerDialog is not showing");
+			System.out.println("FirefoxContainerDialog is not showing");
 		}
 		else{
 			System.out.println("Firefoxdialog !!! IS showing. Closing it now.");
