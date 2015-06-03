@@ -8,7 +8,7 @@
  *
  * The tests are run with Junit, so each test stands on its own and 
  * can be run independently of the others.  Each test launches a fresh 
- * instance of Firefox with Selenim Webdriver.  The tests use Maven and a 
+ * instance of Firefox with Selenium WebDriver.  The tests use Maven and a 
  * Maven pom.xml file to specify dependencies.  The entire suite was written 
  * in and runs with Eclipse on a Windows 7 PC. 
  *
