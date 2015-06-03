@@ -1,3 +1,9 @@
+/***
+ * TestGuruLogin.java by Nancy M. Schorr, 2015
+ *
+ * Please see README.md for more information.
+ * 
+ */
 package com.nmschorr.gurutests;
 // Note:  Surefire requires test classes be named starting or ending w/Test
 //        or ending w/Testcase

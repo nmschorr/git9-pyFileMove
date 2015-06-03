@@ -1,3 +1,11 @@
+/***
+ * GuruUtils.java by Nancy M. Schorr, 2015
+ * 
+ * This is a set of Utilities used by TestGuruLogin.java.
+ *
+ * Please see README.md for more information.
+ * 
+ */
 package com.nmschorr.gurutests;
 
 import java.io.File;
