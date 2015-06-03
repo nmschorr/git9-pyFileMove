@@ -1,3 +1,7 @@
+#
+# by Nancy M. Schorr, 2015
+# Please see README.md for more information.
+
 #!/usr/bin/perl
 #    PATH=$PATH:.
 $special="SUMMARY:Moon goes void";
