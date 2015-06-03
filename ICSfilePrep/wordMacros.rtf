@@ -1,1479 +1,1482 @@
-{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf480
-{\fonttbl\f0\fswiss\fcharset77 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-\margl1440\margr1440\vieww9000\viewh8400\viewkind0
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\ql\qnatural\pardirnatural
-
-\f0\fs24 \cf0 Sub ForRet()\
-' returnMac Macro\
-' Macro recorded 12/9/09 by Nancy Schorr\
-    Selection.Find.ClearFormatting\
-    Selection.Find.Replacement.ClearFormatting\
-    With Selection.Find\
-        .Text = "^p "\
-        .Replacement.Text = " "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-End Sub\
-\
-\
-Sub ForCalendars()\
-'\
-' ForCalendars for Google calendars\
-' Macro recorded 12/9/09 by Nancy Schorr\
-'\
-    Selection.Find.ClearFormatting\
-    Selection.Find.Replacement.ClearFormatting\
-    With Selection.Find\
-        .Text = " Radix "\
-        .Replacement.Text = " "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-  Selection.Find.Execute Replace:=wdReplaceAll\
-  \
-  \
-  Selection.Find.ClearFormatting\
-    Selection.Find.Replacement.ClearFormatting\
-    \
-    With Selection.Find\
-        .Text = "Cnj Ari"\
-        .Replacement.Text = "Enters Ari"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-  Selection.Find.Execute Replace:=wdReplaceAll\
-  \
-    Selection.Find.ClearFormatting\
-    Selection.Find.Replacement.ClearFormatting\
-    With Selection.Find\
-        .Text = "Cnj Tau"\
-        .Replacement.Text = "Enters Tau"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-  Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Cnj Gem"\
-        .Replacement.Text = "Enters Gem"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-  Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Cnj Can"\
-        .Replacement.Text = "Enters Can"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-   Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Cnj Leo"\
-        .Replacement.Text = "Enters Leo"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
- Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Cnj Vir"\
-        .Replacement.Text = "Enters Vir"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-  Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Cnj Lib"\
-        .Replacement.Text = "Enters Lib"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-  Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Cnj Sco"\
-        .Replacement.Text = "Enters Sco"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-  Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Cnj Sag"\
-        .Replacement.Text = "Enters Sag"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-  Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Cnj Cap"\
-        .Replacement.Text = "Enters Cap"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-  Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Cnj Aqu"\
-        .Replacement.Text = "Enters Aqu"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-  Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Cnj Pis"\
-        .Replacement.Text = "Enters Pis"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    'end the conjuncts     'end the conjuncts   'end the conjuncts   'end the conjuncts\
-    \
-    \
-    \
-     Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Ari"\
-        .Replacement.Text = "Aries"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Tau"\
-        .Replacement.Text = "Taurus"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-     Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Gem"\
-        .Replacement.Text = "Gemini"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-   \
-    \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-     With Selection.Find\
-        .Text = " Can "\
-        .Replacement.Text = " Cancer "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-     Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = " Can"\
-        .Replacement.Text = " Cancer"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-      Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Cancercer"\
-        .Replacement.Text = " Cancer"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-  Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Vir"\
-        .Replacement.Text = "Virgo"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-   \
-       Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Lib"\
-        .Replacement.Text = "Libra"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-   \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Sco"\
-        .Replacement.Text = "Scorpio"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-   \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Sag"\
-        .Replacement.Text = "Sagittarius"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-   \
-    \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Cap"\
-        .Replacement.Text = "Capricorn"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-      \
-\
-  \
-       Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Aqu"\
-        .Replacement.Text = "Aquarius"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-       Selection.Find.Execute Replace:=wdReplaceAll\
-    \
-    \
-   Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Pis"\
-        .Replacement.Text = "Pisces"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-   \
-     ' end this section *******************************************************\
-    ' end this section *******************************************************\
-    ' end this section *******************************************************\
-    ' end this section *******************************************************\
-    ' end this section *******************************************************\
-   ' end this section *******************************************************\
-    \
-  Selection.Find.Execute Replace:=wdReplaceAll\
-  With Selection.Find\
-        .Text = "\'b0Ar"\
-        .Replacement.Text = " Aries "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-               \
-  Selection.Find.Execute Replace:=wdReplaceAll\
-  With Selection.Find\
-        .Text = "\'b0Ta"\
-        .Replacement.Text = " Taurus "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "\'b0Ge"\
-        .Replacement.Text = " Gemini "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "\'b0Cn"\
-        .Replacement.Text = " Cancer "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-   \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "\'b0Le"\
-        .Replacement.Text = " Leo "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "\'b0Vi"\
-        .Replacement.Text = " Virgo "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "\'b0Li"\
-        .Replacement.Text = " Libra "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "\'b0Sc"\
-        .Replacement.Text = " Scorpio "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "\'b0Sg"\
-        .Replacement.Text = " Sagittarius "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-         \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "\'b0Cp"\
-        .Replacement.Text = " Capricorn "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "\'b0Aq"\
-        .Replacement.Text = " Aquarius "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "\'b0Pi"\
-        .Replacement.Text = " Pisces "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-\
-\
-       ' end this section *******************************************************\
-        ' end this section *******************************************************\
-       ' end this section *******************************************************\
-       ' end this section *******************************************************\
-\
-   Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Entering"\
-        .Replacement.Text = "Enters"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-   \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "wilful"\
-        .Replacement.Text = "willful"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-   \
-     Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Socialise"\
-        .Replacement.Text = "Socialize"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-   \
-   Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Stabilise"\
-        .Replacement.Text = "Stabilize"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-    \
-    \
-    \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "organised"\
-        .Replacement.Text = "organized"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "excelent"\
-        .Replacement.Text = "excellent"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-\
-\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "realise"\
-        .Replacement.Text = "realize"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-\
-\
-        Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "spiritualilty"\
-        .Replacement.Text = "spirituality"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-\
-  \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "possibiities"\
-        .Replacement.Text = "possibilities"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "fantasise"\
-        .Replacement.Text = "fantasize"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-\
-  Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "\\n"\
-        .Replacement.Text = " - "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-  \
-\
-  Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "The Moon "\
-        .Replacement.Text = "Moon "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Tr -Tr "\
-        .Replacement.Text = ""\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-     Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Tr-Na "\
-        .Replacement.Text = ""\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-   \
-   Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Tr-Tr "\
-        .Replacement.Text = ""\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-     Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Tr "\
-        .Replacement.Text = ""\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Mon"\
-        .Replacement.Text = "Moon"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-\
-        Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Mer"\
-        .Replacement.Text = "Mercury"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-\
-        Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Mar"\
-        .Replacement.Text = "Mars"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-    \
-     Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Sat"\
-        .Replacement.Text = "Saturn"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Jup"\
-        .Replacement.Text = "Jupiter"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Ura"\
-        .Replacement.Text = "Uranus"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Plu"\
-        .Replacement.Text = "Pluto"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-     Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Nep"\
-        .Replacement.Text = "Neptune"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Ven"\
-        .Replacement.Text = "Venus"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Transiting "\
-        .Replacement.Text = ""\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-    \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Tri"\
-        .Replacement.Text = "Trine"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    \
-    \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Cnj"\
-        .Replacement.Text = "Conjunct"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Sqr"\
-        .Replacement.Text = "Square"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Sxt"\
-        .Replacement.Text = "Sextile"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-   \
-     Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Qnx"\
-        .Replacement.Text = "Quincunx"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-  \
-  Selection.Find.Execute Replace:=wdReplaceAll\
-    \
-    With Selection.Find\
-        .Text = "CHARTCalculated"\
-        .Replacement.Text = "CHART Calculated"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    \
-    With Selection.Find\
-        .Text = "Opp"\
-        .Replacement.Text = "Opposite"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
- \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    \
-    With Selection.Find\
-        .Text = "Asc"\
-        .Replacement.Text = "Ascendant"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
- \
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    \
-    With Selection.Find\
-        .Text = "Moon goes "\
-        .Replacement.Text = "Moon "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-          Selection.Find.Execute Replace:=wdReplaceAll\
-\
-    Selection.Find.ClearFormatting\
-    Selection.Find.Replacement.ClearFormatting\
-    With Selection.Find\
-        .Text = "^p "\
-        .Replacement.Text = " "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-  \
-     \
- \
-End Sub\
-\
-Sub Pegasus()\
-'\
-' Macro4 Macro to replace in Pegasus report'\
-' Macro4 Macro to replace in Pegasus report\
-' Macro recorded 12/31/08 by Nancy Schorr\
-'\
-    Selection.Find.ClearFormatting\
-    Selection.Find.Replacement.ClearFormatting\
-    With Selection.Find\
-        .Text = "Sat"\
-        .Replacement.Text = "Saturn"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Jup"\
-        .Replacement.Text = "Jupiter"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Ura"\
-        .Replacement.Text = "Uranus"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Plu"\
-        .Replacement.Text = "Pluto"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-     Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Nep"\
-        .Replacement.Text = "Neptune"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Ven"\
-        .Replacement.Text = "Venus"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Merc"\
-        .Replacement.Text = "Mercury"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Conj"\
-        .Replacement.Text = "Conjunct"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Sqr"\
-        .Replacement.Text = "Square"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "sxtil "\
-        .Replacement.Text = "Sextile "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Qucnx "\
-        .Replacement.Text = "Quincunx "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-   Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "CHARTCalculated"\
-        .Replacement.Text = "CHART Calculated"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Oppos"\
-        .Replacement.Text = "Opposite"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "trine"\
-        .Replacement.Text = "Trine"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "Asc"\
-        .Replacement.Text = "Ascendant"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "t nod"\
-        .Replacement.Text = "True Node"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "H."\
-        .Replacement.Text = "House"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-     Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = ")"\
-        .Replacement.Text = ") "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-      Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = ")  "\
-        .Replacement.Text = ") "\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-    With Selection.Find\
-        .Text = "M("\
-        .Replacement.Text = "M ("\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = True\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
- \
- \
-     With Selection.Find\
-        .Text = "D"\
-        .Replacement.Text = "Direct"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-     \
-    With Selection.Find\
-        .Text = "R"\
-        .Replacement.Text = "Retrograde"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = True\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute Replace:=wdReplaceAll\
-' end pegasus\
-\
-\
-End Sub\
- \
-Sub replaceEnterTime()\
-'\
-' test00Z Macro\
-' Macro recorded 12/26/09 by Lawrence Schorr\
-'\
-    Selection.Find.ClearFormatting\
-    With Selection.Find\
-        .Text = "ing Moon Enter"\
-        .Replacement.Text = "02Z"\
-        .Forward = True\
-        .Wrap = wdFindContinue\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute\
-    Selection.MoveUp Unit:=wdLine, Count:=5\
-    Selection.MoveRight Unit:=wdCharacter, Count:=4\
-    Selection.TypeBackspace\
-    Selection.TypeText Text:="2"\
-    Selection.MoveDown Unit:=wdLine, Count:=7\
-End Sub\
-\
-Sub replaceVoidTime()\
-'\
-' test00Z Macro  cmd-opt-x\
-' Macro recorded 12/26/09 by N Schorr\
-'\
-    Selection.Find.ClearFormatting\
-     With Selection.Find\
-        .Text = "oon goes void"\
-        .Replacement.Text = "01Z"\
-        .Forward = True\
-        .Wrap = wdFindStop\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute\
-    Selection.MoveUp Unit:=wdLine, Count:=4\
-    Selection.MoveRight Unit:=wdCharacter, Count:=14\
-    Selection.TypeBackspace\
-    Selection.TypeText Text:="1"\
-    Selection.MoveDown Unit:=wdLine, Count:=7\
- \
-End Sub\
-\
-Sub replaceVoidTimeAll()\
-'\
-' test00Z Macro  cmd-opt-z\
-' Macro recorded 12/26/09 by N Schorr\
-'\
-Do Until ActiveDocument.Bookmarks("\\Sel").Range.End = ActiveDocument.Bookmarks("\\EndOfDoc").Range.End\
-    Selection.Find.ClearFormatting\
-    With Selection.Find\
-         .Text = "oon goes void"\
-        .Replacement.Text = "01Z"\
-        .Forward = True\
-        .Wrap = wdFindStop\
-        .Format = False\
-        .MatchCase = False\
-        .MatchWholeWord = False\
-        .MatchWildcards = False\
-        .MatchSoundsLike = False\
-        .MatchAllWordForms = False\
-    End With\
-    Selection.Find.Execute\
-    Selection.MoveUp Unit:=wdLine, Count:=4\
-    Selection.MoveRight Unit:=wdCharacter, Count:=14\
-    Selection.TypeBackspace\
-    Selection.TypeText Text:="1"\
-    Selection.MoveDown Unit:=wdLine, Count:=7\
- Loop\
-\
-End Sub\
+{\rtf1\ansi\ansicpg10000\deff0{\fonttbl{\f0\fswiss\fcharset77 Helvetica;}{\f1\fswiss\fcharset0 Helvetica;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\lang9\f0\fs24 /***\par
+ * \lang1033\f1  wordMacros\lang9\f0  by Nancy M. Schorr, 2015\par
+ * \par
+ *\par
+ * Please see README.md for more information.\par
+ * \par
+ */\par
+Sub ForRet()\par
+' returnMac Macro\par
+' Macro recorded 12/9/09 by Nancy Schorr\par
+    Selection.Find.ClearFormatting\par
+    Selection.Find.Replacement.ClearFormatting\par
+    With Selection.Find\par
+        .Text = "^p "\par
+        .Replacement.Text = " "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+End Sub\par
+\par
+\par
+Sub ForCalendars()\par
+'\par
+' ForCalendars for Google calendars\par
+' Macro recorded 12/9/09 by Nancy Schorr\par
+'\par
+    Selection.Find.ClearFormatting\par
+    Selection.Find.Replacement.ClearFormatting\par
+    With Selection.Find\par
+        .Text = " Radix "\par
+        .Replacement.Text = " "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+  \par
+  \par
+  Selection.Find.ClearFormatting\par
+    Selection.Find.Replacement.ClearFormatting\par
+    \par
+    With Selection.Find\par
+        .Text = "Cnj Ari"\par
+        .Replacement.Text = "Enters Ari"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+  \par
+    Selection.Find.ClearFormatting\par
+    Selection.Find.Replacement.ClearFormatting\par
+    With Selection.Find\par
+        .Text = "Cnj Tau"\par
+        .Replacement.Text = "Enters Tau"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Cnj Gem"\par
+        .Replacement.Text = "Enters Gem"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Cnj Can"\par
+        .Replacement.Text = "Enters Can"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+   Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Cnj Leo"\par
+        .Replacement.Text = "Enters Leo"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+ Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Cnj Vir"\par
+        .Replacement.Text = "Enters Vir"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Cnj Lib"\par
+        .Replacement.Text = "Enters Lib"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Cnj Sco"\par
+        .Replacement.Text = "Enters Sco"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Cnj Sag"\par
+        .Replacement.Text = "Enters Sag"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Cnj Cap"\par
+        .Replacement.Text = "Enters Cap"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Cnj Aqu"\par
+        .Replacement.Text = "Enters Aqu"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Cnj Pis"\par
+        .Replacement.Text = "Enters Pis"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    'end the conjuncts     'end the conjuncts   'end the conjuncts   'end the conjuncts\par
+    \par
+    \par
+    \par
+     Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Ari"\par
+        .Replacement.Text = "Aries"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Tau"\par
+        .Replacement.Text = "Taurus"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+     Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Gem"\par
+        .Replacement.Text = "Gemini"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+   \par
+    \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+     With Selection.Find\par
+        .Text = " Can "\par
+        .Replacement.Text = " Cancer "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+     Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = " Can"\par
+        .Replacement.Text = " Cancer"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+      Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Cancercer"\par
+        .Replacement.Text = " Cancer"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Vir"\par
+        .Replacement.Text = "Virgo"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+   \par
+       Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Lib"\par
+        .Replacement.Text = "Libra"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+   \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Sco"\par
+        .Replacement.Text = "Scorpio"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+   \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Sag"\par
+        .Replacement.Text = "Sagittarius"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+   \par
+    \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Cap"\par
+        .Replacement.Text = "Capricorn"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+      \par
+\par
+  \par
+       Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Aqu"\par
+        .Replacement.Text = "Aquarius"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+       Selection.Find.Execute Replace:=wdReplaceAll\par
+    \par
+    \par
+   Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Pis"\par
+        .Replacement.Text = "Pisces"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+   \par
+     ' end this section *******************************************************\par
+    ' end this section *******************************************************\par
+    ' end this section *******************************************************\par
+    ' end this section *******************************************************\par
+    ' end this section *******************************************************\par
+   ' end this section *******************************************************\par
+    \par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+  With Selection.Find\par
+        .Text = "\'b0Ar"\par
+        .Replacement.Text = " Aries "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+               \par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+  With Selection.Find\par
+        .Text = "\'b0Ta"\par
+        .Replacement.Text = " Taurus "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "\'b0Ge"\par
+        .Replacement.Text = " Gemini "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "\'b0Cn"\par
+        .Replacement.Text = " Cancer "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+   \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "\'b0Le"\par
+        .Replacement.Text = " Leo "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "\'b0Vi"\par
+        .Replacement.Text = " Virgo "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "\'b0Li"\par
+        .Replacement.Text = " Libra "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "\'b0Sc"\par
+        .Replacement.Text = " Scorpio "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "\'b0Sg"\par
+        .Replacement.Text = " Sagittarius "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+         \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "\'b0Cp"\par
+        .Replacement.Text = " Capricorn "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "\'b0Aq"\par
+        .Replacement.Text = " Aquarius "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "\'b0Pi"\par
+        .Replacement.Text = " Pisces "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+\par
+\par
+       ' end this section *******************************************************\par
+        ' end this section *******************************************************\par
+       ' end this section *******************************************************\par
+       ' end this section *******************************************************\par
+\par
+   Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Entering"\par
+        .Replacement.Text = "Enters"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+   \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "wilful"\par
+        .Replacement.Text = "willful"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+   \par
+     Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Socialise"\par
+        .Replacement.Text = "Socialize"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+   \par
+   Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Stabilise"\par
+        .Replacement.Text = "Stabilize"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+    \par
+    \par
+    \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "organised"\par
+        .Replacement.Text = "organized"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "excelent"\par
+        .Replacement.Text = "excellent"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+\par
+\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "realise"\par
+        .Replacement.Text = "realize"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+\par
+\par
+        Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "spiritualilty"\par
+        .Replacement.Text = "spirituality"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+\par
+  \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "possibiities"\par
+        .Replacement.Text = "possibilities"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "fantasise"\par
+        .Replacement.Text = "fantasize"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+\par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "\\n"\par
+        .Replacement.Text = " - "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+  \par
+\par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "The Moon "\par
+        .Replacement.Text = "Moon "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Tr -Tr "\par
+        .Replacement.Text = ""\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+     Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Tr-Na "\par
+        .Replacement.Text = ""\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+   \par
+   Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Tr-Tr "\par
+        .Replacement.Text = ""\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+     Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Tr "\par
+        .Replacement.Text = ""\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Mon"\par
+        .Replacement.Text = "Moon"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+\par
+        Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Mer"\par
+        .Replacement.Text = "Mercury"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+\par
+        Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Mar"\par
+        .Replacement.Text = "Mars"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+    \par
+     Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Sat"\par
+        .Replacement.Text = "Saturn"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Jup"\par
+        .Replacement.Text = "Jupiter"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Ura"\par
+        .Replacement.Text = "Uranus"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Plu"\par
+        .Replacement.Text = "Pluto"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+     Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Nep"\par
+        .Replacement.Text = "Neptune"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Ven"\par
+        .Replacement.Text = "Venus"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Transiting "\par
+        .Replacement.Text = ""\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+    \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Tri"\par
+        .Replacement.Text = "Trine"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    \par
+    \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Cnj"\par
+        .Replacement.Text = "Conjunct"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Sqr"\par
+        .Replacement.Text = "Square"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Sxt"\par
+        .Replacement.Text = "Sextile"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+   \par
+     Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Qnx"\par
+        .Replacement.Text = "Quincunx"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+  \par
+  Selection.Find.Execute Replace:=wdReplaceAll\par
+    \par
+    With Selection.Find\par
+        .Text = "CHARTCalculated"\par
+        .Replacement.Text = "CHART Calculated"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    \par
+    With Selection.Find\par
+        .Text = "Opp"\par
+        .Replacement.Text = "Opposite"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+ \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    \par
+    With Selection.Find\par
+        .Text = "Asc"\par
+        .Replacement.Text = "Ascendant"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+ \par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    \par
+    With Selection.Find\par
+        .Text = "Moon goes "\par
+        .Replacement.Text = "Moon "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+          Selection.Find.Execute Replace:=wdReplaceAll\par
+\par
+    Selection.Find.ClearFormatting\par
+    Selection.Find.Replacement.ClearFormatting\par
+    With Selection.Find\par
+        .Text = "^p "\par
+        .Replacement.Text = " "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+  \par
+     \par
+ \par
+End Sub\par
+\par
+Sub Pegasus()\par
+'\par
+' Macro4 Macro to replace in Pegasus report'\par
+' Macro4 Macro to replace in Pegasus report\par
+' Macro recorded 12/31/08 by Nancy Schorr\par
+'\par
+    Selection.Find.ClearFormatting\par
+    Selection.Find.Replacement.ClearFormatting\par
+    With Selection.Find\par
+        .Text = "Sat"\par
+        .Replacement.Text = "Saturn"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Jup"\par
+        .Replacement.Text = "Jupiter"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Ura"\par
+        .Replacement.Text = "Uranus"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Plu"\par
+        .Replacement.Text = "Pluto"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+     Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Nep"\par
+        .Replacement.Text = "Neptune"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Ven"\par
+        .Replacement.Text = "Venus"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Merc"\par
+        .Replacement.Text = "Mercury"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Conj"\par
+        .Replacement.Text = "Conjunct"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Sqr"\par
+        .Replacement.Text = "Square"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "sxtil "\par
+        .Replacement.Text = "Sextile "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Qucnx "\par
+        .Replacement.Text = "Quincunx "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+   Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "CHARTCalculated"\par
+        .Replacement.Text = "CHART Calculated"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Oppos"\par
+        .Replacement.Text = "Opposite"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "trine"\par
+        .Replacement.Text = "Trine"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "Asc"\par
+        .Replacement.Text = "Ascendant"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "t nod"\par
+        .Replacement.Text = "True Node"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "H."\par
+        .Replacement.Text = "House"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+     Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = ")"\par
+        .Replacement.Text = ") "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+      Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = ")  "\par
+        .Replacement.Text = ") "\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+    With Selection.Find\par
+        .Text = "M("\par
+        .Replacement.Text = "M ("\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = True\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+ \par
+ \par
+     With Selection.Find\par
+        .Text = "D"\par
+        .Replacement.Text = "Direct"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+     \par
+    With Selection.Find\par
+        .Text = "R"\par
+        .Replacement.Text = "Retrograde"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = True\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute Replace:=wdReplaceAll\par
+' end pegasus\par
+\par
+\par
+End Sub\par
+ \par
+Sub replaceEnterTime()\par
+'\par
+' test00Z Macro\par
+' Macro recorded 12/26/09 by Lawrence Schorr\par
+'\par
+    Selection.Find.ClearFormatting\par
+    With Selection.Find\par
+        .Text = "ing Moon Enter"\par
+        .Replacement.Text = "02Z"\par
+        .Forward = True\par
+        .Wrap = wdFindContinue\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute\par
+    Selection.MoveUp Unit:=wdLine, Count:=5\par
+    Selection.MoveRight Unit:=wdCharacter, Count:=4\par
+    Selection.TypeBackspace\par
+    Selection.TypeText Text:="2"\par
+    Selection.MoveDown Unit:=wdLine, Count:=7\par
+End Sub\par
+\par
+Sub replaceVoidTime()\par
+'\par
+' test00Z Macro  cmd-opt-x\par
+' Macro recorded 12/26/09 by N Schorr\par
+'\par
+    Selection.Find.ClearFormatting\par
+     With Selection.Find\par
+        .Text = "oon goes void"\par
+        .Replacement.Text = "01Z"\par
+        .Forward = True\par
+        .Wrap = wdFindStop\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute\par
+    Selection.MoveUp Unit:=wdLine, Count:=4\par
+    Selection.MoveRight Unit:=wdCharacter, Count:=14\par
+    Selection.TypeBackspace\par
+    Selection.TypeText Text:="1"\par
+    Selection.MoveDown Unit:=wdLine, Count:=7\par
+ \par
+End Sub\par
+\par
+Sub replaceVoidTimeAll()\par
+'\par
+' test00Z Macro  cmd-opt-z\par
+' Macro recorded 12/26/09 by N Schorr\par
+'\par
+Do Until ActiveDocument.Bookmarks("\\Sel").Range.End = ActiveDocument.Bookmarks("\\EndOfDoc").Range.End\par
+    Selection.Find.ClearFormatting\par
+    With Selection.Find\par
+         .Text = "oon goes void"\par
+        .Replacement.Text = "01Z"\par
+        .Forward = True\par
+        .Wrap = wdFindStop\par
+        .Format = False\par
+        .MatchCase = False\par
+        .MatchWholeWord = False\par
+        .MatchWildcards = False\par
+        .MatchSoundsLike = False\par
+        .MatchAllWordForms = False\par
+    End With\par
+    Selection.Find.Execute\par
+    Selection.MoveUp Unit:=wdLine, Count:=4\par
+    Selection.MoveRight Unit:=wdCharacter, Count:=14\par
+    Selection.TypeBackspace\par
+    Selection.TypeText Text:="1"\par
+    Selection.MoveDown Unit:=wdLine, Count:=7\par
+ Loop\par
+\par
+End Sub\par
 }
+ 
