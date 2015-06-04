@@ -1,5 +1,17 @@
-//  by Nancy Schorr, 2015
-//  can't use an iterator because the file isn't being read that way
+/* ICSVoidsEdit.java by Nancy Schorr, 2015
+ *
+ * This program removes extra calendar events from an ics calendar file.
+ * 
+ * The data for the calendar is calculated with Solar Fire 8 on Windows XP.  
+ * It is run through the Perl script, then the Word macros.  
+ * Ideally that would all take place in one Java executable -
+ * but that's a project for the future.
+
+ * This little program is the final step in preparing the SFCAL.ics file 
+ * for uploading in Google or another calendar system.
+**/
+
+// Note: can't use an iterator because the file isn't being read that way
 
 package com.nmschorr.sfcal;
 
