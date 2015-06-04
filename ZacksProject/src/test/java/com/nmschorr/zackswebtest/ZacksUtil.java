@@ -7,7 +7,7 @@
  * 
  */
 
-package com.nmschorr.zackstest;
+package com.nmschorr.zackswebtest;
 
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;

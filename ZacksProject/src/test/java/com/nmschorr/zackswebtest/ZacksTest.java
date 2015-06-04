@@ -16,7 +16,7 @@
  * 
  */
 
-package com.nmschorr.zackstest;
+package com.nmschorr.zackswebtest;
 
 
 import org.junit.runners.MethodSorters;
