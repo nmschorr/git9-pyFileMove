@@ -23,6 +23,11 @@ import org.openqa.selenium.Cookie;
 import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import java.net.*;
+
+
 // Note: my have a properties directory
 
 public class GuruUtils {
@@ -77,13 +82,27 @@ public class GuruUtils {
 	}
 	
 	public WebDriver setUpDriver() {
+		URL gridHubUrl = null;
 		String fString = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe";
 		WebDriver localDriver;
 		ffoxProfile =  new FirefoxProfile(); 	
 		//ffoxProfile.setPreference("webdriver.firefox.bin", "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe");
 		binaryFile = new File(fString);
 		ffBinary = new FirefoxBinary(binaryFile);
-		localDriver = new FirefoxDriver(ffBinary, ffoxProfile);	
+
+
+		// new remote driver code for Grid	
+		DesiredCapabilities firefoxCapabilities = DesiredCapabilities.firefox();
+
+		try {
+			gridHubUrl = new URL("http://192.168.1.69:4444/wd/hub");
+		} catch (Exception e)  {
+			System.err.println(e);
+		}
+		
+		localDriver = new RemoteWebDriver(gridHubUrl,firefoxCapabilities);
+		//localDriver = new FirefoxDriver(ffBinary, ffoxProfile);	
+
 		return localDriver;
 	}
 
