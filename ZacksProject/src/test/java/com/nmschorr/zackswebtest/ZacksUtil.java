@@ -64,7 +64,7 @@ public class ZacksUtil {
 	protected final static String theTitle = "Zacks Investment Research: Stock Research, Analysis, & Recommendations";
 	protected final static String portfolioUrl = "http://www.zacks.com/portfolios/my-stock-portfolio/";
 	protected final static String zacksMainUrl = "http://www.zacks.com/";
-	private final static String dirname = "C:\\Users\\user\\git2\\ZacksProject\\PropertiesFiles\\" ;
+	private final static String dirname = "C:\\Users\\user\\git2\\ZacksProject\\PropertyFiles\\" ;
 	private final static String pname = "Zacksprops.properties" ;
 	private final static String propname = dirname + pname ;
 
@@ -129,8 +129,8 @@ public class ZacksUtil {
 		AlertThread thread2=new AlertThread();  
 		thread2.start();  
 		System.out.println("!!! executing new FirefoxDriver!");
-		//WebDriver localDriver = new FirefoxDriver(ffBinary,ffoxProfile);	 // using this to see if bug goes away
-		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
+		WebDriver localDriver = new FirefoxDriver(ffBinary,ffoxProfile);	 // using this to see if bug goes away
+		//WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
 		System.out.println("!!! past new FirefoxDriver!");
 		localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
 		return localDriver;
@@ -171,6 +171,9 @@ public class ZacksUtil {
 	} 
 
 	protected static void createProperties()  {
+		System.out.println("!!!!! PROPNAME name is" + propname);
+		
+		
 		try {	 fiStream = new FileInputStream(propname);
 		} catch (FileNotFoundException e) {  
 			System.out.println(e);
