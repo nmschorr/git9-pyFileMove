@@ -99,9 +99,9 @@ public class GuruUtils {
 		} catch (Exception e)  {
 			System.err.println(e);
 		}
-		
-		localDriver = new RemoteWebDriver(gridHubUrl,firefoxCapabilities);
-		//localDriver = new FirefoxDriver(ffBinary, ffoxProfile);	
+		// use the following for special Remote Web Driver testing
+		//localDriver = new RemoteWebDriver(gridHubUrl,firefoxCapabilities);
+		localDriver = new FirefoxDriver(ffBinary, ffoxProfile);	
 
 		return localDriver;
 	}
