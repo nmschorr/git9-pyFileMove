@@ -20,15 +20,20 @@ package com.nmschorr.zackswebtest;
 
 
 import org.junit.runners.MethodSorters;
-import org.junit.After;
+//import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 // note: you need to have an account and password at zacks.com
+
+//import org.openqa.selenium.interactions.Actions;
+
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ZacksTest extends ZacksUtil {
@@ -63,7 +68,7 @@ public class ZacksTest extends ZacksUtil {
 		logoutZacks();
 	}
 
-	@Test
+	//@Test
 	public void Test3ZacksModifyPortfolio() throws Exception {
 		// test modifying a portfolio
 		class eClass {};	    
@@ -74,7 +79,7 @@ public class ZacksTest extends ZacksUtil {
 		logoutZacks();
 	} 
 
-	@Test
+	//@Test
 	public void Test4ZacksDeletePortfolio() throws Exception {
 		// test deleting a portfolio
 		class eClass {};	    
@@ -94,11 +99,17 @@ public class ZacksTest extends ZacksUtil {
 
 		zDriver.get(localUrl);  // main Zacks page
 		setWindowSize();
+		System.out.println("about to close alert");
+
+		mySleep(2);
+		zDriver.findElement(By.cssSelector("img")).click();
+		System.out.println("Done closing ad alert");
 
 		zDriver.findElement(By.linkText("Sign In")).click();
 		zDriver.findElement(By.id("username")).clear();
 		zDriver.findElement(By.id("username")).sendKeys(usernameval);
 		zDriver.findElement(By.id("password")).clear();
+		
 		zDriver.findElement(By.id("password")).sendKeys(pwordval);	 
 		zDriver.findElement(By.xpath(signinval)).click();
 		assertEquals("Testing Signin",theTitle, zDriver.getTitle());	
@@ -166,7 +177,7 @@ public class ZacksTest extends ZacksUtil {
 		// page : <title>Stock Portfolio Management - Zacks Investment Research</title>
 	}
 
-	@After
+	//@After
 	public void tearDown() throws Exception {
 		gLogger.info("All done with tests. Quitting Webdriver and shutting down");
 		gLogger.exit(false);
