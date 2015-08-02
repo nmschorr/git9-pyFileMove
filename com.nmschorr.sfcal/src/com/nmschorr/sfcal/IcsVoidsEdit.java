@@ -33,17 +33,21 @@ public class IcsVoidsEdit {
 	static List<String> memoryList = new ArrayList<String>();
 	static int eventcount = 0;	
 	//final static int SECTION_LINES_EIGHT = 8;	
-	static String SFCALfileName="E:\\SFCAL.ics";
-	static String outFileName = "E:\\SFCALready.ics";
-	static File myOutFile = new File(outFileName);
-	static File inFileName;
+	 
+	static String MainInDirNm="E:\\sfcalfiles";
+	static String MainOutDirNm="C:\\tmp";
+	static String InDirVdsNm=MainInDirNm+"\\vds";
+	static String InFileName="\\SFCAL.ics";
+	static String outFileName = MainOutDirNm + "\\SFCALvds-out.ics";
+	static File myInFile = new File(InFileName);
+	static File myOutFile = new File(OutFileName);
+
 	final static String LINE_FEED = System.getProperty("line.separator");
 	//String eventSecString;
-	static final int MAX_EVENTS=17;
+	
+	static final int MAX_EVENTS=15;
 	static int totalLineCount = 0;
 	static int totInFileLines = 0;
- //	static String outputLine = null;
-		//String testStringNow;
 	
 	public static void main(String[] args) {
 		fileSetup();
@@ -109,9 +113,9 @@ public class IcsVoidsEdit {
 		try {
 			myOutFile.delete();  // delete the inFileName we made last time
 			Thread.sleep(4000);
-			inFileName = new File(SFCALfileName);  // the inFileName we're reading from
-			FileUtils.waitFor(inFileName,2);
-			memoryList =  FileUtils.readLines(inFileName);
+			myInFile = new File(InFileName);  // the inFileName we're reading from
+			  // FileUtils.waitFor(InFileName,2);
+			memoryList =  FileUtils.readLines(myInFile);
 			totInFileLines = memoryList.size() + 10;
 			System.out.println("total lines: " + totInFileLines);
 			// get ics header lines in 1st-first four header lines of ics inFileName
