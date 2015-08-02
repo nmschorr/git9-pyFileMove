@@ -18,24 +18,31 @@ package com.nmschorr.sfcal;
 
 import java.io.File;
 import java.io.IOException;
-import java .util.*;
+import java.util.*;
 
 import org.apache.commons.io.FileUtils;
 
+/**
+ * This class contains methods that remove extra calendar events from an ics calendar file.
+ * @author Nancy M. Schorr
+ * @version 1.0
+ * 
+ *
+ */
 public class IcsVoidsEdit {
 	static List<String> memoryList = new ArrayList<String>();
 	static int eventcount = 0;	
-	final static int SECTION_LINES_EIGHT = 8;	
+	//final static int SECTION_LINES_EIGHT = 8;	
 	static String SFCALfileName="E:\\SFCAL.ics";
-	static String outFileName = "E:\\SFCAL4.txt";
+	static String outFileName = "E:\\SFCALready.ics";
 	static File myOutFile = new File(outFileName);
 	static File inFileName;
 	final static String LINE_FEED = System.getProperty("line.separator");
-	static List<String>  eventSectionLines= new ArrayList<String>();
+	//String eventSecString;
 	static final int MAX_EVENTS=17;
 	static int totalLineCount = 0;
 	static int totInFileLines = 0;
-	static String outputLine = null;
+ //	static String outputLine = null;
 		//String testStringNow;
 	
 	public static void main(String[] args) {
@@ -43,21 +50,28 @@ public class IcsVoidsEdit {
 		
 		try {
 			while (eventcount < MAX_EVENTS) {
+				
 			  while (totalLineCount < totInFileLines) {
-				System.out.println("starting over main loop");
+				  
+				System.out.println("--------     !!!   !!!    !! starting over main loop");
+				List<String>  eventSectionLNs= new ArrayList<String>();
 				
 					// do this for the 10 lines of each section
-				for (int minorSectionCt=0; minorSectionCt<9; minorSectionCt++) {  					
-					eventSectionLines.add(getNextLine(eventcount, minorSectionCt));
+				for (int minorSectionCt=0; minorSectionCt<10; minorSectionCt++) 
+				{  					
+					eventSectionLNs.add(getNextLine(eventcount, minorSectionCt));
 					totalLineCount++;
-					System.out.println("Current total Line count is: " +totalLineCount );
+					System.out.println("    CURRENT total Line count is: " +totalLineCount );
 				}
-			
-				if ( eventSectionLines.get(5).contains("void")  )  {
-					System.out.println ("!!!!! found a LIST void!");
-					    FileUtils.writeLines(myOutFile, eventSectionLines, true);	
-				  }
+				
+				String theSixthLine = eventSectionLNs.get(6);
+				System.out.println("--@@@@____@@@__@@@   the 6th line is" + theSixthLine);
+				if ( theSixthLine.contains("void")  )  
+				{
+					System.out.println ("==========    ===== !!!!! FOUND a LIST void!");
+					FileUtils.writeLines(myOutFile, eventSectionLNs, true);	
 				}
+			  }
 				eventcount++;
 			}  // while
 			 
@@ -65,17 +79,38 @@ public class IcsVoidsEdit {
 	
 		}    
 		catch (IOException e) { e.printStackTrace();	}
-		 		
+		 
+		mySleep(1);	
+		
+		File cpath = new File("C:\\tmp");
+		try {
+		FileUtils.copyFileToDirectory(myOutFile, cpath);
+		} catch (Exception e) {
+			System.out.println(e);
+		} 
+		
+		
 		System.out.println("Finished");
 		System.exit(0);
 	}
  
+	/**
+	 * 
+	 */
+	protected static void mySleep(int timewait) {
+		try {
+			Thread.sleep(timewait * 1000);	//sleep is in milliseconds
+		} catch (Exception e) {
+			System.out.println(e);
+		} 
+	} 
 
 	static void fileSetup() {
 		try {
 			myOutFile.delete();  // delete the inFileName we made last time
-			Thread.sleep(2000);
+			Thread.sleep(4000);
 			inFileName = new File(SFCALfileName);  // the inFileName we're reading from
+			FileUtils.waitFor(inFileName,2);
 			memoryList =  FileUtils.readLines(inFileName);
 			totInFileLines = memoryList.size() + 10;
 			System.out.println("total lines: " + totInFileLines);
@@ -87,6 +122,12 @@ public class IcsVoidsEdit {
 			 catch (InterruptedException e) { e.printStackTrace(); }
 	} 
 
+	/**
+	 * 
+	 * @param loopLocationCount The loop counter
+	 * @param minorLocation The minor location
+	 * @return Returns newString
+	 */
 	static String getNextLine(int loopLocationCount, int minorLocation) {
 		String newString = null;
 		int currentline;
