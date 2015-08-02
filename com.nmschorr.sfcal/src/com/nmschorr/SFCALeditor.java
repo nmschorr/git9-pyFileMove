@@ -1,4 +1,4 @@
-/* ICSVoidsEdit.java by Nancy Schorr, 2015
+/* SFCALeditor.java by Nancy Schorr, 2015
  *
  * This program removes extra calendar events from an ics calendar file.
  * 
@@ -13,7 +13,7 @@
 
 // Note: can't use an iterator because the file isn't being read that way
 
-package com.nmschorr.sfcal;
+package com.nmschorr;
 
 
 import java.io.File;
@@ -25,11 +25,11 @@ import org.apache.commons.io.FileUtils;
 /**
  * This class contains methods that remove extra calendar events from an ics calendar file.
  * @author Nancy M. Schorr
- * @version 1.0
+ * @version 1.1
  * 
  *
  */
-public class IcsVoidsEdit {
+public class SFCALeditor {
 	static List<String> memoryList = new ArrayList<String>();
 	static int eventcount = 0;	
 	//final static int SECTION_LINES_EIGHT = 8;	
@@ -37,8 +37,8 @@ public class IcsVoidsEdit {
 	static String MainInDirNm="E:\\sfcalfiles";
 	static String MainOutDirNm="C:\\tmp";
 	static String InDirVdsNm=MainInDirNm+"\\vds";
-	static String InFileName="\\SFCAL.ics";
-	static String outFileName = MainOutDirNm + "\\SFCALvds-out.ics";
+	static String InFileName=InDirVdsNm +"\\SFCAL.ics";
+	static String OutFileName = MainOutDirNm + "\\SFCALvds-out.ics";
 	static File myInFile = new File(InFileName);
 	static File myOutFile = new File(OutFileName);
 
@@ -70,7 +70,7 @@ public class IcsVoidsEdit {
 				
 				String theSixthLine = eventSectionLNs.get(6);
 				System.out.println("--@@@@____@@@__@@@   the 6th line is" + theSixthLine);
-				if ( theSixthLine.contains("void")  )  
+				if ( !theSixthLine.contains("Quarter")  )     // we are removing the quarters
 				{
 					System.out.println ("==========    ===== !!!!! FOUND a LIST void!");
 					FileUtils.writeLines(myOutFile, eventSectionLNs, true);	
