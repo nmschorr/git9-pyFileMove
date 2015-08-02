@@ -114,6 +114,11 @@ public class SFCALeditor {
 
 	static void newplMimic() {   
 		try {
+			String firstfront;
+			String newback;
+			String newComboStr;  
+			String newfront = "DTEND:";
+				
 			File myTempIn = new File(InFileName);  // the inFileName we're reading from
 			File myTempOut = new File(tempOutName1);  // the inFileName we're reading from
 			myTempOut.delete();  // delete the inFileName we made last time
@@ -124,15 +129,14 @@ public class SFCALeditor {
 
 			// for each line in file:
 			for (String mylinenow : newplList)  {
-				String newfront = "DTEND:";
-				String oldfront = mylinenow.substring(0, 8);
-				String newback = mylinenow.substring(8,16);
-				String newComboStr = newfront + newback +"\n";  
+				firstfront =mylinenow.substring(0, 5);
 
 				FileUtils.writeStringToFile(myTempOut, mylinenow, true);	
 
-				if ( oldfront.equals("DTSTART:") )   {  
-
+				if ( firstfront.equals("DTSTA") )   {  
+					newback = mylinenow.substring(8,16);
+					newComboStr = newfront + newback +"\n";  
+					
 					System.out.println("Replacing: new line is " + newComboStr);
 					FileUtils.writeStringToFile(myTempOut, newComboStr, true);	
 				}
