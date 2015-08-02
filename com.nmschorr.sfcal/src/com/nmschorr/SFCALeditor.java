@@ -39,6 +39,8 @@ public class SFCALeditor {
 	static String InDirVdsNm=MainInDirNm+"\\vds";
 	static String InFileName=InDirVdsNm +"\\SFCAL.ics";
 	static String OutFileName = MainOutDirNm + "\\SFCALvds-out.ics";
+	static String tempOutName1 = MainOutDirNm + "\\SFCALtemp1.ics";
+	static String tempOutName2 = MainOutDirNm + "\\SFCALtemp2.ics";
 	static File myInFile = new File(InFileName);
 	static File myOutFile = new File(OutFileName);
 
@@ -51,6 +53,7 @@ public class SFCALeditor {
 	
 	public static void main(String[] args) {
 		fileSetup();
+		newplMimic();
 		
 		try {
 			while (eventcount < MAX_EVENTS) {
@@ -88,7 +91,7 @@ public class SFCALeditor {
 		
 		File cpath = new File("C:\\tmp");
 		try {
-		FileUtils.copyFileToDirectory(myOutFile, cpath);
+		//FileUtils.copyFileToDirectory(myOutFile, cpath);
 		} catch (Exception e) {
 			System.out.println(e);
 		} 
@@ -108,6 +111,39 @@ public class SFCALeditor {
 			System.out.println(e);
 		} 
 	} 
+
+	static void newplMimic() {   
+		try {
+			File myTempIn = new File(InFileName);  // the inFileName we're reading from
+			File myTempOut = new File(tempOutName1);  // the inFileName we're reading from
+			myTempOut.delete();  // delete the inFileName we made last time
+			List<String> newplList =  FileUtils.readLines(myTempIn);
+			int newplListInt = newplList.size() + 10;
+			System.out.println("total lines: " + newplListInt);
+			// get ics header lines in 1st-first four header lines of ics inFileName
+
+			// for each line in file:
+			for (String mylinenow : newplList)  {
+				String newfront = "DTEND:";
+				String oldfront = mylinenow.substring(0, 8);
+				String newback = mylinenow.substring(8,16);
+				String newComboStr = newfront + newback +"\n";  
+
+				FileUtils.writeStringToFile(myTempOut, mylinenow, true);	
+
+				if ( oldfront.equals("DTSTART:") )   {  
+
+					System.out.println("Replacing: new line is " + newComboStr);
+					FileUtils.writeStringToFile(myTempOut, newComboStr, true);	
+				}
+			}	
+
+		}
+		catch (IOException e)  { 
+
+			e.printStackTrace();	 
+		}
+	}	
 
 	static void fileSetup() {
 		try {
