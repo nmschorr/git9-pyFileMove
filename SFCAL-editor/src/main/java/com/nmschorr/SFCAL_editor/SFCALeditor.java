@@ -37,11 +37,12 @@ public class SFCALeditor extends SFCALutil {
  	static String MainOutdirName = "C:\\tmp";
 	static String IndirVoidsName = MainIndirName +"\\vds";
 	static String InfileNm = IndirVoidsName +"\\SFCAL.ics";
-	static String OutFileNm = MainOutdirName + "\\SFCALvds-out.ics";
+	static String OutFileNmTmp = MainOutdirName + "\\SFCALvds-";
+	static String OutFileNmFinal=null;
  	static String tempOutNm = MainOutdirName + "\\SFCALtemp1.ics";
  	static File myInfileNm = new File(InfileNm);
     static File tempFileOne = new File(tempOutNm);
- 	static File myOutFileOne = new File(OutFileNm);
+ 	static File myOutFileOne = null;
 	final static String LINE_FEED = System.getProperty("line.separator");
 	static final int MAX_EVENTS = 15;
 	static int totalLineCount = 0;
@@ -52,23 +53,29 @@ public class SFCALeditor extends SFCALutil {
 	static boolean checkToss = false;
 	
 	public static void main(String[] args) {
-		makeFileName();
+		OutFileNmFinal = makeFileName();
+	 	myOutFileOne = new File(OutFileNmFinal);
 		generalStringFixing();
 		sectionTask();
 		System.out.println("Finished");
 		System.exit(0);
 	}
 
-	static void makeFileName() {
+	static String makeFileName() {
+		String LocalDateNm=null;
+		
 		try {
 		dateStringFileList =  FileUtils.readLines(tempFileOne);
 		String newDateString=dateStringFileList.get(6);
-		String newDate=newDateString.substring(9, 17);
+		String newDate=newDateString.substring(6, 14);
 		System.out.println("new date string is: "+ newDate);
+		LocalDateNm = OutFileNmTmp  + newDate + ".ics";
+		System.out.println("new LocalDateNm string is: "+ LocalDateNm);
+
 		} catch (IOException e) { 
 			e.printStackTrace();	
 		}	// catch
-
+		return LocalDateNm;
 	}
 	
 	

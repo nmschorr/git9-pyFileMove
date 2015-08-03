@@ -114,7 +114,7 @@ public class SFCALutil {
 		if (origLine.contains(theVal))  {
 			System.out.println("!!!---            ---FOUND sign CHAR -----!!!!  !!! /n"+origLine);
 			theFixedLine = origLine.replace( theVal, theRep);  
-			System.out.println("------------------------The fixed line: " + theFixedLine);
+			//System.out.println("------------------------The fixed line: " + theFixedLine);
 			return theFixedLine;
 		} else {   return origLine;      }
 	}
@@ -122,7 +122,7 @@ public class SFCALutil {
 		
 		static String replaceSigns(String theInputStr) {
 			String returnString=null;
-		 	System.out.println("inside replaceSigns");		
+		 	//System.out.println("inside replaceSigns");		
 			HashMap <String, String> theHashmap = makemyhash();
 
 			for (String key : theHashmap.keySet()) {
