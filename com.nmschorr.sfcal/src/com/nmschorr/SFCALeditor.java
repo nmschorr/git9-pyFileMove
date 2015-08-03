@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.*;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * This class contains methods that remove extra calendar events from an ics calendar file.
@@ -122,6 +123,8 @@ public class SFCALeditor {
 			File myTempIn = new File(InFileName);  // the inFileName we're reading from
 			File myTempOut = new File(tempOutName1);  // the inFileName we're reading from
 			myTempOut.delete();  // delete the inFileName we made last time
+			mySleep(2);
+			FileUtils.waitFor(myTempOut,2);
 			List<String> newplList =  FileUtils.readLines(myTempIn);
 			int newplListInt = newplList.size() + 10;
 			System.out.println("total lines: " + newplListInt);
@@ -129,19 +132,31 @@ public class SFCALeditor {
 
 			// for each line in file:
 			for (String mylinenow : newplList)  {
-				firstfront =mylinenow.substring(0, 5);
+			if (mylinenow.length() > 0 )
+			{
+				StringUtils.chomp(mylinenow);
 
 				FileUtils.writeStringToFile(myTempOut, mylinenow, true);	
+				FileUtils.writeStringToFile(myTempOut,"\n", true);	 
+		
+				firstfront = mylinenow.substring(0,5);
 
 				if ( firstfront.equals("DTSTA") )   {  
-					newback = mylinenow.substring(8,16);
+					
+					newback = mylinenow.substring(8,23);
+					System.out.println("!!@@@@@  the line is  " + mylinenow);
+					System.out.println("!!@@@@@  newback datestring is" + newback);
+					System.out.println("!!@@@@@  last char  is  " + mylinenow.substring(22, 22));
+
+					
 					newComboStr = newfront + newback +"\n";  
 					
-					System.out.println("Replacing: new line is " + newComboStr);
+					System.out.println("DTEND: new line is " + newComboStr);
 					FileUtils.writeStringToFile(myTempOut, newComboStr, true);	
 				}
 			}	
 
+			}
 		}
 		catch (IOException e)  { 
 
@@ -154,7 +169,7 @@ public class SFCALeditor {
 			myOutFile.delete();  // delete the inFileName we made last time
 			Thread.sleep(4000);
 			myInFile = new File(InFileName);  // the inFileName we're reading from
-			  // FileUtils.waitFor(InFileName,2);
+			FileUtils.waitFor(myInFile,2);
 			memoryList =  FileUtils.readLines(myInFile);
 			totInFileLines = memoryList.size() + 10;
 			System.out.println("total lines: " + totInFileLines);
