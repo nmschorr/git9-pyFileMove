@@ -51,52 +51,16 @@ public class SFCALeditor {
 	static final int MAX_EVENTS=15;
 	static int totalLineCount = 0;
 	static int totInFileLines = 0;
+	static File myTempOut;  // the inFileName we're reading from
 	
 	public static void main(String[] args) {
-		fileSetup();
+		myTempOut = new File(tempOutName1);  // the inFileName we're reading from
+		myTempOut.delete();  // delete the inFileName we made last time
+		myOutFile.delete();  // delete the inFileName we made last time
 		newplMimic();
-		
-		try {
-			while (eventcount < MAX_EVENTS) {
-				
-			  while (totalLineCount < totInFileLines) {
-				  
-				System.out.println("--------     !!!   !!!    !! starting over main loop");
-				List<String>  eventSectionLNs= new ArrayList<String>();
-				
-					// do this for the 10 lines of each section
-				for (int minorSectionCt=0; minorSectionCt<10; minorSectionCt++) 
-				{  					
-					eventSectionLNs.add(getNextLine(eventcount, minorSectionCt));
-					totalLineCount++;
-					System.out.println("    CURRENT total Line count is: " +totalLineCount );
-				}
-				
-				String theSixthLine = eventSectionLNs.get(6);
-				System.out.println("--@@@@____@@@__@@@   the 6th line is" + theSixthLine);
-				if ( !theSixthLine.contains("Quarter")  )     // we are removing the quarters
-				{
-					System.out.println ("==========    ===== !!!!! FOUND a LIST void!");
-					FileUtils.writeLines(myOutFile, eventSectionLNs, true);	
-				}
-			  }
-				eventcount++;
-			}  // while
-			 
-			FileUtils.writeStringToFile(myOutFile, "END:VCALENDAR"+LINE_FEED, true);	
+		fileSetup();
+		mainPart();
 	
-		}    
-		catch (IOException e) { e.printStackTrace();	}
-		 
-		mySleep(1);	
-		
-		File cpath = new File("C:\\tmp");
-		try {
-		//FileUtils.copyFileToDirectory(myOutFile, cpath);
-		} catch (Exception e) {
-			System.out.println(e);
-		} 
-		
 		
 		System.out.println("Finished");
 		System.exit(0);
@@ -113,6 +77,51 @@ public class SFCALeditor {
 		} 
 	} 
 
+
+	static void mainPart() {
+		try {
+			while (eventcount < MAX_EVENTS) {
+				
+			  while (totalLineCount < totInFileLines) {
+				  
+				System.out.println("--------     !!!   !!!    !! starting over main loop");
+				List<String>  eventSectionLNs= new ArrayList<String>();
+				
+					// do this for the 10 lines of each section
+				for (int minorSectionCt=0; minorSectionCt<10; minorSectionCt++) 
+				{  					
+					eventSectionLNs.add(getNextLine(eventcount, minorSectionCt));
+					totalLineCount++;
+					System.out.println("    CURRENT total Line count is: " +totalLineCount );
+				}
+				
+				String summaryLine = eventSectionLNs.get(6);
+				System.out.println("--@@@@____@@@__@@@   the 6th line is" + summaryLine);
+				if ( !summaryLine.contains("Quarter")  )     // we are removing the quarters
+				{
+					System.out.println ("==========    ===== !!!!! FOUND a non quarter!");
+					FileUtils.writeLines(myOutFile, eventSectionLNs, true);	
+				}
+			  }
+				eventcount++;
+			}  // while
+			 
+			FileUtils.writeStringToFile(myOutFile, "END:VCALENDAR"+LINE_FEED, true);	
+	
+		}    
+		catch (IOException e) { e.printStackTrace();	}
+		 
+		mySleep(1);	
+		
+		//File cpath = new File("C:\\tmp");
+		try {
+		//FileUtils.copyFileToDirectory(myOutFile, cpath);
+		} catch (Exception e) {
+			System.out.println(e);
+		} 
+	}
+	  
+	
 	static void newplMimic() {   
 		try {
 			String firstfront;
@@ -121,10 +130,8 @@ public class SFCALeditor {
 			String newfront = "DTEND:";
 				
 			File myTempIn = new File(InFileName);  // the inFileName we're reading from
-			File myTempOut = new File(tempOutName1);  // the inFileName we're reading from
-			myTempOut.delete();  // delete the inFileName we made last time
-			mySleep(2);
-			FileUtils.waitFor(myTempOut,2);
+			mySleep(1);
+			//FileUtils.waitFor(myTempOut,2);
 			List<String> newplList =  FileUtils.readLines(myTempIn);
 			int newplListInt = newplList.size() + 10;
 			System.out.println("total lines: " + newplListInt);
@@ -135,42 +142,33 @@ public class SFCALeditor {
 			if (mylinenow.length() > 0 )
 			{
 				StringUtils.chomp(mylinenow);
-
+				if (mylinenow.contains("Moon goes void")) {
+					mylinenow = "SUMMARY:Moon void of course";
+				}
+						
 				FileUtils.writeStringToFile(myTempOut, mylinenow, true);	
 				FileUtils.writeStringToFile(myTempOut,"\n", true);	 
 		
-				firstfront = mylinenow.substring(0,5);
+				firstfront = mylinenow.substring(0,6);
 
-				if ( firstfront.equals("DTSTA") )   {  
-					
-					newback = mylinenow.substring(8,23);
+				if ( firstfront.equals("DTSTAR") )   {  					
+					newback = mylinenow.substring(8,23) + "Z";
 					System.out.println("!!@@@@@  the line is  " + mylinenow);
-					System.out.println("!!@@@@@  newback datestring is" + newback);
-					System.out.println("!!@@@@@  last char  is  " + mylinenow.substring(22, 22));
-
-					
-					newComboStr = newfront + newback +"\n";  
-					
+					newComboStr = newfront + newback +"\n";  					
 					System.out.println("DTEND: new line is " + newComboStr);
 					FileUtils.writeStringToFile(myTempOut, newComboStr, true);	
 				}
-			}	
-
+			  }	
 			}
 		}
 		catch (IOException e)  { 
-
 			e.printStackTrace();	 
 		}
 	}	
 
 	static void fileSetup() {
 		try {
-			myOutFile.delete();  // delete the inFileName we made last time
-			Thread.sleep(4000);
-			myInFile = new File(InFileName);  // the inFileName we're reading from
-			FileUtils.waitFor(myInFile,2);
-			memoryList =  FileUtils.readLines(myInFile);
+			memoryList =  FileUtils.readLines(myTempOut);
 			totInFileLines = memoryList.size() + 10;
 			System.out.println("total lines: " + totInFileLines);
 			// get ics header lines in 1st-first four header lines of ics inFileName
@@ -178,7 +176,6 @@ public class SFCALeditor {
 				FileUtils.writeStringToFile(myOutFile, memoryList.get(i)+LINE_FEED, true);			
 			}
 		}    catch (IOException e) { e.printStackTrace();	} 
-			 catch (InterruptedException e) { e.printStackTrace(); }
 	} 
 
 	/**
