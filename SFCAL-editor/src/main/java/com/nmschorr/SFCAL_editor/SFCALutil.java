@@ -42,6 +42,10 @@ public class SFCALutil {
 			if (mylinenow.length() > 0 )
 			{
 				StringUtils.chomp(mylinenow);
+				
+				checkForChar(mylinenow);
+				replaceSigns(mylinenow);
+
 				if (mylinenow.contains("Moon goes void")) {
 					mylinenow = "SUMMARY:Moon void of course";
 				}
@@ -82,10 +86,77 @@ public class SFCALutil {
 			System.out.println(e);
 		} 
 	  } // mySleep
+	
+	static void checkForChar(String checkLine) {
+		if (checkLine.contains( "\uFFFD"))  {
+			System.out.println("!!!---            ---FOUND WEIRD CHAR -----!!!!  !!!  ");
+			System.out.println(checkLine);	
+			String newStringy = checkLine.replace( "\uFFFD", " ");  
+			String newStringy2 = newStringy.replace( "'", " ");  
+			System.out.println("The fixed line: " + newStringy2);
+		}
+		else {
+			}
+		}
+
+	static String checkForSigns(String checkLine, String theVal, String theRep) {
+		String newStringy;
+	 	 System.out.println("inside checkForStuff");		
+	 	 System.out.println("checking val rep: "+theVal + theRep);		
+		if (checkLine.contains(theVal))  {
+			System.out.println("!!!---            ---FOUND sign CHAR -----!!!!  !!!  ");
+			System.out.println(checkLine);	
+			newStringy = checkLine.replace( theVal, theRep);  
+			System.out.println("------------------------The fixed line: " + newStringy);
+			return newStringy;
+		}
+		else {   
+			return checkLine;
+			}
+		}
+
+	static HashMap<String, String>  makemyhash() {
+		HashMap <String, String> myHashmap = new HashMap<String, String>();
+		myHashmap.put("Cn", " Cancer");
+		myHashmap.put("Ar", " Aries");
+		myHashmap.put("Ta", " Taurus");
+		return myHashmap;
+	}
+		
+		static String replaceSigns(String theStrg) {
+			String returnString=null;
+			HashMap <String, String> theHashmap = makemyhash();
+		 	 System.out.println("inside replaceSigns");		
+
+			for (String key : theHashmap.keySet()) {
+				returnString=  checkForSigns(theStrg, key, theHashmap.get(key));
+			}   
+			if (returnString !=null) {
+				return returnString;
+			}
+			else return theStrg;
+	}	
+	
+	
+	
+	
 }
 
 
 
+//static String getNextLine(int loopLocationCount, int minorLocation) {
+//	String newString = null;
+//	int currentline;
+//	                                     // the file is offset by 4 lines 
+//	try {
+//		currentline=(loopLocationCount * 9 ) +minorLocation + 4;
+//		newString = tempFileList.get(currentline);	//exact line to get	
+//		System.out.println("GNL Newval: " + newString);
+//		
+//	}    catch (Exception e)  {}
+//	return newString;
+//}
+//
 
 
 

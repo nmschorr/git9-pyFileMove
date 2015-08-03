@@ -48,6 +48,7 @@ public class SFCALeditor extends SFCALutil {
 	static int currentCount = 0;
 	static int locLineCount=4;  // start at 5th line
 	static int newListSizeMinus;
+	static boolean checkToss = false;
 	
 	public static void main(String[] args) {
 		remQuarterMoons();
@@ -90,19 +91,11 @@ public class SFCALeditor extends SFCALutil {
 				tinyCounter++;
 				}  // tiny while
 			  
-						 
-				FileUtils.writeLines(myOutFile1, tinySectionList, true);	
-
-//					if ( sumLine.contains("void of") || sumLine.contains("SUMMARY:Full") || sumLine.contains("SUMMARY:New Moon") )     // we are removing the quarters
-//					{
-//						System.out.println ("==========    ===== !!!!! FOUND a non quarter!");
-//						System.out.println ("========== writing: "+ sumLine);
-//						FileUtils.writeLines(myOutFile1, eventSection, true);	
-//					}
-//					else  {
-//						System.out.println("not writing this line:  " + sumLine);
-//					}
-					
+				checkToss = checkForTossouts(tinySectionList);	 
+				
+				if (checkToss) {
+					FileUtils.writeLines(myOutFile1, tinySectionList, true);	
+				}
 					
 				} //  // while locLineCount
 			FileUtils.writeStringToFile(myOutFile1, "END:VCALENDAR"+LINE_FEED, true);	
@@ -110,27 +103,25 @@ public class SFCALeditor extends SFCALutil {
 	}  // try  
 	catch (IOException e) { 
 		e.printStackTrace();	
-		}	// catch
-}  // class
-
-	/* 
-	 * @param loopLocationCount The loop counter
-	 * @param minorLocation The minor location
-	 * @return Returns newString
-	 */
-	static String getNextLine(int loopLocationCount, int minorLocation) {
-		String newString = null;
-		int currentline;
-		                                     // the file is offset by 4 lines 
-		try {
-			currentline=(loopLocationCount * 9 ) +minorLocation + 4;
-			newString = tempFileList.get(currentline);	//exact line to get	
-			System.out.println("GNL Newval: " + newString);
-			
-		}    catch (Exception e)  {}
-		return newString;
+	}	// catch
 	}
 
+		static boolean checkForTossouts(List<String> tinyList) {
+			String sumLine = tinyList.get(6);
+			 if ( sumLine.contains("void of") || sumLine.contains("SUMMARY:Full") || 
+					 sumLine.contains("SUMMARY:New Moon") )     // we are removing the quarters
+					{
+						System.out.println ("==========    ===== !!!!! FOUND a non quarter!");
+						System.out.println ("========== writing: "+ sumLine);		
+						return true;
+					}
+					else  {
+						System.out.println("not writing this line:  " + sumLine);
+						return false;
+					}
+		}			
+			 
+		 
 
 }  // class
  
