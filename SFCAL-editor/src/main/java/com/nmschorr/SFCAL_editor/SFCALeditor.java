@@ -86,10 +86,10 @@ public class SFCALeditor extends SFCALutil {
 				String theString = tempFileList.get(locLineCount);  //get one string
 						//StringUtils.chomp(theString);
 				tinySectionList.add(theString);
+				locLineCount++;
 				tinyCounter++;
 				}  // tiny while
 			  
-				locLineCount++;
 						 
 				FileUtils.writeLines(myOutFile1, tinySectionList, true);	
 
