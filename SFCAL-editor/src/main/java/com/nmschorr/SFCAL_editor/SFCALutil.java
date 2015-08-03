@@ -54,14 +54,14 @@ public class SFCALutil {
 					mylinenow2 = "SUMMARY:Moon void of course";
 				}
 						
-				FileUtils.writeStringToFile(tempFile2, mylinenow, true);	
+				FileUtils.writeStringToFile(tempFile2, mylinenow2, true);	
 				FileUtils.writeStringToFile(tempFile2,"\n", true);	 
 		
-				firstfront = mylinenow.substring(0,6);
+				firstfront = mylinenow2.substring(0,6);
 
 				if ( firstfront.equals("DTSTAR") )   {  					
 					newback = mylinenow2.substring(8,23) + "Z";
-					System.out.println("!!@@@@@  the line is  " + mylinenow);
+					System.out.println("!!@@@@@  the line is  " + mylinenow2);
 					newComboStr = newfront + newback +"\n";  					
 					System.out.println("DTEND: new line is " + newComboStr);
 					FileUtils.writeStringToFile(tempFile2, newComboStr, true);	
@@ -138,7 +138,7 @@ public class SFCALutil {
 				returnString=  checkForSigns(theStrg, key, theHashmap.get(key));
 			}   
 			if ( !returnString.equals(null)) {
-				System.out.println("returning this: " + returnString);
+				System.out.println("%%%%%%%%%5     %%%%%% returning this: " + returnString);
 			
 				return returnString;
 			}
