@@ -24,46 +24,49 @@ public class SFCALutil {
 	static final int MAX_EVENTS=15;
 	static int totalLineCount2 = 0;
 	static int totInFileLines2 = 0;
+	static final String newfront = "DTEND:";
 	
-	static void remQuarterMoons() {   
+	static void generalStringFixing() {   
+		String firstfront;
+		String newback;
+		String newComboStr;  
+		String checkCharString;
+		String replacedSignString;
+		String voidFixedString;
 		try {
-			String firstfront;
-			String newback;
-			String newComboStr;  
-			String newfront = "DTEND:";
-			String newestString;
-			String mylinenow2;
 			delFiles(tempFile2,myOutFile2);  // delete the inFileName we made last time
-			List<String> newList2 =  FileUtils.readLines(myInFile2);
-			int newplListInt = newList2.size() + 10;
-			System.out.println("total lines: " + newplListInt);
+			List<String> theReadLinesArray =  FileUtils.readLines(myInFile2);
+			System.out.println("----------------------------------%%%%%%%##### total lines: " +  theReadLinesArray.size());
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
 			// for each line in file:
-			for (String mylinenow : newList2)  {
-			if (mylinenow.length() > 0 )
+			for (String currentLineInArray : theReadLinesArray)  {
+			if (currentLineInArray.length() > 0 )
 			{
-				StringUtils.chomp(mylinenow);
+				StringUtils.chomp(currentLineInArray);
 				
-				newestString= checkForChar(mylinenow);
-				mylinenow2 = replaceSigns(newestString);
-				System.out.println("value of mylinenow2 is: "+ mylinenow2);
+				checkCharString= checkForChar(currentLineInArray);
+				replacedSignString = replaceSigns(checkCharString);
+				System.out.println("value of replacedSignString is: "+ replacedSignString);
 				
 
-				if (mylinenow2.contains("Moon goes void")) {
-					mylinenow2 = "SUMMARY:Moon void of course";
+				if (replacedSignString.contains("Moon goes void")) {
+					voidFixedString = "SUMMARY:Moon void of course";
 				}
-						
-				FileUtils.writeStringToFile(tempFile2, mylinenow2, true);	
+				else {
+					voidFixedString = replacedSignString;
+
+				}
+				FileUtils.writeStringToFile(tempFile2, voidFixedString, true);	
 				FileUtils.writeStringToFile(tempFile2,"\n", true);	 
 		
-				firstfront = mylinenow2.substring(0,6);
+				firstfront = voidFixedString.substring(0,6);
 
 				if ( firstfront.equals("DTSTAR") )   {  					
-					newback = mylinenow2.substring(8,23) + "Z";
-					System.out.println("!!@@@@@  the line is  " + mylinenow2);
+					newback = voidFixedString.substring(8,23) + "Z";
+					//System.out.println("!!@@@@@  the line is  " + voidFixedString);
 					newComboStr = newfront + newback +"\n";  					
-					System.out.println("DTEND: new line is " + newComboStr);
+					//System.out.println("DTEND: new line is " + newComboStr);
 					FileUtils.writeStringToFile(tempFile2, newComboStr, true);	
 				}
 			  }	
@@ -105,37 +108,25 @@ public class SFCALutil {
 			}
 		}
 
-	static String checkForSigns(String checkLine, String theVal, String theRep) {
-		String newStringyBoo;
-	 	// System.out.println("inside checkForStuff");		
-	 	// System.out.println("checking val rep: "+theVal + theRep);		
-		if (checkLine.contains(theVal))  {
-			System.out.println("!!!---            ---FOUND sign CHAR -----!!!!  !!!  ");
-			System.out.println(checkLine);	
-			newStringyBoo = checkLine.replace( theVal, theRep);  
-			System.out.println("------------------------The fixed line: " + newStringyBoo);
-			return newStringyBoo;
-		}
-		else {   
-			return checkLine;
-			}
-		}
-
-	static HashMap<String, String>  makemyhash() {
-		HashMap <String, String> myHashmap = new HashMap<String, String>();
-		myHashmap.put("Cn", " Cancer");
-		myHashmap.put("Ar", " Aries");
-		myHashmap.put("Ta", " Taurus");
-		return myHashmap;
+	static String checkForSigns(String origLine, String theVal, String theRep) {
+		String theFixedLine;
+	 	// System.out.println("inside checkForSigns"+ "/n" +checking val rep: "+theVal + theRep);		
+		if (origLine.contains(theVal))  {
+			System.out.println("!!!---            ---FOUND sign CHAR -----!!!!  !!! /n"+origLine);
+			theFixedLine = origLine.replace( theVal, theRep);  
+			System.out.println("------------------------The fixed line: " + theFixedLine);
+			return theFixedLine;
+		} else {   return origLine;      }
 	}
+
 		
-		static String replaceSigns(String theStrg) {
+		static String replaceSigns(String theInputStr) {
 			String returnString=null;
+		 	System.out.println("inside replaceSigns");		
 			HashMap <String, String> theHashmap = makemyhash();
-		 	 System.out.println("inside replaceSigns");		
 
 			for (String key : theHashmap.keySet()) {
-				returnString=  checkForSigns(theStrg, key, theHashmap.get(key));
+				returnString=  checkForSigns(theInputStr, key, theHashmap.get(key));
 			}   
 			if ( !returnString.equals(null)) {
 				System.out.println("%%%%%%%%%5     %%%%%% returning this: " + returnString);
@@ -144,72 +135,22 @@ public class SFCALutil {
 			}
 			else  {
 				System.out.println("!!!!!! aaaccck returning wrong value");
-				return theStrg;
+				return theInputStr;
 			}
 	}	
 	
-	
+		static HashMap<String, String>  makemyhash() {
+		HashMap <String, String> myHashmap = new HashMap<String, String>();
+		myHashmap.put("Cn", " Cancer");
+		myHashmap.put("Ar", " Aries");
+		myHashmap.put("Ta", " Taurus");
+		return myHashmap;
+	}
+
 	
 	
 }
 
 
 
-//static String getNextLine(int loopLocationCount, int minorLocation) {
-//	String newString = null;
-//	int currentline;
-//	                                     // the file is offset by 4 lines 
-//	try {
-//		currentline=(loopLocationCount * 9 ) +minorLocation + 4;
-//		newString = tempFileList.get(currentline);	//exact line to get	
-//		System.out.println("GNL Newval: " + newString);
-//		
-//	}    catch (Exception e)  {}
-//	return newString;
-//}
-//
-
-
-
-
-//static void firstPart() {   
-//	try {
-//		String firstfront;
-//		String newback;
-//		String newComboStr;  
-//		String newfront = "DTEND:";
-//		delFiles();  // delete the inFileName we made last time
-//		 
-//		List<String> newList =  FileUtils.readLines(myInFile);
-//		int newplListInt = newList.size() + 10;
-//		System.out.println("total lines: " + newplListInt);
-//		// get ics header lines in 1st-first four header lines of ics inFileName
-//
-//		// for each line in file:
-//		for (String mylinenow : newList)  {
-//		if (mylinenow.length() > 0 )
-//		{
-//			StringUtils.chomp(mylinenow);
-//			if (mylinenow.contains("Moon goes void")) {
-//				mylinenow = "SUMMARY:Moon void of course";
-//			}
-//					
-//			FileUtils.writeStringToFile(tempFile, mylinenow, true);	
-//			FileUtils.writeStringToFile(tempFile,"\n", true);	 
-//	
-//			firstfront = mylinenow.substring(0,6);
-//
-//			if ( firstfront.equals("DTSTAR") )   {  					
-//				newback = mylinenow.substring(8,23) + "Z";
-//				System.out.println("!!@@@@@  the line is  " + mylinenow);
-//				newComboStr = newfront + newback +"\n";  					
-//				System.out.println("DTEND: new line is " + newComboStr);
-//				FileUtils.writeStringToFile(tempFile, newComboStr, true);	
-//			}
-//		  }	
-//		}
-//	}
-//	catch (IOException e)  { 
-//		e.printStackTrace();	 
-//	}
  	

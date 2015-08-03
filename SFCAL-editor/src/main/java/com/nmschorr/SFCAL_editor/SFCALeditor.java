@@ -31,18 +31,19 @@ import org.apache.commons.io.FileUtils;
 
 public class SFCALeditor extends SFCALutil {
 	static List<String> tempFileList = new ArrayList<String>();
+	static List<String> dateStringFileList = new ArrayList<String>();
 	static int eventcount = 0;		 
-	static String MainInDirNm1="E:\\sfcalfiles";
- 	static String MainOutDirNm1="C:\\tmp";
-	static String InDirVdsNm1=MainInDirNm1+"\\vds";
-	static String InFileName1=InDirVdsNm1 +"\\SFCAL.ics";
-	static String OutFileName1 = MainOutDirNm1 + "\\SFCALvds-out.ics";
- 	static String tempOutName1 = MainOutDirNm1 + "\\SFCALtemp1.ics";
- 	static File myInFile1 = new File(InFileName1);
-    static File tempFile1 = new File(tempOutName1);
- 	static File myOutFile1 = new File(OutFileName1);
+	static String MainIndirName = "E:\\sfcalfiles";
+ 	static String MainOutdirName = "C:\\tmp";
+	static String IndirVoidsName = MainIndirName +"\\vds";
+	static String InfileNm = IndirVoidsName +"\\SFCAL.ics";
+	static String OutFileNm = MainOutdirName + "\\SFCALvds-out.ics";
+ 	static String tempOutNm = MainOutdirName + "\\SFCALtemp1.ics";
+ 	static File myInfileNm = new File(InfileNm);
+    static File tempFileOne = new File(tempOutNm);
+ 	static File myOutFileOne = new File(OutFileNm);
 	final static String LINE_FEED = System.getProperty("line.separator");
-	static final int MAX_EVENTS=15;
+	static final int MAX_EVENTS = 15;
 	static int totalLineCount = 0;
 	static int totInFileLines = 0;
 	static int currentCount = 0;
@@ -51,23 +52,39 @@ public class SFCALeditor extends SFCALutil {
 	static boolean checkToss = false;
 	
 	public static void main(String[] args) {
-		remQuarterMoons();
+		makeFileName();
+		generalStringFixing();
 		sectionTask();
 		System.out.println("Finished");
 		System.exit(0);
 	}
- 
+
+	static void makeFileName() {
+		try {
+		dateStringFileList =  FileUtils.readLines(tempFileOne);
+		String newDateString=dateStringFileList.get(6);
+		String newDate=newDateString.substring(9, 17);
+		System.out.println("new date string is: "+ newDate);
+		} catch (IOException e) { 
+			e.printStackTrace();	
+		}	// catch
+
+	}
+	
+	
+	
+	
 	static void sectionTask() {   // this part was done by perl script
 		int tinyCounter =0;
 
 		try {
-			tempFileList =  FileUtils.readLines(tempFile1);
+			tempFileList =  FileUtils.readLines(tempFileOne);
 			totInFileLines = tempFileList.size() + 10;
 			
 			System.out.println("total lines: " + totInFileLines);
 			// get ics header lines in 1st-first four header lines of ics inFileName
 			for (int i = 0; i < 4; i++)	{
-				FileUtils.writeStringToFile(myOutFile1, tempFileList.get(i)+LINE_FEED, true);		
+				FileUtils.writeStringToFile(myOutFileOne, tempFileList.get(i)+LINE_FEED, true);		
 			}
 			newListSizeMinus = tempFileList.size()-1;
 			
@@ -94,11 +111,11 @@ public class SFCALeditor extends SFCALutil {
 				checkToss = checkForTossouts(tinySectionList);	 
 				
 				if (checkToss) {
-					FileUtils.writeLines(myOutFile1, tinySectionList, true);	
+					FileUtils.writeLines(myOutFileOne, tinySectionList, true);	
 				}
 					
 				} //  // while locLineCount
-			FileUtils.writeStringToFile(myOutFile1, "END:VCALENDAR"+LINE_FEED, true);	
+			FileUtils.writeStringToFile(myOutFileOne, "END:VCALENDAR"+LINE_FEED, true);	
 			  
 	}  // try  
 	catch (IOException e) { 
@@ -111,12 +128,12 @@ public class SFCALeditor extends SFCALutil {
 			 if ( sumLine.contains("void of") || sumLine.contains("SUMMARY:Full") || 
 					 sumLine.contains("SUMMARY:New Moon") )     // we are removing the quarters
 					{
-						System.out.println ("==========    ===== !!!!! FOUND a non quarter!");
-						System.out.println ("========== writing: "+ sumLine);		
+						//System.out.println ("==========    ===== !!!!! FOUND a non quarter!");
+						//System.out.println ("========== writing: "+ sumLine);		
 						return true;
 					}
 					else  {
-						System.out.println("not writing this line:  " + sumLine);
+						//System.out.println("not writing this line:  " + sumLine);
 						return false;
 					}
 		}			
