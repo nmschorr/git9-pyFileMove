@@ -31,6 +31,8 @@ public class SFCALutil {
 			String newback;
 			String newComboStr;  
 			String newfront = "DTEND:";
+			String newestString;
+			String mylinenow2;
 			delFiles(tempFile2,myOutFile2);  // delete the inFileName we made last time
 			List<String> newList2 =  FileUtils.readLines(myInFile2);
 			int newplListInt = newList2.size() + 10;
@@ -43,11 +45,13 @@ public class SFCALutil {
 			{
 				StringUtils.chomp(mylinenow);
 				
-				checkForChar(mylinenow);
-				replaceSigns(mylinenow);
+				newestString= checkForChar(mylinenow);
+				mylinenow2 = replaceSigns(newestString);
+				System.out.println("value of mylinenow2 is: "+ mylinenow2);
+				
 
-				if (mylinenow.contains("Moon goes void")) {
-					mylinenow = "SUMMARY:Moon void of course";
+				if (mylinenow2.contains("Moon goes void")) {
+					mylinenow2 = "SUMMARY:Moon void of course";
 				}
 						
 				FileUtils.writeStringToFile(tempFile2, mylinenow, true);	
@@ -56,7 +60,7 @@ public class SFCALutil {
 				firstfront = mylinenow.substring(0,6);
 
 				if ( firstfront.equals("DTSTAR") )   {  					
-					newback = mylinenow.substring(8,23) + "Z";
+					newback = mylinenow2.substring(8,23) + "Z";
 					System.out.println("!!@@@@@  the line is  " + mylinenow);
 					newComboStr = newfront + newback +"\n";  					
 					System.out.println("DTEND: new line is " + newComboStr);
@@ -87,28 +91,30 @@ public class SFCALutil {
 		} 
 	  } // mySleep
 	
-	static void checkForChar(String checkLine) {
+	static String checkForChar(String checkLine) {
+		 
 		if (checkLine.contains( "\uFFFD"))  {
 			System.out.println("!!!---            ---FOUND WEIRD CHAR -----!!!!  !!!  ");
 			System.out.println(checkLine);	
 			String newStringy = checkLine.replace( "\uFFFD", " ");  
 			String newStringy2 = newStringy.replace( "'", " ");  
 			System.out.println("The fixed line: " + newStringy2);
+			return newStringy2;
 		}
-		else {
+		else { return checkLine;
 			}
 		}
 
 	static String checkForSigns(String checkLine, String theVal, String theRep) {
-		String newStringy;
-	 	 System.out.println("inside checkForStuff");		
-	 	 System.out.println("checking val rep: "+theVal + theRep);		
+		String newStringyBoo;
+	 	// System.out.println("inside checkForStuff");		
+	 	// System.out.println("checking val rep: "+theVal + theRep);		
 		if (checkLine.contains(theVal))  {
 			System.out.println("!!!---            ---FOUND sign CHAR -----!!!!  !!!  ");
 			System.out.println(checkLine);	
-			newStringy = checkLine.replace( theVal, theRep);  
-			System.out.println("------------------------The fixed line: " + newStringy);
-			return newStringy;
+			newStringyBoo = checkLine.replace( theVal, theRep);  
+			System.out.println("------------------------The fixed line: " + newStringyBoo);
+			return newStringyBoo;
 		}
 		else {   
 			return checkLine;
