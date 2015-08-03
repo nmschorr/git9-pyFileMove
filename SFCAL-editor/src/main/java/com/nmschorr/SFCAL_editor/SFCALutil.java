@@ -137,10 +137,15 @@ public class SFCALutil {
 			for (String key : theHashmap.keySet()) {
 				returnString=  checkForSigns(theStrg, key, theHashmap.get(key));
 			}   
-			if (returnString !=null) {
+			if ( !returnString.equals(null)) {
+				System.out.println("returning this: " + returnString);
+			
 				return returnString;
 			}
-			else return theStrg;
+			else  {
+				System.out.println("!!!!!! aaaccck returning wrong value");
+				return theStrg;
+			}
 	}	
 	
 	
