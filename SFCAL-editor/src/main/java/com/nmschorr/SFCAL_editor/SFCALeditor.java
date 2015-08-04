@@ -83,7 +83,7 @@ public class SFCALeditor extends SFCALutil {
 			GLOBAL_DATE_FILE = new File(GLOBAL_DATE_FILE_NAME_DIR);
 			out.println("-----------------------------------datefilename is: " + GLOBAL_DATE_FILE_NAME_DIR);
 			 
-			GLOBAL_TEMPOUT_STRNAME = MainOutdirName + "\\SFCALtmp" + System.currentTimeMillis() +".ics";
+			GLOBAL_TEMPOUT_STRNAME = MainOutdirName + "\\tempfiles\\SFCALtmp" + System.currentTimeMillis() +".ics";
 			GLOBAL_TEMP_FILE = new File(GLOBAL_TEMPOUT_STRNAME);
 				
 			delFiles(GLOBAL_TEMP_FILE);  // delete the inFileName we made last time
