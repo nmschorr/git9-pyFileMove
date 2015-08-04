@@ -11,20 +11,16 @@ import org.apache.commons.lang.StringUtils;
 
 	
 public class SFCALutil {
-	static String MainInDirNm2="E:\\sfcalfiles";
-	static String MainOutDirNm2="C:\\tmp";
-	static String InDirVdsNm2=MainInDirNm2+"\\vds";
-	static String InFileName2=InDirVdsNm2 +"\\SFCAL.ics";
-	static String OutFileName2 = MainOutDirNm2 + "\\SFCALvds-out.ics";
-	static String tempOutName2 = MainOutDirNm2 + "\\SFCALtemp1.ics";
-	static File myInFile2 = new File(InFileName2);
-	static File tempFile2 = new File(tempOutName2);
-	static File myOutFile2 = new File(OutFileName2);
+	static String MainInDirNam="E:\\sfcalfiles";
+	static String CtmpDir="C:\\tmp";
+	static String InDirVdsNam=MainInDirNam+"\\vds";
+	static String OrigSFCALfileNm = InDirVdsNam +"\\SFCAL.ics";
+	static String SFCALtempOneFilename = CtmpDir + "\\SFCALtemp1.ics";
+	static File ORIGsfcalFILE = null;
 	final static String LINE_FEED = System.getProperty("line.separator");
 	static final int MAX_EVENTS=15;
-	static int totalLineCount2 = 0;
-	static int totInFileLines2 = 0;
 	static final String newfront = "DTEND:";
+	static File SFCALtempONE;
 	
 	static void generalStringFixing() {   
 		String firstfront;
@@ -33,18 +29,21 @@ public class SFCALutil {
 		String checkCharString;
 		String replacedSignString;
 		String voidFixedString;
+		mySleep(2);
 		try {
-			delFiles(tempFile2,myOutFile2);  // delete the inFileName we made last time
-			List<String> theReadLinesArray =  FileUtils.readLines(myInFile2);
-			System.out.println("----------------------------------%%%%%%%##### total lines: " +  theReadLinesArray.size());
+			ORIGsfcalFILE = new File(OrigSFCALfileNm);
+			SFCALtempONE = new File(SFCALtempOneFilename);
+			//delFiles(tmpFileTwo);  // delete the inFileName we made last time
+			List<String> origSFCALarray =  FileUtils.readLines(ORIGsfcalFILE);
+			System.out.println("----------------------------------%%%%%%%##### total lines: " +  origSFCALarray.size());
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
 			// for each line in file:
-			for (String currentLineInArray : theReadLinesArray)  {
+			for (String currentLineInArray : origSFCALarray)  {
 			if (currentLineInArray.length() > 0 )
 			{
 				StringUtils.chomp(currentLineInArray);
-				
+				System.out.println("current line:"+currentLineInArray);
 				checkCharString= checkForChar(currentLineInArray);
 				replacedSignString = replaceSigns(checkCharString);
 				System.out.println("value of replacedSignString is: "+ replacedSignString);
@@ -57,8 +56,8 @@ public class SFCALutil {
 					voidFixedString = replacedSignString;
 
 				}
-				FileUtils.writeStringToFile(tempFile2, voidFixedString, true);	
-				FileUtils.writeStringToFile(tempFile2,"\n", true);	 
+				FileUtils.writeStringToFile(SFCALtempONE, voidFixedString, true);	
+				FileUtils.writeStringToFile(SFCALtempONE,"\n", true);	 
 		
 				firstfront = voidFixedString.substring(0,6);
 
@@ -67,7 +66,7 @@ public class SFCALutil {
 					//System.out.println("!!@@@@@  the line is  " + voidFixedString);
 					newComboStr = newfront + newback +"\n";  					
 					//System.out.println("DTEND: new line is " + newComboStr);
-					FileUtils.writeStringToFile(tempFile2, newComboStr, true);	
+					FileUtils.writeStringToFile(SFCALtempONE, newComboStr, true);	
 				}
 			  }	
 			}
@@ -77,9 +76,10 @@ public class SFCALutil {
 		}
 	}	
 	
-	static void delFiles(File f1, File f2) {
-		f1.delete();  // delete the inFileName we made last time
-		f2.delete();  // delete the inFileName we made last time		 
+	static void delFiles(File f1) {
+		if ( f1.exists() ) {
+			f1.delete();  // delete the inFileName we made last time
+		}
 	}
 
 	static void fileSetup() {

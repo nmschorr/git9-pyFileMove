@@ -65,9 +65,9 @@ public class SFCALeditor extends SFCALutil {
 		String LocalDateNm=null;
 		
 		try {
-		dateStringFileList =  FileUtils.readLines(tempFileOne);
-		String newDateString=dateStringFileList.get(6);
-		String newDate=newDateString.substring(6, 14);
+		dateStringFileList =  FileUtils.readLines(myInfileNm);
+		String newDateString=dateStringFileList.get(5);
+		String newDate=newDateString.substring(8, 16);
 		System.out.println("new date string is: "+ newDate);
 		LocalDateNm = OutFileNmTmp  + newDate + ".ics";
 		System.out.println("new LocalDateNm string is: "+ LocalDateNm);
