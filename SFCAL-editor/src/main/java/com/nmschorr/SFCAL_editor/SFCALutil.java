@@ -106,9 +106,9 @@ public class SFCALutil {
 			System.out.println("!!!---            ---FOUND WEIRD CHAR -----!!!!  !!!  ");
 			System.out.println(checkLine);	
 			String newStringy = checkLine.replace( "\uFFFD", " ");  
-			String newStringy2 = newStringy.replace( "'", " ");  
-			System.out.println("The fixed line: " + newStringy2);
-			return newStringy2;
+			//String newStringy2 = newStringy.replace( "'", " ");  
+			System.out.println("The fixed line: " + newStringy);
+			return newStringy;
 		}
 		else { return checkLine;
 			}
@@ -120,8 +120,8 @@ public class SFCALutil {
 	 	 System.out.println("inside checkForSigns checking val rep: "+theVal + theRep);		
 		if (origLine.contains(theVal))  {
 			System.out.println("!!!---            ---FOUND sign CHAR -----!!!!  !!! /n"+origLine);
-			//theFixedLine = origLine.replace( theVal, theRep);  
-			theFixedLine = origLine.replace( "Cn", "Cancer ");  
+			theFixedLine = origLine.replace( theVal, theRep);  
+			//theFixedLine = origLine.replace( "Cn", "Cancer ");  
 			System.out.println("------------------------The fixed line: " + theFixedLine);
 			replacePerfectString=true;
 			NEWREPLACEDstring= theFixedLine;
@@ -148,9 +148,18 @@ public class SFCALutil {
 	
 		static HashMap<String, String>  makemyhash() {
 		HashMap <String, String> myHashmap = new HashMap<String, String>();
-		myHashmap.put("Cn", " Cancer");
-		myHashmap.put("Ar", " Aries");
-		myHashmap.put("Ta", " Taurus");
+		myHashmap.put("Cn", "Cancer ");
+		myHashmap.put("Ar", "Aries ");
+		myHashmap.put("Ta", "Taurus ");
+		myHashmap.put("Sg", "Sagittarius ");
+		myHashmap.put("Ge", "Gemini ");
+		myHashmap.put("Le", "Leo ");
+		myHashmap.put("Vi", "Virgo ");
+		myHashmap.put("Li", "Libra ");
+		myHashmap.put("Sc", "Scorpio ");
+		myHashmap.put("Cp", "Capricorn ");
+		myHashmap.put("Aq", "Aquarius ");
+		myHashmap.put("Pi", "Pisces ");
 		return myHashmap;
 	}
 

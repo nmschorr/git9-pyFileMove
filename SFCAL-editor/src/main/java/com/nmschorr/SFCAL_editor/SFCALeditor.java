@@ -18,6 +18,7 @@ package com.nmschorr.SFCAL_editor;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import static java.lang.System.out;
 
 import org.apache.commons.io.FileUtils;
 //import org.apache.commons.lang.StringUtils;
@@ -36,11 +37,11 @@ public class SFCALeditor extends SFCALutil {
 	static String MainIndirName = "E:\\sfcalfiles";
  	static String MainOutdirName = "C:\\tmp";
 	static String IndirVoidsName = MainIndirName +"\\vds";
-	static String InfileNm = IndirVoidsName +"\\SFCAL.ics";
 	static String OutFileNmTmp = MainOutdirName + "\\SFCALvds-";
 	static String OutFileNmFinal=null;
  	static String tempOutNm = MainOutdirName + "\\SFCALtemp1.ics";
- 	static File myInfileNm = new File(InfileNm);
+ 	static String InfileNm;
+	static File actualINFILE;
     static File tempFileOne = new File(tempOutNm);
  	static File myOutFileOne = null;
 	final static String LINE_FEED = System.getProperty("line.separator");
@@ -51,28 +52,44 @@ public class SFCALeditor extends SFCALutil {
 	static int locLineCount=4;  // start at 5th line
 	static int newListSizeMinus;
 	static boolean checkToss = false;
+	static File filesDir;
+	static List<String> myfilelist;
+	
 	
 	public static void main(String[] args) {
-		makeNewFinalFileWDate();
+		
 	 	
-		generalStringFixing();
-		sectionTask();
+		
+		File filesDir = new File(IndirVoidsName);
+		File[] myFileArray = filesDir.listFiles();		
+		for (File i : myFileArray) {
+			out.println("filename is: " + i);
+			makeNewFinalFileWDate(i.getName());
+			generalStringFixing();
+			sectionTask();
+		}
+			
+			
+			
 		System.out.println("Finished");
 		System.exit(0);
 	}
 
-	static void makeNewFinalFileWDate() {
+	static void makeNewFinalFileWDate(String localFilename) {
 		String LocalDateNm=null;
 		
 		try {
-		dateStringFileList =  FileUtils.readLines(myInfileNm);
-		String newDateString=dateStringFileList.get(5);
-		String newDate=newDateString.substring(8, 16);
-		System.out.println("new date string is: "+ newDate);
-		LocalDateNm = OutFileNmTmp  + newDate + ".ics";
-		System.out.println("new LocalDateNm string is: "+ LocalDateNm);
-	 	myOutFileOne = new File(LocalDateNm);
-		delFiles(myOutFileOne);  // delete the inFileName we made last time
+			InfileNm = IndirVoidsName +"\\" + localFilename;
+
+			actualINFILE = new File(InfileNm);
+			dateStringFileList =  FileUtils.readLines(actualINFILE);
+			String newDateString=dateStringFileList.get(5);
+			String newDate=newDateString.substring(8, 16);
+			System.out.println("new date string is: "+ newDate);
+			LocalDateNm = OutFileNmTmp  + newDate + ".ics";
+			System.out.println("new LocalDateNm string is: "+ LocalDateNm);
+			myOutFileOne = new File(LocalDateNm);
+			delFiles(myOutFileOne);  // delete the inFileName we made last time
 
 		} catch (IOException e) { 
 			e.printStackTrace();	
