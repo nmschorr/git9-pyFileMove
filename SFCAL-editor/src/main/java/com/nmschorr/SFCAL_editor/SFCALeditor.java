@@ -37,36 +37,52 @@ public class SFCALeditor extends SFCALutil {
 	static String MainIndirName = "E:\\sfcalfiles";
  	static String MainOutdirName = "C:\\tmp";
 	static String IndirVoidsName = MainIndirName +"\\vds";
-	static String OutFileNmTmp = MainOutdirName + "\\SFCALvds-";
-	static String OutFileNmFinal=null;
  	static String tempOutNm = MainOutdirName + "\\SFCALtemp1.ics";
- 	static String InfileNm;
-	static File actualINFILE;
+ 	static String GLOBAL_ORIG_FILE_NAME_WDIR;
     static File tempFileOne = new File(tempOutNm);
- 	static File myOutFileOne = null;
 	final static String LINE_FEED = System.getProperty("line.separator");
-	static final int MAX_EVENTS = 15;
 	static int totalLineCount = 0;
 	static int totInFileLines = 0;
 	static int currentCount = 0;
 	static int locLineCount=4;  // start at 5th line
 	static int newListSizeMinus;
 	static boolean checkToss = false;
-	static File filesDir;
-	static List<String> myfilelist;
+	public static File filesDir;
 	
-	
+	public static String GLOBAL_DATE_FILE_NAME;
+	static File GLOBAL_DATE_FILE;
+	public static String GLOBAL_ORIG_FILE_NAME;
+	public static File GLOBAL_ORIG_FILE;
+	static File GLOBAL_TEMP_FILE;
+	static String GLOBAL_TEMP_FILE_NAME;
+	static String GLOBAL_DATE_FILE_NAME_DIR;
+	 
 	public static void main(String[] args) {
-		
-	 	
-		
-		File filesDir = new File(IndirVoidsName);
-		File[] myFileArray = filesDir.listFiles();		
-		for (File i : myFileArray) {
-			out.println("filename is: " + i);
-			makeNewFinalFileWDate(i.getName());
-			generalStringFixing();
-			sectionTask();
+
+		File filesDir = new File(IndirVoidsName);  //READ the list of files in sfcalfiles/vds dir
+		String[] myFileArray = filesDir.list();	// create a list of names of those files	
+
+		//String[] myFileArray = filesDir.listFiles();	// create a list of names of those files	
+
+		for (String sfcalOrigName : myFileArray) {  
+			out.println("filename is: " + sfcalOrigName);
+
+			GLOBAL_ORIG_FILE_NAME = 	sfcalOrigName;
+			GLOBAL_ORIG_FILE_NAME_WDIR = IndirVoidsName +"\\" + GLOBAL_ORIG_FILE_NAME;
+			GLOBAL_ORIG_FILE = new File(GLOBAL_ORIG_FILE_NAME_WDIR);
+	
+			
+			GLOBAL_DATE_FILE_NAME = make_new_file_date_name(sfcalOrigName);
+			GLOBAL_DATE_FILE_NAME_DIR = MainOutdirName + "\\" + GLOBAL_DATE_FILE_NAME;
+			GLOBAL_DATE_FILE = new File(GLOBAL_DATE_FILE_NAME);
+
+			GLOBAL_TEMP_FILE = new File(tempOutNm);
+				
+			delFiles(GLOBAL_DATE_FILE);  // delete the inFileName we made last time
+			delFiles(GLOBAL_TEMP_FILE);  // delete the inFileName we made last time
+			generalStringFixing(GLOBAL_ORIG_FILE);
+			
+			sectionTask(GLOBAL_DATE_FILE);
 		}
 			
 			
@@ -75,31 +91,29 @@ public class SFCALeditor extends SFCALutil {
 		System.exit(0);
 	}
 
-	static void makeNewFinalFileWDate(String localFilename) {
-		String LocalDateNm=null;
+	static String make_new_file_date_name(String ORIG_INFILE_STR) {
+		String LocalDateNmStr = null;
 		
 		try {
-			InfileNm = IndirVoidsName +"\\" + localFilename;
 
-			actualINFILE = new File(InfileNm);
-			dateStringFileList =  FileUtils.readLines(actualINFILE);
+			dateStringFileList =  FileUtils.readLines(GLOBAL_ORIG_FILE);
 			String newDateString=dateStringFileList.get(5);
-			String newDate=newDateString.substring(8, 16);
-			System.out.println("new date string is: "+ newDate);
-			LocalDateNm = OutFileNmTmp  + newDate + ".ics";
-			System.out.println("new LocalDateNm string is: "+ LocalDateNm);
-			myOutFileOne = new File(LocalDateNm);
-			delFiles(myOutFileOne);  // delete the inFileName we made last time
+			String newDateStr = newDateString.substring(8, 16);
+			System.out.println("new date string is: "+ newDateStr);
+			LocalDateNmStr = ORIG_INFILE_STR + "." + newDateStr + ".ics";
+			System.out.println("new LocalDateNmStr string is: "+ LocalDateNmStr);
 
 		} catch (IOException e) { 
 			e.printStackTrace();	
 		}	// catch
+
+		return LocalDateNmStr; 
 	}
 	
 	
 	
 	
-	static void sectionTask() {   // this part was done by perl script
+	static void sectionTask(File SECTION_FILE) {   // this part was done by perl script
 		int tinyCounter =0;
 
 		try {
@@ -109,7 +123,7 @@ public class SFCALeditor extends SFCALutil {
 			System.out.println("total lines: " + totInFileLines);
 			// get ics header lines in 1st-first four header lines of ics inFileName
 			for (int i = 0; i < 4; i++)	{
-				FileUtils.writeStringToFile(myOutFileOne, tempFileList.get(i)+LINE_FEED, true);		
+				FileUtils.writeStringToFile(GLOBAL_DATE_FILE, tempFileList.get(i)+LINE_FEED, true);		
 			}
 			newListSizeMinus = tempFileList.size()-1;
 			
@@ -136,11 +150,11 @@ public class SFCALeditor extends SFCALutil {
 				checkToss = checkForTossouts(tinySectionList);	 
 				
 				if (checkToss) {
-					FileUtils.writeLines(myOutFileOne, tinySectionList, true);	
+					FileUtils.writeLines(GLOBAL_DATE_FILE, tinySectionList, true);	
 				}
 					
 				} //  // while locLineCount
-			FileUtils.writeStringToFile(myOutFileOne, "END:VCALENDAR"+LINE_FEED, true);	
+			FileUtils.writeStringToFile(GLOBAL_DATE_FILE, "END:VCALENDAR"+LINE_FEED, true);	
 			  
 	}  // try  
 	catch (IOException e) { 

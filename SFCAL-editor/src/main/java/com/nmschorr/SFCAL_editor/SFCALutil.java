@@ -7,37 +7,35 @@ import java.util.*;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+
 //static String MainInDirNm="E:\\sfcalfiles";
+//public static File DATE_OUTFILE;
+//public static String DATE_OUTFILE_STR;
+//public static String GLOBAL_DATE_FILE_NAME;
+//static File GLOBAL_DATE_FILE;
+//public static String GLOBAL_ORIG_FILE_NAME;
 
 	
 public class SFCALutil {
-	static String MainInDirNam="E:\\sfcalfiles";
-	static String CtmpDir="C:\\tmp";
-	static String InDirVdsNam=MainInDirNam+"\\vds";
-	static String OrigSFCALfileNm = InDirVdsNam +"\\SFCAL.ics";
-	static String SFCALtempOneFilename = CtmpDir + "\\SFCALtemp1.ics";
-	static File ORIGsfcalFILE = null;
+  	static String CtmpDir="C:\\tmp";
+ 	static String SFCALtempOneFilename = CtmpDir + "\\SFCALtemp1.ics";
 	final static String LINE_FEED = System.getProperty("line.separator");
-	static final int MAX_EVENTS=15;
 	static final String newfront = "DTEND:";
-	static File SFCALtempONE;
 	static String NEWREPLACEDstring;
 	static String perfectString;
-	static boolean replacePerfectString = false;
 	
-	static void generalStringFixing() {   
+	static void generalStringFixing(File localOriginalFile) {   
 		String firstfront;
 		String newback;
 		String newComboStr;  
 		String checkCharString;
 		String replacedSignString;
 		String voidFixedString;
-		mySleep(2);
+
 		try {
-			ORIGsfcalFILE = new File(OrigSFCALfileNm);
-			SFCALtempONE = new File(SFCALtempOneFilename);
-			delFiles(SFCALtempONE);  // delete the inFileName we made last time
-			List<String> origSFCALarray =  FileUtils.readLines(ORIGsfcalFILE);
+			File SFCALtempONE = new File(SFCALtempOneFilename);
+
+			List<String> origSFCALarray =  FileUtils.readLines(localOriginalFile);
 			System.out.println("----------------------------------%%%%%%%##### total lines: " +  origSFCALarray.size());
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
@@ -51,7 +49,6 @@ public class SFCALutil {
 				NEWREPLACEDstring = checkCharString;
 				replaceSigns(checkCharString);
 				
-				replacePerfectString = false;
 				System.out.println("value of NEWREPLACEDstring is: "+ NEWREPLACEDstring);
 				
 
@@ -116,14 +113,12 @@ public class SFCALutil {
 
 	static void checkForSigns(String origLine, String theVal, String theRep) {
 		String theFixedLine;
-		replacePerfectString=false;
 	 	 System.out.println("inside checkForSigns checking val rep: "+theVal + theRep);		
 		if (origLine.contains(theVal))  {
 			System.out.println("!!!---            ---FOUND sign CHAR -----!!!!  !!! /n"+origLine);
 			theFixedLine = origLine.replace( theVal, theRep);  
 			//theFixedLine = origLine.replace( "Cn", "Cancer ");  
 			System.out.println("------------------------The fixed line: " + theFixedLine);
-			replacePerfectString=true;
 			NEWREPLACEDstring= theFixedLine;
 		}
 	}
