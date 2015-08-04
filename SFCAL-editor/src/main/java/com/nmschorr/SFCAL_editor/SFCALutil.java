@@ -44,12 +44,12 @@ public class SFCALutil {
 			if (currentLineInArray.length() > 0 )
 			{
 				StringUtils.chomp(currentLineInArray);
-				System.out.println("current line:"+currentLineInArray);
+				//System.out.println("current line:"+currentLineInArray);
 				checkCharString= checkForChar(currentLineInArray);
 				NEWREPLACEDstring = checkCharString;
 				replaceSigns(checkCharString);
 				
-				System.out.println("value of NEWREPLACEDstring is: "+ NEWREPLACEDstring);
+				//System.out.println("value of NEWREPLACEDstring is: "+ NEWREPLACEDstring);
 				
 
 				if (NEWREPLACEDstring.contains("Moon goes void")) {
@@ -113,7 +113,7 @@ public class SFCALutil {
 
 	static void checkForSigns(String origLine, String theVal, String theRep) {
 		String theFixedLine;
-	 	 System.out.println("inside checkForSigns checking val rep: "+theVal + theRep);		
+	 	 ///System.out.println("inside checkForSigns checking val rep: "+theVal + theRep);		
 		if (origLine.contains(theVal))  {
 			System.out.println("!!!---            ---FOUND sign CHAR -----!!!!  !!! /n"+origLine);
 			theFixedLine = origLine.replace( theVal, theRep);  
