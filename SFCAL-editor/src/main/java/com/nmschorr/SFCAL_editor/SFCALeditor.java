@@ -37,13 +37,13 @@ public class SFCALeditor extends SFCALutil {
 	static String MainIndirName = "E:\\sfcalfiles";
  	static String MainOutdirName = "C:\\tmp";
 	static String IndirVoidsName = MainIndirName +"\\vds";
- 	static String GLOBAL_TEMPOUTWDIR = MainOutdirName + "\\SFCALtemp1.ics";
+ 	static String GLOBAL_TEMPOUT_STRNAME;
  	static String GLOBAL_ORIG_FILE_NAME_WDIR;
 	final static String LINE_FEED = System.getProperty("line.separator");
 	static int totalLineCount = 0;
-	static int totInFileLines = 0;
+	static int totInFileLines;
 	static int currentCount = 0;
-	static int locLineCount=4;  // start at 5th line
+	static int locLineCount;  // start at 5th line
 	static int newListSizeMinus;
 	static boolean checkToss = false;
 	public static File filesDir;
@@ -53,9 +53,8 @@ public class SFCALeditor extends SFCALutil {
 	public static String GLOBAL_ORIG_FILE_NAME;
 	public static File GLOBAL_ORIG_FILE;
 	public 	static File GLOBAL_TEMP_FILE;
-	public 	static String GLOBAL_TEMP_FILE_NAME;
 	public 	static String GLOBAL_DATE_FILE_NAME_DIR;
-	
+ 	
 	
 	static int GLOBAL_VERBOSE=0;
 	 
@@ -63,9 +62,17 @@ public class SFCALeditor extends SFCALutil {
 		File filesDir = new File(IndirVoidsName);  //READ the list of files in sfcalfiles/vds dir
 		String[] arryOfInFiles = filesDir.list();	// create a list of names of those files	
 		out.println("	NEW LIST: " + filesDir.list());
+		int myCount=0;
+		
+		int arraysize = arryOfInFiles.length;
+	arraysize = 2;
 
-		for (String currentInfile : arryOfInFiles) {  
+		while (myCount < arraysize) {  
+			String currentInfile= arryOfInFiles[myCount];
+			   
+			out.println("-----------------------------------");
 			out.println("-----------------------------------filename is: " + currentInfile);
+			out.println("--------------######---------------------LOOP# " + myCount);
 
 			GLOBAL_ORIG_FILE_NAME = 	currentInfile;
 			GLOBAL_ORIG_FILE_NAME_WDIR = IndirVoidsName +"\\" + GLOBAL_ORIG_FILE_NAME;
@@ -75,28 +82,31 @@ public class SFCALeditor extends SFCALutil {
 			GLOBAL_DATE_FILE_NAME_DIR = MainOutdirName + "\\" + GLOBAL_DATE_FILE_NAME;
 			GLOBAL_DATE_FILE = new File(GLOBAL_DATE_FILE_NAME_DIR);
 			out.println("-----------------------------------datefilename is: " + GLOBAL_DATE_FILE_NAME_DIR);
-
-			GLOBAL_TEMP_FILE = new File(GLOBAL_TEMPOUTWDIR);
+			 
+			GLOBAL_TEMPOUT_STRNAME = MainOutdirName + "\\SFCALtmp" + System.currentTimeMillis() +".ics";
+			GLOBAL_TEMP_FILE = new File(GLOBAL_TEMPOUT_STRNAME);
 				
-			delFiles(GLOBAL_DATE_FILE);  // delete the inFileName we made last time
 			delFiles(GLOBAL_TEMP_FILE);  // delete the inFileName we made last time
-			generalStringFixing(GLOBAL_ORIG_FILE);
+			delFiles(GLOBAL_DATE_FILE);  // delete the inFileName we made last time
+			mySleep(2);
+			generalStringFixing(GLOBAL_TEMPOUT_STRNAME, GLOBAL_ORIG_FILE);
 			
-			sectionTask(GLOBAL_DATE_FILE);
+			sectionTask(GLOBAL_TEMP_FILE, GLOBAL_DATE_FILE);
+			FileUtils.waitFor(GLOBAL_DATE_FILE, 4);
 			
-			GLOBAL_ORIG_FILE = null;
 			GLOBAL_ORIG_FILE = null;
 			out.println("------------------NEW filename is: "+GLOBAL_DATE_FILE);
 			out.println("------------------End of Loop");
 		
 			
-			
+			myCount++;		
 		}
 			
 			
+		FileUtils.waitFor(GLOBAL_DATE_FILE, 4);
 			
 		System.out.println("Finished");
-		System.exit(0);
+		//System.exit(0);
 	}
 
 	static String make_new_file_date_name(String ORIG_INFILE_STR) {
@@ -125,12 +135,17 @@ public class SFCALeditor extends SFCALutil {
 	}
 	
 	
-	static void sectionTask(File theDATEFILE_WRTINGTO) {   // this part was done by perl script
+	static void sectionTask(File theREADING_FROM_TMP_FILE, File theDATEFILE_WRTINGTO) {   // this part was done by perl script
+		List<String> tinySectionList;
 		int tinyCounter =0;
+		totInFileLines=0;
+		newListSizeMinus=0;
+		locLineCount=4;  // start at 5th line
+
  
 		try {
-			tempFileList =  FileUtils.readLines(GLOBAL_TEMP_FILE);
-			totInFileLines = tempFileList.size() + 10;
+			tempFileList =  FileUtils.readLines(theREADING_FROM_TMP_FILE);
+			totInFileLines = tempFileList.size() + 9;
 			
 	System.out.println("!!! INSIDE sectiontask. total lines: " + totInFileLines +" " 
 	+ theDATEFILE_WRTINGTO.getName());
@@ -149,8 +164,9 @@ public class SFCALeditor extends SFCALutil {
 				// first load sections of 10x lines each into smaller arrarys
 				// then check each section for voids etc
 				// then correct
-			
-			List<String> tinySectionList = new ArrayList<String>();
+				
+			tinySectionList=null;
+			tinySectionList = new ArrayList<String>();
 				
 			  while (tinyCounter < 10) {         //tiny while
 				String theString = tempFileList.get(locLineCount);  //get one string
@@ -170,9 +186,9 @@ public class SFCALeditor extends SFCALutil {
 				} //  // while locLineCount
 			System.out.println("!!! INSIDE sectiontask. filename -------------------------"  
 					+ theDATEFILE_WRTINGTO.getName());
-			out.println("name out outfile" + theDATEFILE_WRTINGTO);
+			out.println("!!!###   name out outfile" + theDATEFILE_WRTINGTO);
 			FileUtils.writeStringToFile(theDATEFILE_WRTINGTO, "END:VCALENDAR"+LINE_FEED, true);	
-			mySleep(2);
+			mySleep(1);
 			FileUtils.waitFor(theDATEFILE_WRTINGTO, 4);
 			  
 	}  // try  

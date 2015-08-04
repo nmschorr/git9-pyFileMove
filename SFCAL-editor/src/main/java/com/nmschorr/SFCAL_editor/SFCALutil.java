@@ -19,13 +19,13 @@ import static com.nmschorr.SFCAL_editor.SFCALeditor.*;
 	
 public class SFCALutil {
   	static String CtmpDir="C:\\tmp";
- 	static String SFCALtempOneFilename = CtmpDir + "\\SFCALtemp1.ics";
+ 	//static String SFCALtempOneFilename = CtmpDir + "\\SFCALtemp1.ics";
 	final static String LINE_FEED = System.getProperty("line.separator");
 	static final String newfront = "DTEND:";
 	static String NEWREPLACEDstring;
 	static String perfectString;
 	
-	static void generalStringFixing(File localOriginalFile) {   
+	static void generalStringFixing(String SFCALtempOneFilename, File localOriginalFile) {   
 		String firstfront;
 		String newback;
 		String newComboStr;  
@@ -74,6 +74,8 @@ public class SFCALutil {
 				}
 			  }	
 			}
+			FileUtils.waitFor(SFCALtempONE, 4);
+
 		}
 		catch (IOException e)  { 
 			e.printStackTrace();	 
