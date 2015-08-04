@@ -21,6 +21,9 @@ public class SFCALutil {
 	static final int MAX_EVENTS=15;
 	static final String newfront = "DTEND:";
 	static File SFCALtempONE;
+	static String NEWREPLACEDstring;
+	static String perfectString;
+	static boolean replacePerfectString = false;
 	
 	static void generalStringFixing() {   
 		String firstfront;
@@ -33,7 +36,7 @@ public class SFCALutil {
 		try {
 			ORIGsfcalFILE = new File(OrigSFCALfileNm);
 			SFCALtempONE = new File(SFCALtempOneFilename);
-			//delFiles(tmpFileTwo);  // delete the inFileName we made last time
+			delFiles(SFCALtempONE);  // delete the inFileName we made last time
 			List<String> origSFCALarray =  FileUtils.readLines(ORIGsfcalFILE);
 			System.out.println("----------------------------------%%%%%%%##### total lines: " +  origSFCALarray.size());
 			// get ics header lines in 1st-first four header lines of ics inFileName
@@ -45,15 +48,18 @@ public class SFCALutil {
 				StringUtils.chomp(currentLineInArray);
 				System.out.println("current line:"+currentLineInArray);
 				checkCharString= checkForChar(currentLineInArray);
-				replacedSignString = replaceSigns(checkCharString);
-				System.out.println("value of replacedSignString is: "+ replacedSignString);
+				NEWREPLACEDstring = checkCharString;
+				replaceSigns(checkCharString);
+				
+				replacePerfectString = false;
+				System.out.println("value of NEWREPLACEDstring is: "+ NEWREPLACEDstring);
 				
 
-				if (replacedSignString.contains("Moon goes void")) {
+				if (NEWREPLACEDstring.contains("Moon goes void")) {
 					voidFixedString = "SUMMARY:Moon void of course";
 				}
 				else {
-					voidFixedString = replacedSignString;
+					voidFixedString = NEWREPLACEDstring;
 
 				}
 				FileUtils.writeStringToFile(SFCALtempONE, voidFixedString, true);	
@@ -76,7 +82,7 @@ public class SFCALutil {
 		}
 	}	
 	
-	static void delFiles(File f1) {
+	public static void delFiles(File f1) {
 		if ( f1.exists() ) {
 			f1.delete();  // delete the inFileName we made last time
 		}
@@ -108,35 +114,36 @@ public class SFCALutil {
 			}
 		}
 
-	static String checkForSigns(String origLine, String theVal, String theRep) {
+	static void checkForSigns(String origLine, String theVal, String theRep) {
 		String theFixedLine;
-	 	// System.out.println("inside checkForSigns"+ "/n" +checking val rep: "+theVal + theRep);		
+		replacePerfectString=false;
+	 	 System.out.println("inside checkForSigns checking val rep: "+theVal + theRep);		
 		if (origLine.contains(theVal))  {
 			System.out.println("!!!---            ---FOUND sign CHAR -----!!!!  !!! /n"+origLine);
-			theFixedLine = origLine.replace( theVal, theRep);  
-			//System.out.println("------------------------The fixed line: " + theFixedLine);
-			return theFixedLine;
-		} else {   return origLine;      }
+			//theFixedLine = origLine.replace( theVal, theRep);  
+			theFixedLine = origLine.replace( "Cn", "Cancer ");  
+			System.out.println("------------------------The fixed line: " + theFixedLine);
+			replacePerfectString=true;
+			NEWREPLACEDstring= theFixedLine;
+		}
 	}
 
 		
-		static String replaceSigns(String theInputStr) {
+		static void replaceSigns(String theInputStr) {
 			String returnString=null;
+			perfectString=null;
 		 	//System.out.println("inside replaceSigns");		
 			HashMap <String, String> theHashmap = makemyhash();
 
 			for (String key : theHashmap.keySet()) {
-				returnString=  checkForSigns(theInputStr, key, theHashmap.get(key));
+				checkForSigns(theInputStr, key, theHashmap.get(key));
 			}   
-			if ( !returnString.equals(null)) {
-				System.out.println("%%%%%%%%%5     %%%%%% returning this: " + returnString);
 			
-				return returnString;
-			}
-			else  {
-				System.out.println("!!!!!! aaaccck returning wrong value");
-				return theInputStr;
-			}
+			System.out.println("val of perfectString is: " + perfectString);
+						
+			 
+	 
+			 
 	}	
 	
 		static HashMap<String, String>  makemyhash() {

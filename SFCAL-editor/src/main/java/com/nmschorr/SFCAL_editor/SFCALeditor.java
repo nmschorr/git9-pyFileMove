@@ -53,15 +53,15 @@ public class SFCALeditor extends SFCALutil {
 	static boolean checkToss = false;
 	
 	public static void main(String[] args) {
-		OutFileNmFinal = makeFileName();
-	 	myOutFileOne = new File(OutFileNmFinal);
+		makeNewFinalFileWDate();
+	 	
 		generalStringFixing();
 		sectionTask();
 		System.out.println("Finished");
 		System.exit(0);
 	}
 
-	static String makeFileName() {
+	static void makeNewFinalFileWDate() {
 		String LocalDateNm=null;
 		
 		try {
@@ -71,11 +71,12 @@ public class SFCALeditor extends SFCALutil {
 		System.out.println("new date string is: "+ newDate);
 		LocalDateNm = OutFileNmTmp  + newDate + ".ics";
 		System.out.println("new LocalDateNm string is: "+ LocalDateNm);
+	 	myOutFileOne = new File(LocalDateNm);
+		delFiles(myOutFileOne);  // delete the inFileName we made last time
 
 		} catch (IOException e) { 
 			e.printStackTrace();	
 		}	// catch
-		return LocalDateNm;
 	}
 	
 	
