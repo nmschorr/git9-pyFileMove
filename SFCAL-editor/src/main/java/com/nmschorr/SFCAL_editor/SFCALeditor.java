@@ -55,23 +55,26 @@ public class SFCALeditor extends SFCALutil {
 	public 	static File GLOBAL_TEMP_FILE;
 	public 	static String GLOBAL_TEMP_FILE_NAME;
 	public 	static String GLOBAL_DATE_FILE_NAME_DIR;
+	
+	
+	static int GLOBAL_VERBOSE=0;
 	 
 	public static void main(String[] args) {
-
 		File filesDir = new File(IndirVoidsName);  //READ the list of files in sfcalfiles/vds dir
-		String[] myFileArray = filesDir.list();	// create a list of names of those files	
+		String[] arryOfInFiles = filesDir.list();	// create a list of names of those files	
+		out.println("	NEW LIST: " + filesDir.list());
 
-		for (String sfcalOrigName : myFileArray) {  
-			out.println("filename is: " + sfcalOrigName);
+		for (String currentInfile : arryOfInFiles) {  
+			out.println("-----------------------------------filename is: " + currentInfile);
 
-			GLOBAL_ORIG_FILE_NAME = 	sfcalOrigName;
+			GLOBAL_ORIG_FILE_NAME = 	currentInfile;
 			GLOBAL_ORIG_FILE_NAME_WDIR = IndirVoidsName +"\\" + GLOBAL_ORIG_FILE_NAME;
 			GLOBAL_ORIG_FILE = new File(GLOBAL_ORIG_FILE_NAME_WDIR);
-	
-			
-			GLOBAL_DATE_FILE_NAME = make_new_file_date_name(sfcalOrigName);
+				
+			GLOBAL_DATE_FILE_NAME = make_new_file_date_name(currentInfile);
 			GLOBAL_DATE_FILE_NAME_DIR = MainOutdirName + "\\" + GLOBAL_DATE_FILE_NAME;
 			GLOBAL_DATE_FILE = new File(GLOBAL_DATE_FILE_NAME_DIR);
+			out.println("-----------------------------------datefilename is: " + GLOBAL_DATE_FILE_NAME_DIR);
 
 			GLOBAL_TEMP_FILE = new File(GLOBAL_TEMPOUTWDIR);
 				
@@ -80,6 +83,14 @@ public class SFCALeditor extends SFCALutil {
 			generalStringFixing(GLOBAL_ORIG_FILE);
 			
 			sectionTask(GLOBAL_DATE_FILE);
+			
+			GLOBAL_ORIG_FILE = null;
+			GLOBAL_ORIG_FILE = null;
+			out.println("------------------NEW filename is: "+GLOBAL_DATE_FILE);
+			out.println("------------------End of Loop");
+		
+			
+			
 		}
 			
 			
@@ -96,9 +107,9 @@ public class SFCALeditor extends SFCALutil {
 			dateStringFileList =  FileUtils.readLines(GLOBAL_ORIG_FILE);
 			String newDateString=dateStringFileList.get(5);
 			String newDateStr = newDateString.substring(8, 16);
-			System.out.println("new date string is: "+ newDateStr);
+			verboseOut("new date string is: "+ newDateStr);
 			LocalDateNmStr = ORIG_INFILE_STR + "." + newDateStr + ".ics";
-			System.out.println("new LocalDateNmStr string is: "+ LocalDateNmStr);
+			verboseOut("new LocalDateNmStr string is: "+ LocalDateNmStr);
 
 		} catch (IOException e) { 
 			e.printStackTrace();	
@@ -107,20 +118,25 @@ public class SFCALeditor extends SFCALutil {
 		return LocalDateNmStr; 
 	}
 	
+	public static void verboseOut(String theoutline) {
+		if (GLOBAL_VERBOSE==1) {
+			out.println(theoutline);
+		}
+	}
 	
 	
-	
-	static void sectionTask(File date_infile) {   // this part was done by perl script
+	static void sectionTask(File theDATEFILE_WRTINGTO) {   // this part was done by perl script
 		int tinyCounter =0;
-
+ 
 		try {
 			tempFileList =  FileUtils.readLines(GLOBAL_TEMP_FILE);
 			totInFileLines = tempFileList.size() + 10;
 			
-			System.out.println("total lines: " + totInFileLines);
+	System.out.println("!!! INSIDE sectiontask. total lines: " + totInFileLines +" " 
+	+ theDATEFILE_WRTINGTO.getName());
 			// get ics header lines in 1st-first four header lines of ics inFileName
 			for (int i = 0; i < 4; i++)	{
-				FileUtils.writeStringToFile(date_infile, tempFileList.get(i)+LINE_FEED, true);		
+				FileUtils.writeStringToFile(theDATEFILE_WRTINGTO, tempFileList.get(i)+LINE_FEED, true);		
 			}
 			newListSizeMinus = tempFileList.size()-1;
 			
@@ -147,11 +163,17 @@ public class SFCALeditor extends SFCALutil {
 				checkToss = checkForTossouts(tinySectionList);	 
 				
 				if (checkToss) {
-					FileUtils.writeLines(date_infile, tinySectionList, true);	
+					FileUtils.writeLines(theDATEFILE_WRTINGTO, tinySectionList, true);	
+					FileUtils.waitFor(theDATEFILE_WRTINGTO,2);
 				}
 					
 				} //  // while locLineCount
-			FileUtils.writeStringToFile(date_infile, "END:VCALENDAR"+LINE_FEED, true);	
+			System.out.println("!!! INSIDE sectiontask. filename -------------------------"  
+					+ theDATEFILE_WRTINGTO.getName());
+			out.println("name out outfile" + theDATEFILE_WRTINGTO);
+			FileUtils.writeStringToFile(theDATEFILE_WRTINGTO, "END:VCALENDAR"+LINE_FEED, true);	
+			mySleep(2);
+			FileUtils.waitFor(theDATEFILE_WRTINGTO, 4);
 			  
 	}  // try  
 	catch (IOException e) { 
@@ -164,12 +186,12 @@ public class SFCALeditor extends SFCALutil {
 			 if ( sumLine.contains("void of") || sumLine.contains("SUMMARY:Full") || 
 					 sumLine.contains("SUMMARY:New Moon") )     // we are removing the quarters
 					{
-						//System.out.println ("==========    ===== !!!!! FOUND a non quarter!");
-						//System.out.println ("========== writing: "+ sumLine);		
+						//verboseOut ("==========    ===== !!!!! FOUND a non quarter!");
+						//verboseOut ("========== writing: "+ sumLine);		
 						return true;
 					}
 					else  {
-						//System.out.println("not writing this line:  " + sumLine);
+						//verboseOut("not writing this line:  " + sumLine);
 						return false;
 					}
 		}			

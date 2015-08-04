@@ -7,6 +7,7 @@ import java.util.*;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import static com.nmschorr.SFCAL_editor.SFCALeditor.*;
 
 //static String MainInDirNm="E:\\sfcalfiles";
 //public static File DATE_OUTFILE;
@@ -44,12 +45,12 @@ public class SFCALutil {
 			if (currentLineInArray.length() > 0 )
 			{
 				StringUtils.chomp(currentLineInArray);
-				//System.out.println("current line:"+currentLineInArray);
+				verboseOut("current line:"+currentLineInArray);
 				checkCharString= checkForChar(currentLineInArray);
 				NEWREPLACEDstring = checkCharString;
 				replaceSigns(checkCharString);
 				
-				//System.out.println("value of NEWREPLACEDstring is: "+ NEWREPLACEDstring);
+				verboseOut("value of NEWREPLACEDstring is: "+ NEWREPLACEDstring);
 				
 
 				if (NEWREPLACEDstring.contains("Moon goes void")) {
@@ -66,9 +67,9 @@ public class SFCALutil {
 
 				if ( firstfront.equals("DTSTAR") )   {  					
 					newback = voidFixedString.substring(8,23) + "Z";
-					//System.out.println("!!@@@@@  the line is  " + voidFixedString);
+					verboseOut("!!@@@@@  the line is  " + voidFixedString);
 					newComboStr = newfront + newback +"\n";  					
-					//System.out.println("DTEND: new line is " + newComboStr);
+					verboseOut("DTEND: new line is " + newComboStr);
 					FileUtils.writeStringToFile(SFCALtempONE, newComboStr, true);	
 				}
 			  }	
@@ -113,7 +114,7 @@ public class SFCALutil {
 
 	static void checkForSigns(String origLine, String theVal, String theRep) {
 		String theFixedLine;
-	 	 ///System.out.println("inside checkForSigns checking val rep: "+theVal + theRep);		
+		verboseOut("inside checkForSigns checking val rep: "+theVal + theRep);		
 		if (origLine.contains(theVal))  {
 			System.out.println("!!!---            ---FOUND sign CHAR -----!!!!  !!! /n"+origLine);
 			theFixedLine = origLine.replace( theVal, theRep);  
@@ -127,14 +128,14 @@ public class SFCALutil {
 		static void replaceSigns(String theInputStr) {
 			String returnString=null;
 			perfectString=null;
-		 	//System.out.println("inside replaceSigns");		
+			verboseOut("inside replaceSigns");		
 			HashMap <String, String> theHashmap = makemyhash();
 
 			for (String key : theHashmap.keySet()) {
 				checkForSigns(theInputStr, key, theHashmap.get(key));
 			}   
 			
-			System.out.println("val of perfectString is: " + perfectString);
+			verboseOut("val of perfectString is: " + perfectString);
 						
 			 
 	 
