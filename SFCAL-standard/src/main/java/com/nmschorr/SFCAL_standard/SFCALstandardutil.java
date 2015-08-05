@@ -59,7 +59,7 @@ public class SFCALstandardutil {
 				
 				FileUtils.writeStringToFile(SFCALtempONE, voidFixedString, true);	
 				FileUtils.writeStringToFile(SFCALtempONE,"\n", true);	 
-		
+		//
 				firstfront = voidFixedString.substring(0,6);
 
 				if ( firstfront.equals("DTSTAR") )   {  					
