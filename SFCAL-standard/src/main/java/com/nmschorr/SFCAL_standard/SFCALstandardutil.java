@@ -86,9 +86,9 @@ public class SFCALstandardutil {
 		myHashmap.put("Gem", "Cancer ");
 		myHashmap.put("Can", "Cancer ");
 		myHashmap.put("Vir", "Cancer ");
-		myHashmap.put("Can", "Cancer ");
-		myHashmap.put("Can", "Cancer ");
-		myHashmap.put("Can", "Cancer ");
+		myHashmap.put("Lib", "Cancer ");
+		myHashmap.put("Sco", "Cancer ");
+		myHashmap.put("Sag", "Cancer ");
 	
 	
 	
