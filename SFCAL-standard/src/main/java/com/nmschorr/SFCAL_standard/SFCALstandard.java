@@ -34,9 +34,8 @@ public class SFCALstandard extends SFCALstandardutil {
 	static List<String> tempFileList = new ArrayList<String>();
 	static List<String> dateStringFileList = new ArrayList<String>();
 	static int eventcount = 0;		 
-	static String MainIndirName = "E:\\sfcalfiles";
+	static String MainIndirName = "E:\\sfcalfiles\\standard";
  	static String MainOutdirName = "C:\\SFCALOUT\\standard";
-	static String IndirVoidsName = MainIndirName +"\\standard";
  	static String G_TEMPOUT_STRNAME;
  	static String G_ORIG_FILE_NAME_WDIR;
 	final static String LINE_FEED = System.getProperty("line.separator");
@@ -59,13 +58,14 @@ public class SFCALstandard extends SFCALstandardutil {
 	static int G_VERBOSE=0;
 	 
 	public static void main(String[] args) {
-		File filesDir = new File(IndirVoidsName);  //READ the list of files in sfcalfiles/vds dir
+		File filesDir = new File(MainIndirName);  //READ the list of files in sfcalfiles/vds dir
 		String[] arryOfInFiles = filesDir.list();	// create a list of names of those files	
 		out.println("	NEW LIST: " + filesDir.list());
 		int myCount=0;
 		
-		int arraysize = arryOfInFiles.length;
-	arraysize = 2;
+		//int arraysize = arryOfInFiles.length;
+		//arraysize = 2;
+		int arraysize = 2;
 
 		while (myCount < arraysize) {  
 			String currentInfile= arryOfInFiles[myCount];
@@ -75,7 +75,7 @@ public class SFCALstandard extends SFCALstandardutil {
 			out.println("--------------######---------------------LOOP# " + myCount);
 
 			G_ORIG_FILE_NAME = 	currentInfile;
-			G_ORIG_FILE_NAME_WDIR = IndirVoidsName +"\\" + G_ORIG_FILE_NAME;
+			G_ORIG_FILE_NAME_WDIR = MainIndirName +"\\" + G_ORIG_FILE_NAME;
 			G_ORIG_FILE = new File(G_ORIG_FILE_NAME_WDIR);
 				
 			G_DATE_FILE_NAME = make_new_file_date_name(currentInfile);
@@ -154,8 +154,10 @@ public class SFCALstandard extends SFCALstandardutil {
 				FileUtils.writeStringToFile(theDATEFILE_WRTINGTO, tempFileList.get(i)+LINE_FEED, true);		
 			}
 			newListSizeMinus = tempFileList.size()-1;
+			out.println("array size is: " +tempFileList.size() );
 			
-			while ( locLineCount < newListSizeMinus )  
+			//while ( locLineCount < tempFileList.size() )  
+	while ( locLineCount < 1500 )  
 			{  // while locLineCount
 				//  while there are still lines left in array
 			  // starting on 5th line, load
