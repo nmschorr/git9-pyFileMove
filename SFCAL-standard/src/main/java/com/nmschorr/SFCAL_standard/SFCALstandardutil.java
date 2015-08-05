@@ -38,29 +38,25 @@ public class SFCALstandardutil {
 				StringUtils.chomp(currentLineInArray);
 				verboseOut("current line:"+currentLineInArray);
 				
-				checkCharString= checkForChar(currentLineInArray);
+				checkCharString= checkForChar(currentLineInArray);  // checks for degree char
 				NEWREPLACEDstring = checkCharString;
 				
-				replaceSigns(checkCharString);
+				//replaceSigns(checkCharString);
 				
 				verboseOut("value of NEWREPLACEDstring is: "+ NEWREPLACEDstring);
 				
 
-				if (NEWREPLACEDstring.contains("Moon goes void")) {
-					voidFixedString = "SUMMARY:Moon void of course";
-				}
-				else {
-					voidFixedString = NEWREPLACEDstring;
-
-				}
+//				if (NEWREPLACEDstring.contains("Moon goes void")) {
+//					voidFixedString = "SUMMARY:Moon void of course";
+//				}
+//				else {
+//					voidFixedString = NEWREPLACEDstring;   }
+				voidFixedString=	NEWREPLACEDstring;	
 				
-				currentLineInArray.replaceAll("Gem ", "Gemini ");
-				
-				HashMap<String, String> newh = makeNewhash();
-				
-				for (String key : newh.keySet()) {
-					currentLineInArray.replaceAll(key, newh.get(key));
-				}   
+		HashMap<String, String> newh = makeNewhash();
+		for (String key : newh.keySet()) {
+			currentLineInArray.replaceAll(key, newh.get(key));
+		}   
 				
 				FileUtils.writeStringToFile(SFCALtempONE, voidFixedString, true);	
 				FileUtils.writeStringToFile(SFCALtempONE,"\n", true);	 
@@ -86,14 +82,23 @@ public class SFCALstandardutil {
 	
 	static HashMap<String, String>  makeNewhash() {
 		HashMap <String, String> myHashmap = new HashMap<String, String>();
-		myHashmap.put("Ari", "Aries");
-		myHashmap.put("Tau", "Taurus");
-		myHashmap.put("Gem", "Gemini");
-		myHashmap.put("Can", "Cancer");
-		myHashmap.put("Vir", "Virgo");
-		myHashmap.put("Lib", "Libra");
-		myHashmap.put("Sco", "Scorpio");
-		myHashmap.put("Sag", "Sagittarius");
+		myHashmap.put("Ari ", "Aries ");
+		myHashmap.put("Tau ", "Taurus ");
+		myHashmap.put("Gem ", "Gemini ");
+		myHashmap.put("Can ", "Cancer ");
+		myHashmap.put("Vir ", "Virgo ");
+		myHashmap.put("Lib ", "Libra ");
+		myHashmap.put("Sco ", "Scorpio ");
+		myHashmap.put("Sag ", "Sagittarius ");
+		myHashmap.put("Mon ", "Moon ");
+		myHashmap.put("Mer ", "Mercury ");
+		myHashmap.put("Ven ", "Venus ");
+		myHashmap.put("Mar ", "Mars ");
+		myHashmap.put("Jup ", "Jupiter ");
+		myHashmap.put("Sat ", "Saturn ");
+		myHashmap.put("Ura ", "Uranus ");
+		myHashmap.put("Nep ", "Neptune ");
+		myHashmap.put("Plu ", "Pluto ");
 		return myHashmap;
 	}
 	
