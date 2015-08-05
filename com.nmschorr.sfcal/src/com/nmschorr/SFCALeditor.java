@@ -45,6 +45,7 @@ public class SFCALeditor extends SFCALutil {
 	static final int MAX_EVENTS=15;
 	static int totalLineCount = 0;
 	static int totInFileLines = 0;
+<<<<<<< HEAD
 	static int currentCount = 0;
 	static int locLineCount=4;  // start at 5th line
 	static int newListSizeMinus;
@@ -63,11 +64,133 @@ public class SFCALeditor extends SFCALutil {
 			tempFileList =  FileUtils.readLines(tempFile1);
 			totInFileLines = tempFileList.size() + 10;
 			
+=======
+	static File myTempOut;  // the inFileName we're reading from
+	
+	public static void main(String[] args) {
+		myTempOut = new File(tempOutName1);  // the inFileName we're reading from
+		myTempOut.delete();  // delete the inFileName we made last time
+		myOutFile.delete();  // delete the inFileName we made last time
+		newplMimic();
+		fileSetup();
+		mainPart();
+	
+		
+		System.out.println("Finished");
+		System.exit(0);
+	}
+ 
+	/**
+	 * 
+	 */
+	protected static void mySleep(int timewait) {
+		try {
+			Thread.sleep(timewait * 1000);	//sleep is in milliseconds
+		} catch (Exception e) {
+			System.out.println(e);
+		} 
+	} 
+
+
+	static void mainPart() {
+		try {
+			while (eventcount < MAX_EVENTS) {
+				
+			  while (totalLineCount < totInFileLines) {
+				  
+				System.out.println("--------     !!!   !!!    !! starting over main loop");
+				List<String>  eventSectionLNs= new ArrayList<String>();
+				
+					// do this for the 10 lines of each section
+				for (int minorSectionCt=0; minorSectionCt<10; minorSectionCt++) 
+				{  					
+					eventSectionLNs.add(getNextLine(eventcount, minorSectionCt));
+					totalLineCount++;
+					System.out.println("    CURRENT total Line count is: " +totalLineCount );
+				}
+				
+				String summaryLine = eventSectionLNs.get(6);
+				System.out.println("--@@@@____@@@__@@@   the 6th line is" + summaryLine);
+				if ( !summaryLine.contains("Quarter")  )     // we are removing the quarters
+				{
+					System.out.println ("==========    ===== !!!!! FOUND a non quarter!");
+					FileUtils.writeLines(myOutFile, eventSectionLNs, true);	
+				}
+			  }
+				eventcount++;
+			}  // while
+			 
+			FileUtils.writeStringToFile(myOutFile, "END:VCALENDAR"+LINE_FEED, true);	
+	
+		}    
+		catch (IOException e) { e.printStackTrace();	}
+		 
+		mySleep(1);	
+		
+		//File cpath = new File("C:\\tmp");
+		try {
+		//FileUtils.copyFileToDirectory(myOutFile, cpath);
+		} catch (Exception e) {
+			System.out.println(e);
+		} 
+	}
+	  
+	
+	static void newplMimic() {   
+		try {
+			String firstfront;
+			String newback;
+			String newComboStr;  
+			String newfront = "DTEND:";
+				
+			File myTempIn = new File(InFileName);  // the inFileName we're reading from
+			mySleep(1);
+			//FileUtils.waitFor(myTempOut,2);
+			List<String> newplList =  FileUtils.readLines(myTempIn);
+			int newplListInt = newplList.size() + 10;
+			System.out.println("total lines: " + newplListInt);
+			// get ics header lines in 1st-first four header lines of ics inFileName
+
+			// for each line in file:
+			for (String mylinenow : newplList)  {
+			if (mylinenow.length() > 0 )
+			{
+				StringUtils.chomp(mylinenow);
+				if (mylinenow.contains("Moon goes void")) {
+					mylinenow = "SUMMARY:Moon void of course";
+				}
+						
+				FileUtils.writeStringToFile(myTempOut, mylinenow, true);	
+				FileUtils.writeStringToFile(myTempOut,"\n", true);	 
+		
+				firstfront = mylinenow.substring(0,6);
+
+				if ( firstfront.equals("DTSTAR") )   {  					
+					newback = mylinenow.substring(8,23) + "Z";
+					System.out.println("!!@@@@@  the line is  " + mylinenow);
+					newComboStr = newfront + newback +"\n";  					
+					System.out.println("DTEND: new line is " + newComboStr);
+					FileUtils.writeStringToFile(myTempOut, newComboStr, true);	
+				}
+			  }	
+			}
+		}
+		catch (IOException e)  { 
+			e.printStackTrace();	 
+		}
+	}	
+
+	static void fileSetup() {
+		try {
+			memoryList =  FileUtils.readLines(myTempOut);
+			totInFileLines = memoryList.size() + 10;
+>>>>>>> ab83110d95af5d015a3028aca21e0dafd3e4bcc2
 			System.out.println("total lines: " + totInFileLines);
 			// get ics header lines in 1st-first four header lines of ics inFileName
 			for (int i = 0; i < 4; i++)	{
 				FileUtils.writeStringToFile(myOutFile1, tempFileList.get(i)+LINE_FEED, true);		
 			}
+<<<<<<< HEAD
 			newListSizeMinus = tempFileList.size()-1;
 			
 			while ( locLineCount < newListSizeMinus )  
@@ -114,6 +237,13 @@ public class SFCALeditor extends SFCALutil {
 }  // class
 
 	/* 
+=======
+		}    catch (IOException e) { e.printStackTrace();	} 
+	} 
+
+	/**
+	 * 
+>>>>>>> ab83110d95af5d015a3028aca21e0dafd3e4bcc2
 	 * @param loopLocationCount The loop counter
 	 * @param minorLocation The minor location
 	 * @return Returns newString
