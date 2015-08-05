@@ -54,8 +54,13 @@ public class SFCALstandardutil {
 
 				}
 				
-				 
+				currentLineInArray.replaceAll("Gem ", "Gemini ");
 				
+				HashMap<String, String> newh = makeNewhash();
+				
+				for (String key : newh.keySet()) {
+					currentLineInArray.replaceAll(key, newh.get(key));
+				}   
 				
 				FileUtils.writeStringToFile(SFCALtempONE, voidFixedString, true);	
 				FileUtils.writeStringToFile(SFCALtempONE,"\n", true);	 
@@ -81,15 +86,16 @@ public class SFCALstandardutil {
 	
 	static HashMap<String, String>  makeNewhash() {
 		HashMap <String, String> myHashmap = new HashMap<String, String>();
-		myHashmap.put("Ari", "Cancer ");
-		myHashmap.put("Tau", "Cancer ");
-		myHashmap.put("Gem", "Cancer ");
-		myHashmap.put("Can", "Cancer ");
-		myHashmap.put("Vir", "Cancer ");
-		myHashmap.put("Lib", "Cancer ");
-		myHashmap.put("Sco", "Cancer ");
-		myHashmap.put("Sag", "Cancer ");
-	
+		myHashmap.put("Ari", "Aries");
+		myHashmap.put("Tau", "Taurus");
+		myHashmap.put("Gem", "Gemini");
+		myHashmap.put("Can", "Cancer");
+		myHashmap.put("Vir", "Virgo");
+		myHashmap.put("Lib", "Libra");
+		myHashmap.put("Sco", "Scorpio");
+		myHashmap.put("Sag", "Sagittarius");
+		return myHashmap;
+	}
 	
 	
 	public static void delFiles(File f1) {
