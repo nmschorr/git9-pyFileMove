@@ -39,9 +39,12 @@ public class SFCALstandardutil {
 				verboseOut("current line:"+currentLineInArray);
 				
 				checkCharString= checkForChar(currentLineInArray);
-				NEWREPLACEDstring = checkCharString;
 				
-				replaceSigns(checkCharString);
+				Map<String, String> myHASHMAP = makeNewhash();
+				for (String key : myHASHMAP.keySet()) {
+					checkCharString.replaceAll(key, myHASHMAP.get(key));
+				}   
+				
 				
 				verboseOut("value of NEWREPLACEDstring is: "+ NEWREPLACEDstring);
 				
@@ -80,16 +83,17 @@ public class SFCALstandardutil {
 	}	
 	
 	static HashMap<String, String>  makeNewhash() {
-		HashMap <String, String> myHashmap = new HashMap<String, String>();
-		myHashmap.put("Ari", "Cancer ");
-		myHashmap.put("Tau", "Cancer ");
-		myHashmap.put("Gem", "Cancer ");
-		myHashmap.put("Can", "Cancer ");
-		myHashmap.put("Vir", "Cancer ");
-		myHashmap.put("Lib", "Cancer ");
-		myHashmap.put("Sco", "Cancer ");
-		myHashmap.put("Sag", "Cancer ");
-	
+		HashMap <String, String> localHash = new HashMap<String, String>();
+		localHash.put("Ari", "Aries");
+		localHash.put("Tau", "Taurus");
+		localHash.put("Gem", "Gemini");
+		localHash.put("Can", "Cancer");
+		localHash.put("Vir", "Virgo");
+		localHash.put("Lib", "Libra");
+		localHash.put("Sco", "Scropio");
+		localHash.put("Sag", "Sagittarius");
+	return localHash;
+	}
 	
 	
 	public static void delFiles(File f1) {
