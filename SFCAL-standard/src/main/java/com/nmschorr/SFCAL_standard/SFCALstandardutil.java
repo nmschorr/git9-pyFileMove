@@ -46,28 +46,17 @@ public class SFCALstandardutil {
 				}   
 				
 				
-				verboseOut("value of NEWREPLACEDstring is: "+ NEWREPLACEDstring);
-				
-
-				if (NEWREPLACEDstring.contains("Moon goes void")) {
-					voidFixedString = "SUMMARY:Moon void of course";
-				}
-				else {
-					voidFixedString = NEWREPLACEDstring;
-
-				}
-				
-				 
+				verboseOut("value of checkCharString is: "+ checkCharString);
 				
 				
-				FileUtils.writeStringToFile(SFCALtempONE, voidFixedString, true);	
+				FileUtils.writeStringToFile(SFCALtempONE, checkCharString, true);	
 				FileUtils.writeStringToFile(SFCALtempONE,"\n", true);	 
 		//
-				firstfront = voidFixedString.substring(0,6);
+				firstfront = checkCharString.substring(0,6);
 
 				if ( firstfront.equals("DTSTAR") )   {  					
-					newback = voidFixedString.substring(8,23) + "Z";
-					verboseOut("!!@@@@@  the line is  " + voidFixedString);
+					newback = checkCharString.substring(8,23) + "Z";
+					verboseOut("!!@@@@@  the line is  " + checkCharString);
 					newComboStr = newfront + newback +"\n";  					
 					verboseOut("DTEND: new line is " + newComboStr);
 					FileUtils.writeStringToFile(SFCALtempONE, newComboStr, true);	
