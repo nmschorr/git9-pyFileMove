@@ -30,15 +30,24 @@ public class SFCALstandardutil {
 			File SFCALtempONE = new File(SFCALtempOneFilename);
 
 			List<String> origSFCALarray =  FileUtils.readLines(localOriginalFile);
+			
+			
+			int realCOUNT = origSFCALarray.size();
+			int safeCount=realCOUNT-5;
+			int keepcount=1;
+			System.out.println("safecount:  " +  safeCount);
+			
 			System.out.println("----------------------------------%%%%%%%##### total lines: " +  origSFCALarray.size());
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
 			// for each line in file:
 			for (String cLINE : origSFCALarray)  {
 				
-			if   (cLINE.length() > 0 )   {
+				
+			//	if   ((cLINE.length() > 0 ) && (keepcount < safeCount) )   {
+		if   ((cLINE.length() > 0 ) && (keepcount < 1500) )   {
 				 keepGoing = 1;
-			}
+			} else { keepGoing=0; }
 					
 			if ( ( cLINE.contains("TRANSPARENT")) ||
 			      ( cLINE.contains("DTEND")) || 
@@ -52,7 +61,8 @@ public class SFCALstandardutil {
 					G_VERBOSE=1;
 			
 			if (keepGoing ==1 ) {
-		 
+				System.out.println("realcount:  " + realCOUNT);
+	 
 				StringUtils.chomp(cLINE);
 
 				verboseOut("current line:"+cLINE);
@@ -67,7 +77,7 @@ public class SFCALstandardutil {
 				checkCharString=newSTR;
 			
 				verboseOut("value of checkCharString is: "+ checkCharString);
-				G_VERBOSE=0;
+				G_VERBOSE=0; 
 			
 				
 				FileUtils.writeStringToFile(SFCALtempONE, checkCharString, true);	
@@ -82,6 +92,7 @@ public class SFCALstandardutil {
 					verboseOut("DTEND: new line is " + newComboStr);
 					FileUtils.writeStringToFile(SFCALtempONE, newComboStr, true);	
 				}
+				keepcount++;
 			  }	
 			}  // for
 			FileUtils.waitFor(SFCALtempONE, 4);
