@@ -30,10 +30,7 @@
 		<version>2.18.1</version>
 		<type>maven-plugin</type>
 	</dependency>
-
-
-
-    <dependency>
+  <dependency>
         <groupId>net.java.dev.jna</groupId>
         <artifactId>jna</artifactId>
         <version>3.5.1</version>
