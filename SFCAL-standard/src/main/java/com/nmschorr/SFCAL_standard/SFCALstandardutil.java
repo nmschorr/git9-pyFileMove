@@ -25,6 +25,7 @@ public class SFCALstandardutil {
 		String voidFixedString;
 
 		try {
+			Map<String, String> myHASHMAP = makeNewhash();
 			File SFCALtempONE = new File(SFCALtempOneFilename);
 
 			List<String> origSFCALarray =  FileUtils.readLines(localOriginalFile);
@@ -39,9 +40,10 @@ public class SFCALstandardutil {
 				verboseOut("current line:"+currentLineInArray);
 				
 				checkCharString= checkForChar(currentLineInArray);
-				
-				Map<String, String> myHASHMAP = makeNewhash();
+				System.out.println("char string is " + checkCharString);
+			
 				for (String key : myHASHMAP.keySet()) {
+				//	System.out.println("key is: " + key + "  key set is: " +myHASHMAP.get(key));
 					checkCharString.replaceAll(key, myHASHMAP.get(key));
 				}   
 				
