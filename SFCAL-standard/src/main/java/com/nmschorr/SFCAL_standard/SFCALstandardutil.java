@@ -23,6 +23,7 @@ public class SFCALstandardutil {
 		String checkCharString;
 		String replacedSignString;
 		String voidFixedString;
+		int keepGoing=1;
 
 		try {
 			Map<String, String> myHASHMAP = makeNewhash();
@@ -33,23 +34,41 @@ public class SFCALstandardutil {
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
 			// for each line in file:
-			for (String currentLineInArray : origSFCALarray)  {
-			if (currentLineInArray.length() > 0 )
-			{
-				StringUtils.chomp(currentLineInArray);
-				verboseOut("current line:"+currentLineInArray);
+			for (String cLINE : origSFCALarray)  {
 				
-				checkCharString= checkForChar(currentLineInArray);
-				System.out.println("char string is " + checkCharString);
+			if   (cLINE.length() > 0 )   {
+				 keepGoing = 1;
+			}
+					
+			if ( ( cLINE.contains("TRANSPARENT")) ||
+			      ( cLINE.contains("DTEND")) || 
+			      ( cLINE.contains("VEVENT")) || ( cLINE.contains("UID")) 
+			      || ( cLINE.contains("CATEGORIES")) || ( cLINE.contains("DTSTAMP")) 
+					)
+				{
+				keepGoing=0;
+				}
+				
+					G_VERBOSE=1;
 			
+			if (keepGoing ==1 ) {
+		 
+				StringUtils.chomp(cLINE);
+
+				verboseOut("current line:"+cLINE);
+				
+				checkCharString= checkForChar(cLINE);
+				System.out.println("char string is " + checkCharString);
+			String newSTR=null;
 				for (String key : myHASHMAP.keySet()) {
 				//	System.out.println("key is: " + key + "  key set is: " +myHASHMAP.get(key));
-					checkCharString.replaceAll(key, myHASHMAP.get(key));
+					newSTR=checkCharString.replaceAll(key, myHASHMAP.get(key));
 				}   
-				
-				
+				checkCharString=newSTR;
+			
 				verboseOut("value of checkCharString is: "+ checkCharString);
-				
+				G_VERBOSE=0;
+			
 				
 				FileUtils.writeStringToFile(SFCALtempONE, checkCharString, true);	
 				FileUtils.writeStringToFile(SFCALtempONE,"\n", true);	 
@@ -64,7 +83,7 @@ public class SFCALstandardutil {
 					FileUtils.writeStringToFile(SFCALtempONE, newComboStr, true);	
 				}
 			  }	
-			}
+			}  // for
 			FileUtils.waitFor(SFCALtempONE, 4);
 
 		}
