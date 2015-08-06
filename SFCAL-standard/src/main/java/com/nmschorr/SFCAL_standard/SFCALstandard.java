@@ -72,7 +72,7 @@ public class SFCALstandard extends SFCALstandardutil {
 			   
 			out.println("-----------------------------------");
 			out.println("-----------------------------------filename is: " + currentInfile);
-			out.println("--------------######---------------------LOOP# " + myCount);
+			out.println("--------------######---------------------LOOP# " + myCount+1);
 
 			G_ORIG_FILE_NAME = 	currentInfile;
 			G_ORIG_FILE_NAME_WDIR = IndirVoidsName +"\\" + G_ORIG_FILE_NAME;
@@ -89,7 +89,7 @@ public class SFCALstandard extends SFCALstandardutil {
 			delFiles(G_TEMP_FILE);  // delete the inFileName we made last time
 			delFiles(G_DATE_FILE);  // delete the inFileName we made last time
 			 mySleep(2);
-			generalStringFixing(G_TEMPOUT_STRNAME, G_ORIG_FILE);
+			generalStringFixing(G_TEMPOUT_STRNAME, G_ORIG_FILE_NAME_WDIR);
 			
 			sectionTask(G_TEMP_FILE, G_DATE_FILE);
 			FileUtils.waitFor(G_DATE_FILE, 4);
