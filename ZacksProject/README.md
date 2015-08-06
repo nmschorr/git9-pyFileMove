@@ -12,6 +12,6 @@ Firefox and Selenium have had a long series of bugs where at the launch of Firef
 
 The thread that launches Firefox becomes stuck waiting for the alert to go away. This test suite handles those alerts by launching a separate thread, and that second thread uses the java jna libraries to find the alert and dismiss it. 
   
-To do: include:  list of files and directories
+To do: include:  list of files and directories.
 
 
