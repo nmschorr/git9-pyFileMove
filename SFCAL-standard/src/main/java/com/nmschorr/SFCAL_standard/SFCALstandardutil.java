@@ -81,6 +81,12 @@ public class SFCALstandardutil {
 		localHash.put("Lib", "Libra");
 		localHash.put("Sco", "Scropio");
 		localHash.put("Sag", "Sagittarius");
+		localHash.put("Cnj", "Conjunct");
+		localHash.put("Tri", "Trine");
+		localHash.put("Opp", "Opposite");
+		localHash.put("Sat", "Saturn");
+		localHash.put("Mon", "Moon");
+		localHash.put("Mer", "Mercury");
 	return localHash;
 	}
 	

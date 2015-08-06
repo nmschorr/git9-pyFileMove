@@ -139,15 +139,17 @@ public class SFCALstandard extends SFCALstandardutil {
 		List<String> tinySectionList;
 		int tinyCounter =0;
 		totInFileLines=0;
+		int realInlineCOUNT = 0;
 		newListSizeMinus=0;
 		locLineCount=4;  // start at 5th line
-
+		int countMinusTen = realInlineCOUNT-10;
  
 		try {
 			tempFileList =  FileUtils.readLines(theREADING_FROM_TMP_FILE);
 			totInFileLines = tempFileList.size() + 9;
+			realInlineCOUNT = tempFileList.size();
 			
-	System.out.println("!!! INSIDE sectiontask. total lines: " + totInFileLines +" " 
+	System.out.println("!!! INSIDE sectiontask. total lines: " + realInlineCOUNT +" " 
 	+ theDATEFILE_WRTINGTO.getName());
 			// get ics header lines in 1st-first four header lines of ics inFileName
 			for (int i = 0; i < 4; i++)	{
@@ -155,7 +157,7 @@ public class SFCALstandard extends SFCALstandardutil {
 			}
 			newListSizeMinus = tempFileList.size()-1;
 			
-			while ( locLineCount < newListSizeMinus )  
+			while ( locLineCount < countMinusTen )  
 			{  // while locLineCount
 				//  while there are still lines left in array
 			  // starting on 5th line, load
