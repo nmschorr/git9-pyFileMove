@@ -28,8 +28,10 @@ public class SFCALstandardutil {
 		try {
 			Map<String, String> myHASHMAP = makeNewhash();
 			File SFCALtempONE = new File(SFCALtempOneFilename);
+			File SFCALtempTWO = new File(SFCALtempOneFilename +"two");
 
 			List<String> origSFCALarray =  FileUtils.readLines(localOriginalFile);
+			List<String> origSFCALarrayTWO =  FileUtils.readLines(SFCALtempONE);
 			
 			
 			int realCOUNT = origSFCALarray.size();
@@ -41,10 +43,10 @@ public class SFCALstandardutil {
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
 			// for each line in file:
-			for (String cLINE : origSFCALarray)  {
+		for (String cLINE : origSFCALarray)  {
 				
 				
-			//	if   ((cLINE.length() > 0 ) && (keepcount < safeCount) )   {
+		if   ((cLINE.length() > 0 ) && (keepcount < safeCount) )   {
 		if   ((cLINE.length() > 0 ) && (keepcount < 1500) )   {
 				 keepGoing = 1;
 			} else { keepGoing=0; }
@@ -66,10 +68,13 @@ public class SFCALstandardutil {
 				StringUtils.chomp(cLINE);
 
 				verboseOut("current line:"+cLINE);
+				String CURSTR="";
 				
 				checkCharString= checkForChar(cLINE);
 				System.out.println("char string is " + checkCharString);
-			String newSTR=null;
+				
+				
+				String newSTR=null;
 				for (String key : myHASHMAP.keySet()) {
 				//	System.out.println("key is: " + key + "  key set is: " +myHASHMAP.get(key));
 					newSTR=checkCharString.replaceAll(key, myHASHMAP.get(key));
@@ -95,6 +100,19 @@ public class SFCALstandardutil {
 				keepcount++;
 			  }	
 			}  // for
+		
+		int lastINT=0;
+		int myCNT = 0;
+		
+		while (myCNT < 999 ) {
+			
+		}
+	
+		
+		
+		
+		
+		
 			FileUtils.waitFor(SFCALtempONE, 4);
 
 		}
