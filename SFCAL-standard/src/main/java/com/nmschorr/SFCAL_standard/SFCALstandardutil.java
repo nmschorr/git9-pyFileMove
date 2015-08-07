@@ -101,6 +101,7 @@ for (String cLINE : genFileARRAY)  {
 		HashMap <String, String> localHash  =  new HashMap<String, String>();
 		localHash.put("Ari", "Aries");
 		localHash.put("Tau", "Taurus");
+		localHash.put("Mon", "Moon");
 		localHash.put("Gem", "Gemini");
 		localHash.put("Can", "Cancer");
 		localHash.put("Vir", "Virgo");
@@ -111,7 +112,6 @@ for (String cLINE : genFileARRAY)  {
 		localHash.put("Tri", "Trine");
 		localHash.put("Opp", "Opposite");
 		localHash.put("Sat", "Saturn");
-		localHash.put("Mon", "Moon");
 		localHash.put("Mer", "Mercury");
 		localHash.put("Squ", "Square");
 		localHash.put("Sex", "Sextile");

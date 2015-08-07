@@ -58,42 +58,42 @@ public class SFCALstandard extends SFCALstandardutil {
  	
 	
 	static int G_VERBOSE=0;
-	 
-	public static void main(String[] args) {
-
 	
-	String bigstr = "My Mon";
-	String repstr = "Moon";
+static String gofixhash(String string2fix) {
+	String bigstr = string2fix;
 	String newstr = "empty";
 	Map<String, String> hm  =  makeNewhash();
 	String theval = "empty";
 	int donenow = 0;
-	HashMap <String, String> loch  =  new HashMap<String, String>();
-		loch.put("Mon", "Moon");
+	String thelookupSTR;			
 
-//		if ( bigstr.contains("Mon") ) {
-//			newstr = bigstr.replace("Mon", repstr);
-//			System.out.println("val of newstr:  " + newstr);
-//		}
-		
-		while ( donenow == 0) {
-		//for (String thelookup : loch.keySet()) {    // this is THE big search
-			String thelookup = "Mon";
+	for (Object thelookup : hm.keySet()) {    // this is THE big search
+		if ( donenow < 1) {
+			System.out.println(hm.get(thelookup));
+			thelookupSTR = (String)thelookup;
 			theval = hm.get(thelookup);
-			if ( hm.containsKey(thelookup) ) {
-				newstr =  bigstr.replace(thelookup, theval);
+			CharSequence cs = (CharSequence)thelookupSTR;
+
+			if ( bigstr.contains(cs) ) {
+				newstr =  bigstr.replace(thelookupSTR, theval);
 				System.out.println("replaced string");
 				donenow = 1;
 			}
 			System.out.println("val of newstr:  " + newstr);
-		  }
-		//}
-		//	verboseOut(   "value of checkCharString is: " + checkCharString);
-		//	verboseOut(   "          value of myCNT is: " + myCNT);
+		}
+		else {}
+	}  // for
+	return newstr;
+	} // gofixhash
 	 
+	 
+	public static void main(String[] args) {
+
+	String fixedstr = gofixhash("The Mon");
 		
-		
-		
+	System.out.println("val of fixedstr:  " + fixedstr);
+	
+	
 	System.exit(0);	
 		
 		
