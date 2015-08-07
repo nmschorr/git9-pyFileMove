@@ -83,7 +83,6 @@ public class SFCALstandard extends SFCALstandardutil {
 		System.out.println("value of newstr:  " + newstr);
 
 
-
 		System.out.println("return this new value  " + newstr);
 		return newstr;
 	} // gofixhash
