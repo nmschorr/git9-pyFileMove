@@ -59,12 +59,15 @@ for (String cLINE : genFileARRAY)  {
 				
 				checkCharString  =   checkForChar(cLINE);
 				System.out.println("    char string is:         " + checkCharString);
-				
+				arrayTHREE  = new ArrayList<String>();
+				String newVAL ="";
+						
 				for (String key : regHASHMAP.keySet()) {    // this is THE big search
-					newSTR =  myREPLACE(checkCharString, key, regHASHMAP.get(key));
+					newVAL = regHASHMAP.get(key);
+					newSTR =  myREPLACE(checkCharString, key, newVAL);
 					arrayTHREE.add(newSTR);
 					myCNT++;
-					verboseOut(   "value of checkCharString is: " + checkCharString);
+				//	verboseOut(   "value of checkCharString is: " + checkCharString);
 				//	verboseOut(   "          value of myCNT is: " + myCNT);
 				}   
 				verboseOut("final value of myCNT is: "+ myCNT);
@@ -192,6 +195,8 @@ for (String cLINE : genFileARRAY)  {
 				if ( ( theLocLine.contains("TRANSPARENT")) ||
 						( theLocLine.contains("DTEND")) || 
 						( theLocLine.contains("VCALENDAR")) || 
+						( theLocLine.contains("VEVENT")) || 
+						( theLocLine.contains("DTSTART")) || 
 						( theLocLine.contains("PRODID:")) || 
 						( theLocLine.contains("VERSION:")) || 
 						( theLocLine.contains("METHOD:")) || ( theLocLine.contains("UID")) 
