@@ -80,7 +80,7 @@ public class SFCALstandard extends SFCALstandardutil {
 		//for (String thelookup : loch.keySet()) {    // this is THE big search
 			String thelookup = "Mon";
 			theval = hm.get(thelookup);
-			if ( hm.containsValue(thelookup) ) {
+			if ( hm.containsKey(thelookup) ) {
 				newstr =  bigstr.replace(thelookup, theval);
 				System.out.println("replaced string");
 				donenow = 1;
