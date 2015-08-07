@@ -18,6 +18,7 @@ package com.nmschorr.SFCAL_standard;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+
 import static java.lang.System.out;
 
 import org.apache.commons.io.FileUtils;
@@ -59,6 +60,52 @@ public class SFCALstandard extends SFCALstandardutil {
 	static int G_VERBOSE=0;
 	 
 	public static void main(String[] args) {
+
+	
+	String bigstr = "My Mon";
+	String repstr = "Moon";
+	String newstr = "empty";
+	Map<String, String> hm  =  makeNewhash();
+	String theval = "empty";
+	int donenow = 0;
+	HashMap <String, String> loch  =  new HashMap<String, String>();
+		loch.put("Mon", "Moon");
+
+//		if ( bigstr.contains("Mon") ) {
+//			newstr = bigstr.replace("Mon", repstr);
+//			System.out.println("val of newstr:  " + newstr);
+//		}
+		
+		while ( donenow == 0) {
+		//for (String thelookup : loch.keySet()) {    // this is THE big search
+			String thelookup = "Mon";
+			theval = hm.get(thelookup);
+			if ( hm.containsValue(thelookup) ) {
+				newstr =  bigstr.replace(thelookup, theval);
+				System.out.println("replaced string");
+				donenow = 1;
+			}
+			System.out.println("val of newstr:  " + newstr);
+		  }
+		//}
+		//	verboseOut(   "value of checkCharString is: " + checkCharString);
+		//	verboseOut(   "          value of myCNT is: " + myCNT);
+	 
+		
+		
+		
+	System.exit(0);	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		File filesDir = new File(IndirVoidsName);  //READ the list of files in sfcalfiles/vds dir
 		String[] arryOfInFiles = filesDir.list();	// create a list of names of those files	
 		out.println("	NEW LIST: " + filesDir.list());
