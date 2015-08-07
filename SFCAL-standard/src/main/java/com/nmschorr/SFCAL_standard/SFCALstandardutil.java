@@ -84,6 +84,7 @@ for (String cLINE : genFileARRAY)  {
 		localHash.put("Tau", "Taurus");
 		localHash.put("Gem", "Gemini");
 		localHash.put("Can", "Cancer");
+		localHash.put("Leo", "Leo");
 		localHash.put("Vir", "Virgo");
 		localHash.put("Lib", "Libra");
 		localHash.put("Sco", "Scropio");
@@ -95,10 +96,11 @@ for (String cLINE : genFileARRAY)  {
 		localHash.put("Cnj", "Conjunct");
 		localHash.put("Tri", "Trine");
 		localHash.put("Opp", "Opposite");
-		localHash.put("Squ", "Square");
+		localHash.put("Sqr", "Square");
 		localHash.put("Sxt", "Sextile");
 		localHash.put("Qnx", "Quincunx");
 		
+		localHash.put("Sun", "Sun");
 		localHash.put("Mer", "Mercury");
 		localHash.put("Ven", "Ven");
 		localHash.put("Mar", "Mars");

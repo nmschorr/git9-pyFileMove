@@ -55,31 +55,51 @@ public class SFCALstandard extends SFCALstandardutil {
 	public static File G_ORIG_FILE;
 	public 	static File G_TEMP_FILE;
 	public 	static String G_DATE_FILE_NAME_DIR;
- 	
+ 	static int yes;
 	
 	static int G_VERBOSE=0;
 	
 	static String gofixhash(String oldstrg) {
 		System.out.println("just entered gofixhash");
 		String newstr = "empty";
-		String theval = "empty";
-		String thelookupSTR;			
+			StringBuffer newbuf = new StringBuffer(oldstrg);
+	 
+		 		
 		Map<String, String> hm  =  makeNewhash();
-		String subpart = oldstrg.substring(14,17);
-		System.out.println("subtr:  " + subpart);
-		String foundhashstr = hm.get(subpart) + " ";
-		System.out.println("found this in hash:  " + foundhashstr );
+		String firstthird = oldstrg.substring(14,17);
+		String secondthird = oldstrg.substring(18,21);
+		String lastthird = oldstrg.substring(22,25);
+		System.out.println("first:  " + firstthird);
+		System.out.println("2nd  :  " + secondthird);
+		System.out.println("3rd  :  " + lastthird);
 
-		StringBuffer newbuf = new StringBuffer(oldstrg);
-		int start = 8;
-		int end = 17;
+		String thirdrep = hm.get(lastthird) + " ";
+		System.out.println("found this in hash:  " + thirdrep );
+		int start = 22;
+		int end = 25;
 		newbuf.delete(start, end); 
-		newbuf.insert(9,foundhashstr);
+		newbuf.insert(start,thirdrep);
+		System.out.println("new buf is: " + newbuf);
+		
+		String firstrep = hm.get(firstthird) + " ";
+		System.out.println("found this in hash:  " + firstrep );
+		start = 8;
+		end = 17;
+		newbuf.delete(start, end); 
+		newbuf.insert(9,firstrep);
 		System.out.println("new buf is: " + newbuf);
 
+//		String thirdrep = hm.get(lastthird) + " ";
+//		System.out.println("found this in hash:  " + thirdrep );
+//		int start = 23;
+//		int end = 26;
+//		newbuf.delete(start, end); 
+//		newbuf.insert(9,thirdrep);
+//		System.out.println("new buf is: " + newbuf);
+		
+		
 		newstr =   newbuf.toString();
 		System.out.println("replaced string with new string... now fixed: " + newstr);
-
 		System.out.println("value of newstr:  " + newstr);
 
 
