@@ -59,45 +59,33 @@ public class SFCALstandard extends SFCALstandardutil {
 	
 	static int G_VERBOSE=0;
 	
-static String gofixhash(String oldstrg) {
-	System.out.println("just entered gofixhash");
-	String newstr = "empty";
-	String theval = "empty";
-	int donenow = 0;
-	String thelookupSTR;			
-	Map<String, String> hm  =  makeNewhash();
-	String subpart = oldstrg.substring(14,17);
-	System.out.println("subtr:  " + subpart);
-	String foundhashstr = hm.get(subpart);
-	System.out.println("found this in hash:  " + foundhashstr );
+	static String gofixhash(String oldstrg) {
+		System.out.println("just entered gofixhash");
+		String newstr = "empty";
+		String theval = "empty";
+		String thelookupSTR;			
+		Map<String, String> hm  =  makeNewhash();
+		String subpart = oldstrg.substring(14,17);
+		System.out.println("subtr:  " + subpart);
+		String foundhashstr = hm.get(subpart) + " ";
+		System.out.println("found this in hash:  " + foundhashstr );
 
-	for (Object thelookup : hm.keySet()) {    // this is THE big search
-	System.out.println("    Inside gofixhash for loop ");
-		if ( donenow < 1) {
-			System.out.println("val of old str:  " + oldstrg);
-			System.out.println(hm.get(thelookup));
-			thelookupSTR = (String)thelookup;
-			theval = hm.get(thelookup) + " ";
-			CharSequence cs = (CharSequence)thelookupSTR;
+		StringBuffer newbuf = new StringBuffer(oldstrg);
+		int start = 8;
+		int end = 17;
+		newbuf.delete(start, end); 
+		newbuf.insert(9,foundhashstr);
+		System.out.println("new buf is: " + newbuf);
 
-			StringBuffer newbuf = new StringBuffer(oldstrg);
-	        int start = 8;
-	        int end = 17;
-	        newbuf.delete(start, end); 
-	        newbuf.insert(9,theval);
-	        System.out.println("new buf is: " + newbuf);
-			
-			if ( subpart.contains(cs) ) {
-				newstr =   newbuf.toString();
-				System.out.println("replaced string with new string... now fixed: " + newstr);
-				donenow = 1;
-			}
-			System.out.println("value of newstr:  " + newstr);
-		}
-		else {}
-	}  // for
-	System.out.println("return this new value  " + newstr);
-	return newstr;
+		newstr =   newbuf.toString();
+		System.out.println("replaced string with new string... now fixed: " + newstr);
+
+		System.out.println("value of newstr:  " + newstr);
+
+
+
+		System.out.println("return this new value  " + newstr);
+		return newstr;
 	} // gofixhash
 	 
 	 
