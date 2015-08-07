@@ -59,53 +59,37 @@ public class SFCALstandard extends SFCALstandardutil {
 	
 	static int G_VERBOSE=0;
 	
-static String gofixhash(String string2fix) {
-	String bigstr = string2fix;
+static String gofixhash(String oldstrg) {
 	String newstr = "empty";
-	Map<String, String> hm  =  makeNewhash();
 	String theval = "empty";
 	int donenow = 0;
 	String thelookupSTR;			
+	Map<String, String> hm  =  makeNewhash();
+	System.out.println("    Inside gofixhash  ");
 
 	for (Object thelookup : hm.keySet()) {    // this is THE big search
 		if ( donenow < 1) {
+			System.out.println("val of old str:  " + oldstrg);
 			System.out.println(hm.get(thelookup));
 			thelookupSTR = (String)thelookup;
 			theval = hm.get(thelookup);
 			CharSequence cs = (CharSequence)thelookupSTR;
 
-			if ( bigstr.contains(cs) ) {
-				newstr =  bigstr.replace(thelookupSTR, theval);
-				System.out.println("replaced string");
+			if ( oldstrg.contains(cs) ) {
+				newstr =  oldstrg.replace(thelookupSTR, theval);
+				System.out.println("replaced string with new string... now fixed: " + newstr);
 				donenow = 1;
 			}
-			System.out.println("val of newstr:  " + newstr);
+			System.out.println("value of newstr:  " + newstr);
 		}
 		else {}
 	}  // for
+	System.out.println("return this new value  " + newstr);
 	return newstr;
 	} // gofixhash
 	 
 	 
-	public static void main(String[] args) {
-
-	String fixedstr = gofixhash("The Mon");
-		
-	System.out.println("val of fixedstr:  " + fixedstr);
-	
-	
-	System.exit(0);	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+	public static void main(String[] args) {	
 		File filesDir = new File(IndirVoidsName);  //READ the list of files in sfcalfiles/vds dir
 		String[] arryOfInFiles = filesDir.list();	// create a list of names of those files	
 		out.println("	NEW LIST: " + filesDir.list());
@@ -138,8 +122,8 @@ static String gofixhash(String string2fix) {
 			 mySleep(2);
 			generalStringFixing(G_TEMPOUT_STRNAME, G_ORIG_FILE_NAME_WDIR);
 			
-			sectionTask(G_TEMP_FILE, G_DATE_FILE);
-			FileUtils.waitFor(G_DATE_FILE, 4);
+			//sectionTask(G_TEMP_FILE, G_DATE_FILE);
+			//FileUtils.waitFor(G_DATE_FILE, 4);
 			
 			G_ORIG_FILE = null;
 			out.println("------------------NEW filename is: "+G_DATE_FILE);
