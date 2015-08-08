@@ -18,6 +18,9 @@ package com.nmschorr.SFCAL_editor;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static java.lang.System.out;
 
 import org.apache.commons.io.FileUtils;
@@ -53,6 +56,7 @@ public class SFCALeditor extends SFCALutil {
 	public static File GLOBAL_ORIG_FILE;
 	public 	static File GLOBAL_TEMP_FILE;
 	public 	static String GLOBAL_DATE_FILE_NAME_DIR;
+	
  	
 	
 	static int GLOBAL_VERBOSE=0;
@@ -62,9 +66,10 @@ public class SFCALeditor extends SFCALutil {
 		String[] arryOfInFiles = filesDir.list();	// create a list of names of those files	
 		out.println("	NEW LIST: " + filesDir.list());
 		int myCount=0;
+		 
 		
 		int arraysize = arryOfInFiles.length;
-	arraysize = 2;
+	arraysize = 1;
 
 		while (myCount < arraysize) {  
 			String currentInfile= arryOfInFiles[myCount];
@@ -134,6 +139,7 @@ public class SFCALeditor extends SFCALutil {
 	}
 	
 	
+// new method: ----------------------------------------------------------------	
 	static void sectionTask(File theREADING_FROM_TMP_FILE, File theDATEFILE_WRTINGTO) {   // this part was done by perl script
 		List<String> tinySectionList;
 		int tinyCounter =0;
@@ -141,65 +147,72 @@ public class SFCALeditor extends SFCALutil {
 		newListSizeMinus=0;
 		locLineCount=4;  // start at 5th line
 
- 
 		try {
 			tempFileList =  FileUtils.readLines(theREADING_FROM_TMP_FILE);
 			totInFileLines = tempFileList.size() + 9;
-			
-	System.out.println("!!! INSIDE sectiontask. total lines: " + totInFileLines +" " 
-	+ theDATEFILE_WRTINGTO.getName());
+
+			System.out.println("!!! INSIDE sectiontask. total lines: " + totInFileLines +" " 
+					+ theDATEFILE_WRTINGTO.getName());
 			// get ics header lines in 1st-first four header lines of ics inFileName
+
 			for (int i = 0; i < 4; i++)	{
 				FileUtils.writeStringToFile(theDATEFILE_WRTINGTO, tempFileList.get(i)+LINE_FEED, true);		
 			}
 			newListSizeMinus = tempFileList.size()-1;
-			
+
 			while ( locLineCount < newListSizeMinus )  
 			{  // while locLineCount
-				//  while there are still lines left in array
-			  // starting on 5th line, load
+				//  while there are still lines left in array // starting on 5th line, load
 				tinyCounter = 0;
-			
+				tinySectionList=null;
+				tinySectionList = new ArrayList<String>();
+
 				// first load sections of 10x lines each into smaller arrarys
-				// then check each section for voids etc
-				// then correct
-				
-			tinySectionList=null;
-			tinySectionList = new ArrayList<String>();
-				
-			  while (tinyCounter < 10) {         //tiny while
-				String theString = tempFileList.get(locLineCount);  //get one string
-						//StringUtils.chomp(theString);
-				tinySectionList.add(theString);
-				locLineCount++;
-				tinyCounter++;
+				// then check each section for voids etc  then correct
+
+				while (tinyCounter < 10) {         //tiny while
+					String theString = tempFileList.get(locLineCount);  //get one string
+					//StringUtils.chomp(theString);
+					tinySectionList.add(theString);
+					locLineCount++;
+					tinyCounter++;
 				}  // tiny while
-			  
+
 				checkToss = checkForTossouts(tinySectionList);	 
-				
-				if (checkToss) {
+
+				if (checkToss) {   // IF 	checkfortoss comes back TRUE, then write this section
 					FileUtils.writeLines(theDATEFILE_WRTINGTO, tinySectionList, true);	
 					FileUtils.waitFor(theDATEFILE_WRTINGTO,2);
 				}
-					
-				} //  // while locLineCount
+
+			} //  // while locLineCount
 			System.out.println("!!! INSIDE sectiontask. filename -------------------------"  
 					+ theDATEFILE_WRTINGTO.getName());
 			out.println("!!!###   name out outfile" + theDATEFILE_WRTINGTO);
 			FileUtils.writeStringToFile(theDATEFILE_WRTINGTO, "END:VCALENDAR"+LINE_FEED, true);	
 			mySleep(1);
 			FileUtils.waitFor(theDATEFILE_WRTINGTO, 4);
-			  
-	}  // try  
-	catch (IOException e) { 
-		e.printStackTrace();	
-	}	// catch
-	}
+		}  // try  
+		catch (IOException e) {  	e.printStackTrace();	 }	// catch
+	}  // end
 
+	
+// new method: ----------------------------------------------------------------
 		static boolean checkForTossouts(List<String> tinyList) {
-			String sumLine = tinyList.get(6);
-			 if ( sumLine.contains("void of") || sumLine.contains("SUMMARY:Full") || 
-					 sumLine.contains("SUMMARY:New Moon") )     // we are removing the quarters
+			String sl = tinyList.get(6);
+			if (sl.matches("SUMMARY*Eclipse*")) {
+				out.println("!!===!!===  matches worked! ");
+			}
+			Pattern myp = Pattern.compile("SUMMARY*Eclipse*");
+			Matcher mymat = myp.matcher(sl);
+			boolean myboo = mymat.matches();
+					
+					 		
+			out.println("-----------%%%%%%%%%%%%%%%---- myboo:  "+myboo);
+			
+			if ( sl.contains("void of") || sl.contains("SUMMARY:Full") || 
+					 sl.contains("SUMMARY:New Moon")|| sl.contains("Solar Eclipse") 
+					 || sl.contains("Lunar Eclipse"))     // we are removing the quarters
 					{
 						//verboseOut ("==========    ===== !!!!! FOUND a non quarter!");
 						//verboseOut ("========== writing: "+ sumLine);		
