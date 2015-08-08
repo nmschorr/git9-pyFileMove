@@ -123,26 +123,30 @@ public class SFCALstandard extends SFCALstandardutil {
 	}
 
 // new method // --------------------------------------------------------------	 	
-
 	static String gofixDES(String oldstrg) {
-		System.out.println("just entered gofixDES");
+		System.out.println("just entered gofixDES. oldstrg is: " +oldstrg );
 		String newstr = "empty";
-		StringBuffer newbuf = new StringBuffer(oldstrg);
-		HashMap <String, String>  hmSpell = makeSpellhm();
-		String tempcheck = "Stabilise";
-		int locIndex=0;
-		
-	    if (oldstrg.contains(tempcheck)) {
-			String torep = hmSpell.get(tempcheck);
-	    	locIndex = newbuf.indexOf(tempcheck);
-	    	System.out.println("found a misspelling : " + tempcheck);
-	    	System.out.println("index is : " + locIndex);
-			newbuf.delete(locIndex, locIndex + 11); 
-			newbuf.insert(locIndex,torep);
-			System.out.println("new buf is: " + newbuf);
-			newstr =   newbuf.toString();
+		//StringBuffer newbuf = new StringBuffer(oldstrg);
+		///HashMap <String, String>  hmSpell = makeSpellhm();
+		//String tempcheck = "Stabilise";
+		///String tempcheck = "\\n";
+		CharSequence tempcheckCS = "\\n";
+		String tempcheck = (String)tempcheckCS;
+		//int locIndex=0;
+		    
+	    if (oldstrg.contains(tempcheckCS)) {
+	    	System.out.println("!! Inside checker. found a misspelling : " + tempcheck);
+			//String torep = hmSpell.get(tempcheck);
+			String torep = " - ";
+//	    	locIndex = newbuf.indexOf(tempcheck);
+//	    	System.out.println("index is : " + locIndex);
+//			newbuf.delete(locIndex, locIndex + 11); 
+//			newbuf.insert(locIndex,torep);
+//			System.out.println("new buf is: " + newbuf);
+//			newstr =   newbuf.toString();
+	    	newstr = oldstrg.replace(tempcheck, torep);
 			System.out.println("replaced string with new string... now fixed: " + newstr);
-			System.out.println("value of newstr:  " + newstr+ "return this new value  " + newstr);
+			System.out.println("!!!! =======  !!!  value of newstr:  " + newstr+ "return this new value  " + newstr);
 			return newstr;
 	    }		
 	    else return oldstrg;
