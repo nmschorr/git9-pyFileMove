@@ -103,14 +103,56 @@ public class SFCALstandard extends SFCALstandardutil {
 		System.out.println("Finished");
 	}
 
+// new method // --------------------------------------------------------------	 	
 
+	static HashMap makeSpellhm() {
+		HashMap <String, String> spellhm  =  new HashMap<String, String>();
+		spellhm.put("Stabilise","Stabilize");
+		spellhm.put("organised","organized");
+		spellhm.put("vital","very vital");
+		
+		//.Text = "Stabilise","Stabilize"
+		//.Text = "organised","organized"
+		//.Text = "excelent","excellent"
+		//.Text = "realise","realize"
+		//.Text = "spiritualilty","spirituality"
+		//.Text = "possibiities","possibilities"
+		//.Text = "fantasise","fantasize"
+		//"\n"
+		return spellhm;
+	}
+
+// new method // --------------------------------------------------------------	 	
+
+	static String gofixDES(String oldstrg) {
+		System.out.println("just entered gofixDES");
+		String newstr = "empty";
+		StringBuffer newbuf = new StringBuffer(oldstrg);
+		HashMap <String, String>  hmSpell = makeSpellhm();
+		String tempcheck = "Stabilise";
+		int locIndex=0;
+		
+	    if (oldstrg.contains(tempcheck)) {
+			String torep = hmSpell.get(tempcheck);
+	    	locIndex = newbuf.indexOf(tempcheck);
+	    	System.out.println("found a misspelling : " + tempcheck);
+	    	System.out.println("index is : " + locIndex);
+			newbuf.delete(locIndex, locIndex + 11); 
+			newbuf.insert(locIndex,torep);
+			System.out.println("new buf is: " + newbuf);
+			newstr =   newbuf.toString();
+			System.out.println("replaced string with new string... now fixed: " + newstr);
+			System.out.println("value of newstr:  " + newstr+ "return this new value  " + newstr);
+			return newstr;
+	    }		
+	    else return oldstrg;
+	}
+	
+// new method // --------------------------------------------------------------	 	
 	static String gofixhash(String oldstrg) {
 		System.out.println("just entered gofixhash");
 		String newstr = "empty";
 		StringBuffer newbuf = new StringBuffer(oldstrg);
-			//	String[] plansArry = {"Sun", "Mon","Mer", "Ven", "Mar", "Jup", "Sat","Nep", "Ura", "Plu"};		
-			//	String[] signsLista = {"Aries", "Taurus","Gemini", "Cancer", "Leo", 
-			//				"Virgo", "Libra","Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"};		
 		String[] signsList = {"Ari", "Tau","Gem", "Can", "Leo", 
 				"Vir", "Lib","Sco", "Sag", "Cap", "Aqu", "Pis"};		
 		String tempv ="";
@@ -131,16 +173,14 @@ public class SFCALstandard extends SFCALstandardutil {
 		    	signmatch = true;
 		    }
 		}
-//begin third column
-		    
+//begin third column		    
 		String thirdrep = hm.get(lastthird);
 		System.out.println("found this in hash:  " + lastthird );
 		int start = 22;
 		int end = 25;
 		newbuf.delete(start, end); 
 		newbuf.insert(start,thirdrep);
-		System.out.println("new buf is: " + newbuf);
-		
+		System.out.println("new buf is: " + newbuf);		
 		
 //begin second column
 		String secondrep = hm.get(secondthird);
@@ -154,15 +194,8 @@ public class SFCALstandard extends SFCALstandardutil {
 		} else {
 			newbuf.insert(start,secondrep);
 		}
-		
 		System.out.println("new buf is: " + newbuf);
-		
-		
-		
-		
-		
-		
-		
+				
 // begin first column		
 		String firstrep = hm.get(firstthird) + " ";
 		System.out.println("found this in hash:  " + firstrep );
@@ -176,7 +209,9 @@ public class SFCALstandard extends SFCALstandardutil {
 		System.out.println("value of newstr:  " + newstr+ "return this new value  " + newstr);
 		return newstr;
 	} // gofixhash
-	 	
+
+	
+// new method // --------------------------------------------------------------	 	
 	static void sectionTask(File theREADING_FROM_TMP_FILE, File theDATEFILE_WRTINGTO) {   // this part was done by perl script
 		List<String> tinySectionList;
 		int tinyCounter =0;
@@ -241,44 +276,49 @@ public class SFCALstandard extends SFCALstandardutil {
 	}	// catch
 	}
 
-		static boolean checkForTossouts(List<String> tinyList) {
-			String sumLine = tinyList.get(6);
-			 if ( sumLine.contains("void of") || sumLine.contains("SUMMARY:Full") || 
-					 sumLine.contains("SUMMARY:New Moon") )     // we are removing the quarters
-					{
-						//verboseOut ("==========    ===== !!!!! FOUND a non quarter!");
-						//verboseOut ("========== writing: "+ sumLine);		
-						return true;
-					}
-					else  {
-						//verboseOut("not writing this line:  " + sumLine);
-						return false;
-					}
-		}			
-
-		static String make_new_file_date_name(String ORIG_INFILE_STR) {
-			String LocalDateNmStr = null;
-			
-			try {
-				dateStringFileList =  FileUtils.readLines(G_ORIG_FILE);
-				String newDateString=dateStringFileList.get(5);
-				String newDateStr = newDateString.substring(8, 16);
-				verboseOut("new date string is: "+ newDateStr);
-				LocalDateNmStr = ORIG_INFILE_STR + "." + newDateStr + ".ics";
-				verboseOut("new LocalDateNmStr string is: "+ LocalDateNmStr);
-
-			} catch (IOException e) { 
-				e.printStackTrace();	
-			}	// catch
-
-			return LocalDateNmStr; 
+// new method // --------------------------------------------------------------	 	
+	static boolean checkForTossouts(List<String> tinyList) {
+		String sumLine = tinyList.get(6);
+		if ( sumLine.contains("void of") || sumLine.contains("SUMMARY:Full") || 
+				sumLine.contains("SUMMARY:New Moon") )     // we are removing the quarters
+		{
+			//verboseOut ("==========    ===== !!!!! FOUND a non quarter!");
+			//verboseOut ("========== writing: "+ sumLine);		
+			return true;
 		}
-		public static void verboseOut(String theoutline) {
-			if (G_VERBOSE==1) {
-				out.println(theoutline);
-			}
+		else  {
+			//verboseOut("not writing this line:  " + sumLine);
+			return false;
 		}
-		
-		
+	}			
+
+// new method // --------------------------------------------------------------	 	
+	static String make_new_file_date_name(String ORIG_INFILE_STR) {
+		String LocalDateNmStr = null;
+
+		try {
+			dateStringFileList =  FileUtils.readLines(G_ORIG_FILE);
+			String newDateString=dateStringFileList.get(5);
+			String newDateStr = newDateString.substring(8, 16);
+			verboseOut("new date string is: "+ newDateStr);
+			LocalDateNmStr = ORIG_INFILE_STR + "." + newDateStr + ".ics";
+			verboseOut("new LocalDateNmStr string is: "+ LocalDateNmStr);
+
+		} catch (IOException e) { 
+			e.printStackTrace();	
+		}	// catch
+
+		return LocalDateNmStr; 
+	}
+	public static void verboseOut(String theoutline) {
+		if (G_VERBOSE==1) {
+			out.println(theoutline);
+		}
+	}
 }  // class
+
+//	String[] plansArry = {"Sun", "Mon","Mer", "Ven", "Mar", "Jup", "Sat","Nep", "Ura", "Plu"};		
+//	String[] signsLista = {"Aries", "Taurus","Gemini", "Cancer", "Leo", 
+//				"Virgo", "Libra","Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"};		
+
  

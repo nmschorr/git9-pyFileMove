@@ -31,6 +31,8 @@ public class SFCALstandardutil {
 		
 		File SFCALtempONE  =  new File(SFCALtempOneFilename);
 		CharSequence SUMstr = "SUMMARY:Tr-Tr";
+		CharSequence DEScs = "DESCRIPTION";
+		String DEStr = "DESCRIPTION";
 
 		try {
 			List<String> genFileARRAY  =   FileUtils.readLines(sfcalFile);
@@ -58,6 +60,11 @@ for (String cLINE : genFileARRAY)  {
 				 	useSUMMARYstr = true;
 				 	FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
 			 	   }										
+ 		 	else if ( cLINE.contains(DEStr))   {  /// if TR-TR only lines
+ 			 	 newSTR = gofixDES(genMainCharString) ;
+ 				//  useDESstr = true;
+ 				 	FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
+ 			 	   }										
 			 	else {
 					System.out.println("   writing ALT string to file         " + genMainCharString);
 					FileUtils.writeStringToFile(SFCALtempONE, genMainCharString +"\n", true);	
