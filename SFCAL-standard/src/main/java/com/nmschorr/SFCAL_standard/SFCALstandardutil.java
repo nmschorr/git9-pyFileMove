@@ -19,19 +19,19 @@ public class SFCALstandardutil {
 	static int keepcount = 1;
 	static String replacedSignString;
 	static String voidFixedString;
-	 
+	String newSTR2="yes";	
+	static boolean useSUMMARYstr = false;
 	
 	static void generalStringFixing(String SFCALtempOneFilename, String sfcalFilename) {   
 		String genMainCharString = "";
-		int keepGoing = 1;
+		boolean keepGoing = true;
 		File sfcalFile = new File(sfcalFilename);
+		String newSTR = "";
 		
 		File SFCALtempONE  =  new File(SFCALtempOneFilename);
-		File SFCALtempTWO  =  new File(SFCALtempOneFilename +"two");
-		CharSequence newcs = "SUMMARY:Tr-Tr";
+		CharSequence SUMstr = "SUMMARY:Tr-Tr";
 
 		try {
-			Map<String, String> regHASHMAP  =  makeNewhash();
 			List<String> genFileARRAY  =   FileUtils.readLines(sfcalFile);
 			int realCOUNT  =  genFileARRAY.size();
 			int safeCount = realCOUNT-5;
@@ -43,34 +43,28 @@ public class SFCALstandardutil {
 for (String cLINE : genFileARRAY)  {
 	keepGoing = checkLINEfunction(cLINE, safeCount) ;		
  	G_VERBOSE = 1;
-				
- 	if ( cLINE.contains(newcs)) {
-				
-			if (keepGoing < 2 ) { 
+
+			if (keepGoing == true ) { 
 				StringUtils.chomp(cLINE);
-				String newSTR = "";
 				System.out.println("realcount:  " + realCOUNT);
 				verboseOut(        "current line:               " + cLINE);
 				
 				genMainCharString  =   checkForChar(cLINE);
 				System.out.println("    char string is:         " + genMainCharString);
 			
-				newSTR =  gofixhash(genMainCharString);
-				System.out.println("just got this new string back from tofixhash " + newSTR);
-
-				genMainCharString  =   newSTR;
-				
-				verboseOut("value of checkCharString is: "+ genMainCharString);
-		G_VERBOSE = 0; 
-			
-				FileUtils.writeStringToFile(SFCALtempONE, genMainCharString, true);	
-				FileUtils.writeStringToFile(SFCALtempONE,"\n", true);	 
- 
+			 	if ( cLINE.contains(SUMstr)) {  /// if TR-TR only lines
+				 	newSTR = gofixhash(genMainCharString) ;
+				 	useSUMMARYstr = true;
+				 	FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
+			 	   }										
+			 	else {
+					System.out.println("   writing ALT string to file         " + genMainCharString);
+					FileUtils.writeStringToFile(SFCALtempONE, genMainCharString +"\n", true);	
+				}
 				keepcount++;
-			  }	
- 				}  // cs
-			}  // for
-		}  //try
+			   }	// if
+ 			 }  //for string in array
+			}  // try
 		catch (IOException e)  { 
 			e.printStackTrace();	 
 		     }  // catch
@@ -87,7 +81,7 @@ for (String cLINE : genFileARRAY)  {
 		localHash.put("Leo", "Leo");
 		localHash.put("Vir", "Virgo");
 		localHash.put("Lib", "Libra");
-		localHash.put("Sco", "Scropio");
+		localHash.put("Sco", "Scorpio");
 		localHash.put("Sag", "Sagittarius");
 		localHash.put("Cap", "Capricorn");
 		localHash.put("Aqu", "Aquarius");
@@ -177,26 +171,28 @@ for (String cLINE : genFileARRAY)  {
 //		}	
 //	
 
-		static int checkLINEfunction(String theLocLine, int safecount) {
-			int KG=1;
-			if   ((theLocLine.length() > 0 ) && (KG < safecount) )   {
+		static boolean checkLINEfunction(String theLocLine, int safecount) {
+			boolean KG = true;
+			if   ((theLocLine.length() > 0 ) && (theLocLine.length() < safecount) )   {
 
 				if   ((theLocLine.length() > 0 )  
-						&& (keepcount < 100) )   { KG  =  1; } 
-				else { KG = 0; }
+						&& (keepcount < 400) )   { KG  =  true; } 
+				else { KG = false; }
 
 				if ( ( theLocLine.contains("TRANSPARENT")) ||
-						( theLocLine.contains("DTEND")) || 
+					//	( theLocLine.contains("DTEND")) || 
 						( theLocLine.contains("VCALENDAR")) || 
 						( theLocLine.contains("VEVENT")) || 
-						( theLocLine.contains("DTSTART")) || 
+					//	( theLocLine.contains("DTSTART")) || 
 						( theLocLine.contains("PRODID:")) || 
 						( theLocLine.contains("VERSION:")) || 
 						( theLocLine.contains("METHOD:")) || ( theLocLine.contains("UID")) 
 						|| ( theLocLine.contains("CATEGORIES")) || ( theLocLine.contains("DTSTAMP")) 
 						)
 
-				{ KG = 0; }
+				{ 
+				 KG =false; 
+				}
 			}
 			//System.out.println ("val of KG is :" + KG);
 			return KG;

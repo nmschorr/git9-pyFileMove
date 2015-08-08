@@ -62,7 +62,7 @@ public class SFCALstandard extends SFCALstandardutil {
 	static String gofixhash(String oldstrg) {
 		System.out.println("just entered gofixhash");
 		String newstr = "empty";
-			StringBuffer newbuf = new StringBuffer(oldstrg);
+		StringBuffer newbuf = new StringBuffer(oldstrg);
 	 
 		 		
 		Map<String, String> hm  =  makeNewhash();
@@ -80,6 +80,16 @@ public class SFCALstandard extends SFCALstandardutil {
 		newbuf.delete(start, end); 
 		newbuf.insert(start,thirdrep);
 		System.out.println("new buf is: " + newbuf);
+
+		String secondrep = hm.get(secondthird);
+		System.out.println("found this in hash:  " + secondrep );
+		start = 18;
+		end = 21;
+		newbuf.delete(start, end); 
+		newbuf.insert(start,secondrep);
+		System.out.println("new buf is: " + newbuf);
+
+		
 		
 		String firstrep = hm.get(firstthird) + " ";
 		System.out.println("found this in hash:  " + firstrep );
