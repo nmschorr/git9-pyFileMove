@@ -21,6 +21,7 @@ public class SFCALstandardutil {
 	static String voidFixedString;
 	String newSTR2="yes";	
 	static boolean useSUMMARYstr = false;
+	String[] plansArry = {"Sun", "Mon","Mer", "Ven", "Mar", "Jup", "Sat","Nep", "Ura", "Plu"};		
 	
 	static void generalStringFixing(String SFCALtempOneFilename, String sfcalFilename) {   
 		String genMainCharString = "";
@@ -96,19 +97,18 @@ for (String cLINE : genFileARRAY)  {
 		
 		localHash.put("Sun", "Sun");
 		localHash.put("Mer", "Mercury");
-		localHash.put("Ven", "Ven");
+		localHash.put("Ven", "Venus");
 		localHash.put("Mar", "Mars");
 		localHash.put("Jup", "Jupiter");
 		localHash.put("Sat", "Saturn");
 		localHash.put("Nep", "Neptune");
 		localHash.put("Ura", "Uranus");
-		localHash.put("Plu", "Pluto");
-		
-		
-		
-		
+		localHash.put("Plu", "Pluto");		
 	return localHash;
 	}
+
+	
+	
 	
 	static String myREPLACE(String bigstr, String oldStr, String newStr) {
 		if ( bigstr.contains(oldStr) ) {

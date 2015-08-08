@@ -59,86 +59,26 @@ public class SFCALstandard extends SFCALstandardutil {
 	
 	static int G_VERBOSE=0;
 	
-	static String gofixhash(String oldstrg) {
-		System.out.println("just entered gofixhash");
-		String newstr = "empty";
-		StringBuffer newbuf = new StringBuffer(oldstrg);
-	 
-		 		
-		Map<String, String> hm  =  makeNewhash();
-		String firstthird = oldstrg.substring(14,17);
-		String secondthird = oldstrg.substring(18,21);
-		String lastthird = oldstrg.substring(22,25);
-		System.out.println("first:  " + firstthird);
-		System.out.println("2nd  :  " + secondthird);
-		System.out.println("3rd  :  " + lastthird);
-
-		String thirdrep = hm.get(lastthird) + " ";
-		System.out.println("found this in hash:  " + thirdrep );
-		int start = 22;
-		int end = 25;
-		newbuf.delete(start, end); 
-		newbuf.insert(start,thirdrep);
-		System.out.println("new buf is: " + newbuf);
-
-		String secondrep = hm.get(secondthird);
-		System.out.println("found this in hash:  " + secondrep );
-		start = 18;
-		end = 21;
-		newbuf.delete(start, end); 
-		newbuf.insert(start,secondrep);
-		System.out.println("new buf is: " + newbuf);
-
-		
-		
-		String firstrep = hm.get(firstthird) + " ";
-		System.out.println("found this in hash:  " + firstrep );
-		start = 8;
-		end = 17;
-		newbuf.delete(start, end); 
-		newbuf.insert(9,firstrep);
-		System.out.println("new buf is: " + newbuf);
-
-//		String thirdrep = hm.get(lastthird) + " ";
-//		System.out.println("found this in hash:  " + thirdrep );
-//		int start = 23;
-//		int end = 26;
-//		newbuf.delete(start, end); 
-//		newbuf.insert(9,thirdrep);
-//		System.out.println("new buf is: " + newbuf);
-		
-		
-		newstr =   newbuf.toString();
-		System.out.println("replaced string with new string... now fixed: " + newstr);
-		System.out.println("value of newstr:  " + newstr);
-
-
-		System.out.println("return this new value  " + newstr);
-		return newstr;
-	} // gofixhash
-	 
 	 
 	public static void main(String[] args) {	
 		File filesDir = new File(IndirVoidsName);  //READ the list of files in sfcalfiles/vds dir
 		String[] arryOfInFiles = filesDir.list();	// create a list of names of those files	
 		out.println("	NEW LIST: " + filesDir.list());
-		int myCount=0;
+		int fileInDirCNT=0;
 		
-		int arraysize = arryOfInFiles.length;
-	arraysize = 2;
+		//int arraysize = arryOfInFiles.length;
+	int arraysize = 1;
 
-		while (myCount < arraysize) {  
-			String currentInfile= arryOfInFiles[myCount];
+		while (fileInDirCNT < arraysize) {  
+			G_ORIG_FILE_NAME= arryOfInFiles[fileInDirCNT];
 			   
-			out.println("-----------------------------------");
-			out.println("-----------------------------------filename is: " + currentInfile);
-			out.println("--------------######---------------------LOOP# " + myCount+1);
+			out.println("----------- starting over in main-----------LOOP# " + fileInDirCNT+1);
+			out.println("-----------------------------------filename is: " + G_ORIG_FILE_NAME);
 
-			G_ORIG_FILE_NAME = 	currentInfile;
 			G_ORIG_FILE_NAME_WDIR = IndirVoidsName +"\\" + G_ORIG_FILE_NAME;
 			G_ORIG_FILE = new File(G_ORIG_FILE_NAME_WDIR);
 				
-			G_DATE_FILE_NAME = make_new_file_date_name(currentInfile);
+			G_DATE_FILE_NAME = make_new_file_date_name(G_ORIG_FILE_NAME);
 			G_DATE_FILE_NAME_DIR = MainOutdirName + "\\" + G_DATE_FILE_NAME;
 			G_DATE_FILE = new File(G_DATE_FILE_NAME_DIR);
 			out.println("-----------------------------------datefilename is: " + G_DATE_FILE_NAME_DIR);
@@ -146,55 +86,97 @@ public class SFCALstandard extends SFCALstandardutil {
 			G_TEMPOUT_STRNAME = MainOutdirName + "\\tempfiles\\SFCALtmp" + System.currentTimeMillis() +".ics";
 			G_TEMP_FILE = new File(G_TEMPOUT_STRNAME);
 				
-			delFiles(G_TEMP_FILE);  // delete the inFileName we made last time
+			//delFiles(G_TEMP_FILE);  // delete the inFileName we made last time
 			delFiles(G_DATE_FILE);  // delete the inFileName we made last time
-			 mySleep(2);
+			mySleep(1);
 			generalStringFixing(G_TEMPOUT_STRNAME, G_ORIG_FILE_NAME_WDIR);
 			
 			//sectionTask(G_TEMP_FILE, G_DATE_FILE);
 			//FileUtils.waitFor(G_DATE_FILE, 4);
 			
 			G_ORIG_FILE = null;
-			out.println("------------------NEW filename is: "+G_DATE_FILE);
-			out.println("------------------End of Loop");
-		
+			out.println("--------End of Loop------------NEW filename is: "+G_DATE_FILE);		
 			
-			myCount++;		
-		}
-			
-			
-		FileUtils.waitFor(G_DATE_FILE, 4);
-			
+			fileInDirCNT++;		
+		}			
+		FileUtils.waitFor(G_DATE_FILE, 2);
 		System.out.println("Finished");
-		//System.exit(0);
 	}
 
-	static String make_new_file_date_name(String ORIG_INFILE_STR) {
-		String LocalDateNmStr = null;
+
+	static String gofixhash(String oldstrg) {
+		System.out.println("just entered gofixhash");
+		String newstr = "empty";
+		StringBuffer newbuf = new StringBuffer(oldstrg);
+			//	String[] plansArry = {"Sun", "Mon","Mer", "Ven", "Mar", "Jup", "Sat","Nep", "Ura", "Plu"};		
+			//	String[] signsLista = {"Aries", "Taurus","Gemini", "Cancer", "Leo", 
+			//				"Virgo", "Libra","Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"};		
+		String[] signsList = {"Ari", "Tau","Gem", "Can", "Leo", 
+				"Vir", "Lib","Sco", "Sag", "Cap", "Aqu", "Pis"};		
+		String tempv ="";
+		boolean signmatch =false;
+	 		 		
+		Map<String, String> hm  =  makeNewhash();
+		String firstthird = oldstrg.substring(14,17);
+		String secondthird = oldstrg.substring(18,21);
+		String lastthird = oldstrg.substring(22,25);
+		System.out.println("first:  " + firstthird);
+		System.out.println("2nd  :  " + secondthird);
+		System.out.println("3rd  :  " + lastthird);
 		
-		try {
-
-			dateStringFileList =  FileUtils.readLines(G_ORIG_FILE);
-			String newDateString=dateStringFileList.get(5);
-			String newDateStr = newDateString.substring(8, 16);
-			verboseOut("new date string is: "+ newDateStr);
-			LocalDateNmStr = ORIG_INFILE_STR + "." + newDateStr + ".ics";
-			verboseOut("new LocalDateNmStr string is: "+ LocalDateNmStr);
-
-		} catch (IOException e) { 
-			e.printStackTrace();	
-		}	// catch
-
-		return LocalDateNmStr; 
-	}
-	
-	public static void verboseOut(String theoutline) {
-		if (G_VERBOSE==1) {
-			out.println(theoutline);
+		for (int i=0; i<12; i++) {
+		    tempv = signsList[i];
+		    if (tempv.equals(lastthird)) {
+		    	System.out.println("found a sign match in 3rd column");
+		    	signmatch = true;
+		    }
 		}
-	}
-	
-	
+//begin third column
+		    
+		String thirdrep = hm.get(lastthird);
+		System.out.println("found this in hash:  " + lastthird );
+		int start = 22;
+		int end = 25;
+		newbuf.delete(start, end); 
+		newbuf.insert(start,thirdrep);
+		System.out.println("new buf is: " + newbuf);
+		
+		
+//begin second column
+		String secondrep = hm.get(secondthird);
+		System.out.println("value of signmatch:  " + signmatch );
+		System.out.println("found this in hash:  " + secondrep );
+		start = 18;
+		end = 21;
+		newbuf.delete(start, end); 
+		if (signmatch) {   // change Conjunct a sign to Enters a sign
+			newbuf.insert(start,"Enters");
+		} else {
+			newbuf.insert(start,secondrep);
+		}
+		
+		System.out.println("new buf is: " + newbuf);
+		
+		
+		
+		
+		
+		
+		
+// begin first column		
+		String firstrep = hm.get(firstthird) + " ";
+		System.out.println("found this in hash:  " + firstrep );
+		start = 8;
+		end = 17;
+		newbuf.delete(start, end); 
+		newbuf.insert(9,firstrep);
+		System.out.println("new buf is: " + newbuf);
+		newstr =   newbuf.toString();
+		System.out.println("replaced string with new string... now fixed: " + newstr);
+		System.out.println("value of newstr:  " + newstr+ "return this new value  " + newstr);
+		return newstr;
+	} // gofixhash
+	 	
 	static void sectionTask(File theREADING_FROM_TMP_FILE, File theDATEFILE_WRTINGTO) {   // this part was done by perl script
 		List<String> tinySectionList;
 		int tinyCounter =0;
@@ -273,8 +255,30 @@ public class SFCALstandard extends SFCALstandardutil {
 						return false;
 					}
 		}			
-			 
-		 
 
+		static String make_new_file_date_name(String ORIG_INFILE_STR) {
+			String LocalDateNmStr = null;
+			
+			try {
+				dateStringFileList =  FileUtils.readLines(G_ORIG_FILE);
+				String newDateString=dateStringFileList.get(5);
+				String newDateStr = newDateString.substring(8, 16);
+				verboseOut("new date string is: "+ newDateStr);
+				LocalDateNmStr = ORIG_INFILE_STR + "." + newDateStr + ".ics";
+				verboseOut("new LocalDateNmStr string is: "+ LocalDateNmStr);
+
+			} catch (IOException e) { 
+				e.printStackTrace();	
+			}	// catch
+
+			return LocalDateNmStr; 
+		}
+		public static void verboseOut(String theoutline) {
+			if (G_VERBOSE==1) {
+				out.println(theoutline);
+			}
+		}
+		
+		
 }  // class
  
