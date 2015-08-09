@@ -7,8 +7,8 @@ import java.util.*;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
-import static java.lang.System.out;
 
+import static java.lang.System.out;
 import static com.nmschorr.SFCAL_standard.SFCALstandard.*;
 
 	
@@ -21,15 +21,17 @@ public class SFCALstandardutil {
 	static String replacedSignString;
 	static String voidFixedString;
 	String newSTR2="yes";	
-	static boolean useSUMMARYstr = false;
+	//static boolean useSUMMARYstr = false;
 	String[] plansArry = {"Sun", "Mon","Mer", "Ven", "Mar", "Jup", "Sat","Nep", "Ura", "Plu"};		
+	
+	
 	
 	static void generalStringFixing(String SFCALtempOneFilename, String sfcalFilename) {   
 		String genMainCharString = "";
 		boolean keepGoing = true;
 		File sfcalFile = new File(sfcalFilename);
 		String newSTR = "";
-		
+
 		File SFCALtempONE  =  new File(SFCALtempOneFilename);
 		CharSequence SUMstr = "SUMMARY:Tr-Tr";
 		CharSequence DEScs = "DESCRIPTION";
@@ -44,40 +46,63 @@ public class SFCALstandardutil {
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
 			// for each line in file:
-for (String cLINE : genFileARRAY)  {
-	keepGoing = checkLINEfunction(cLINE, safeCount) ;		
- 	G_VERBOSE = 1;
+			for (String cLINE : genFileARRAY)  {
+				keepGoing = checkLINEfunction(cLINE, safeCount) ;		
+				G_VERBOSE = 1;
 
-			if (keepGoing == true ) { 
-				StringUtils.chomp(cLINE);
-				System.out.println("realcount:  " + realCOUNT);
-				verboseOut(        "current line:               " + cLINE);
-				
-				genMainCharString  =   checkForChar(cLINE);
-				System.out.println("    char string is:         " + genMainCharString);
-			
-			 	if ( cLINE.contains(SUMstr)) {  /// if TR-TR only lines
-				 	newSTR = gofixhash(genMainCharString) ;
-				 	useSUMMARYstr = true;
-				 	FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
-			 	   }										
- 		 	else if ( cLINE.contains(DEStr) || cLINE.startsWith(" "))   {  /// if TR-TR only lines
- 			 	 newSTR = gofixDES(genMainCharString) ;
- 				//  useDESstr = true;
- 				 	FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
- 			 	   }										
-			 	else {
-					System.out.println("   writing ALT string to file         " + genMainCharString);
-					FileUtils.writeStringToFile(SFCALtempONE, genMainCharString +"\n", true);	
-				}
-				keepcount++;
-			   }	// if
- 			 }  //for string in array
-			}  // try
+				if (keepGoing == true ) { 
+					StringUtils.chomp(cLINE);
+					System.out.println("realcount:  " + realCOUNT);
+					verboseOut(        "current line:               " + cLINE);
+
+					genMainCharString  =   checkForChar(cLINE);
+					System.out.println("    char string is:         " + genMainCharString);
+
+					if ( cLINE.contains(SUMstr)) {  /// if TR-TR only lines
+						newSTR = gofixhash(genMainCharString) ;
+						//useSUMMARYstr = true;
+						FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
+					}										
+					else if ( cLINE.contains(DEStr) || cLINE.startsWith(" "))   {  /// if TR-TR only lines
+						newSTR = gofixDES(genMainCharString) ;
+						//  useDESstr = true;
+						FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
+					}										
+					else if (cLINE.startsWith("SUMMARY:Tr "))   { 
+						Map<String, String> newhash  =  makeNewhash();
+					   // StringBuffer newbuf = new StringBuffer(cLINE);
+						String dchar = "D";
+						String rchar = "R";
+						int cStart = cLINE.length()-2;  // there's a line ending too
+						String myStuff = cLINE.substring(cStart,cLINE.length()-1);
+						if (myStuff.equals(dchar))  { /// if TR-TR only lines
+							String strone  = genMainCharString.replace("SUMMARY:Tr ", "SUMMARY:");
+							newSTR  = strone.replace("D", "goes Direct");
+							String oldplan = " ";
+							String repval = " ";
+							 oldplan = newSTR.substring(8,11);
+							 if ( newhash.containsKey(oldplan)) {
+								 repval = (newhash.get(oldplan));
+							 }
+							String newSTR2 = newSTR.replace(oldplan, repval);
+							newSTR = newSTR2;
+							FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
+						}
+					}  // if (cLINE.st
+					else {
+						System.out.println("   writing ALT string to file         " + genMainCharString);
+						FileUtils.writeStringToFile(SFCALtempONE, genMainCharString +"\n", true);	
+					}
+					keepcount++;
+				}	// if
+
+			}  //for string in array
+		}  // try
 		catch (IOException e)  { 
 			e.printStackTrace();	 
-		     }  // catch
+		}  // catch
 	}	// end of method
+	
 	
 	static HashMap<String, String>  makeNewhash() {
 		HashMap <String, String> localHash  =  new HashMap<String, String>();
