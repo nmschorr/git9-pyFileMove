@@ -88,7 +88,7 @@ public class SFCALstandard extends SFCALstandardutil {
 			G_TEMP_FILE = new File(G_TEMPOUT_STRNAME);
 				
 			//delFiles(G_TEMP_FILE);  // delete the inFileName we made last time
-			delFiles(G_DATE_FILE);  // delete the inFileName we made last time
+			// delFiles(G_DATE_FILE);  // delete the inFileName we made last time
 			mySleep(1);
 			generalStringFixing(G_TEMPOUT_STRNAME, G_ORIG_FILE_NAME_WDIR);
 			

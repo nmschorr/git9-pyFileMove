@@ -9,6 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 
 import static java.lang.System.out;
+//import static com.nmschorr.SFCAL_editor.SFCALeditor.verboseOut;
 import static com.nmschorr.SFCAL_standard.SFCALstandard.*;
 
 	
@@ -36,14 +37,13 @@ public class SFCALstandardutil {
 		
 		File SFCALtempONE  =  new File(SFCALtempOneFilename);
 		CharSequence SUMstr = "SUMMARY:Tr-Tr";
-		CharSequence DEScs = "DESCRIPTION";
 		String DEStr = "DESCRIPTION";
 
 		try {
 			List<String> genFileARRAY  =   FileUtils.readLines(sfcalFile);
 			int realCOUNT  =  genFileARRAY.size();
 			int safeCount = realCOUNT-5;
-			System.out.println("safecount:  " +  safeCount);			
+			System.out.println("realCOUNT:  " +  realCOUNT + "   safecount:  " +  safeCount);			
 			System.out.println("----------------------------------%%%%%%%##### total lines: " +  genFileARRAY.size());
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
@@ -62,12 +62,10 @@ public class SFCALstandardutil {
 
 					if ( cLINE.contains(SUMstr)) {  /// if TR-TR only lines
 						newSTR = gofixhash(genMainCharString) ;
-						//useSUMMARYstr = true;
 						FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
 					}										
 					else if ( cLINE.contains(DEStr) || cLINE.startsWith(" "))   {  /// if TR-TR only lines
 						newSTR = gofixDES(genMainCharString) ;
-						//  useDESstr = true;
 						FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
 					}										
 					else if (cLINE.startsWith("SUMMARY:Tr "))   { 
@@ -98,7 +96,12 @@ public class SFCALstandardutil {
 						}
 						newLocLINE= newSTR.replace(oldPlanet, newPlanet);
 						FileUtils.writeStringToFile(SFCALtempONE, newLocLINE +"\n", true);	
-					}  // if (cLINE.st
+					}  // SUMMARY:TR 	
+					else if ( cLINE.contains("DTSTAR") ) {
+						String theDTSTline = chkAddDTEND(cLINE);
+						FileUtils.writeStringToFile(SFCALtempONE, cLINE, true);  // start line
+						FileUtils.writeStringToFile(SFCALtempONE, theDTSTline, true);
+				}
 					else {
 						System.out.println("   writing ALT string to file         " + genMainCharString);
 						FileUtils.writeStringToFile(SFCALtempONE, genMainCharString +"\n", true);	
@@ -113,6 +116,16 @@ public class SFCALstandardutil {
 		}  // catch
 	}	// end of method
 	
+	static String chkAddDTEND (String theLine) {
+		if ( theLine.contains("DTSTAR") )   {  		// double check			
+			String newback = theLine.substring(8,23) + "Z";
+			out.println("!!@@@@@  the line is  " + theLine);
+			String newDTEND = newfront + newback +"\n";  					
+			out.println("DTEND: new line is " + newDTEND);
+			return newDTEND;
+		}
+		else return theLine;
+	}
 	
 	static HashMap<String, String>  makeNewhash() {
 		HashMap <String, String> localHash  =  new HashMap<String, String>();
@@ -195,15 +208,17 @@ public class SFCALstandardutil {
 						&& (keepcount < 400) )   { KG  =  true; } 
 				else { KG = false; }
 
-				if ( ( theLocLine.contains("TRANSPARENT")) ||
+				if ( ( theLocLine.contains("THISISATESTONLY")) 
+					//	( theLocLine.contains("TRANSPARENT")) 
+						///     ||
 					//	( theLocLine.contains("DTEND")) || 
-						( theLocLine.contains("VCALENDAR")) || 
-						( theLocLine.contains("VEVENT")) || 
+					//	( theLocLine.contains("VCALENDAR")) || 
+					//	( theLocLine.contains("VEVENT")) || 
 					//	( theLocLine.contains("DTSTART")) || 
-						( theLocLine.contains("PRODID:")) || 
-						( theLocLine.contains("VERSION:")) || 
-						( theLocLine.contains("METHOD:")) || ( theLocLine.contains("UID")) 
-						|| ( theLocLine.contains("CATEGORIES")) || ( theLocLine.contains("DTSTAMP")) 
+					//	( theLocLine.contains("PRODID:")) || 
+					//	( theLocLine.contains("VERSION:")) || 
+					//	( theLocLine.contains("METHOD:")) || ( theLocLine.contains("UID")) 
+					//	|| ( theLocLine.contains("CATEGORIES")) || ( theLocLine.contains("DTSTAMP")) 
 						)
 
 				{ 
