@@ -109,47 +109,53 @@ public class SFCALstandard extends SFCALstandardutil {
 		HashMap <String, String> spellhm  =  new HashMap<String, String>();
 		spellhm.put("Stabilise","Stabilize");
 		spellhm.put("organised","organized");
-		spellhm.put("vital","very vital");
-		
-		//.Text = "Stabilise","Stabilize"
-		//.Text = "organised","organized"
-		//.Text = "excelent","excellent"
-		//.Text = "realise","realize"
-		//.Text = "spiritualilty","spirituality"
-		//.Text = "possibiities","possibilities"
-		//.Text = "fantasise","fantasize"
-		//"\n"
+		spellhm.put("excelent","excellent");
+		spellhm.put("realise","realize");
+		spellhm.put("spiritualilty","spirituality");
+		spellhm.put("possibiities","possibilities");
+		spellhm.put("fantasise","fantasize");
 		return spellhm;
 	}
 
 // new method // --------------------------------------------------------------	 	
-	static String gofixDES(String oldstrg) {
+	static String gofixDES( String  oldstrg) {
 		System.out.println("just entered gofixDES. oldstrg is: " +oldstrg );
 		String newstr = "empty";
-		//StringBuffer newbuf = new StringBuffer(oldstrg);
-		///HashMap <String, String>  hmSpell = makeSpellhm();
-		//String tempcheck = "Stabilise";
-		///String tempcheck = "\\n";
+		String finSTR = "";
+		HashMap<String, String> hMAP = makeSpellhm();
 		CharSequence tempcheckCS = "\\n";
 		String tempcheck = (String)tempcheckCS;
-		//int locIndex=0;
 		    
-	    if (oldstrg.contains(tempcheckCS)) {
+	    if (oldstrg.contains(tempcheckCS)) {  // for newline only
 	    	System.out.println("!! Inside checker. found a misspelling : " + tempcheck);
-			//String torep = hmSpell.get(tempcheck);
 			String torep = " - ";
-//	    	locIndex = newbuf.indexOf(tempcheck);
-//	    	System.out.println("index is : " + locIndex);
-//			newbuf.delete(locIndex, locIndex + 11); 
-//			newbuf.insert(locIndex,torep);
-//			System.out.println("new buf is: " + newbuf);
-//			newstr =   newbuf.toString();
 	    	newstr = oldstrg.replace(tempcheck, torep);
 			System.out.println("replaced string with new string... now fixed: " + newstr);
 			System.out.println("!!!! =======  !!!  value of newstr:  " + newstr+ "return this new value  " + newstr);
-			return newstr;
+	 		finSTR = newstr;
 	    }		
-	    else return oldstrg;
+	    else if (oldstrg.startsWith(" ")) {   // spelling errors in extra lines of DESCRIPTION
+	    	String oldVal;
+	    	String newVal;
+	    	for (String key : hMAP.keySet()) {
+	    		oldVal= key;
+	    		newVal= hMAP.get(key);
+	    		//String tempRep = hMAP.get("Stabilise");
+	    		out.println("\n\n" + "!!!----- value of hmap retrieval: " + oldVal + " " + newVal);
+	    		//String tReplace = "Stabilize";
+	    		if (oldstrg.contains((CharSequence)oldVal)) {
+	    			newstr = oldstrg.replace(oldVal, newVal);
+	    			System.out.println("replaced string with new string... now fixed: " + newstr);
+	    			finSTR = newstr;
+	    			break;
+	    		}
+	    		else finSTR = oldstrg;
+	    	
+	    	}  // for
+	    }
+	    else  { 
+	 		finSTR = oldstrg; }
+	    return finSTR;
 	}
 	
 // new method // --------------------------------------------------------------	 	

@@ -7,6 +7,7 @@ import java.util.*;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import static java.lang.System.out;
 
 import static com.nmschorr.SFCAL_standard.SFCALstandard.*;
 
@@ -60,7 +61,7 @@ for (String cLINE : genFileARRAY)  {
 				 	useSUMMARYstr = true;
 				 	FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
 			 	   }										
- 		 	else if ( cLINE.contains(DEStr))   {  /// if TR-TR only lines
+ 		 	else if ( cLINE.contains(DEStr) || cLINE.startsWith(" "))   {  /// if TR-TR only lines
  			 	 newSTR = gofixDES(genMainCharString) ;
  				//  useDESstr = true;
  				 	FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
@@ -151,33 +152,6 @@ for (String cLINE : genFileARRAY)  {
 		else { return checkLine;
 			}
 		}
-
-//	static void checkForSigns(String origLine, String theVal, String theRep) {
-//		String theFixedLine;
-//		verboseOut("inside checkForSigns checking val rep: "+theVal + theRep);		
-//		if (origLine.contains(theVal))  {
-//			System.out.println("!!!---            ---FOUND sign CHAR -----!!!!  !!! /n"+origLine);
-//			theFixedLine  =  origLine.replace( theVal, theRep);  
-//			//theFixedLine  =  origLine.replace( "Cn", "Cancer ");  
-//			System.out.println("------------------------The fixed line: " + theFixedLine);
-//			NEWREPLACEDstring =  theFixedLine;
-//		}
-//	}
-
-		
-//		static void replaceSigns(String theInputStr) {
-//			String returnString = null;
-//			perfectString = null;
-//			verboseOut("inside replaceSigns");		
-//			HashMap <String, String> theHashmap  =  makemyhash();
-//
-//			for (String key : theHashmap.keySet()) {
-//				checkForSigns(theInputStr, key, theHashmap.get(key));
-//			}   		
-//			verboseOut("val of perfectString is: " + perfectString);
-//		}	
-//	
-
 		static boolean checkLINEfunction(String theLocLine, int safecount) {
 			boolean KG = true;
 			if   ((theLocLine.length() > 0 ) && (theLocLine.length() < safecount) )   {
