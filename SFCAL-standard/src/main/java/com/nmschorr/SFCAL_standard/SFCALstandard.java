@@ -108,10 +108,13 @@ public class SFCALstandard extends SFCALstandardutil {
 	static HashMap<String, String> makeSpellhm() {
 		HashMap <String, String> spellhm  =  new HashMap<String, String>();
 		spellhm.put("Stabilise","Stabilize");
+		spellhm.put("Socialise","Socialize");
+		spellhm.put("Entering","Enters");
 		spellhm.put("organised","organized");
 		spellhm.put("excelent","excellent");
 		spellhm.put("realise","realize");
 		spellhm.put("spiritualilty","spirituality");
+		spellhm.put("wilfull","willful");
 		spellhm.put("possibiities","possibilities");
 		spellhm.put("fantasise","fantasize");
 		return spellhm;
