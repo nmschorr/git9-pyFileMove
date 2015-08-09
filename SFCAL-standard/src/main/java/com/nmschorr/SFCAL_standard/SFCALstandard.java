@@ -23,6 +23,7 @@ import static java.lang.System.out;
 
 import org.apache.commons.io.FileUtils;
 //import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * This class contains methods that remove extra calendar events from an ics calendar file.
@@ -117,22 +118,31 @@ public class SFCALstandard extends SFCALstandardutil {
 		spellhm.put("wilfull","willful");
 		spellhm.put("possibiities","possibilities");
 		spellhm.put("fantasise","fantasize");
+		//spellhm.put("Transiting ","");
+		//spellhm.put("Conjunction","Conjunct");
 		return spellhm;
 	}
 
 // new method // --------------------------------------------------------------	 	
 	static String gofixDES( String  oldstrg) {
+		String tString = oldstrg.replaceAll("%0A","");  // get rid of CRs  - \n
+ 
+		oldstrg=tString;
 		System.out.println("just entered gofixDES. oldstrg is: " +oldstrg );
 		String newstr = "empty";
 		String finSTR = "";
 		HashMap<String, String> hMAP = makeSpellhm();
 		CharSequence tempcheckCS = "\\n";
 		String tempcheck = (String)tempcheckCS;
-		    
+		String newTempStr="";
+		
 	    if (oldstrg.contains(tempcheckCS)) {  // for newline only
 	    	System.out.println("!! Inside checker. found a misspelling : " + tempcheck);
 			String torep = " - ";
 	    	newstr = oldstrg.replace(tempcheck, torep);
+	    	newTempStr = newstr.replace("Transiting ","" );
+	    	newstr= newTempStr.replace("Conjunction","Conjunct");
+	    	
 			System.out.println("replaced string with new string... now fixed: " + newstr);
 			System.out.println("!!!! =======  !!!  value of newstr:  " + newstr+ "return this new value  " + newstr);
 	 		finSTR = newstr;
