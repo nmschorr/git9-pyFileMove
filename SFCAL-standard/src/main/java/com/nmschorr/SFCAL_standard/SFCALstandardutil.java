@@ -18,58 +18,57 @@ public class SFCALstandardutil {
 	static final String newfront  =  "DTEND:";
 	static String NEWREPLACEDstring;
 	static String perfectString;
-	static int keepcount = 1;
+	static int myLINEct =0;
 	static String replacedSignString;
 	static String voidFixedString;
-	String newSTR2="yes";	
 	//static boolean useSUMMARYstr = false;
 	String[] plansArry = {"Sun", "Mon","Mer", "Ven", "Mar", "Jup", "Sat","Nep", "Ura", "Plu"};		
 	
 	
 	
 	static void generalStringFixing(String SFCALtempOneFilename, String sfcalFilename) {   
-		String genMainCharString = "";
+		String newLocLINE1 = "";
+		String newLocLINE2 = "";
 		boolean keepGoing = true;
 		File sfcalFile = new File(sfcalFilename);
-		String newSTR = "";
-		String newLocLINE="";
-		String newLocLINE2="";
-		
 		File SFCALtempONE  =  new File(SFCALtempOneFilename);
 		CharSequence SUMstr = "SUMMARY:Tr-Tr";
 		String DEStr = "DESCRIPTION";
+		String lineEND = "\n";
 
 		try {
 			List<String> genFileARRAY  =   FileUtils.readLines(sfcalFile);
-			int realCOUNT  =  genFileARRAY.size();
-			int safeCount = realCOUNT-5;
-			System.out.println("realCOUNT:  " +  realCOUNT + "   safecount:  " +  safeCount);			
+			int arraySIZE  =  genFileARRAY.size();
+			int safeSIZE = arraySIZE-5;
+			System.out.println("realCOUNT:  " +  arraySIZE + "   safecount:  " +  safeSIZE);			
 			System.out.println("----------------------------------%%%%%%%##### total lines: " +  genFileARRAY.size());
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
 			// for each line in file:
 			for (String cLINE : genFileARRAY)  {
-				keepGoing = checkLINEfunction(cLINE, safeCount) ;		
+				keepGoing = checkLINEfunction(cLINE, safeSIZE) ;		
 				G_VERBOSE = 1;
 
 				if (keepGoing == true ) { 
-					StringUtils.chomp(cLINE);
-					System.out.println("realcount:  " + realCOUNT);
+					System.out.println("myLINEct:  " + myLINEct);
 					verboseOut(        "current line:               " + cLINE);
 
-					genMainCharString  =   checkForChar(cLINE);
-					System.out.println("    char string is:         " + genMainCharString);
-
+					newLocLINE2  =   chkForWeirdChar(cLINE);
+					cLINE=newLocLINE2;
+					
+					System.out.println("    char string is:         " + cLINE);
+   // the ifs start here
 					if ( cLINE.contains(SUMstr)) {  /// if TR-TR only lines
-						newSTR = gofixhash(genMainCharString) ;
-						FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
+						newLocLINE2 = gofixhash(cLINE) ;
+						FileUtils.writeStringToFile(SFCALtempONE, newLocLINE2 + lineEND, true);	
 					}										
 					else if ( cLINE.contains(DEStr) || cLINE.startsWith(" "))   {  /// if TR-TR only lines
-						newSTR = gofixDES(genMainCharString) ;
-						FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
+	 					//StringUtils.chomp(cLINE);  // chomp is removing the Z
+						newLocLINE2 = gofixDES(cLINE) ;
+						FileUtils.writeStringToFile(SFCALtempONE, newLocLINE2 + lineEND, true);	
 					}										
 					else if (cLINE.startsWith("SUMMARY:Tr "))   { 
-						newLocLINE = cLINE.replace("Tr ", "");
+						newLocLINE2 = cLINE.replace("Tr ", "");
 						
 						String oldPlanet = "";
 						String newPlanet = "";
@@ -78,35 +77,36 @@ public class SFCALstandardutil {
 
 						Map<String, String> newhash  =  makeNewhash();
 						
-						int cStart = newLocLINE.length()-3;  // a space & there's a line ending too
-						int cEnd = newLocLINE.length()-1;
-						String newSub = newLocLINE.substring(cStart,cEnd);  // get the last char
+						int cStart = newLocLINE2.length()-3;  // a space & there's a line ending too
+						int cEnd = newLocLINE2.length()-1;
+						String newSub = newLocLINE2.substring(cStart,cEnd);  // get the last char
 						
 						if (newSub.equals(rchar))  {  
-							newLocLINE2  = newLocLINE.replace(rchar, " goes Retrograde");
+							newLocLINE1  = newLocLINE2.replace(rchar, " goes Retrograde");
 						}
 						else if (newSub.equals(dchar))  { /// if TR-TR only lines
-							newLocLINE2  = newLocLINE.replace(dchar, " goes Direct");
+							newLocLINE1  = newLocLINE2.replace(dchar, " goes Direct");
 						}
-						newSTR=newLocLINE2;
 						
-						oldPlanet = newSTR.substring(8,11);
+						oldPlanet = newLocLINE1.substring(8,11);
 						if ( newhash.containsKey(oldPlanet)) {
 							newPlanet = (newhash.get(oldPlanet));
 						}
-						newLocLINE= newSTR.replace(oldPlanet, newPlanet);
-						FileUtils.writeStringToFile(SFCALtempONE, newLocLINE +"\n", true);	
+						cLINE= newLocLINE1.replace(oldPlanet, newPlanet);
+						FileUtils.writeStringToFile(SFCALtempONE, cLINE + lineEND, true);	
 					}  // SUMMARY:TR 	
 					else if ( cLINE.contains("DTSTAR") ) {
 						String theDTSTline = chkAddDTEND(cLINE);
-						FileUtils.writeStringToFile(SFCALtempONE, cLINE, true);  // start line
-						FileUtils.writeStringToFile(SFCALtempONE, theDTSTline, true);
+						FileUtils.writeStringToFile(SFCALtempONE, cLINE + lineEND, true);  // start line
+						FileUtils.writeStringToFile(SFCALtempONE, theDTSTline + lineEND, true);
 				}
 					else {
-						System.out.println("   writing ALT string to file         " + genMainCharString);
-						FileUtils.writeStringToFile(SFCALtempONE, genMainCharString +"\n", true);	
+						System.out.println("   writing ORIGINAL string to file         " + cLINE);
+						FileUtils.writeStringToFile(SFCALtempONE, cLINE+ lineEND, true);	
 					}
-					keepcount++;
+					myLINEct++;
+					newLocLINE1 = "";
+					newLocLINE2 = "";
 				}	// if
 
 			}  //for string in array
@@ -114,13 +114,14 @@ public class SFCALstandardutil {
 		catch (IOException e)  { 
 			e.printStackTrace();	 
 		}  // catch
+
 	}	// end of method
 	
 	static String chkAddDTEND (String theLine) {
 		if ( theLine.contains("DTSTAR") )   {  		// double check			
 			String newback = theLine.substring(8,23) + "Z";
-			out.println("!!@@@@@  the line is  " + theLine);
-			String newDTEND = newfront + newback +"\n";  					
+			out.println("                   !! inside chkAddDTEND -----                        @@@@@  the line is  " + theLine);
+			String newDTEND = newfront + newback;  					
 			out.println("DTEND: new line is " + newDTEND);
 			return newDTEND;
 		}
@@ -187,7 +188,7 @@ public class SFCALstandardutil {
 		} 
 	  } // mySleep
 	
-	static String checkForChar(String checkLine) {
+	static String chkForWeirdChar(String checkLine) {
 		 
 		if (checkLine.contains( "\uFFFD"))  {
 			System.out.println("!!!---            ---FOUND WEIRD CHAR -----!!!!  !!!  ");
@@ -204,8 +205,8 @@ public class SFCALstandardutil {
 			boolean KG = true;
 			if   ((theLocLine.length() > 0 ) && (theLocLine.length() < safecount) )   {
 
-				if   ((theLocLine.length() > 0 )  
-						&& (keepcount < 400) )   { KG  =  true; } 
+				if   ((theLocLine.length() > 0 )  && (myLINEct < safecount) )   
+					{ KG  =  true; } 
 				else { KG = false; }
 
 				if ( ( theLocLine.contains("THISISATESTONLY")) 
@@ -220,7 +221,6 @@ public class SFCALstandardutil {
 					//	( theLocLine.contains("METHOD:")) || ( theLocLine.contains("UID")) 
 					//	|| ( theLocLine.contains("CATEGORIES")) || ( theLocLine.contains("DTSTAMP")) 
 						)
-
 				{ 
 				 KG =false; 
 				}
@@ -246,21 +246,6 @@ public class SFCALstandardutil {
 			myHashmap.put("Pi", "Pisces ");
 			return myHashmap;
 		}
-
-//		static void dtstar() {
-//		String firstfront;
-//		String newback;
-//		String newComboStr;  
-//		firstfront  =  checkCharString.substring(0,6);
-//		if ( firstfront.equals("DTSTAR") )   {  					
-//			String newback  =  checkCharString.substring(8,23) + "Z";
-//			verboseOut("!!@@@@@  the line is  " + checkCharString);
-//			newComboStr  =  newfront + newback +"\n";  					
-//			verboseOut("DTEND: new line is " + newComboStr);
-//			FileUtils.writeStringToFile(SFCALtempONE, newComboStr, true);	
-//			}
-//		}
-	
 }
 
 
