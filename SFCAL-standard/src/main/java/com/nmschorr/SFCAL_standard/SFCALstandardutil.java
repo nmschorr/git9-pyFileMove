@@ -31,7 +31,9 @@ public class SFCALstandardutil {
 		boolean keepGoing = true;
 		File sfcalFile = new File(sfcalFilename);
 		String newSTR = "";
-
+		String newLocLINE="";
+		String newLocLINE2="";
+		
 		File SFCALtempONE  =  new File(SFCALtempOneFilename);
 		CharSequence SUMstr = "SUMMARY:Tr-Tr";
 		CharSequence DEScs = "DESCRIPTION";
@@ -69,25 +71,33 @@ public class SFCALstandardutil {
 						FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
 					}										
 					else if (cLINE.startsWith("SUMMARY:Tr "))   { 
+						newLocLINE = cLINE.replace("Tr ", "");
+						
+						String oldPlanet = "";
+						String newPlanet = "";
+						String dchar = " D";  
+						String rchar = " R";  // MUST have a space first
+
 						Map<String, String> newhash  =  makeNewhash();
-					   // StringBuffer newbuf = new StringBuffer(cLINE);
-						String dchar = "D";
-						String rchar = "R";
-						int cStart = cLINE.length()-2;  // there's a line ending too
-						String myStuff = cLINE.substring(cStart,cLINE.length()-1);
-						if (myStuff.equals(dchar))  { /// if TR-TR only lines
-							String strone  = genMainCharString.replace("SUMMARY:Tr ", "SUMMARY:");
-							newSTR  = strone.replace("D", "goes Direct");
-							String oldplan = " ";
-							String repval = " ";
-							 oldplan = newSTR.substring(8,11);
-							 if ( newhash.containsKey(oldplan)) {
-								 repval = (newhash.get(oldplan));
-							 }
-							String newSTR2 = newSTR.replace(oldplan, repval);
-							newSTR = newSTR2;
-							FileUtils.writeStringToFile(SFCALtempONE, newSTR +"\n", true);	
+						
+						int cStart = newLocLINE.length()-3;  // a space & there's a line ending too
+						int cEnd = newLocLINE.length()-1;
+						String newSub = newLocLINE.substring(cStart,cEnd);  // get the last char
+						
+						if (newSub.equals(rchar))  {  
+							newLocLINE2  = newLocLINE.replace(rchar, " goes Retrograde");
 						}
+						else if (newSub.equals(dchar))  { /// if TR-TR only lines
+							newLocLINE2  = newLocLINE.replace(dchar, " goes Direct");
+						}
+						newSTR=newLocLINE2;
+						
+						oldPlanet = newSTR.substring(8,11);
+						if ( newhash.containsKey(oldPlanet)) {
+							newPlanet = (newhash.get(oldPlanet));
+						}
+						newLocLINE= newSTR.replace(oldPlanet, newPlanet);
+						FileUtils.writeStringToFile(SFCALtempONE, newLocLINE +"\n", true);	
 					}  // if (cLINE.st
 					else {
 						System.out.println("   writing ALT string to file         " + genMainCharString);
