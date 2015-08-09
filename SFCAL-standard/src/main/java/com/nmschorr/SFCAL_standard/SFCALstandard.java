@@ -105,7 +105,7 @@ public class SFCALstandard extends SFCALstandardutil {
 
 // new method // --------------------------------------------------------------	 	
 
-	static HashMap makeSpellhm() {
+	static HashMap<String, String> makeSpellhm() {
 		HashMap <String, String> spellhm  =  new HashMap<String, String>();
 		spellhm.put("Stabilise","Stabilize");
 		spellhm.put("organised","organized");
@@ -140,12 +140,10 @@ public class SFCALstandard extends SFCALstandardutil {
 	    	for (String key : hMAP.keySet()) {
 	    		oldVal= key;
 	    		newVal= hMAP.get(key);
-	    		//String tempRep = hMAP.get("Stabilise");
 	    		out.println("\n\n" + "!!!----- value of hmap retrieval: " + oldVal + " " + newVal);
-	    		//String tReplace = "Stabilize";
 	    		if (oldstrg.contains((CharSequence)oldVal)) {
 	    			newstr = oldstrg.replace(oldVal, newVal);
-	    			System.out.println("replaced string with new string... now fixed: " + newstr);
+	    			System.out.println("SPELLING ERROR!!!! ----------replaced string with new string... now fixed: " + newstr);
 	    			finSTR = newstr;
 	    			break;
 	    		}
