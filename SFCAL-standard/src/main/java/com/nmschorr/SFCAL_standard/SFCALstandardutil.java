@@ -59,7 +59,7 @@ public class SFCALstandardutil {
 					System.out.println("    char string is:         " + cLINE);
    // the ifs start here
 					if ( cLINE.contains(SUMstr)) {  /// if TR-TR only lines
-						newLocLINE2 = gofixhash(cLINE) ;
+						newLocLINE2 = fixSUMMARYsigns(cLINE) ;
 						FileUtils.writeStringToFile(SFCALtempONE, newLocLINE2 + lineEND, true);	
 					}										
 					else if ( cLINE.contains(DEStr) || cLINE.startsWith(" "))   {  /// if TR-TR only lines

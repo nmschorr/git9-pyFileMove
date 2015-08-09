@@ -170,8 +170,10 @@ public class SFCALstandard extends SFCALstandardutil {
 	}
 	
 // new method // --------------------------------------------------------------	 	
-	static String gofixhash(String oldstrg) {
-		System.out.println("just entered gofixhash");
+	static String fixSUMMARYsigns(String oldstrg) {
+		String tstring = oldstrg.replace("SUMMARY: ", "SUMMARY:");
+		oldstrg=tstring;
+		System.out.println("just entered fixSUMMARYsigns");
 		String newstr = "empty";
 		StringBuffer newbuf = new StringBuffer(oldstrg);
 		String[] signsList = {"Ari", "Tau","Gem", "Can", "Leo", 
@@ -218,12 +220,13 @@ public class SFCALstandard extends SFCALstandardutil {
 		System.out.println("new buf is: " + newbuf);
 				
 // begin first column		
-		String firstrep = hm.get(firstthird) + " ";
+		String firstrep = hm.get(firstthird);
+		//String firstrep = hm.get(firstthird) + " ";
 		System.out.println("found this in hash:  " + firstrep );
 		start = 8;
 		end = 17;
 		newbuf.delete(start, end); 
-		newbuf.insert(9,firstrep);
+		newbuf.insert(8,firstrep);
 		System.out.println("new buf is: " + newbuf);
 		newstr =   newbuf.toString();
 		System.out.println("replaced string with new string... now fixed: " + newstr);
