@@ -1,36 +1,33 @@
+/**
+ * This class contains methods that remove extra calendar events from an ics calendar file.
+ * @author Nancy M. Schorr
+ * @version 1.1
+ * 
+ */
 package com.nmschorr.SFCAL_editor;
 
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import static com.nmschorr.SFCAL_editor.SFCALeditor.*;
-
-//static String MainInDirNm="E:\\sfcalfiles";
-//public static File DATE_OUTFILE;
-//public static String DATE_OUTFILE_STR;
-//public static String GLOBAL_DATE_FILE_NAME;
-//static File GLOBAL_DATE_FILE;
-//public static String GLOBAL_ORIG_FILE_NAME;
-
 	
+
 public class SFCALutil {
   	static String CtmpDir="C:\\tmp";
- 	//static String SFCALtempOneFilename = CtmpDir + "\\SFCALtemp1.ics";
 	final static String LINE_FEED = System.getProperty("line.separator");
 	static final String newfront = "DTEND:";
 	static String NEWREPLACEDstring;
 	static String perfectString;
+
 	
 	static void generalStringFixing(String SFCALtempOneFilename, File localOriginalFile) {   
 		String firstfront;
 		String newback;
 		String newComboStr;  
 		String checkCharString;
-		String replacedSignString;
 		String voidFixedString;
 
 		try {
@@ -50,8 +47,7 @@ public class SFCALutil {
 				NEWREPLACEDstring = checkCharString;
 				replaceSigns(checkCharString);
 				
-				verboseOut("value of NEWREPLACEDstring is: "+ NEWREPLACEDstring);
-				
+				verboseOut("value of NEWREPLACEDstring is: "+ NEWREPLACEDstring);				
 
 				if (NEWREPLACEDstring.contains("Moon goes void")) {
 					voidFixedString = "SUMMARY:Moon void of course";
@@ -88,9 +84,6 @@ public class SFCALutil {
 		}
 	}
 
-	static void fileSetup() {
-	} 
-
 	
 	protected static void mySleep(int timewait) {
 		try {
@@ -99,6 +92,7 @@ public class SFCALutil {
 			System.out.println(e);
 		} 
 	  } // mySleep
+	
 	
 	static String checkForChar(String checkLine) {
 		 
@@ -114,6 +108,7 @@ public class SFCALutil {
 			}
 		}
 
+	
 	static void checkForSigns(String origLine, String theVal, String theRep) {
 		String theFixedLine;
 		verboseOut("inside checkForSigns checking val rep: "+theVal + theRep);		
@@ -127,24 +122,21 @@ public class SFCALutil {
 	}
 
 		
-		static void replaceSigns(String theInputStr) {
-			String returnString=null;
-			perfectString=null;
-			verboseOut("inside replaceSigns");		
-			HashMap <String, String> theHashmap = makemyhash();
+	static void replaceSigns(String theInputStr) {
+		String returnString=null;
+		perfectString=null;
+		verboseOut("inside replaceSigns");		
+		HashMap <String, String> theHashmap = makemyhash();
 
-			for (String key : theHashmap.keySet()) {
-				checkForSigns(theInputStr, key, theHashmap.get(key));
-			}   
-			
-			verboseOut("val of perfectString is: " + perfectString);
-						
-			 
-	 
-			 
+		for (String key : theHashmap.keySet()) {
+			checkForSigns(theInputStr, key, theHashmap.get(key));
+		}   
+
+		verboseOut("val of perfectString is: " + perfectString);
 	}	
+
 	
-		static HashMap<String, String>  makemyhash() {
+	static HashMap<String, String>  makemyhash() {
 		HashMap <String, String> myHashmap = new HashMap<String, String>();
 		myHashmap.put("Cn", "Cancer ");
 		myHashmap.put("Ar", "Aries ");
@@ -160,10 +152,8 @@ public class SFCALutil {
 		myHashmap.put("Pi", "Pisces ");
 		return myHashmap;
 	}
-
 	
-	
-}
+}  // end of class
 
 
 

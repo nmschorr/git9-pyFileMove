@@ -6,39 +6,31 @@
  * It is run through the Perl script, then the Word macros.  
  * Ideally that would all take place in one Java executable -
  * but that's a project for the future.
-
+ *
  * This little program is the final step in preparing the SFCAL.ics file 
  * for uploading in Google or another calendar system.
-**/
-
-// Note: can't use an iterator because the file isn't being read that way
-
-package com.nmschorr.SFCAL_editor;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static java.lang.System.out;
-
-import org.apache.commons.io.FileUtils;
-  //import org.apache.commons.lang.StringUtils;
-
-/**
+ * *
  * This class contains methods that remove extra calendar events from an ics calendar file.
  * @author Nancy M. Schorr
  * @version 1.1
  * 
  */
 
+package com.nmschorr.SFCAL_editor;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
+import static java.lang.System.out;
+import org.apache.commons.io.FileUtils;
+
+
 public class SFCALeditor extends SFCALutil {
 	static List<String> tempFileList = new ArrayList<String>();
 	static List<String> dateStringFileList = new ArrayList<String>();
 	static int eventcount = 0;		 
 	static String MainIndirName = "E:\\sfcalfiles";
- 	static String MainOutdirName = "C:\\tmp";
+ 	static String MainOutdirName = "C:\\SFCALOUT\\vds";
 	static String IndirVoidsName = MainIndirName +"\\vds";
  	static String GLOBAL_TEMPOUT_STRNAME;
  	static String GLOBAL_ORIG_FILE_NAME_WDIR;
@@ -51,31 +43,25 @@ public class SFCALeditor extends SFCALutil {
 	static boolean checkToss = false;
 	public static File filesDir;
 	public static String GLOBAL_DATE_FILE_NAME;
-	public 	static File GLOBAL_DATE_FILE;
+	public static File GLOBAL_DATE_FILE;
 	public static String GLOBAL_ORIG_FILE_NAME;
 	public static File GLOBAL_ORIG_FILE;
-	public 	static File GLOBAL_TEMP_FILE;
-	public 	static String GLOBAL_DATE_FILE_NAME_DIR;
-	
- 	
-	
+	public static File GLOBAL_TEMP_FILE;
+	public static String GLOBAL_DATE_FILE_NAME_DIR;
 	static int GLOBAL_VERBOSE=0;
-	 
+
+// new method: ----------------------------------------------------------------	
 	public static void main(String[] args) {
 		File filesDir = new File(IndirVoidsName);  //READ the list of files in sfcalfiles/vds dir
 		String[] arryOfInFiles = filesDir.list();	// create a list of names of those files	
 		out.println("	NEW LIST: " + filesDir.list());
-		int myCount=0;
-		 
-		
+		int myCount=0;		 		
 		int arraysize = arryOfInFiles.length;
-	arraysize = 1;
 
 		while (myCount < arraysize) {  
 			String currentInfile= arryOfInFiles[myCount];
 			   
-			out.println("-----------------------------------");
-			out.println("-----------------------------------filename is: " + currentInfile);
+			out.println("----------------------------------- filename is: " + currentInfile);
 			out.println("--------------######---------------------LOOP# " + myCount);
 
 			GLOBAL_ORIG_FILE_NAME = 	currentInfile;
@@ -101,23 +87,19 @@ public class SFCALeditor extends SFCALutil {
 			GLOBAL_ORIG_FILE = null;
 			out.println("------------------NEW filename is: "+GLOBAL_DATE_FILE);
 			out.println("------------------End of Loop");
-		
-			
+					
 			myCount++;		
-		}
-			
-			
+		}			
 		FileUtils.waitFor(GLOBAL_DATE_FILE, 4);
-			
 		System.out.println("Finished");
-		//System.exit(0);
 	}
+
+// new method: ----------------------------------------------------------------	
 
 	static String make_new_file_date_name(String ORIG_INFILE_STR) {
 		String LocalDateNmStr = null;
 		
 		try {
-
 			dateStringFileList =  FileUtils.readLines(GLOBAL_ORIG_FILE);
 			String newDateString=dateStringFileList.get(5);
 			String newDateStr = newDateString.substring(8, 16);
@@ -132,6 +114,7 @@ public class SFCALeditor extends SFCALutil {
 		return LocalDateNmStr; 
 	}
 	
+// new method: ----------------------------------------------------------------	
 	public static void verboseOut(String theoutline) {
 		if (GLOBAL_VERBOSE==1) {
 			out.println(theoutline);
@@ -161,8 +144,7 @@ public class SFCALeditor extends SFCALutil {
 			newListSizeMinus = tempFileList.size()-1;
 
 			while ( locLineCount < newListSizeMinus )  
-			{  // while locLineCount
-				//  while there are still lines left in array // starting on 5th line, load
+			{  // while there are still lines left in array // starting on 5th line, load
 				tinyCounter = 0;
 				tinySectionList=null;
 				tinySectionList = new ArrayList<String>();
@@ -198,33 +180,32 @@ public class SFCALeditor extends SFCALutil {
 
 	
 // new method: ----------------------------------------------------------------
-		static boolean checkForTossouts(List<String> tinyList) {
-			String sl = tinyList.get(6);
-			if (sl.matches("SUMMARY*Eclipse*")) {
-				out.println("!!===!!===  matches worked! ");
-			}
-			Pattern myp = Pattern.compile("SUMMARY*Eclipse*");
-			Matcher mymat = myp.matcher(sl);
-			boolean myboo = mymat.matches();
-					
-					 		
-			out.println("-----------%%%%%%%%%%%%%%%---- myboo:  "+myboo);
-			
-			if ( sl.contains("void of") || sl.contains("SUMMARY:Full") || 
-					 sl.contains("SUMMARY:New Moon")|| sl.contains("Solar Eclipse") 
-					 || sl.contains("Lunar Eclipse"))     // we are removing the quarters
-					{
-						//verboseOut ("==========    ===== !!!!! FOUND a non quarter!");
-						//verboseOut ("========== writing: "+ sumLine);		
-						return true;
-					}
-					else  {
-						//verboseOut("not writing this line:  " + sumLine);
-						return false;
-					}
-		}			
-			 
-		 
+	static boolean checkForTossouts(List<String> tinyList) {
+		String sl = tinyList.get(6);
+		out.println("\n\n");
+		out.println("               %%%%%%%%%%%%%%%%% starting over in checkForTossouts");
+		out.println("The string is:  " + sl );
 
+		if ( (sl.contains("SUMMARY")) && (sl.contains("Eclipse")) )
+		{
+			out.println("==========    ===== !!!!! reg method FOUND ECLIPSE!!! !!  !");
+			out.println("========== writing: "+ sl);		
+			return true;
+		}
+
+		else if ( (sl.contains("void of")) || (sl.contains("SUMMARY:Full")) || 
+				( sl.contains("SUMMARY:New Moon")) )     // we are removing the quarters
+		{
+			out.println("==========    ===== !!!!! reg method FOUND !");
+			out.println("========== writing: "+ sl);		
+			return true;
+		}
+		else  {
+			//verboseOut("not writing this line:  " + sumLine);
+			return false;
+		}
+	} // method end
 }  // class
+		
+		
  
