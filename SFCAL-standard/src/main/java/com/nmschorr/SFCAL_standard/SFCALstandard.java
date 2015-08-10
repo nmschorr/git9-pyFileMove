@@ -96,7 +96,7 @@ public class SFCALstandard extends SFCALstandardutil {
 			mySleep(1);
 			generalStringFixing( G_ORIG_FILE_NAME_WDIR, G_TEMPOUT_STRNAME);
 			
-			SectionNew.sectionTask(G_TEMP_FILE, G_DATE_FILE);
+			SectionNew.sectionTask(G_TEMP_FILE, G_DATE_FILE, G_TEMP_FILE2);
 			//FileUtils.waitFor(G_DATE_FILE, 4);
 			
 			G_ORIG_FILE = null;
