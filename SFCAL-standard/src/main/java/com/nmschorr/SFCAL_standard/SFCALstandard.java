@@ -39,7 +39,7 @@ public class SFCALstandard extends SFCALstandardutil {
 	static int eventcount = 0;		 
 	static String indirMAIN = "E:\\sfcalfiles\\standard";
 	static String outDIR ="C:\\SFCALOUT\\standard";
-	static String outDIRTMP = outDIR + "tempfiles";
+	static String outDIRTMP = outDIR + "\\tempfiles";
 	static String G_TEMPOUT_STRNAME;
  	static String G_ORIG_FILE_NAME_WDIR;
 	final static String LINE_FEED = System.getProperty("line.separator");
