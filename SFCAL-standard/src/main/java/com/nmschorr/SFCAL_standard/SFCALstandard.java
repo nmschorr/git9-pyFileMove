@@ -23,7 +23,8 @@ import static java.lang.System.out;
 
 import org.apache.commons.io.FileUtils;
 //import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.StringUtils;
+//import org.apache.commons.lang.StringUtils;
+import com.nmschorr.SFCAL_standard.SectionNew;
 
 /**
  * This class contains methods that remove extra calendar events from an ics calendar file.
@@ -87,12 +88,11 @@ public class SFCALstandard extends SFCALstandardutil {
 			G_TEMPOUT_STRNAME = MainOutdirName + "\\tempfiles\\SFCALtmp" + System.currentTimeMillis() +".ics";
 			G_TEMP_FILE = new File(G_TEMPOUT_STRNAME);
 				
-			//delFiles(G_TEMP_FILE);  // delete the inFileName we made last time
 			// delFiles(G_DATE_FILE);  // delete the inFileName we made last time
 			mySleep(1);
 			generalStringFixing(G_TEMPOUT_STRNAME, G_ORIG_FILE_NAME_WDIR);
 			
-			//sectionTask(G_TEMP_FILE, G_DATE_FILE);
+			SectionNew.sectionTask(G_TEMP_FILE, G_DATE_FILE);
 			//FileUtils.waitFor(G_DATE_FILE, 4);
 			
 			G_ORIG_FILE = null;
@@ -106,6 +106,7 @@ public class SFCALstandard extends SFCALstandardutil {
 
 // new method // --------------------------------------------------------------	 	
 
+	
 	static HashMap<String, String> makeSpellhm() {
 		HashMap <String, String> spellhm  =  new HashMap<String, String>();
 		spellhm.put("Stabilise","Stabilize");
@@ -123,6 +124,7 @@ public class SFCALstandard extends SFCALstandardutil {
 		return spellhm;
 	}
 
+	
 // new method // --------------------------------------------------------------	 	
 	static String gofixDES( String  oldstrg) {
 		String tString = oldstrg.replaceAll("%0A","");  // get rid of CRs  - \n
@@ -141,8 +143,10 @@ public class SFCALstandard extends SFCALstandardutil {
 			String torep = " - ";
 	    	newstr = oldstrg.replace(tempcheck, torep);
 	    	newTempStr = newstr.replace("Transiting ","" );
-	    	newstr= newTempStr.replace("Conjunction","Conjunct");
-	    	
+	    	newstr= newTempStr.replace("Conjunction","Conjunct"); 
+	    	newstr= newTempStr.replace("Opposition","Opposite"); 
+	    	newTempStr = newstr.replace("Entering","Enters" );
+    	
 			System.out.println("replaced string with new string... now fixed: " + newstr);
 			System.out.println("!!!! =======  !!!  value of newstr:  " + newstr+ "return this new value  " + newstr);
 	 		finSTR = newstr;
@@ -160,8 +164,7 @@ public class SFCALstandard extends SFCALstandardutil {
 	    			finSTR = newstr;
 	    			break;
 	    		}
-	    		else finSTR = oldstrg;
-	    	
+	    		else finSTR = oldstrg;    	
 	    	}  // for
 	    }
 	    else  { 
@@ -236,110 +239,117 @@ public class SFCALstandard extends SFCALstandardutil {
 
 	
 // new method // --------------------------------------------------------------	 	
-	static void sectionTask(File theREADING_FROM_TMP_FILE, File theDATEFILE_WRTINGTO) {   // this part was done by perl script
-		List<String> tinySectionList;
-		int tinyCounter =0;
-		totInFileLines=0;
-		int realInlineCOUNT = 0;
-		newListSizeMinus=0;
-		locLineCount=4;  // start at 5th line
-		int countMinusTen = realInlineCOUNT-10;
- 
-		try {
-			tempFileList =  FileUtils.readLines(theREADING_FROM_TMP_FILE);
-			totInFileLines = tempFileList.size() + 9;
-			realInlineCOUNT = tempFileList.size();
-			
-	System.out.println("!!! INSIDE sectiontask. total lines: " + realInlineCOUNT +" " 
-	+ theDATEFILE_WRTINGTO.getName());
-			// get ics header lines in 1st-first four header lines of ics inFileName
-			for (int i = 0; i < 4; i++)	{
-				FileUtils.writeStringToFile(theDATEFILE_WRTINGTO, tempFileList.get(i)+LINE_FEED, true);		
+		static String make_new_file_date_name(String ORIG_INFILE_STR) {
+			String LocalDateNmStr = null;
+
+			try {
+				dateStringFileList =  FileUtils.readLines(G_ORIG_FILE);
+				String newDateString=dateStringFileList.get(5);
+				String newDateStr = newDateString.substring(8, 16);
+				verboseOut("new date string is: "+ newDateStr);
+				LocalDateNmStr = ORIG_INFILE_STR + "." + newDateStr + ".ics";
+				verboseOut("new LocalDateNmStr string is: "+ LocalDateNmStr);
+
+			} catch (IOException e) { 
+				e.printStackTrace();	
+			}	// catch
+
+			return LocalDateNmStr; 
+		}
+		public static void verboseOut(String theoutline) {
+			if (G_VERBOSE==1) {
+				out.println(theoutline);
 			}
-			newListSizeMinus = tempFileList.size()-1;
-			
-			while ( locLineCount < countMinusTen )  
-			{  // while locLineCount
-				//  while there are still lines left in array
-			  // starting on 5th line, load
-				tinyCounter = 0;
-			
-				// first load sections of 10x lines each into smaller arrarys
-				// then check each section for voids etc
-				// then correct
-				
-			tinySectionList=null;
-			tinySectionList = new ArrayList<String>();
-				
-			  while (tinyCounter < 10) {         //tiny while
-				String theString = tempFileList.get(locLineCount);  //get one string
-						//StringUtils.chomp(theString);
-				tinySectionList.add(theString);
-				locLineCount++;
-				tinyCounter++;
-				}  // tiny while
-			  
-				checkToss = checkForTossouts(tinySectionList);	 
-				
-				if (checkToss) {
-					FileUtils.writeLines(theDATEFILE_WRTINGTO, tinySectionList, true);	
-					FileUtils.waitFor(theDATEFILE_WRTINGTO,2);
-				}
-					
-				} //  // while locLineCount
-			System.out.println("!!! INSIDE sectiontask. filename -------------------------"  
-					+ theDATEFILE_WRTINGTO.getName());
-			out.println("!!!###   name out outfile" + theDATEFILE_WRTINGTO);
-			FileUtils.writeStringToFile(theDATEFILE_WRTINGTO, "END:VCALENDAR"+LINE_FEED, true);	
-			mySleep(1);
-			FileUtils.waitFor(theDATEFILE_WRTINGTO, 4);
-			  
-	}  // try  
-	catch (IOException e) { 
-		e.printStackTrace();	
-	}	// catch
-	}
-
-// new method // --------------------------------------------------------------	 	
-	static boolean checkForTossouts(List<String> tinyList) {
-		String sumLine = tinyList.get(6);
-		if ( sumLine.contains("void of") || sumLine.contains("SUMMARY:Full") || 
-				sumLine.contains("SUMMARY:New Moon") )     // we are removing the quarters
-		{
-			//verboseOut ("==========    ===== !!!!! FOUND a non quarter!");
-			//verboseOut ("========== writing: "+ sumLine);		
-			return true;
 		}
-		else  {
-			//verboseOut("not writing this line:  " + sumLine);
-			return false;
-		}
-	}			
+	}  // class
 
-// new method // --------------------------------------------------------------	 	
-	static String make_new_file_date_name(String ORIG_INFILE_STR) {
-		String LocalDateNmStr = null;
 
-		try {
-			dateStringFileList =  FileUtils.readLines(G_ORIG_FILE);
-			String newDateString=dateStringFileList.get(5);
-			String newDateStr = newDateString.substring(8, 16);
-			verboseOut("new date string is: "+ newDateStr);
-			LocalDateNmStr = ORIG_INFILE_STR + "." + newDateStr + ".ics";
-			verboseOut("new LocalDateNmStr string is: "+ LocalDateNmStr);
 
-		} catch (IOException e) { 
-			e.printStackTrace();	
-		}	// catch
 
-		return LocalDateNmStr; 
-	}
-	public static void verboseOut(String theoutline) {
-		if (G_VERBOSE==1) {
-			out.println(theoutline);
-		}
-	}
-}  // class
+
+
+
+//// new method // --------------------------------------------------------------	 	
+//	static void sectionTask(File theREADING_FROM_TMP_FILE, File theDATEFILE_WRTINGTO) {   // this part was done by perl script
+//		List<String> tinySectionList;
+//		int tinyCounter =0;
+//		totInFileLines=0;
+//		int realInlineCOUNT = 0;
+//		newListSizeMinus=0;
+//		locLineCount=4;  // start at 5th line
+//		int countMinusTen = realInlineCOUNT-10;
+// 
+//		try {
+//			tempFileList =  FileUtils.readLines(theREADING_FROM_TMP_FILE);
+//			totInFileLines = tempFileList.size() + 9;
+//			realInlineCOUNT = tempFileList.size();
+//			
+//	System.out.println("!!! INSIDE sectiontask. total lines: " + realInlineCOUNT +" " 
+//	+ theDATEFILE_WRTINGTO.getName());
+//			// get ics header lines in 1st-first four header lines of ics inFileName
+//			for (int i = 0; i < 4; i++)	{
+//				FileUtils.writeStringToFile(theDATEFILE_WRTINGTO, tempFileList.get(i)+LINE_FEED, true);		
+//			}
+//			newListSizeMinus = tempFileList.size()-1;
+//			
+//			while ( locLineCount < countMinusTen )  
+//			{  // while locLineCount
+//				//  while there are still lines left in array
+//			  // starting on 5th line, load
+//				tinyCounter = 0;
+//			
+//				// first load sections of 10x lines each into smaller arrarys
+//				// then check each section for voids etc
+//				// then correct
+//				
+//			tinySectionList=null;
+//			tinySectionList = new ArrayList<String>();
+//				
+//			  while (tinyCounter < 10) {         //tiny while
+//				String theString = tempFileList.get(locLineCount);  //get one string
+//						//StringUtils.chomp(theString);
+//				tinySectionList.add(theString);
+//				locLineCount++;
+//				tinyCounter++;
+//				}  // tiny while
+//			  
+//				checkToss = checkForTossouts(tinySectionList);	 
+//				
+//				if (checkToss) {
+//					FileUtils.writeLines(theDATEFILE_WRTINGTO, tinySectionList, true);	
+//					FileUtils.waitFor(theDATEFILE_WRTINGTO,2);
+//				}
+//					
+//				} //  // while locLineCount
+//			System.out.println("!!! INSIDE sectiontask. filename -------------------------"  
+//					+ theDATEFILE_WRTINGTO.getName());
+//			out.println("!!!###   name out outfile" + theDATEFILE_WRTINGTO);
+//			FileUtils.writeStringToFile(theDATEFILE_WRTINGTO, "END:VCALENDAR"+LINE_FEED, true);	
+//			mySleep(1);
+//			FileUtils.waitFor(theDATEFILE_WRTINGTO, 4);
+//			  
+//	}  // try  
+//	catch (IOException e) { 
+//		e.printStackTrace();	
+//	}	// catch
+//	}
+//
+//// new method // --------------------------------------------------------------	 	
+//	static boolean checkForTossouts(List<String> tinyList) {
+//		String sumLine = tinyList.get(6);
+//		if ( sumLine.contains("void of") || sumLine.contains("SUMMARY:Full") || 
+//				sumLine.contains("SUMMARY:New Moon") )     // we are removing the quarters
+//		{
+//			//verboseOut ("==========    ===== !!!!! FOUND a non quarter!");
+//			//verboseOut ("========== writing: "+ sumLine);		
+//			return true;
+//		}
+//		else  {
+//			//verboseOut("not writing this line:  " + sumLine);
+//			return false;
+//		}
+//	}			
+
 
 //	String[] plansArry = {"Sun", "Mon","Mer", "Ven", "Mar", "Jup", "Sat","Nep", "Ura", "Plu"};		
 //	String[] signsLista = {"Aries", "Taurus","Gemini", "Cancer", "Leo", 
