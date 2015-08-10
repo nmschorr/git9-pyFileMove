@@ -83,12 +83,12 @@ public class SFCALstandard extends SFCALstandardutil {
 			G_DATE_FILE_NAME = make_new_file_date_name(G_ORIG_FILE_NAME);
 			G_DATE_FILE_NAME_DIR = MainOutdirName + "\\" + G_DATE_FILE_NAME;
 			G_DATE_FILE = new File(G_DATE_FILE_NAME_DIR);
+			delFiles(G_DATE_FILE);  // delete the inFileName we made last time
 			out.println("-----------------------------------datefilename is: " + G_DATE_FILE_NAME_DIR);
 			 
 			G_TEMPOUT_STRNAME = MainOutdirName + "\\tempfiles\\SFCALtmp" + System.currentTimeMillis() +".ics";
 			G_TEMP_FILE = new File(G_TEMPOUT_STRNAME);
 				
-			// delFiles(G_DATE_FILE);  // delete the inFileName we made last time
 			mySleep(1);
 			generalStringFixing(G_TEMPOUT_STRNAME, G_ORIG_FILE_NAME_WDIR);
 			
@@ -144,9 +144,11 @@ public class SFCALstandard extends SFCALstandardutil {
 	    	newstr = oldstrg.replace(tempcheck, torep);
 	    	newTempStr = newstr.replace("Transiting ","" );
 	    	newstr= newTempStr.replace("Conjunction","Conjunct"); 
-	    	newstr= newTempStr.replace("Opposition","Opposite"); 
-	    	newTempStr = newstr.replace("Entering","Enters" );
-    	
+	    	newTempStr= newstr.replace("Opposition","Opposite"); 
+	    	newstr = newTempStr.replace("Entering","Enters" );
+	    	newTempStr = newstr.replace("DESCRIPTION:The ","DESCRIPTION:" );
+	    	newstr = newTempStr;
+	    	
 			System.out.println("replaced string with new string... now fixed: " + newstr);
 			System.out.println("!!!! =======  !!!  value of newstr:  " + newstr+ "return this new value  " + newstr);
 	 		finSTR = newstr;
