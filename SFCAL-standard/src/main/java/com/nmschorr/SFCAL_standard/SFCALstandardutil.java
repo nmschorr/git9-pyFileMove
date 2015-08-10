@@ -26,18 +26,18 @@ public class SFCALstandardutil {
 	
 	
 	
-	static void generalStringFixing(String SFCALtempOneFilename, String sfcalFilename) {   
+	static void generalStringFixing(String origFILEnm, String tmpFILEnmONE ) {   
 		String newLocLINE1 = "";
 		String newLocLINE2 = "";
 		boolean keepGoing = true;
-		File sfcalFile = new File(sfcalFilename);
-		File SFCALtempONE  =  new File(SFCALtempOneFilename);
+		File origFILE = new File(origFILEnm);
+		File SFCALtempONE  =  new File(tmpFILEnmONE);
 		CharSequence SUMstr = "SUMMARY:Tr-Tr";
 		String DEStr = "DESCRIPTION";
 		String lineEND = "\n";
 
 		try {
-			List<String> genFileARRAY  =   FileUtils.readLines(sfcalFile);
+			List<String> genFileARRAY  =   FileUtils.readLines(origFILE);
 			int arraySIZE  =  genFileARRAY.size();
 			int safeSIZE = arraySIZE-5;
 			System.out.println("realCOUNT:  " +  arraySIZE + "   safecount:  " +  safeSIZE);			
@@ -64,7 +64,7 @@ public class SFCALstandardutil {
 					}										
 					else if ( cLINE.contains(DEStr) || cLINE.startsWith(" "))   {  /// if TR-TR only lines
 	 					//StringUtils.chomp(cLINE);  // chomp is removing the Z
-						newLocLINE2 = gofixDES(cLINE) ;
+						newLocLINE2 = fixDESCRIPTION_line(cLINE) ;
 						FileUtils.writeStringToFile(SFCALtempONE, newLocLINE2 + lineEND, true);	
 					}										
 					else if (cLINE.startsWith("SUMMARY:Tr "))   { 

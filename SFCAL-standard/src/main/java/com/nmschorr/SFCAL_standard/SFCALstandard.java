@@ -37,10 +37,10 @@ public class SFCALstandard extends SFCALstandardutil {
 	static List<String> tempFileList = new ArrayList<String>();
 	static List<String> dateStringFileList = new ArrayList<String>();
 	static int eventcount = 0;		 
-	static String MainIndirName = "E:\\sfcalfiles";
- 	static String MainOutdirName = "C:\\SFCALOUT\\standard";
-	static String IndirVoidsName = MainIndirName +"\\standard";
- 	static String G_TEMPOUT_STRNAME;
+	static String indirMAIN = "E:\\sfcalfiles\\standard";
+	static String outDIR ="C:\\SFCALOUT\\standard";
+	static String outDIRTMP = outDIR + "tempfiles";
+	static String G_TEMPOUT_STRNAME;
  	static String G_ORIG_FILE_NAME_WDIR;
 	final static String LINE_FEED = System.getProperty("line.separator");
 	static int totalLineCount = 0;
@@ -56,14 +56,16 @@ public class SFCALstandard extends SFCALstandardutil {
 	public static String G_ORIG_FILE_NAME;
 	public static File G_ORIG_FILE;
 	public 	static File G_TEMP_FILE;
+	public 	static File G_TEMP_FILE2;
 	public 	static String G_DATE_FILE_NAME_DIR;
  	static int yes;
+ 	static String G_TEMPOUT_STRNAME2;
 	
 	static int G_VERBOSE=0;
 	
 	 
 	public static void main(String[] args) {	
-		File filesDir = new File(IndirVoidsName);  //READ the list of files in sfcalfiles/vds dir
+		File filesDir = new File(indirMAIN);  //READ the list of files in sfcalfiles/vds dir
 		String[] arryOfInFiles = filesDir.list();	// create a list of names of those files	
 		out.println("	NEW LIST: " + filesDir.list());
 		int fileInDirCNT=0;
@@ -77,20 +79,22 @@ public class SFCALstandard extends SFCALstandardutil {
 			out.println("----------- starting over in main-----------LOOP# " + fileInDirCNT+1);
 			out.println("-----------------------------------filename is: " + G_ORIG_FILE_NAME);
 
-			G_ORIG_FILE_NAME_WDIR = IndirVoidsName +"\\" + G_ORIG_FILE_NAME;
+			G_ORIG_FILE_NAME_WDIR = indirMAIN +"\\" + G_ORIG_FILE_NAME;
 			G_ORIG_FILE = new File(G_ORIG_FILE_NAME_WDIR);
 				
 			G_DATE_FILE_NAME = make_new_file_date_name(G_ORIG_FILE_NAME);
-			G_DATE_FILE_NAME_DIR = MainOutdirName + "\\" + G_DATE_FILE_NAME;
+			G_DATE_FILE_NAME_DIR = outDIRTMP + "\\" + G_DATE_FILE_NAME;
 			G_DATE_FILE = new File(G_DATE_FILE_NAME_DIR);
 			delFiles(G_DATE_FILE);  // delete the inFileName we made last time
 			out.println("-----------------------------------datefilename is: " + G_DATE_FILE_NAME_DIR);
 			 
-			G_TEMPOUT_STRNAME = MainOutdirName + "\\tempfiles\\SFCALtmp" + System.currentTimeMillis() +".ics";
+			G_TEMPOUT_STRNAME = outDIRTMP + "\\SFCALtmp" + System.currentTimeMillis() +".ics";
+			G_TEMPOUT_STRNAME2 = outDIRTMP + "\\SFCALtmp" + System.currentTimeMillis() +"-2.ics";
 			G_TEMP_FILE = new File(G_TEMPOUT_STRNAME);
+			G_TEMP_FILE2 = new File(G_TEMPOUT_STRNAME2);
 				
 			mySleep(1);
-			generalStringFixing(G_TEMPOUT_STRNAME, G_ORIG_FILE_NAME_WDIR);
+			generalStringFixing( G_ORIG_FILE_NAME_WDIR, G_TEMPOUT_STRNAME);
 			
 			SectionNew.sectionTask(G_TEMP_FILE, G_DATE_FILE);
 			//FileUtils.waitFor(G_DATE_FILE, 4);
@@ -104,29 +108,9 @@ public class SFCALstandard extends SFCALstandardutil {
 		System.out.println("Finished");
 	}
 
-// new method // --------------------------------------------------------------	 	
-
-	
-	static HashMap<String, String> makeSpellhm() {
-		HashMap <String, String> spellhm  =  new HashMap<String, String>();
-		spellhm.put("Stabilise","Stabilize");
-		spellhm.put("Socialise","Socialize");
-		spellhm.put("Entering","Enters");
-		spellhm.put("organised","organized");
-		spellhm.put("excelent","excellent");
-		spellhm.put("realise","realize");
-		spellhm.put("spiritualilty","spirituality");
-		spellhm.put("wilfull","willful");
-		spellhm.put("possibiities","possibilities");
-		spellhm.put("fantasise","fantasize");
-		//spellhm.put("Transiting ","");
-		//spellhm.put("Conjunction","Conjunct");
-		return spellhm;
-	}
-
 	
 // new method // --------------------------------------------------------------	 	
-	static String gofixDES( String  oldstrg) {
+	static String fixDESCRIPTION_line( String  oldstrg) {
 		String tString = oldstrg.replaceAll("%0A","");  // get rid of CRs  - \n
  
 		oldstrg=tString;
@@ -173,6 +157,7 @@ public class SFCALstandard extends SFCALstandardutil {
 	 		finSTR = oldstrg; }
 	    return finSTR;
 	}
+	
 	
 // new method // --------------------------------------------------------------	 	
 	static String fixSUMMARYsigns(String oldstrg) {
@@ -238,6 +223,27 @@ public class SFCALstandard extends SFCALstandardutil {
 		System.out.println("value of newstr:  " + newstr+ "return this new value  " + newstr);
 		return newstr;
 	} // gofixhash
+	
+	
+	
+// new method // --------------------------------------------------------------	 	
+	static HashMap<String, String> makeSpellhm() {
+		HashMap <String, String> spellhm  =  new HashMap<String, String>();
+		spellhm.put("Stabilise","Stabilize");
+		spellhm.put("Socialise","Socialize");
+		spellhm.put("Entering","Enters");
+		spellhm.put("organised","organized");
+		spellhm.put("excelent","excellent");
+		spellhm.put("realise","realize");
+		spellhm.put("spiritualilty","spirituality");
+		spellhm.put("wilfull","willful");
+		spellhm.put("possibiities","possibilities");
+		spellhm.put("fantasise","fantasize");
+		//spellhm.put("Transiting ","");
+		//spellhm.put("Conjunction","Conjunct");
+		return spellhm;
+	}
+
 
 	
 // new method // --------------------------------------------------------------	 	
@@ -264,97 +270,4 @@ public class SFCALstandard extends SFCALstandardutil {
 			}
 		}
 	}  // class
-
-
-
-
-
-
-
-//// new method // --------------------------------------------------------------	 	
-//	static void sectionTask(File theREADING_FROM_TMP_FILE, File theDATEFILE_WRTINGTO) {   // this part was done by perl script
-//		List<String> tinySectionList;
-//		int tinyCounter =0;
-//		totInFileLines=0;
-//		int realInlineCOUNT = 0;
-//		newListSizeMinus=0;
-//		locLineCount=4;  // start at 5th line
-//		int countMinusTen = realInlineCOUNT-10;
-// 
-//		try {
-//			tempFileList =  FileUtils.readLines(theREADING_FROM_TMP_FILE);
-//			totInFileLines = tempFileList.size() + 9;
-//			realInlineCOUNT = tempFileList.size();
-//			
-//	System.out.println("!!! INSIDE sectiontask. total lines: " + realInlineCOUNT +" " 
-//	+ theDATEFILE_WRTINGTO.getName());
-//			// get ics header lines in 1st-first four header lines of ics inFileName
-//			for (int i = 0; i < 4; i++)	{
-//				FileUtils.writeStringToFile(theDATEFILE_WRTINGTO, tempFileList.get(i)+LINE_FEED, true);		
-//			}
-//			newListSizeMinus = tempFileList.size()-1;
-//			
-//			while ( locLineCount < countMinusTen )  
-//			{  // while locLineCount
-//				//  while there are still lines left in array
-//			  // starting on 5th line, load
-//				tinyCounter = 0;
-//			
-//				// first load sections of 10x lines each into smaller arrarys
-//				// then check each section for voids etc
-//				// then correct
-//				
-//			tinySectionList=null;
-//			tinySectionList = new ArrayList<String>();
-//				
-//			  while (tinyCounter < 10) {         //tiny while
-//				String theString = tempFileList.get(locLineCount);  //get one string
-//						//StringUtils.chomp(theString);
-//				tinySectionList.add(theString);
-//				locLineCount++;
-//				tinyCounter++;
-//				}  // tiny while
-//			  
-//				checkToss = checkForTossouts(tinySectionList);	 
-//				
-//				if (checkToss) {
-//					FileUtils.writeLines(theDATEFILE_WRTINGTO, tinySectionList, true);	
-//					FileUtils.waitFor(theDATEFILE_WRTINGTO,2);
-//				}
-//					
-//				} //  // while locLineCount
-//			System.out.println("!!! INSIDE sectiontask. filename -------------------------"  
-//					+ theDATEFILE_WRTINGTO.getName());
-//			out.println("!!!###   name out outfile" + theDATEFILE_WRTINGTO);
-//			FileUtils.writeStringToFile(theDATEFILE_WRTINGTO, "END:VCALENDAR"+LINE_FEED, true);	
-//			mySleep(1);
-//			FileUtils.waitFor(theDATEFILE_WRTINGTO, 4);
-//			  
-//	}  // try  
-//	catch (IOException e) { 
-//		e.printStackTrace();	
-//	}	// catch
-//	}
-//
-//// new method // --------------------------------------------------------------	 	
-//	static boolean checkForTossouts(List<String> tinyList) {
-//		String sumLine = tinyList.get(6);
-//		if ( sumLine.contains("void of") || sumLine.contains("SUMMARY:Full") || 
-//				sumLine.contains("SUMMARY:New Moon") )     // we are removing the quarters
-//		{
-//			//verboseOut ("==========    ===== !!!!! FOUND a non quarter!");
-//			//verboseOut ("========== writing: "+ sumLine);		
-//			return true;
-//		}
-//		else  {
-//			//verboseOut("not writing this line:  " + sumLine);
-//			return false;
-//		}
-//	}			
-
-
-//	String[] plansArry = {"Sun", "Mon","Mer", "Ven", "Mar", "Jup", "Sat","Nep", "Ura", "Plu"};		
-//	String[] signsLista = {"Aries", "Taurus","Gemini", "Cancer", "Leo", 
-//				"Virgo", "Libra","Scorpio", "Sagittarius", "Capricorn", "Aquarius", "Pisces"};		
-
  
