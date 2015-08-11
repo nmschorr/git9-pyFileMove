@@ -26,7 +26,7 @@ import org.apache.commons.io.FileUtils;
 
 
 public class SFCALeditor extends SFCALutil {
-	static List<String> tempFileList = new ArrayList<String>();
+	static List<String> tmpARRAY = new ArrayList<String>();
 	static List<String> dateStringFileList = new ArrayList<String>();
 	static int eventcount = 0;		 
 	static String MainIndirName = "E:\\sfcalfiles";
@@ -34,9 +34,9 @@ public class SFCALeditor extends SFCALutil {
 	static String IndirVoidsName = MainIndirName +"\\vds";
  	static String GLOBAL_TEMPOUT_STRNAME;
  	static String GLOBAL_ORIG_FILE_NAME_WDIR;
-	final static String LINE_FEED = System.getProperty("line.separator");
+	final static String LFEED = System.getProperty("line.separator");
 	static int totalLineCount = 0;
-	static int totInFileLines;
+	static int totLines;
 	static int currentCount = 0;
 	static int locLineCount;  // start at 5th line
 	static int newListSizeMinus;
@@ -80,8 +80,9 @@ public class SFCALeditor extends SFCALutil {
 			delFiles(GLOBAL_DATE_FILE);  // delete the inFileName we made last time
 			mySleep(1);
 			generalStringFixing(GLOBAL_TEMPOUT_STRNAME, GLOBAL_ORIG_FILE);
-			
-			//sectionTask(GLOBAL_TEMP_FILE, GLOBAL_DATE_FILE);
+			FileUtils.waitFor(GLOBAL_DATE_FILE, 1);
+		
+			sectionTask(GLOBAL_TEMP_FILE, GLOBAL_DATE_FILE);
 			FileUtils.waitFor(GLOBAL_DATE_FILE, 1);
 			
 			GLOBAL_ORIG_FILE = null;
@@ -123,27 +124,29 @@ public class SFCALeditor extends SFCALutil {
 	
 	
 // new method: ----------------------------------------------------------------	
-	static void sectionTask(File theREADING_FROM_TMP_FILE, File theDATEFILE_WRTINGTO) {   // this part was done by perl script
+	static void sectionTask(File infileORIG, File dateFILE_OUT) {   // this part was done by perl script
 		List<String> tinySectionList;
 		int tinyCounter =0;
-		totInFileLines=0;
+		totLines=0;
 		newListSizeMinus=0;
 		locLineCount=4;  // start at 5th line
+		int keepGoingSZ = 0;
 
 		try {
-			tempFileList =  FileUtils.readLines(theREADING_FROM_TMP_FILE);
-			totInFileLines = tempFileList.size() + 9;
+			tmpARRAY =  FileUtils.readLines(infileORIG);
+			totLines = tmpARRAY.size();
+			keepGoingSZ = totLines-7;  // from trial and error with debugger
 
-			System.out.println("!!! INSIDE sectiontask. total lines: " + totInFileLines +" " 
-					+ theDATEFILE_WRTINGTO.getName());
+			System.out.println("!!! INSIDE sectiontask. total lines: " + totLines +" " 
+					+ dateFILE_OUT.getName());
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
 			for (int i = 0; i < 4; i++)	{
-				FileUtils.writeStringToFile(theDATEFILE_WRTINGTO, tempFileList.get(i)+LINE_FEED, true);		
+				FileUtils.writeStringToFile(dateFILE_OUT, tmpARRAY.get(i)+LFEED, true);		
 			}
-			newListSizeMinus = tempFileList.size()-1;
+			newListSizeMinus = tmpARRAY.size()-9;
 
-			while ( locLineCount < newListSizeMinus )  
+			while ( locLineCount < keepGoingSZ )  
 			{  // while there are still lines left in array // starting on 5th line, load
 				tinyCounter = 0;
 				tinySectionList=null;
@@ -153,7 +156,7 @@ public class SFCALeditor extends SFCALutil {
 				// then check each section for voids etc  then correct
 
 				while (tinyCounter < 10) {         //tiny while
-					String theString = tempFileList.get(locLineCount);  //get one string
+					String theString = tmpARRAY.get(locLineCount);  //get one string
 					tinySectionList.add(theString);
 					locLineCount++;
 					tinyCounter++;
@@ -162,14 +165,14 @@ public class SFCALeditor extends SFCALutil {
 				checkToss = checkForTossouts(tinySectionList);	 
 
 				if (checkToss) {   // IF 	checkfortoss comes back TRUE, then write this section
-					FileUtils.writeLines(theDATEFILE_WRTINGTO, tinySectionList, true);	
-					FileUtils.waitFor(theDATEFILE_WRTINGTO,1);
+					FileUtils.writeLines(dateFILE_OUT, tinySectionList, true);	
+					FileUtils.waitFor(dateFILE_OUT,1);
 				}
 
 			} //  // while locLineCount
 			System.out.println("!!! INSIDE sectiontask. filename -------------------------"  
-					+ theDATEFILE_WRTINGTO.getName());
-			out.println("!!!###   name out outfile" + theDATEFILE_WRTINGTO);
+					+ dateFILE_OUT.getName());
+			out.println("!!!###   name out outfile" + dateFILE_OUT);
 		}  // try  
 		catch (IOException e) {  	e.printStackTrace();	 }	// catch
 	}  // end
