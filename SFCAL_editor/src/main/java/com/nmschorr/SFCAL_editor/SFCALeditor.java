@@ -78,11 +78,11 @@ public class SFCALeditor extends SFCALutil {
 				
 			delFiles(GLOBAL_TEMP_FILE);  // delete the inFileName we made last time
 			delFiles(GLOBAL_DATE_FILE);  // delete the inFileName we made last time
-			mySleep(2);
+			mySleep(1);
 			generalStringFixing(GLOBAL_TEMPOUT_STRNAME, GLOBAL_ORIG_FILE);
 			
-			sectionTask(GLOBAL_TEMP_FILE, GLOBAL_DATE_FILE);
-			FileUtils.waitFor(GLOBAL_DATE_FILE, 4);
+			//sectionTask(GLOBAL_TEMP_FILE, GLOBAL_DATE_FILE);
+			FileUtils.waitFor(GLOBAL_DATE_FILE, 1);
 			
 			GLOBAL_ORIG_FILE = null;
 			out.println("------------------NEW filename is: "+GLOBAL_DATE_FILE);
@@ -90,7 +90,7 @@ public class SFCALeditor extends SFCALutil {
 					
 			myCount++;		
 		}			
-		FileUtils.waitFor(GLOBAL_DATE_FILE, 4);
+		FileUtils.waitFor(GLOBAL_DATE_FILE, 1);
 		System.out.println("Finished");
 	}
 
@@ -154,7 +154,6 @@ public class SFCALeditor extends SFCALutil {
 
 				while (tinyCounter < 10) {         //tiny while
 					String theString = tempFileList.get(locLineCount);  //get one string
-					//StringUtils.chomp(theString);
 					tinySectionList.add(theString);
 					locLineCount++;
 					tinyCounter++;
@@ -164,16 +163,13 @@ public class SFCALeditor extends SFCALutil {
 
 				if (checkToss) {   // IF 	checkfortoss comes back TRUE, then write this section
 					FileUtils.writeLines(theDATEFILE_WRTINGTO, tinySectionList, true);	
-					FileUtils.waitFor(theDATEFILE_WRTINGTO,2);
+					FileUtils.waitFor(theDATEFILE_WRTINGTO,1);
 				}
 
 			} //  // while locLineCount
 			System.out.println("!!! INSIDE sectiontask. filename -------------------------"  
 					+ theDATEFILE_WRTINGTO.getName());
 			out.println("!!!###   name out outfile" + theDATEFILE_WRTINGTO);
-			FileUtils.writeStringToFile(theDATEFILE_WRTINGTO, "END:VCALENDAR"+LINE_FEED, true);	
-			mySleep(1);
-			FileUtils.waitFor(theDATEFILE_WRTINGTO, 4);
 		}  // try  
 		catch (IOException e) {  	e.printStackTrace();	 }	// catch
 	}  // end
@@ -201,7 +197,6 @@ public class SFCALeditor extends SFCALutil {
 			return true;
 		}
 		else  {
-			//verboseOut("not writing this line:  " + sumLine);
 			return false;
 		}
 	} // method end

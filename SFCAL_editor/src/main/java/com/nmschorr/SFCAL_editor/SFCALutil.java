@@ -17,18 +17,17 @@ import static com.nmschorr.SFCAL_editor.SFCALeditor.*;
 
 public class SFCALutil {
   	static String CtmpDir="C:\\tmp";
-	final static String LINE_FEED = System.getProperty("line.separator");
-	static final String newfront = "DTEND:";
-	static String NEWREPLACEDstring;
-	static String perfectString;
-
+	final static String LFEED = System.getProperty("line.separator");
 	
 	static void generalStringFixing(String SFCALtempOneFilename, File localOriginalFile) {   
-		String firstfront;
-		String newback;
-		String newComboStr;  
-		String checkCharString;
-		String voidFixedString;
+		String firstfront = "";
+		String partialEND = "";
+		String newDTENDstr = "";  
+		String utilLINE1 = "";
+		String utilLINE2 = "";
+		List <String> newLINEARRY = new ArrayList<String>();
+		boolean addDTEND=false;
+		String strDTEND = "";
 
 		try {
 			File SFCALtempONE = new File(SFCALtempOneFilename);
@@ -38,45 +37,58 @@ public class SFCALutil {
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
 			// for each line in file:
-			for (String currentLineInArray : origSFCALarray)  {
-			if (currentLineInArray.length() > 0 )
-			{
-				StringUtils.chomp(currentLineInArray);
-				verboseOut("current line:"+currentLineInArray);
-				checkCharString= checkForChar(currentLineInArray);
-				NEWREPLACEDstring = checkCharString;
-				replaceSigns(checkCharString);
+			for (String curSTR : origSFCALarray)  {
+				addDTEND=false;
+			
+				if (curSTR.length() > 0 )
+				{
+					verboseOut("current line:"+curSTR);
+					utilLINE2= StringUtils.chomp(curSTR);
+					utilLINE1= checkForSignQuote(utilLINE2);
+
+					if (utilLINE1.startsWith("SUMMARY:")) {
+						utilLINE2 = replaceSigns(utilLINE1);
+					} else utilLINE2 = utilLINE1;
+					verboseOut("value of utilLINE2 is: "+ utilLINE2);				
+
+					if (utilLINE2.contains("Moon goes void")) {
+						utilLINE1 = "SUMMARY:Moon void of course";
+					}
+					else { 	utilLINE1 = utilLINE2; }
+					GLOBAL_VERBOSE=1;
+					firstfront = utilLINE1.substring(0,6);
+					if ( firstfront.equals("DTSTAR") )   {   // add DTEND line, chg  start line ending to 5Z to add 5 secs	 			
+						strDTEND = "DTEND:";
+						String newDTSTART;
+						verboseOut("!!@@@@@  the original DTSTART line is  " + utilLINE1);
+
+						partialEND = utilLINE1.substring(8,22) + "5Z";
+						newDTSTART = "DTSTART:" + partialEND;
+						
+						newDTENDstr ="DTEND:" + partialEND;					
+						verboseOut("!!@@@@@  the new DTSTART line is  " + newDTSTART);
+						verboseOut("DTEND: new line is " + newDTENDstr);
+						addDTEND = true;
+						utilLINE2 = newDTSTART;
+					}
+					else { 	utilLINE2 = utilLINE1; }				
+				}  //if curSTR				
+				newLINEARRY.add(utilLINE2);
+				if (addDTEND) { 
+					newLINEARRY.add(newDTENDstr);  }
+				GLOBAL_VERBOSE=0;			
 				
-				verboseOut("value of NEWREPLACEDstring is: "+ NEWREPLACEDstring);				
+			} // for curSTR
+			FileUtils.writeLines(SFCALtempONE, newLINEARRY, LFEED, true);	
+			//mySleep(1);
 
-				if (NEWREPLACEDstring.contains("Moon goes void")) {
-					voidFixedString = "SUMMARY:Moon void of course";
-				}
-				else {
-					voidFixedString = NEWREPLACEDstring;
-
-				}
-				FileUtils.writeStringToFile(SFCALtempONE, voidFixedString, true);	
-				FileUtils.writeStringToFile(SFCALtempONE,"\n", true);	 
-		
-				firstfront = voidFixedString.substring(0,6);
-
-				if ( firstfront.equals("DTSTAR") )   {  					
-					newback = voidFixedString.substring(8,23) + "Z";
-					verboseOut("!!@@@@@  the line is  " + voidFixedString);
-					newComboStr = newfront + newback +"\n";  					
-					verboseOut("DTEND: new line is " + newComboStr);
-					FileUtils.writeStringToFile(SFCALtempONE, newComboStr, true);	
-				}
-			  }	
-			}
-			FileUtils.waitFor(SFCALtempONE, 4);
-
-		}
-		catch (IOException e)  { 
+		}   catch (IOException e)  { 
 			e.printStackTrace();	 
-		}
-	}	
+		}  // catch
+	}	/// end of method
+	
+	
+//----new Method ===============================================================//
 	
 	public static void delFiles(File f1) {
 		if ( f1.exists() ) {
@@ -94,7 +106,7 @@ public class SFCALutil {
 	  } // mySleep
 	
 	
-	static String checkForChar(String checkLine) {
+	static String checkForSignQuote(String checkLine) {
 		 
 		if (checkLine.contains( "\uFFFD"))  {
 			System.out.println("!!!---            ---FOUND WEIRD CHAR -----!!!!  !!!  ");
@@ -109,30 +121,30 @@ public class SFCALutil {
 		}
 
 	
-	static void checkForSigns(String origLine, String theVal, String theRep) {
-		String theFixedLine;
+	static String checkForSigns(String origLine, String theVal, String theRep) {
+		String theFixedLine = "";
 		verboseOut("inside checkForSigns checking val rep: "+theVal + theRep);		
 		if (origLine.contains(theVal))  {
-			System.out.println("!!!---            ---FOUND sign CHAR -----!!!!  !!! /n"+origLine);
+			System.out.println("!!!---            ---FOUND sign CHAR -----!!!!  !!! \n"+origLine);
 			theFixedLine = origLine.replace( theVal, theRep);  
 			//theFixedLine = origLine.replace( "Cn", "Cancer ");  
 			System.out.println("------------------------The fixed line: " + theFixedLine);
-			NEWREPLACEDstring= theFixedLine;
+			return theFixedLine;
 		}
+		else return origLine;	
 	}
 
 		
-	static void replaceSigns(String theInputStr) {
-		String returnString=null;
-		perfectString=null;
+	static String replaceSigns(String theInputStr) {
+		String answerst =null;
 		verboseOut("inside replaceSigns");		
 		HashMap <String, String> theHashmap = makemyhash();
 
 		for (String key : theHashmap.keySet()) {
-			checkForSigns(theInputStr, key, theHashmap.get(key));
+			answerst = checkForSigns(theInputStr, key, theHashmap.get(key));
 		}   
-
-		verboseOut("val of perfectString is: " + perfectString);
+		verboseOut("val of answerst is: " + answerst);
+		return answerst;
 	}	
 
 	
