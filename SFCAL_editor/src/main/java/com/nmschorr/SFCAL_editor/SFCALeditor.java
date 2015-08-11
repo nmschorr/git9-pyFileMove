@@ -129,7 +129,7 @@ public class SFCALeditor extends SFCALutil {
 		try {
 			inARRAY =  FileUtils.readLines(infileORIG);
 			totLines = inARRAY.size();
-			keepGoingSZ = totLines-6;  // from trial and error with debugger
+			keepGoingSZ = totLines-9;  // from trial and error with debugger
 
 			System.out.println("!!! INSIDE sectiontask. lines: " + totLines +" " 
 					+ dateFILE_OUT.getName());
@@ -140,7 +140,7 @@ public class SFCALeditor extends SFCALutil {
 				outARRAY.add(inARRAY.get(i));
 			}
 
-			while ( locLineCount < keepGoingSZ )  
+			while ( locLineCount < totLines )  
 			{  // while there are still lines left in array // starting on 5th line, load
 				tinyCounter = 0;
 				tinySectionList=null;
@@ -150,11 +150,14 @@ public class SFCALeditor extends SFCALutil {
 				// then check each section for voids etc  then correct
 
 				while (tinyCounter < 10) {         //tiny while
+					while (locLineCount < totLines ) {         //tiny while
+						
 					String theString = inARRAY.get(locLineCount);  //get one string
 					tinySectionList.add(theString);
 					locLineCount++;
 					tinyCounter++;
-				}  // tiny while
+					}  // tiny while
+				}
 
 				shouldKEEP = ckToKEEP(tinySectionList);	 
 

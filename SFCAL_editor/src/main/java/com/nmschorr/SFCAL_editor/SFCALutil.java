@@ -39,14 +39,15 @@ public class SFCALutil {
 			// for each line in file:
 			int arrySize = origSFCALarray.size();
 			System.out.println("array size: " + arrySize);
-			int i = 0;
-			while (i < arrySize)  {
+			int mockCT = 0;
+			int realINLINEct = 0;
+			while (mockCT < arrySize)  {
 				utilLINE1 = "";
 				utilLINE2 = "";
 				curSTR = "";
 				newDTENDstr = "";
-				curSTR = origSFCALarray.get(i);
-				System.out.println("line count: " + i);
+				curSTR = origSFCALarray.get(realINLINEct);
+				System.out.println("mock line count: " + mockCT);
 				addDTEND=false;
 			
 				if (curSTR.length() > 0 )
@@ -78,15 +79,16 @@ public class SFCALutil {
 						verboseOut("DTEND: new line is " + newDTENDstr);
 						addDTEND = true;
 						utilLINE2 = newDTSTART;
-						i++;
+						mockCT++;
 					}
 					else { 	utilLINE2 = utilLINE1; }				
 				}  //if curSTR				
 				newLINEARRY.add(utilLINE2);
 				if (addDTEND) { 
 					newLINEARRY.add(newDTENDstr);  }
-				G_VERBOSE=0;			
-				i++;
+				G_VERBOSE=0;
+				realINLINEct++;
+				mockCT++;
 
 			} // for curSTR
 			FileUtils.writeLines(SFCALtempONE, newLINEARRY, LFEED, true);	
