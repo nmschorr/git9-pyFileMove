@@ -27,7 +27,7 @@ public class SFCALutil {
 		String utilLINE2 = "";
 		List <String> newLINEARRY = new ArrayList<String>();
 		boolean addDTEND=false;
-		String strDTEND = "";
+		String curSTR = "";
 
 		try {
 			File SFCALtempONE = new File(SFCALtempOneFilename);
@@ -37,7 +37,16 @@ public class SFCALutil {
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
 			// for each line in file:
-			for (String curSTR : origSFCALarray)  {
+			int arrySize = origSFCALarray.size();
+			System.out.println("array size: " + arrySize);
+			int i = 0;
+			while (i < arrySize)  {
+				utilLINE1 = "";
+				utilLINE2 = "";
+				curSTR = "";
+				newDTENDstr = "";
+				curSTR = origSFCALarray.get(i);
+				System.out.println("line count: " + i);
 				addDTEND=false;
 			
 				if (curSTR.length() > 0 )
@@ -55,10 +64,9 @@ public class SFCALutil {
 						utilLINE1 = "SUMMARY:Moon void of course";
 					}
 					else { 	utilLINE1 = utilLINE2; }
-					GLOBAL_VERBOSE=1;
+					G_VERBOSE=1;
 					firstfront = utilLINE1.substring(0,6);
 					if ( firstfront.equals("DTSTAR") )   {   // add DTEND line, chg  start line ending to 5Z to add 5 secs	 			
-						strDTEND = "DTEND:";
 						String newDTSTART;
 						verboseOut("!!@@@@@  the original DTSTART line is  " + utilLINE1);
 
@@ -70,14 +78,16 @@ public class SFCALutil {
 						verboseOut("DTEND: new line is " + newDTENDstr);
 						addDTEND = true;
 						utilLINE2 = newDTSTART;
+						i++;
 					}
 					else { 	utilLINE2 = utilLINE1; }				
 				}  //if curSTR				
 				newLINEARRY.add(utilLINE2);
 				if (addDTEND) { 
 					newLINEARRY.add(newDTENDstr);  }
-				GLOBAL_VERBOSE=0;			
-				
+				G_VERBOSE=0;			
+				i++;
+
 			} // for curSTR
 			FileUtils.writeLines(SFCALtempONE, newLINEARRY, LFEED, true);	
 			//mySleep(1);
