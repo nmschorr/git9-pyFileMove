@@ -26,19 +26,12 @@ import org.apache.commons.io.FileUtils;
 
 
 public class SFCALeditor extends SFCALutil {
-	static List<String> tmpARRAY = new ArrayList<String>();
-	static List<String> dateStringFileList = new ArrayList<String>();
-	static int eventcount = 0;		 
+	final static String LFEED = System.getProperty("line.separator");
 	static String MainIndirName = "E:\\sfcalfiles";
  	static String MainOutdirName = "C:\\SFCALOUT\\vds";
 	static String IndirVoidsName = MainIndirName +"\\vds";
  	static String G_TEMPOUT_STRNAME;
  	static String G_ORIG_FILE_NAME_WDIR;
-	final static String LFEED = System.getProperty("line.separator");
-	static int totalLineCount = 0;
-	static int currentCount = 0;
-	static boolean checkToss = false;
-	public static File filesDir;
 	public static String G_DATE_FILE_NAME;
 	public static File G_DATE_FILE;
 	public static String G_ORIG_FILE_NAME;
@@ -95,6 +88,7 @@ public class SFCALeditor extends SFCALutil {
 // new method: ----------------------------------------------------------------	
 
 	static String make_new_file_date_name(String ORIG_INFILE_STR) {
+		List<String> dateStringFileList = new ArrayList<String>();
 		String LocalDateNmStr = null;
 		
 		try {
@@ -122,25 +116,28 @@ public class SFCALeditor extends SFCALutil {
 	
 // new method: ----------------------------------------------------------------	
 	static void sectionTask(File infileORIG, File dateFILE_OUT) {   // this part was done by perl script
+		List<String> inARRAY = new ArrayList<String>();
+		List<String> outARRAY = new ArrayList<String>();
 		List<String> tinySectionList;
+		boolean shouldKEEP = false;
 		int tinyCounter =0;
 		int totLines=0;
 		int locLineCount=4;  // start at 5th line
 		int keepGoingSZ = 0;
-		List<String> tmpARRAY2 = new ArrayList<String>();
-
+		inARRAY.clear();
+		
 		try {
-			tmpARRAY =  FileUtils.readLines(infileORIG);
-			totLines = tmpARRAY.size();
+			inARRAY =  FileUtils.readLines(infileORIG);
+			totLines = inARRAY.size();
 			keepGoingSZ = totLines-6;  // from trial and error with debugger
 
-			System.out.println("!!! INSIDE sectiontask. total lines: " + totLines +" " 
+			System.out.println("!!! INSIDE sectiontask. lines: " + totLines +" " 
 					+ dateFILE_OUT.getName());
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
 			for (int i = 0; i < 4; i++)	{
 				//FileUtils.writeStringToFile(dateFILE_OUT, tmpARRAY.get(i)+LFEED, true);		
-				tmpARRAY2.add(tmpARRAY.get(i));
+				outARRAY.add(inARRAY.get(i));
 			}
 
 			while ( locLineCount < keepGoingSZ )  
@@ -153,21 +150,21 @@ public class SFCALeditor extends SFCALutil {
 				// then check each section for voids etc  then correct
 
 				while (tinyCounter < 10) {         //tiny while
-					String theString = tmpARRAY.get(locLineCount);  //get one string
+					String theString = inARRAY.get(locLineCount);  //get one string
 					tinySectionList.add(theString);
 					locLineCount++;
 					tinyCounter++;
 				}  // tiny while
 
-				checkToss = checkForTossouts(tinySectionList);	 
+				shouldKEEP = ckToKEEP(tinySectionList);	 
 
-				if (checkToss) {   // IF 	checkfortoss comes back TRUE, then write this section
-					tmpARRAY2.addAll( tinySectionList);
+				if (shouldKEEP == true) {   // IF 	checkfortoss comes back TRUE, then write this section
+					outARRAY.addAll( tinySectionList);
 					//FileUtils.writeLines(dateFILE_OUT, tinySectionList, true);	
 				}
 
 			} //  // while locLineCount
-			FileUtils.writeLines(dateFILE_OUT, tmpARRAY2, false);	
+			FileUtils.writeLines(dateFILE_OUT, outARRAY, true);	
 			System.out.println("!!! INSIDE sectiontask. filename  - "+ dateFILE_OUT.getName());			
 		}  // try  
 		catch (IOException e) {  	e.printStackTrace();	 }	// catch
@@ -175,7 +172,7 @@ public class SFCALeditor extends SFCALutil {
 
 	
 // new method: ----------------------------------------------------------------
-	static boolean checkForTossouts(List<String> tinyList) {
+	static boolean ckToKEEP(List<String> tinyList) {  // returns true to write
 		String sl = tinyList.get(6);
 		out.println("\n\n");
 		out.println("               %%%%%%%%%%%%%%%%% starting over in checkForTossouts");
@@ -185,7 +182,7 @@ public class SFCALeditor extends SFCALutil {
 		{
 			out.println("==========    ===== !!!!! reg method FOUND ECLIPSE!!! !!  !");
 			out.println("========== writing: "+ sl);		
-			return true;
+			return true;  //keep
 		}
 
 		else if ( (sl.contains("void of")) || (sl.contains("SUMMARY:Full")) || 
@@ -193,10 +190,10 @@ public class SFCALeditor extends SFCALutil {
 		{
 			out.println("==========    ===== !!!!! reg method FOUND !");
 			out.println("========== writing: "+ sl);		
-			return true;
+			return true; //keep
 		}
 		else  {
-			return false;
+			return false;  // don't keep
 		}
 	} // method end
 }  // class

@@ -16,7 +16,7 @@ import static com.nmschorr.SFCAL_editor.SFCALeditor.*;
 	
 
 public class SFCALutil {
-  	static String CtmpDir="C:\\tmp";
+  	//static String CtmpDir="C:\\tmp";
 	final static String LFEED = System.getProperty("line.separator");
 	
 	static void generalStringFixing(String SFCALtempOneFilename, File localOriginalFile) {   
