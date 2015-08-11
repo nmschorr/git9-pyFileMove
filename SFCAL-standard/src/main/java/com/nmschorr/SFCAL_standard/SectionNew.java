@@ -77,11 +77,12 @@ public class SectionNew {
 			FileUtils.writeStringToFile(tmpFILtwo, "END:VCALENDAR"+LINE_FEED, true);	
 	// new code		
 			List<String> lastFILE_ARRAY =  FileUtils.readLines(tmpFILtwo);
+			List<String> lastFILE_ARRAY2 =  FileUtils.readLines(tmpFILtwo);
 			List<String> bigARRAY =  new ArrayList<String>() ;
 			//List<String> lastARRAY =  new ArrayList<String>();
 			int arSIZE = lastFILE_ARRAY.size();
 			String tline="";
-			int curLINEct = 4;
+			int curLINEct = 0;
 			List<String> tinyARRY =  new ArrayList<String>() ;
 			//boolean mygo = true;
 			boolean yesDESC = false;
@@ -94,9 +95,12 @@ public class SectionNew {
 			
 			while ( curLINEct < arSIZE) {    // while we're still in the file
 				tline="";
-				longstr ="";				tline = lastFILE_ARRAY.get(curLINEct);
+				longstr ="";				
+				tline = lastFILE_ARRAY.get(curLINEct);
 				yesDESC = false;
-				System.out.println("linect is --- "  + curLINEct);
+				System.out.println("curLINEct is --- "  + curLINEct);
+				System.out.println("arSIZE is --- "  + arSIZE);
+				//System.out.println("linect is --- "  + curLINEct);
 			
 				if (tline.contains("DESCRIPTION")) {
 					yesDESC = true;
@@ -135,27 +139,33 @@ public class SectionNew {
 					concatline2 ="";
 					concatline3 ="";
 					concatline4 ="";
-				
-					
-					
-					curLINEct = curLINEct +8;   // only bump up 8 if we found a DESCRIPTION
 					tline="";
 				}	// if DESCRIPTION
 
-
+				int anInt = 0;
+				
 				if (yesDESC) {
-					bigARRAY.add(longstr);
-					//bigARRAY.add("\n\n-----------New Section----------\n");
+					int numberRemoved = cntLONG.size();  // should be around 3
+					int numberRemovedMinus = cntLONG.size()-2;  // should be around 3
+					//curLINEct = curLINEct - numberRemoved;  // minus because we add a new DESC line
+					
+					anInt=cntLONG.get(0);
+					for (int i=0; i < numberRemoved; i++) {
+						anInt=cntLONG.get(0);
+						lastFILE_ARRAY.remove(anInt);  // remove little strings
+					}
+					int wheretoaddline = cntLONG.get(0);
+					lastFILE_ARRAY.add(wheretoaddline, longstr);  // add new long string back
 				}
 				tinyARRY.clear();
 				cntLONG.clear();
 				curLINEct = curLINEct + 1;  //move the line counter up to the next group
 		}  // while
 		 
-			FileUtils.writeLines(finalFILE, bigARRAY, true);
+			FileUtils.writeLines(finalFILE, lastFILE_ARRAY, true);
 			
-			SFCALstandardutil.mySleep(1);
-			FileUtils.waitFor(tmpFILtwo, 1);
+			SFCALstandardutil.mySleep(2);
+			FileUtils.waitFor(finalFILE, 1);
 		}  // try  
 		catch (IOException e) {  	e.printStackTrace();	 }	// catch
 	}  // end of method
