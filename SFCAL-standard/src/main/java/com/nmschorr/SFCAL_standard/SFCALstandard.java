@@ -83,7 +83,7 @@ public class SFCALstandard extends SFCALstandardutil {
 			G_ORIG_FILE = new File(G_ORIG_FILE_NAME_WDIR);
 				
 			G_DATE_FILE_NAME = make_new_file_date_name(G_ORIG_FILE_NAME);
-			G_DATE_FILE_NAME_DIR = outDIRTMP + "\\" + G_DATE_FILE_NAME;
+			G_DATE_FILE_NAME_DIR = outDIR + "\\" + G_DATE_FILE_NAME;
 			G_DATE_FILE = new File(G_DATE_FILE_NAME_DIR);
 			delFiles(G_DATE_FILE);  // delete the inFileName we made last time
 			out.println("-----------------------------------datefilename is: " + G_DATE_FILE_NAME_DIR);

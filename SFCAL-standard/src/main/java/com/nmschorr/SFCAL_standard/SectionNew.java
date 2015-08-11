@@ -81,6 +81,7 @@ public class SectionNew {
 			List<String> bigARRAY =  new ArrayList<String>() ;
 			//List<String> lastARRAY =  new ArrayList<String>();
 			int arSIZE = lastFILE_ARRAY.size();
+			int newARRAYSIZE=arSIZE;
 			String tline="";
 			int curLINEct = 0;
 			List<String> tinyARRY =  new ArrayList<String>() ;
@@ -93,7 +94,7 @@ public class SectionNew {
 			String longstr ="";
 			List<Integer> cntLONG = new ArrayList<Integer>();
 			
-			while ( curLINEct < arSIZE) {    // while we're still in the file
+			while ( curLINEct < newARRAYSIZE) {    // while we're still in the file
 				tline="";
 				longstr ="";				
 				tline = lastFILE_ARRAY.get(curLINEct);
@@ -159,6 +160,9 @@ public class SectionNew {
 				}
 				tinyARRY.clear();
 				cntLONG.clear();
+				newARRAYSIZE=lastFILE_ARRAY.size();
+				out.println("new array size is: " + newARRAYSIZE);
+				
 				curLINEct = curLINEct + 1;  //move the line counter up to the next group
 		}  // while
 		 
