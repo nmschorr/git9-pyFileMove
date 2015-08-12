@@ -101,7 +101,8 @@ public class SFCALutil {
 	
 //----new Method ===============================================================//
 	
-	public static void delFiles(File f1) {
+	public static void delFiles(String nf) {
+		File f1 = new File(nf);
 		if ( f1.exists() ) {
 			f1.delete();  // delete the inFileName we made last time
 		}

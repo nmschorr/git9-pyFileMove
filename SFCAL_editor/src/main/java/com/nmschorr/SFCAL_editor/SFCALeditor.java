@@ -29,64 +29,64 @@ public class SFCALeditor extends SFCALutil {
 	final static String LFEED = System.getProperty("line.separator");
 	static int G_VERBOSE = 1;
 
-// new method: ----------------------------------------------------------------	
+// new method main: ----------------------------------------------------------------	
 	public static void main(String[] args) {
-	 	String indirNM = getindir();
-		String[] infileLIST = getflist(indirNM);
+	 	String inDIRNM = getindir();
  		String outDIRNM = getoutdir();
-		int arraysize = infileLIST.length;
-		int myCount = 0;		 		
+ 		String[] infileLIST = getflist(inDIRNM);				
+		//int arraysize = infileLIST.length;
+		int myCount = 0;	
+		String curINFILENM = "";
 
-		while (myCount < arraysize) {  
-			String currentInfile =  infileLIST[myCount];
-			   
-			out.println("----------------------------------- filename is: " + currentInfile);
+		while (myCount < infileLIST.length) {  
+			curINFILENM =  infileLIST[myCount];			   
+			out.println("----------------------------------- filename is: " + curINFILENM);
 			out.println("--------------######---------------------LOOP# " + myCount);
-
-			File gl_DATE_FILE = new File(outDIRNM);
-			String gl_TEMPOUT_STRNAME = gettempnm(outDIRNM);
-			File gl_TEMP_FILE = new File(gl_TEMPOUT_STRNAME);
+						
+			String dateNM = mkDateFileNM(curINFILENM, inDIRNM);
+			String dateNMwDIR = outDIRNM + dateNM;			
+			String tempNMwDIR = getTMPnmWdir(outDIRNM);
+			
 			out.println("-----------------------------------datefilename is: " + outDIRNM);
 			 
-			delFiles(gl_TEMP_FILE);  // delete the inFileName we made last time
-			delFiles(gl_DATE_FILE);  // delete the inFileName we made last time
+			delFiles(dateNMwDIR);  // delete the FileName we made last time
 			mySleep(1);
-			generalStringFixing(gl_TEMPOUT_STRNAME, currentInfile);
-			FileUtils.waitFor(gl_DATE_FILE, 1);
+			generalStringFixing(tempNMwDIR, curINFILENM);
 		
-			sectionTask(gl_TEMP_FILE, gl_DATE_FILE);
-			FileUtils.waitFor(gl_DATE_FILE, 1);
+			sectionTask(tempNMwDIR, dateNMwDIR);
 			
-			out.println("------------------NEW filename is: "+gl_DATE_FILE);
-			out.println("------------------End of Loop");
-					
+			out.println("------------------NEW filename w/dir is: "+dateNMwDIR + "\n" +" --End of Loop");					
 			myCount++;		
 		}			
 		System.out.println("Finished");
 	}
 
-// new method: ----------------------------------------------------------------	
 
+	// new method: ----------------------------------------------------------------	
 	static String getindir() {  // 1 for name, 2 for file
 		String iDIRNM = "E:\\sfcalfiles\\vds";
 		return iDIRNM;
 		}
 	 
+	// new method: ----------------------------------------------------------------	
 	static String getoutdir() {  // 1 for name, 2 for file
 		String oDIRNM =  "C:\\SFCALOUT\\vds";
 		return oDIRNM;
 		}
 	 
+	// new method: ----------------------------------------------------------------	
 	static String getorignm(String a, String b) {  // 1 for name, 2 for file
 		String iDIRNM = a + b;
 		return iDIRNM;
 		}
 	 
-	static String gettempnm(String d) {  // 1 for name, 2 for file
+	// new method: ----------------------------------------------------------------	
+	static String getTMPnmWdir(String d) {  // 1 for name, 2 for file
 		String sNAME = d + "\\tempfiles\\SFCALtmp" + System.currentTimeMillis() +".ics";
 		return sNAME;
 		}
 	 
+	// new method: ----------------------------------------------------------------	
 	static String[] getflist(String dnm) {  // 1 for name, 2 for file
 		File filesDir = new File(dnm);  //READ the list of files in sfcalfiles/vds dir
  		String[] arryOfInFiles = filesDir.list();	// create a list of names of those files	
@@ -94,24 +94,23 @@ public class SFCALeditor extends SFCALutil {
 		}
 
 
-	static String mkfile_date_name(String oldname, String oldfile) {
-		File oldf = new File(oldfile);  //READ the list of files in sfcalfiles/vds dir
-		List<String> dateStringFileList = new ArrayList<String>();
-		String LocalDateNmStr = null;
+	// new method: ----------------------------------------------------------------	
+	static String mkDateFileNM(String oldname, String oldfiledir) {
+		List<String> oldfilecontents = new ArrayList<String>();
+		String newDateNM = "";
 		
 		try {
-			dateStringFileList =  FileUtils.readLines(oldf);
-			String newDateString = dateStringFileList.get(5);
+			oldfilecontents =  FileUtils.readLines(new File(oldfiledir));  //READ the list of files in sfcalfiles/vds dir
+			String newDateString = oldfilecontents.get(5);
 			String newDateStr = newDateString.substring(8, 16);
-			verboseOut("new date string is: "+ newDateStr);
-			LocalDateNmStr = oldname + "." + newDateStr + ".ics";
-			verboseOut("new LocalDateNmStr string is: "+ LocalDateNmStr);
+			newDateNM = oldname + "." + newDateStr + ".ics";
+			verboseOut("new date string is: "+ newDateStr + "new LocalDateNmStr string is: "+ newDateNM);
 
 		} catch (IOException e) { 
 			e.printStackTrace();	
 		}	// catch
 
-		return LocalDateNmStr; 
+		return newDateNM; 
 	}
 		
 	
@@ -124,10 +123,12 @@ public class SFCALeditor extends SFCALutil {
 	
 	
 // new method: ----------------------------------------------------------------	
-	static void sectionTask(File infileORIG, File dateFILE_OUT) {   // this part was done by perl script
+	static void sectionTask(String infORIGstr, String dFILE_OUT) {   // this part was done by perl script
 		List<String> inARRAY = new ArrayList<String>();
 		List<String> outARRAY = new ArrayList<String>();
 		List<String> tinySectionList;
+		File infileORIG = new File(infORIGstr); 
+		File dateFILE_OUT = new File(dFILE_OUT); 
 		boolean shouldKEEP = false;
 		int tinyCounter =0;
 		int totLines=0;
@@ -143,7 +144,6 @@ public class SFCALeditor extends SFCALutil {
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
 			for (int i = 0; i < 4; i++)	{
-				//FileUtils.writeStringToFile(dateFILE_OUT, tmpARRAY.get(i)+LFEED, true);		
 				outARRAY.add(inARRAY.get(i));
 			}
 
@@ -170,7 +170,6 @@ public class SFCALeditor extends SFCALutil {
 
 				if (shouldKEEP == true) {   // IF 	checkfortoss comes back TRUE, then write this section
 					outARRAY.addAll( tinySectionList);
-					//FileUtils.writeLines(dateFILE_OUT, tinySectionList, true);	
 				}
 
 			} //  // while locLineCount
@@ -184,22 +183,19 @@ public class SFCALeditor extends SFCALutil {
 // new method: ----------------------------------------------------------------
 	static boolean ckToKEEP(List<String> tinyList) {  // returns true to write
 		String sl = tinyList.get(6);
-		out.println("\n\n");
-		out.println("               %%%%%%%%%%%%%%%%% starting over in checkForTossouts");
+		out.println("\n\n"+"               %%%%%%%%%%%%%%%%% starting over in checkForTossouts");
 		out.println("The string is:  " + sl );
 
 		if ( (sl.contains("SUMMARY")) && (sl.contains("Eclipse")) )
 		{
-			out.println("==========    ===== !!!!! reg method FOUND ECLIPSE!!! !!  !");
-			out.println("========== writing: "+ sl);		
+			out.println("==========    ===== !!!!! reg method FOUND ECLIPSE!!! !!  !  ========== writing: "+ sl);		
 			return true;  //keep
 		}
 
 		else if ( (sl.contains("void of")) || (sl.contains("SUMMARY:Full")) || 
 				( sl.contains("SUMMARY:New Moon")) )     // we are removing the quarters
 		{
-			out.println("==========    ===== !!!!! reg method FOUND !");
-			out.println("========== writing: "+ sl);		
+			out.println("==========    ===== !!!!! reg method FOUND ! ========== writing: "+ sl);		
 			return true; //keep
 		}
 		else  {
