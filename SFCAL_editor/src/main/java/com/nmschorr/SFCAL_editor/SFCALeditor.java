@@ -39,19 +39,20 @@ public class SFCALeditor extends SFCALutil {
 		String curINFILENM = "";
 
 		while (myCount < infileLIST.length) {  
-			curINFILENM =  infileLIST[myCount];			   
+			curINFILENM =  infileLIST[myCount];	
+			String curINwDIR = inDIRNM + "\\" + curINFILENM;
 			out.println("----------------------------------- filename is: " + curINFILENM);
 			out.println("--------------######---------------------LOOP# " + myCount);
 						
 			String dateNM = mkDateFileNM(curINFILENM, inDIRNM);
-			String dateNMwDIR = outDIRNM + dateNM;			
+			String dateNMwDIR = outDIRNM + "\\" +dateNM;			
 			String tempNMwDIR = getTMPnmWdir(outDIRNM);
 			
 			out.println("-----------------------------------datefilename is: " + outDIRNM);
 			 
 			delFiles(dateNMwDIR);  // delete the FileName we made last time
 			mySleep(1);
-			generalStringFixing(tempNMwDIR, curINFILENM);
+			generalStringFixing(tempNMwDIR, curINwDIR);
 		
 			sectionTask(tempNMwDIR, dateNMwDIR);
 			
@@ -97,10 +98,11 @@ public class SFCALeditor extends SFCALutil {
 	// new method: ----------------------------------------------------------------	
 	static String mkDateFileNM(String oldname, String oldfiledir) {
 		List<String> oldfilecontents = new ArrayList<String>();
+		String newOLDName = oldfiledir + "\\" + oldname;
 		String newDateNM = "";
 		
 		try {
-			oldfilecontents =  FileUtils.readLines(new File(oldfiledir));  //READ the list of files in sfcalfiles/vds dir
+			oldfilecontents =  FileUtils.readLines(new File(newOLDName));  //READ the list of files in sfcalfiles/vds dir
 			String newDateString = oldfilecontents.get(5);
 			String newDateStr = newDateString.substring(8, 16);
 			newDateNM = oldname + "." + newDateStr + ".ics";
@@ -173,7 +175,13 @@ public class SFCALeditor extends SFCALutil {
 				}
 
 			} //  // while locLineCount
+			String lastLine = outARRAY.get( outARRAY.size()-1);  // the last line of the array
+			if (lastLine.equals("")) {
+				out.println("Removing last blank line of array.");
+				outARRAY.remove(outARRAY.size()-1);
+			}
 			FileUtils.writeLines(dateFILE_OUT, outARRAY, true);	
+			 
 			System.out.println("!!! INSIDE sectiontask. filename  - "+ dateFILE_OUT.getName());			
 		}  // try  
 		catch (IOException e) {  	e.printStackTrace();	 }	// catch
