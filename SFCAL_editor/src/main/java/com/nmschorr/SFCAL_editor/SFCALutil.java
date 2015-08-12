@@ -19,34 +19,33 @@ public class SFCALutil {
   	//static String CtmpDir="C:\\tmp";
 	final static String LFEED = System.getProperty("line.separator");
 	
-	static void generalStringFixing(String SFCALtempOneFilename, File localOriginalFile) {   
+	static void generalStringFixing(String SFCALtempOneFilename, String infile) {   
 		String firstfront = "";
 		String partialEND = "";
 		String newDTENDstr = "";  
 		String utilLINE1 = "";
 		String utilLINE2 = "";
-		List <String> newLINEARRY = new ArrayList<String>();
 		boolean addDTEND=false;
 		String curSTR = "";
 
 		try {
 			File SFCALtempONE = new File(SFCALtempOneFilename);
-
-			List<String> origSFCALarray =  FileUtils.readLines(localOriginalFile);
-			System.out.println("----------------------------------%%%%%%%##### total lines: " +  origSFCALarray.size());
+			File oldFILE = new File(infile);
+			List<String> oldARRY =  FileUtils.readLines(oldFILE);
+			List<String> newLINEARRY = new ArrayList<String>();
+			System.out.println("----------------------------------%%%%%%%##### total lines: " +  oldARRY.size());
 			// get ics header lines in 1st-first four header lines of ics inFileName
-
 			// for each line in file:
-			int arrySize = origSFCALarray.size();
+			int arrySize = oldARRY.size();
 			System.out.println("array size: " + arrySize);
 			int mockCT = 0;
 			int realINLINEct = 0;
-			while (mockCT < arrySize)  {
+			while (realINLINEct < arrySize)  {
 				utilLINE1 = "";
 				utilLINE2 = "";
 				curSTR = "";
 				newDTENDstr = "";
-				curSTR = origSFCALarray.get(realINLINEct);
+				curSTR = oldARRY.get(realINLINEct);
 				System.out.println("mock line count: " + mockCT);
 				addDTEND=false;
 			

@@ -27,76 +27,84 @@ import org.apache.commons.io.FileUtils;
 
 public class SFCALeditor extends SFCALutil {
 	final static String LFEED = System.getProperty("line.separator");
-	static String MainIndirName = "E:\\sfcalfiles";
- 	static String MainOutdirName = "C:\\SFCALOUT\\vds";
-	static String IndirVoidsName = MainIndirName +"\\vds";
- 	static String G_TEMPOUT_STRNAME;
- 	static String G_ORIG_FILE_NAME_WDIR;
-	public static String G_DATE_FILE_NAME;
-	public static File G_DATE_FILE;
-	public static String G_ORIG_FILE_NAME;
-	public static File G_ORIG_FILE;
-	public static File G_TEMP_FILE;
-	public static String G_DATE_FILE_NAME_DIR;
-	static int G_VERBOSE=0;
+	static int G_VERBOSE = 1;
 
 // new method: ----------------------------------------------------------------	
 	public static void main(String[] args) {
-		File filesDir = new File(IndirVoidsName);  //READ the list of files in sfcalfiles/vds dir
-		String[] arryOfInFiles = filesDir.list();	// create a list of names of those files	
-		out.println("	NEW LIST: " + filesDir.list());
-		int myCount=0;		 		
-		int arraysize = arryOfInFiles.length;
+	 	String indirNM = getindir();
+		String[] infileLIST = getflist(indirNM);
+ 		String outDIRNM = getoutdir();
+		int arraysize = infileLIST.length;
+		int myCount = 0;		 		
 
 		while (myCount < arraysize) {  
-			String currentInfile= arryOfInFiles[myCount];
+			String currentInfile =  infileLIST[myCount];
 			   
 			out.println("----------------------------------- filename is: " + currentInfile);
 			out.println("--------------######---------------------LOOP# " + myCount);
 
-			G_ORIG_FILE_NAME = 	currentInfile;
-			G_ORIG_FILE_NAME_WDIR = IndirVoidsName +"\\" + G_ORIG_FILE_NAME;
-			G_ORIG_FILE = new File(G_ORIG_FILE_NAME_WDIR);
-				
-			G_DATE_FILE_NAME = make_new_file_date_name(currentInfile);
-			G_DATE_FILE_NAME_DIR = MainOutdirName + "\\" + G_DATE_FILE_NAME;
-			G_DATE_FILE = new File(G_DATE_FILE_NAME_DIR);
-			out.println("-----------------------------------datefilename is: " + G_DATE_FILE_NAME_DIR);
+			File gl_DATE_FILE = new File(outDIRNM);
+			String gl_TEMPOUT_STRNAME = gettempnm(outDIRNM);
+			File gl_TEMP_FILE = new File(gl_TEMPOUT_STRNAME);
+			out.println("-----------------------------------datefilename is: " + outDIRNM);
 			 
-			G_TEMPOUT_STRNAME = MainOutdirName + "\\tempfiles\\SFCALtmp" + System.currentTimeMillis() +".ics";
-			G_TEMP_FILE = new File(G_TEMPOUT_STRNAME);
-				
-			delFiles(G_TEMP_FILE);  // delete the inFileName we made last time
-			delFiles(G_DATE_FILE);  // delete the inFileName we made last time
+			delFiles(gl_TEMP_FILE);  // delete the inFileName we made last time
+			delFiles(gl_DATE_FILE);  // delete the inFileName we made last time
 			mySleep(1);
-			generalStringFixing(G_TEMPOUT_STRNAME, G_ORIG_FILE);
-			FileUtils.waitFor(G_DATE_FILE, 1);
+			generalStringFixing(gl_TEMPOUT_STRNAME, currentInfile);
+			FileUtils.waitFor(gl_DATE_FILE, 1);
 		
-			sectionTask(G_TEMP_FILE, G_DATE_FILE);
-			FileUtils.waitFor(G_DATE_FILE, 1);
+			sectionTask(gl_TEMP_FILE, gl_DATE_FILE);
+			FileUtils.waitFor(gl_DATE_FILE, 1);
 			
-			G_ORIG_FILE = null;
-			out.println("------------------NEW filename is: "+G_DATE_FILE);
+			out.println("------------------NEW filename is: "+gl_DATE_FILE);
 			out.println("------------------End of Loop");
 					
 			myCount++;		
 		}			
-		FileUtils.waitFor(G_DATE_FILE, 1);
 		System.out.println("Finished");
 	}
 
 // new method: ----------------------------------------------------------------	
 
-	static String make_new_file_date_name(String ORIG_INFILE_STR) {
+	static String getindir() {  // 1 for name, 2 for file
+		String iDIRNM = "E:\\sfcalfiles\\vds";
+		return iDIRNM;
+		}
+	 
+	static String getoutdir() {  // 1 for name, 2 for file
+		String oDIRNM =  "C:\\SFCALOUT\\vds";
+		return oDIRNM;
+		}
+	 
+	static String getorignm(String a, String b) {  // 1 for name, 2 for file
+		String iDIRNM = a + b;
+		return iDIRNM;
+		}
+	 
+	static String gettempnm(String d) {  // 1 for name, 2 for file
+		String sNAME = d + "\\tempfiles\\SFCALtmp" + System.currentTimeMillis() +".ics";
+		return sNAME;
+		}
+	 
+	static String[] getflist(String dnm) {  // 1 for name, 2 for file
+		File filesDir = new File(dnm);  //READ the list of files in sfcalfiles/vds dir
+ 		String[] arryOfInFiles = filesDir.list();	// create a list of names of those files	
+ 		return arryOfInFiles;
+		}
+
+
+	static String mkfile_date_name(String oldname, String oldfile) {
+		File oldf = new File(oldfile);  //READ the list of files in sfcalfiles/vds dir
 		List<String> dateStringFileList = new ArrayList<String>();
 		String LocalDateNmStr = null;
 		
 		try {
-			dateStringFileList =  FileUtils.readLines(G_ORIG_FILE);
-			String newDateString=dateStringFileList.get(5);
+			dateStringFileList =  FileUtils.readLines(oldf);
+			String newDateString = dateStringFileList.get(5);
 			String newDateStr = newDateString.substring(8, 16);
 			verboseOut("new date string is: "+ newDateStr);
-			LocalDateNmStr = ORIG_INFILE_STR + "." + newDateStr + ".ics";
+			LocalDateNmStr = oldname + "." + newDateStr + ".ics";
 			verboseOut("new LocalDateNmStr string is: "+ LocalDateNmStr);
 
 		} catch (IOException e) { 
@@ -105,6 +113,7 @@ public class SFCALeditor extends SFCALutil {
 
 		return LocalDateNmStr; 
 	}
+		
 	
 // new method: ----------------------------------------------------------------	
 	public static void verboseOut(String theoutline) {
@@ -123,13 +132,11 @@ public class SFCALeditor extends SFCALutil {
 		int tinyCounter =0;
 		int totLines=0;
 		int locLineCount=4;  // start at 5th line
-		int keepGoingSZ = 0;
 		inARRAY.clear();
 		
 		try {
 			inARRAY =  FileUtils.readLines(infileORIG);
 			totLines = inARRAY.size();
-			keepGoingSZ = totLines-9;  // from trial and error with debugger
 
 			System.out.println("!!! INSIDE sectiontask. lines: " + totLines +" " 
 					+ dateFILE_OUT.getName());
@@ -143,7 +150,7 @@ public class SFCALeditor extends SFCALutil {
 			while ( locLineCount < totLines )  
 			{  // while there are still lines left in array // starting on 5th line, load
 				tinyCounter = 0;
-				tinySectionList=null;
+				tinySectionList = null;
 				tinySectionList = new ArrayList<String>();
 
 				// first load sections of 10x lines each into smaller arrarys
