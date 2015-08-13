@@ -22,6 +22,11 @@ import java.util.*;
 import static java.lang.System.out;
 
 import org.apache.commons.io.FileUtils;
+
+
+
+
+
 //import org.apache.commons.lang.StringUtils;
 //import org.apache.commons.lang.StringUtils;
 import com.nmschorr.SFCAL_standard.SectionNew;
@@ -34,21 +39,14 @@ import com.nmschorr.SFCAL_standard.SectionNew;
  */
 
 public class SFCALstandard extends SFCALstandardutil {
-	static String indirMAIN = "E:\\sfcalfiles\\standard";
-	static String outDIR ="C:\\SFCALOUT\\standard";
-	static String outDIRTMP = outDIR + "\\tempfiles";
-	final static String LFEED = System.getProperty("line.separator");
-	static int totalLineCount = 0;
-	static int totInFileLines;
-	static int currentCount = 0;
-	static boolean checkToss = false;	
 	static int G_VERBOSE=0;
 	
 	 
 	public static void main(String[] args) {	
-		File filesDir = new File(indirMAIN);  //READ the list of files in sfcalfiles/vds dir
-		String[] arryOfInFiles = filesDir.list();	// create a list of names of those files	
-		out.println("	NEW LIST: " + filesDir.list());
+		String indirMAIN = getindir();
+		String outDIR = getoutdir();
+		String outDIRTMP = outDIR + "\\tempfiles";
+		String[] arryOfInFiles = getflist(indirMAIN);	// create a list of names of those files	
 		int fileInDirCNT=0;
 		
 		//int arraysize = arryOfInFiles.length;
@@ -56,26 +54,23 @@ public class SFCALstandard extends SFCALstandardutil {
 
 		while (fileInDirCNT < arraysize) {  
 			String infileNM= arryOfInFiles[fileInDirCNT];
+			String inFILEstr = indirMAIN +"\\" + infileNM;
 			   
 			out.println("----------- starting over in main-----------LOOP# " + fileInDirCNT+1);
 			out.println("-----------------------------------filename is: " + infileNM);
-
-			String inFILEstr = indirMAIN +"\\" + infileNM;
-				
-			String finFILEnmWdir = make_new_file_date_name(infileNM, outDIR);
-			String finFILEnmWdir = outDIR + "\\" + finalFILEnm;
+			
+			String finFILEnmWdir = mkDateFileNM(infileNM, indirMAIN, outDIR);
 			delFiles(finFILEnmWdir);  // delete the inFileName we made last time
-			out.println("-----------------------------------datefilename is: " + finFILEnmWdir);
 			 
-			String tOUTone = outDIRTMP + "\\SFCALtmp" + System.currentTimeMillis() +".ics";
-			String tOUTtwo = outDIRTMP + "\\SFCALtmp" + System.currentTimeMillis() +"-2.ics";
-			//File G_TEMP_FILE = new File(G_TEMPOUT_STRNAME);
+			String tOUTone = getTMPnmWdir(outDIRTMP,"1");
+			String tOUTtwo = getTMPnmWdir(outDIRTMP,"2");;
 				
 			generalStringFixing( inFILEstr, tOUTone);
 			
 			SectionNew.sectionTask(tOUTone, inFILEstr, tOUTtwo);
 			
-			out.println("--------End of Loop------------NEW filename is: "+finalFILEnm);		
+			out.println("-----------------------------------datefilename is: " + finFILEnmWdir);
+			out.println("--------End of Loop------------NEW filename is: "+finFILEnmWdir);		
 			
 			fileInDirCNT++;		
 		}			
@@ -83,56 +78,85 @@ public class SFCALstandard extends SFCALstandardutil {
 		System.out.println("Finished Program");
 	}
 
+	// new method: ----------------------------------------------------------------	
+	static String getindir() {  // 1 for name, 2 for file
+		String iDIRNM = "E:\\sfcalfiles\\standard";
+		return iDIRNM;
+		}
+	 
+	// new method: ----------------------------------------------------------------	
+	static String getoutdir() {  // 1 for name, 2 for file
+		String oDIRNM =  "C:\\SFCALOUT\\standard";
+		return oDIRNM;
+		}
+
+	static String getTMPnmWdir(String tnm, String myIn) {  // 1 for name, 2 for file
+		String sNAME = tnm + "\\tempfiles\\SFCALtmp" + System.currentTimeMillis() +myIn +".ics";
+		return sNAME;
+		}
+
+	static String[] getflist(String dnm) {  // 1 for name, 2 for file
+		File filesDir = new File(dnm);  //READ the list of files in sfcalfiles/vds dir
+ 		String[] arryOfInFiles = filesDir.list();	// create a list of names of those files	
+ 		return arryOfInFiles;
+		}
+
+	public static void verboseOut(String theoutline) {
+		if (G_VERBOSE==1) {
+			out.println(theoutline);
+		}
+	}
+
+
 	
 // new method // --------------------------------------------------------------	 	
-	static String fixDESCRIPTION_line( String  oldstrg) {
-		String tString = oldstrg.replaceAll("%0A","");  // get rid of CRs  - \n
- 
-		oldstrg=tString;
-		System.out.println("just entered gofixDES. oldstrg is: " +oldstrg );
-		String newstr = "empty";
-		String finSTR = "";
+	static String fixDESCRIPTION_line( String  inSTRING) {
 		HashMap<String, String> hMAP = makeSpellhm();
-		CharSequence tempcheckCS = "\\n";
-		String tempcheck = (String)tempcheckCS;
-		String newTempStr="";
+		CharSequence badLINEFchars = "\\n";
+		String badLINEFstr = (String)badLINEFchars;
+		String newstr = "";
+		String finSTR = "";
+		System.out.println("just entered gofixDES. oldstrg is: " +inSTRING );
+
+		String tString = inSTRING.replaceAll("%0A","");  // get rid of CRs  - \n
+		if (tString.contains(badLINEFchars))    // for newline only
+			newstr = tString.replace(badLINEFstr, " - ");
+		else newstr = tString;
 		
-	    if (oldstrg.contains(tempcheckCS)) {  // for newline only
-	    	System.out.println("!! Inside checker. found a misspelling : " + tempcheck);
-			String torep = " - ";
-	    	newstr = oldstrg.replace(tempcheck, torep);
-	    	newTempStr = newstr.replace("Transiting ","" );
-	    	newstr= newTempStr.replace("Conjunction","Conjunct"); 
-	    	newTempStr= newstr.replace("Opposition","Opposite"); 
-	    	newstr = newTempStr.replace("Entering","Enters" );
-	    	newTempStr = newstr.replace("DESCRIPTION:The ","DESCRIPTION:" );
-	    	newstr = newTempStr;
-	    	
-			System.out.println("replaced string with new string... now fixed: " + newstr);
-			System.out.println("!!!! =======  !!!  value of newstr:  " + newstr+ "return this new value  " + newstr);
-	 		finSTR = newstr;
-	    }		
-	    else if (oldstrg.startsWith(" ")) {   // spelling errors in extra lines of DESCRIPTION
-	    	String oldVal;
-	    	String newVal;
-	    	for (String key : hMAP.keySet()) {
-	    		oldVal= key;
-	    		newVal= hMAP.get(key);
-	    		out.println("\n\n" + "!!!----- value of hmap retrieval: " + oldVal + " " + newVal);
-	    		if (oldstrg.contains((CharSequence)oldVal)) {
-	    			newstr = oldstrg.replace(oldVal, newVal);
-	    			System.out.println("SPELLING ERROR!!!! ----------replaced string with new string... now fixed: " + newstr);
-	    			finSTR = newstr;
-	    			break;
-	    		}
-	    		else finSTR = oldstrg;    	
-	    	}  // for
-	    }
-	    else  { 
-	 		finSTR = oldstrg; }
-	    return finSTR;
+		tString = continueReplacing(newstr);
+	 		
+		if (tString.startsWith(" ")) {   // spelling errors in extra lines of DESCRIPTION
+			String oldVal;
+			String newVal;
+			for (String key : hMAP.keySet()) {
+				oldVal= key;
+				newVal= hMAP.get(key);
+				out.println("\n\n" + "!!!----- value of hmap retrieval: " + oldVal + " " + newVal);
+				if (tString.contains((CharSequence)oldVal)) {
+					newstr = tString.replace(oldVal, newVal);
+					System.out.println("SPELLING ERROR!!!! ----------replaced string with new string... now fixed: " + newstr);
+					tString = newstr;
+					break;
+				}
+				//else finSTR = tString;    	
+			}  // for
+		}
+	//	else   {  //finSTR = tString; }
+		return tString;
 	}
-	
+
+	static String continueReplacing(String fixmeSTR) {
+		String newTempStr = fixmeSTR.replace("Transiting ","" );
+		fixmeSTR= newTempStr.replace("Conjunction","Conjunct"); 
+		newTempStr= fixmeSTR.replace("Opposition","Opposite"); 
+		fixmeSTR = newTempStr.replace("Entering","Enters" );
+		newTempStr = fixmeSTR.replace("DESCRIPTION:The ","DESCRIPTION:" );
+
+		System.out.println("replaced string with new string... now fixed: " + newTempStr);
+		System.out.println("!!!! =======  !!!  value of instr:  " + fixmeSTR+ "return this new value  " + newTempStr);
+		return newTempStr;
+	}
+
 	
 // new method // --------------------------------------------------------------	 	
 	static String fixSUMMARYsigns(String oldstrg) {
@@ -222,30 +246,23 @@ public class SFCALstandard extends SFCALstandardutil {
 
 	
 // new method // --------------------------------------------------------------	 	
-		static String make_new_file_date_name(String ORIG_INFILE_STR, String outDirnew) {
-			String LocalDateNmStr = null;
-			String finName="";
-			
-			try {
-				File nfile = new File(ORIG_INFILE_STR);
-				List<String> dateStringFileList2 =  FileUtils.readLines(nfile);
-				String newDateString=dateStringFileList2.get(5);
-				String newDateStr = newDateString.substring(8, 16);
-				verboseOut("new date string is: "+ newDateStr);
-				LocalDateNmStr = ORIG_INFILE_STR + "." + newDateStr + ".ics";
-				finName = outDirnew + "\\" + LocalDateNmStr;
-				verboseOut("new LocalDateNmStr string is: "+ LocalDateNmStr);
+	static String mkDateFileNM(String oldname, String oldfiledir, String newfiledir) {
+		List<String> oldfilecontents = new ArrayList<String>();
+		String newOLDName = oldfiledir + "\\" + oldname;
+		String newDateNM = "";
+		
+		try {
+			oldfilecontents =  FileUtils.readLines(new File(newOLDName));  //READ the list of files in sfcalfiles/vds dir
+			String newDateString = oldfilecontents.get(5);
+			String newDateStr = newDateString.substring(8, 16);
+			newDateNM = newfiledir + "\\" + oldname + "." + newDateStr + ".ics";
 
-			} catch (IOException e) { 
-				e.printStackTrace();	
-			}	// catch
+		} catch (IOException e) { 
+			e.printStackTrace();	
+		}	// catch
 
-			return finName; 
-		}
-		public static void verboseOut(String theoutline) {
-			if (G_VERBOSE==1) {
-				out.println(theoutline);
-			}
-		}
-	}  // class
+		return newDateNM; 
+	}
+
+}  // class
  

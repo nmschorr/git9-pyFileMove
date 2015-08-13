@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
-import static com.nmschorr.SFCAL_standard.*;
+//import static com.nmschorr.SFCAL_standard.*;
 
 
 public class SectionNew {
@@ -80,8 +80,8 @@ public class SectionNew {
 			FileUtils.writeStringToFile(tmpFILtwo, "END:VCALENDAR"+LINE_FEED, true);	
 	// new code		
 			List<String> lastFILE_ARRAY =  FileUtils.readLines(tmpFILtwo);
-			List<String> lastFILE_ARRAY2 =  FileUtils.readLines(tmpFILtwo);
-			List<String> bigARRAY =  new ArrayList<String>() ;
+		//	List<String> lastFILE_ARRAY2 =  FileUtils.readLines(tmpFILtwo);
+		//	List<String> bigARRAY =  new ArrayList<String>() ;
 			//List<String> lastARRAY =  new ArrayList<String>();
 			int arSIZE = lastFILE_ARRAY.size();
 			int newARRAYSIZE=arSIZE;
@@ -150,7 +150,7 @@ public class SectionNew {
 				
 				if (yesDESC) {
 					int numberRemoved = cntLONG.size();  // should be around 3
-					int numberRemovedMinus = cntLONG.size()-2;  // should be around 3
+				//	int numberRemovedMinus = cntLONG.size()-2;  // should be around 3
 					//curLINEct = curLINEct - numberRemoved;  // minus because we add a new DESC line
 					
 					anInt=cntLONG.get(0);

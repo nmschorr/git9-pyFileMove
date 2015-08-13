@@ -51,7 +51,7 @@ public class SFCALstandardutil {
 
 				if (keepGoing == true ) { 
 					System.out.println("myLINEct:  " + myLINEct);
-					verboseOut(        "current line:               " + cLINE);
+					//verboseOut(        "current line:               " + cLINE);
 
 					newLocLINE2  =   chkForWeirdChar(cLINE);
 					cLINE=newLocLINE2;
