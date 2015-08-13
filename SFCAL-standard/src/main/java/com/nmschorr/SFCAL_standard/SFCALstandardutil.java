@@ -8,6 +8,7 @@ import java.util.*;
 import org.apache.commons.io.FileUtils;
 //import org.apache.commons.lang.StringUtils;
 
+
 import static java.lang.System.out;
 //import static com.nmschorr.SFCAL_editor.SFCALeditor.verboseOut;
 import static com.nmschorr.SFCAL_standard.SFCALstandard.*;
@@ -34,8 +35,8 @@ public class SFCALstandardutil {
 		File SFCALtempONE  =  new File(tmpFILEnmONE);
 		CharSequence SUMstr = "SUMMARY:Tr-Tr";
 		String DEStr = "DESCRIPTION";
-		String lineEND = "\n";
-
+		String LFEED = System.getProperty("line.separator");
+		List<String> nwARRY  =  new ArrayList<String>();
 		try {
 			List<String> origFILEARRY  =   FileUtils.readLines(origFILE);
 			int arraySIZE  =  origFILEARRY.size();
@@ -51,7 +52,6 @@ public class SFCALstandardutil {
 
 				if (keepGoing == true ) { 
 					System.out.println("myLINEct:  " + myLINEct);
-					//verboseOut(        "current line:               " + cLINE);
 
 					newLocLINE2  =   chkForWeirdChar(cLINE);
 					cLINE=newLocLINE2;
@@ -60,12 +60,14 @@ public class SFCALstandardutil {
    // the ifs start here
 					if ( cLINE.contains(SUMstr)) {  /// if TR-TR only lines
 						newLocLINE2 = fixSUMMARYsigns(cLINE) ;
-						FileUtils.writeStringToFile(SFCALtempONE, newLocLINE2 + lineEND, true);	
+						nwARRY.add(cLINE+ LFEED);
+						//FileUtils.writeStringToFile(SFCALtempONE, newLocLINE2 + LFEED, true);	
 					}										
 					else if ( cLINE.contains(DEStr) || cLINE.startsWith(" "))   {  /// if TR-TR only lines
 	 					//StringUtils.chomp(cLINE);  // chomp is removing the Z
 						newLocLINE2 = fixDESCRIPTION_line(cLINE) ;
-						FileUtils.writeStringToFile(SFCALtempONE, newLocLINE2 + lineEND, true);	
+						nwARRY.add(newLocLINE2+ LFEED);
+						//FileUtils.writeStringToFile(SFCALtempONE, newLocLINE2 + LFEED, true);	
 					}										
 					else if (cLINE.startsWith("SUMMARY:Tr "))   { 
 						newLocLINE2 = cLINE.replace("Tr ", "");
@@ -93,16 +95,20 @@ public class SFCALstandardutil {
 							newPlanet = (newhash.get(oldPlanet));
 						}
 						cLINE= newLocLINE1.replace(oldPlanet, newPlanet);
-						FileUtils.writeStringToFile(SFCALtempONE, cLINE + lineEND, true);	
+						nwARRY.add(cLINE + LFEED);
+						//FileUtils.writeStringToFile(SFCALtempONE, cLINE + LFEED, true);	
 					}  // SUMMARY:TR 	
 					else if ( cLINE.contains("DTSTAR") ) {
 						String theDTSTline = chkAddDTEND(cLINE);
-						FileUtils.writeStringToFile(SFCALtempONE, cLINE + lineEND, true);  // start line
-						FileUtils.writeStringToFile(SFCALtempONE, theDTSTline + lineEND, true);
+						nwARRY.add(cLINE + LFEED);
+						nwARRY.add(theDTSTline + LFEED);
+						//FileUtils.writeStringToFile(SFCALtempONE, cLINE + LFEED, true);  // start line
+					//	FileUtils.writeStringToFile(SFCALtempONE, theDTSTline + LFEED, true);
 				}
 					else {
 						System.out.println("   writing ORIGINAL string to file         " + cLINE);
-						FileUtils.writeStringToFile(SFCALtempONE, cLINE+ lineEND, true);	
+						nwARRY.add(cLINE + LFEED);
+						//FileUtils.writeStringToFile(SFCALtempONE, cLINE+ LFEED, true);	
 					}
 					myLINEct++;
 					newLocLINE1 = "";
@@ -110,6 +116,7 @@ public class SFCALstandardutil {
 				}	// if
 
 			}  //for string in array
+			FileUtils.writeLines(SFCALtempONE, nwARRY);	
 		}  // try
 		catch (IOException e)  { 
 			e.printStackTrace();	 
@@ -164,8 +171,6 @@ public class SFCALstandardutil {
 	return localHash;
 	}
 
-	
-	
 	
 	static String myREPLACE(String bigstr, String oldStr, String newStr) {
 		if ( bigstr.contains(oldStr) ) {

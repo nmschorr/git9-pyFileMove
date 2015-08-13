@@ -111,11 +111,9 @@ public class SFCALstandard extends SFCALstandardutil {
 	
 // new method // --------------------------------------------------------------	 	
 	static String fixDESCRIPTION_line( String  inSTRING) {
-		HashMap<String, String> hMAP = makeSpellhm();
 		CharSequence badLINEFchars = "\\n";
 		String badLINEFstr = (String)badLINEFchars;
 		String newstr = "";
-		String finSTR = "";
 		System.out.println("just entered gofixDES. oldstrg is: " +inSTRING );
 
 		String tString = inSTRING.replaceAll("%0A","");  // get rid of CRs  - \n
@@ -125,26 +123,33 @@ public class SFCALstandard extends SFCALstandardutil {
 		
 		tString = continueReplacing(newstr);
 	 		
-		if (tString.startsWith(" ")) {   // spelling errors in extra lines of DESCRIPTION
-			String oldVal;
-			String newVal;
-			for (String key : hMAP.keySet()) {
-				oldVal= key;
-				newVal= hMAP.get(key);
-				out.println("\n\n" + "!!!----- value of hmap retrieval: " + oldVal + " " + newVal);
-				if (tString.contains((CharSequence)oldVal)) {
-					newstr = tString.replace(oldVal, newVal);
-					System.out.println("SPELLING ERROR!!!! ----------replaced string with new string... now fixed: " + newstr);
-					tString = newstr;
-					break;
-				}
-				//else finSTR = tString;    	
-			}  // for
-		}
-	//	else   {  //finSTR = tString; }
+		if (tString.startsWith(" "))   // spelling errors in extra lines of DESCRIPTION
+			tString = newrepl(tString);
+	
 		return tString;
 	}
 
+	static String newrepl(String localSTR) {
+		String oldVal;
+		String newVal;
+		String newstr=localSTR;
+		HashMap<String, String> hMAP = makeSpellhm();
+		for (String key : hMAP.keySet()) {
+			oldVal= key;
+			newVal= hMAP.get(key);
+			out.println("\n\n" + "!!!----- value of hmap retrieval: " + oldVal + " " + newVal);
+			if (localSTR.contains((CharSequence)oldVal)) {
+			    newstr = localSTR.replace(oldVal, newVal);
+				System.out.println("SPELLING ERROR!!!! ----------replaced string with new string... now fixed: " + newstr);
+			}
+		} //for
+	return newstr;
+	}
+		
+		
+		
+		
+		
 	static String continueReplacing(String fixmeSTR) {
 		String newTempStr = fixmeSTR.replace("Transiting ","" );
 		fixmeSTR= newTempStr.replace("Conjunction","Conjunct"); 
