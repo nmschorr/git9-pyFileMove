@@ -28,6 +28,7 @@ public class SectionNew {
 		System.out.println("tFILEin: " + tFILEin);
 		System.out.println("finFILE: " + finFILE);
 		System.out.println("tFILEtwo: " + tFILEtwo);
+		ArrayList<String> lastFILE_ARRAY = new ArrayList<String>();
 
 		try {
 			List<String> tempFILE_ARRAY =  FileUtils.readLines(theREADING_FROM_TMP_FILE);
@@ -39,21 +40,18 @@ public class SectionNew {
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
 			for (int i = 0; i < 4; i++)	{
-				FileUtils.writeStringToFile(tmpFILtwo, tempFILE_ARRAY.get(i)+LINE_FEED, true);		
+				lastFILE_ARRAY.add(tempFILE_ARRAY.get(i));
 			}
 			totInfilesMinusNine = totInFileLines-9;  //  
 			System.out.println("!!! totInfilesMinusNine: " + totInfilesMinusNine );
 
 			while ( locLineCount < totInfilesMinusNine )  
-			{  // while there are still lines left in array // starting on 5th line, load
-			//	int tinyCounter = 0;
+			{                 // while there are still lines left in array // starting on 5th line, load
 				ArrayList<String> tinySectionList = new ArrayList<String>();
 
-				// first load sections of 10x lines each into smaller arrarys
-				// then check each section for voids etc  then correct
+							// first load sections of 10x lines each into smaller arrarys  then check each section for voids etc  then correct
 
 				for (int tc=0; tc < 17; tc++) {         //tiny while
-				//while (tinyCounter < 10) {         //tiny while
 					String theString = tempFILE_ARRAY.get(locLineCount);  //get one string
 					boolean checkforend = theString.startsWith("END:VEVENT", 0);
 					if (checkforend) {
@@ -66,47 +64,38 @@ public class SectionNew {
 						locLineCount++;
 						System.out.println(" lincount is -----------" + locLineCount); 
 					}
-					//tinyCounter++;
-				}  // tiny while
+				}  // tiny 
 				
 				boolean checkToKeep=true;
 				if (tinySectionList.size() > 6) 
 					checkToKeep = checkSUMMARYforToss(tinySectionList);	 // true is keep and write 
 
 				if (checkToKeep) {   // IF 	checkfortoss comes back TRUE, then write this section
-					FileUtils.writeLines(tmpFILtwo, tinySectionList, true);	
-					FileUtils.waitFor(tmpFILtwo,2);
+					lastFILE_ARRAY.addAll(tinySectionList);
 				}
 
 			} //  // while locLineCount
-			System.out.println("!!! INSIDE sectiontask. filename -------------------------"  
-					+ tmpFILtwo.getName());
-			out.println("!!!###   name out outfile" + tmpFILtwo);
-			FileUtils.writeStringToFile(tmpFILtwo, "END:VCALENDAR"+LINE_FEED, true);	
+\			lastFILE_ARRAY.add("END:VCALENDAR"+LINE_FEED);
 	// new code		
-			List<String> lastFILE_ARRAY =  FileUtils.readLines(tmpFILtwo);
-			int arSIZE = lastFILE_ARRAY.size();
-			int newARRAYSIZE=arSIZE;
+			List<String> tinyARRY =  new ArrayList<String>();
+			List<Integer> cntLONG = new ArrayList<Integer>();
 			String tline="";
-			int curLINEct = 0;
-			List<String> tinyARRY =  new ArrayList<String>() ;
-			//boolean mygo = true;
-			boolean yesDESC = false;
 			String concatline1 ="";
 			String concatline2 ="";
 			String concatline3 ="";
 			String concatline4 ="";
 			String longstr ="";
-			List<Integer> cntLONG = new ArrayList<Integer>();
+			int arSIZE = lastFILE_ARRAY.size();
+			int newARRAYSIZE=arSIZE;
+			int curLINEct = 0;
+			boolean yesDESC = false;
 			
 			while ( curLINEct < newARRAYSIZE) {    // while we're still in the file
+				yesDESC = false;
 				tline="";
 				longstr ="";				
 				tline = lastFILE_ARRAY.get(curLINEct);
-				yesDESC = false;
-				System.out.println("curLINEct is --- "  + curLINEct);
-				System.out.println("arSIZE is --- "  + arSIZE);
-				//System.out.println("linect is --- "  + curLINEct);
+				out.println("curLINEct is --- "  + curLINEct +"arSIZE is --- "  + arSIZE);
 			
 				if (tline.contains("DESCRIPTION")) {
 					yesDESC = true;
@@ -147,21 +136,9 @@ public class SectionNew {
 					concatline4 ="";
 					tline="";
 				}	// if DESCRIPTION
-
-				int anInt = 0;
 				
 				if (yesDESC) {
-					int numberRemoved = cntLONG.size();  // should be around 3
-				//	int numberRemovedMinus = cntLONG.size()-2;  // should be around 3
-					//curLINEct = curLINEct - numberRemoved;  // minus because we add a new DESC line
-					
-					anInt=cntLONG.get(0);
-					for (int i=0; i < numberRemoved; i++) {
-						anInt=cntLONG.get(0);
-						lastFILE_ARRAY.remove(anInt);  // remove little strings
-					}
-					int wheretoaddline = cntLONG.get(0);
-					lastFILE_ARRAY.add(wheretoaddline, longstr);  // add new long string back
+					addmyLines (cntLONG, lastFILE_ARRAY, longstr);
 				}
 				tinyARRY.clear();
 				cntLONG.clear();
@@ -172,48 +149,53 @@ public class SectionNew {
 		}  // while
 		 
 			FileUtils.writeLines(finalFILE, lastFILE_ARRAY, true);
-			
-			SFCALstandardutil.mySleep(2);
+			SFCALstandardutil.mySleep(1);
 			FileUtils.waitFor(finalFILE, 1);
 		}  // try  
 		catch (IOException e) {  	e.printStackTrace();	 }	// catch
 	}  // end of method
 
-
+	static List<String> addmyLines (List<Integer> cntLONG, List<String> farray, String longstrg) {
+		int numberRemoved = cntLONG.size();  // should be around 3					
+		int ttInt=cntLONG.get(0);
+		for (int i=0; i < numberRemoved; i++) {
+			ttInt=cntLONG.get(0);
+			farray.remove(ttInt);  // remove little strings
+		}
+		int wheretoaddline = cntLONG.get(0);
+		farray.add(wheretoaddline, longstrg);  // add new long string back
+	 return farray;
+	} 	
+	
+	
 	// new method: ----------------------------------------------------------------
 		static boolean checkSUMMARYforToss(List<String> tinyList) {
 			String sl = tinyList.get(6);  // checking the 6th line : SUMMARY
-			out.println("\n\n" +"               %%%%%%%%%%%%%%%%% starting over in checkForTossouts");
-			out.println("The string is:  " + sl );
+			out.println("\n\n" +"   starting over in checkForTossouts. The string is:  " + sl );
 
 			if ( (sl.contains("SUMMARY")) && (sl.contains("Eclipse")) )
 			{
-				out.println("==========    ===== !!!!! reg method FOUND ECLIPSE!!! !!  !");
-				out.println("========== tossing: "+ sl);		
+				out.println("==========    ===== !!!!! reg method FOUND ECLIPSE!! tossing: "+ sl);		
 				return false;  // toss
 			}
 			else if ( (sl.contains("SUMMARY")) && (sl.contains("Moon enters")) )
 			{
-				out.println("==========    ===== !!!!! reg method FOUND ECLIPSE!!! !!  !");
-				out.println("========== tossing: "+ sl);		
+				out.println("==========    ===== !!!!! reg method Moon enters! ========== tossing: "+ sl);		
 				return false;  // toss
 			}
 			else if ( (sl.contains("SUMMARY")) && (sl.contains("Quarter")) )
 			{
-				out.println("==========    ===== !!!!! reg method FOUND ECLIPSE!!! !!  !");
-				out.println("========== tossing: "+ sl);		
+				out.println("==========    ===== !!!!! reg method FOUND ECLIPSE!!!  tossing: "+ sl);		
 				return false;  // toss
 			}
 
 			else if ( (sl.contains("void of")) || (sl.contains("SUMMARY:Full")) || 
 					( sl.contains("SUMMARY:New Moon"))   )     // we are removing the quarters
 			{
-				out.println("==========    ===== !!!!! reg method FOUND !");
-				out.println("========== tossing: "+ sl);		
+				out.println("==========    ===== !!!!! reg method FOUND ! tossing: "+ sl);		
 				return false;   //toss
 			}
 			else  {
-				//verboseOut("writing this line:  " + sumLine);
 				return true;
 			}
 		} // method end
