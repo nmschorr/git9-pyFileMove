@@ -151,7 +151,7 @@ public class SFCALstandard extends SFCALstandardutil {
 
 	
 // new method // --------------------------------------------------------------	 	
-	static String fixSUMMARYsigns(String oldstrg) {
+	static String fixSUMMARYsigns(String oldstrg, boolean isDIRorRET) {
 		String tstring = oldstrg.replace("SUMMARY: ", "SUMMARY:");
 		oldstrg=tstring;
 		String newstr = "empty";
@@ -163,8 +163,8 @@ public class SFCALstandard extends SFCALstandardutil {
 	 		 		
 		Map<String, String> hm  =  makeNewhash();
 		String firstthird = oldstrg.substring(14,17);
-		String secondthird = oldstrg.substring(18,21);
-		String lastthird = oldstrg.substring(22,25);
+		String secondthird = "";
+		String lastthird = "";
 		out.println("in fixSUMMARYsigns. first:  " + firstthird+" 2nd  :  " + secondthird+" 3rd  :  " + lastthird);
 		
 		for (int i=0; i<12; i++) {
@@ -175,29 +175,32 @@ public class SFCALstandard extends SFCALstandardutil {
 		    }
 		}
 //begin third column		    
-		String thirdrep = hm.get(lastthird);
-		int start = 22;
-		int end = 25;
-		newbuf.delete(start, end); 
-		newbuf.insert(start,thirdrep);
-		out.println("found this in hash:  " + lastthird+"new buf is: " + newbuf);		
-		
+		if (isDIRorRET==false) {
+			lastthird = oldstrg.substring(22,25);
+			String thirdrep = hm.get(lastthird);			int start = 22;
+			int end = 25;
+			newbuf.delete(start, end); 
+			newbuf.insert(start,thirdrep);
+			out.println("found this in hash:  " + lastthird+"new buf is: " + newbuf);		
+		}		
 //begin second column
-		String secondrep = hm.get(secondthird);
-		start = 18;
-		end = 21;
-		newbuf.delete(start, end); 
-		if (signmatch) {   // change Conjunct a sign to Enters a sign
-			newbuf.insert(start,"Enters");
-		} else {
-			newbuf.insert(start,secondrep);
-		}
-		out.println("value of signmatch:  " + signmatch+ "found this in hash:  " + secondrep+"new buf is: " + newbuf);
-				
+		if  (isDIRorRET==false) {
+			secondthird = oldstrg.substring(18,21);
+			String secondrep = hm.get(secondthird);
+			int start = 18;
+			int end = 21;
+			newbuf.delete(start, end); 
+			if (signmatch) {   // change Conjunct a sign to Enters a sign
+				newbuf.insert(start,"Enters");
+			} else {
+				newbuf.insert(start,secondrep);
+			}
+			out.println("value of signmatch:  " + signmatch+ "found this in hash:  " + secondrep+"new buf is: " + newbuf);
+		}			
 // begin first column		
 		String firstrep = hm.get(firstthird);
-		start = 8;
-		end = 17;
+		int start = 8;
+		int end = 17;
 		newbuf.delete(start, end); 
 		newbuf.insert(8,firstrep);
 		newstr =   newbuf.toString();

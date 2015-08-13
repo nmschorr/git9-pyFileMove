@@ -75,15 +75,11 @@ public class SectionNew {
 				}
 
 			} //  // while locLineCount
-\			lastFILE_ARRAY.add("END:VCALENDAR"+LINE_FEED);
+			lastFILE_ARRAY.add("END:VCALENDAR"+LINE_FEED);
 	// new code		
-			List<String> tinyARRY =  new ArrayList<String>();
+			//List<String> tinyARRY =  new ArrayList<String>();
 			List<Integer> cntLONG = new ArrayList<Integer>();
 			String tline="";
-			String concatline1 ="";
-			String concatline2 ="";
-			String concatline3 ="";
-			String concatline4 ="";
 			String longstr ="";
 			int arSIZE = lastFILE_ARRAY.size();
 			int newARRAYSIZE=arSIZE;
@@ -101,46 +97,15 @@ public class SectionNew {
 					yesDESC = true;
 					cntLONG.clear();
 					cntLONG.add(curLINEct);
-					tinyARRY.add(tline);   // check the next lines for continuation of DESCRIPTION
-					if (lastFILE_ARRAY.get(curLINEct+1).startsWith(" ")) {
-						concatline1=lastFILE_ARRAY.get(curLINEct+1);
-						tinyARRY.add(concatline1);
-						cntLONG.add(curLINEct+1);
+					//tinyARRY.add(tline);   // check the next lines for continuation of DESCRIPTION
 
-						if (lastFILE_ARRAY.get(curLINEct+2).startsWith(" ")) {
-							concatline2=lastFILE_ARRAY.get(curLINEct+2);
-							tinyARRY.add(concatline2);
-							cntLONG.add(curLINEct+2);
-
-							if (lastFILE_ARRAY.get(curLINEct+3).startsWith(" ")) {
-								concatline3=lastFILE_ARRAY.get(curLINEct+3);
-								tinyARRY.add(concatline3);
-								cntLONG.add(curLINEct+3);
-
-								if (lastFILE_ARRAY.get(curLINEct+4).startsWith(" ")) {
-									concatline4=lastFILE_ARRAY.get(curLINEct+4);
-									tinyARRY.add(concatline4);
-									cntLONG.add(curLINEct+4);
-
-								}  
-							}  
-						}  
-					}
-					
-					longstr=longstr.concat(tline + concatline1 + concatline2 + concatline3 + concatline4);
-					out.println("longstring is : " +longstr);
-
-					concatline1 ="";
-					concatline2 ="";
-					concatline3 ="";
-					concatline4 ="";
+					longstr = concatDESC (tline, lastFILE_ARRAY, curLINEct, cntLONG);  
 					tline="";
 				}	// if DESCRIPTION
 				
 				if (yesDESC) {
 					addmyLines (cntLONG, lastFILE_ARRAY, longstr);
 				}
-				tinyARRY.clear();
 				cntLONG.clear();
 				newARRAYSIZE=lastFILE_ARRAY.size();
 				out.println("new array size is: " + newARRAYSIZE);
@@ -155,6 +120,52 @@ public class SectionNew {
 		catch (IOException e) {  	e.printStackTrace();	 }	// catch
 	}  // end of method
 
+
+	static String concatDESC (String ttline, List<String> fileARY, int cLineCT, List<Integer> cLONG) {
+		String concatline1 ="";
+		String concatline2 ="";
+		String concatline3 ="";
+		String concatline4 ="";
+		String longstraa ="";
+		cLONG.add(cLineCT+1);
+		
+		concatline1=fileARY.get(cLineCT+1);
+		//atnyAR.add(concatline1);
+
+		if (fileARY.get(cLineCT+2).startsWith(" ")) {
+			concatline2=fileARY.get(cLineCT+2);
+			//atnyAR.add(concatline2);
+			cLONG.add(cLineCT+2);
+
+			if (fileARY.get(cLineCT+3).startsWith(" ")) {
+				concatline3=fileARY.get(cLineCT+3);
+				//atnyAR.add(concatline3);
+				cLONG.add(cLineCT+3);
+
+				if (fileARY.get(cLineCT+4).startsWith(" ")) {
+					concatline4=fileARY.get(cLineCT+4);
+					//atnyAR.add(concatline4);
+					cLONG.add(cLineCT+4);
+
+				}  
+			}  
+		}  
+		String longstaar=longstraa.concat(ttline + concatline1 + concatline2 + concatline3 + concatline4);
+		out.println("longstring is : " +longstraa);
+		concatline1 ="";
+		concatline2 ="";
+		concatline3 ="";
+		concatline4 ="";
+
+	return longstaar;
+		
+	}
+	
+	
+	
+	
+	
+	
 	static List<String> addmyLines (List<Integer> cntLONG, List<String> farray, String longstrg) {
 		int numberRemoved = cntLONG.size();  // should be around 3					
 		int ttInt=cntLONG.get(0);

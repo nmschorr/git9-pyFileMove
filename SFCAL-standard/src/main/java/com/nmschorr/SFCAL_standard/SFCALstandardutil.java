@@ -52,15 +52,16 @@ public class SFCALstandardutil {
 		// the ifs start here
 		// begin the IFS			
 				if ( cLINE.contains(SUMstr)) {  /// if TR-TR only lines
-					cLINEtwo = fixSUMMARYsigns(cLINE) ;
+					cLINEtwo = fixSUMMARYsigns(cLINE, false) ;
 					nwARRY.add(cLINEtwo);
 				}										
 				else if ( cLINE.contains(DEStr) || cLINE.startsWith(" "))   {  /// if TR-TR only lines
 						cLINEtwo = fixDESCRIPTION_line(cLINE) ;
 						nwARRY.add(cLINEtwo);
 					}										
-					else if (cLINE.startsWith("SUMMARY:Tr "))   { 
+					else if (cLINE.startsWith("SUMMARY:Tr "))   { // direct or retrograde
 						cLINEtwo= fixDirRetro(cLINE);
+						cLINEtwo = fixSUMMARYsigns(cLINEtwo, true) ;
 						nwARRY.add(cLINEtwo );
 					}  // SUMMARY:TR 	
 
