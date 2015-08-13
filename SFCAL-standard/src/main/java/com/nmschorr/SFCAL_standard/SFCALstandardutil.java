@@ -9,6 +9,8 @@ import org.apache.commons.io.FileUtils;
 //import org.apache.commons.lang.StringUtils;
 
 
+import org.apache.commons.lang.StringUtils;
+
 import static java.lang.System.out;
 //import static com.nmschorr.SFCAL_editor.SFCALeditor.verboseOut;
 import static com.nmschorr.SFCAL_standard.SFCALstandard.*;
@@ -27,15 +29,18 @@ public class SFCALstandardutil {
 	
 	// new method // --------------------------------------------------------------	 		
 	static void generalStringFixing(String origFILEnm, String tmpFILEnmONE ) {   
+		boolean keepGoing = true;
+		CharSequence SUMstr = "SUMMARY:Tr-Tr";
 		String newLocLINE1 = "";
 		String newLocLINE2 = "";
-		boolean keepGoing = true;
-		File origFILE = new File(origFILEnm);
-		File SFCALtempONE  =  new File(tmpFILEnmONE);
-		CharSequence SUMstr = "SUMMARY:Tr-Tr";
 		String DEStr = "DESCRIPTION";
 		String LFEED = System.getProperty("line.separator");
+
 		List<String> nwARRY  =  new ArrayList<String>();
+		File origFILE = new File(origFILEnm);
+		File SFCALtempONE  =  new File(tmpFILEnmONE);
+		Map<String, String> newhash  =  makeNewhash();
+	
 		try {
 			List<String> origFILEARRY  =   FileUtils.readLines(origFILE);
 			int arraySIZE  =  origFILEARRY.size();
@@ -51,20 +56,19 @@ public class SFCALstandardutil {
 
 				if (keepGoing == true ) { 
 					System.out.println("myLINEct:  " + myLINEct);
-
-					newLocLINE2  =   chkForWeirdChar(cLINE);
-					cLINE=newLocLINE2;
+					newLocLINE2  =   StringUtils.chomp(cLINE);  // chomp is removing the Z
+					
+					cLINE  =   chkForWeirdChar(newLocLINE2);
 					
 					System.out.println("    char string is:         " + cLINE);
    // the ifs start here
 					if ( cLINE.contains(SUMstr)) {  /// if TR-TR only lines
 						newLocLINE2 = fixSUMMARYsigns(cLINE) ;
-						nwARRY.add(cLINE+ LFEED);
+						nwARRY.add(cLINE);
 					}										
 					else if ( cLINE.contains(DEStr) || cLINE.startsWith(" "))   {  /// if TR-TR only lines
-	 					//StringUtils.chomp(cLINE);  // chomp is removing the Z
 						newLocLINE2 = fixDESCRIPTION_line(cLINE) ;
-						nwARRY.add(newLocLINE2+ LFEED);
+						nwARRY.add(newLocLINE2);
 					}										
 					else if (cLINE.startsWith("SUMMARY:Tr "))   { 
 						newLocLINE2 = cLINE.replace("Tr ", "");
@@ -73,8 +77,6 @@ public class SFCALstandardutil {
 						String newPlanet = "";
 						String dchar = " D";  
 						String rchar = " R";  // MUST have a space first
-
-						Map<String, String> newhash  =  makeNewhash();
 						
 						int cStart = newLocLINE2.length()-3;  // a space & there's a line ending too
 						int cEnd = newLocLINE2.length()-1;
@@ -92,16 +94,18 @@ public class SFCALstandardutil {
 							newPlanet = (newhash.get(oldPlanet));
 						}
 						cLINE= newLocLINE1.replace(oldPlanet, newPlanet);
-						nwARRY.add(cLINE + LFEED);
+						nwARRY.add(cLINE );
 					}  // SUMMARY:TR 	
 					else if ( cLINE.contains("DTSTAR") ) {
-						String theDTSTline = chkAddDTEND(cLINE);
-						nwARRY.add(cLINE + LFEED);
-						nwARRY.add(theDTSTline + LFEED);
-				}
+						if (!CLINE.contains("VALUE")) { //skip these; they are moon for the day
+						String theDTENDline = chkAddDTEND(cLINE);
+						nwARRY.add(cLINE );
+						nwARRY.add(theDTENDline );
+						}
+					}
 					else {
 						System.out.println("   writing ORIGINAL string to file         " + cLINE);
-						nwARRY.add(cLINE + LFEED);
+						nwARRY.add(cLINE );
 					}
 					myLINEct++;
 					newLocLINE1 = "";
@@ -122,14 +126,16 @@ public class SFCALstandardutil {
 	
 	// new method // --------------------------------------------------------------	 	
 	static String chkAddDTEND (String theLine) {
-		if ( theLine.contains("DTSTAR") )   {  		// double check			
+		String newDTEND = theLine;
+		if ( theLine.contains("DTSTAR") )   {  // double check
+			if  ( !theLine.contains("VALUE")) { //moon for the  day			
 			String newback = theLine.substring(8,23) + "Z";
 			out.println("                   !! inside chkAddDTEND -----                        @@@@@  the line is  " + theLine);
-			String newDTEND = newfront + newback;  					
+			newDTEND = newfront + newback;  					
 			out.println("DTEND: new line is " + newDTEND);
-			return newDTEND;
 		}
-		else return theLine;
+	}
+	return theLine;
 	}
 	
 

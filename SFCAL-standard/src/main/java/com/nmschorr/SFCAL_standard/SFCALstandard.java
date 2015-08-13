@@ -91,7 +91,7 @@ public class SFCALstandard extends SFCALstandardutil {
 		}
 
 	static String getTMPnmWdir(String tnm, String myIn) {  // 1 for name, 2 for file
-		String sNAME = tnm + "\\tempfiles\\SFCALtmp" + System.currentTimeMillis() +myIn +".ics";
+		String sNAME = tnm + "\\SFCALtmp" + System.currentTimeMillis() +myIn +".ics";
 		return sNAME;
 		}
 
