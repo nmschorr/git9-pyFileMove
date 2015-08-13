@@ -83,7 +83,7 @@ public class SFCALstandardutil {
 				lineCOUNT++;
 				if (lineCOUNT == 1899)
 					tempboo = true;
-				cLINEtwo =null;
+				cLINEtwo ="";
 			}  // while lines in file arrray
 			System.out.println("Writing to file: " + SFCALtempONE.getName());
 			FileUtils.writeLines(SFCALtempONE, nwARRY);	

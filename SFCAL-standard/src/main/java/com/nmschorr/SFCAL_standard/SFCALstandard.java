@@ -49,7 +49,7 @@ public class SFCALstandard extends SFCALstandardutil {
 			   
 			out.println("-- starting over in main LOOP# " + fileInDirCNT+1 +" filename is: " + infileNM);
 			
-			String finFILEnmWdir = mkDateFileNM(infileNM, indirMAIN, outDIR);
+			String finFILEnmWdir = mkDateFileNM(inFILEstr, infileNM, outDIR);
 			delFiles(finFILEnmWdir);  // delete the inFileName we made last time
 			 
 			String tOUTone = getTMPnmWdir(outDIRTMP,"1");
@@ -228,17 +228,33 @@ public class SFCALstandard extends SFCALstandardutil {
 
 	
 // new method // --------------------------------------------------------------	 	
-	static String mkDateFileNM(String oldname, String oldfiledir, String newfiledir) {
-		List<String> oldfilecontents = new ArrayList<String>();
-		String newOLDName = oldfiledir + "\\" + oldname;
+	static String mkDateFileNM(String oldFileWDir, String oldname, String newfiledir) {
+		List<String> oldfileAR = new ArrayList<String>();
 		String newDateNM = "";
+		String theTst = "DTSTART";
+		int whileCT = 0;
+		String tmpSTR = "";
+		String newDateStr = "";
+		int indColon = 0;
+		int tStart=0;
+		int tEnd=0;
 		
 		try {
-			oldfilecontents =  FileUtils.readLines(new File(newOLDName));  //READ the list of files in sfcalfiles/vds dir
-			String newDateString = oldfilecontents.get(5);
-			String newDateStr = newDateString.substring(8, 16);
-			newDateNM = newfiledir + "\\" + oldname + "." + newDateStr + ".ics";
-
+			oldfileAR =  FileUtils.readLines(new File(oldFileWDir));  //READ the list of files in sfcalfiles/vds dir
+			
+			while ( whileCT < 15) {
+				tmpSTR = oldfileAR.get(whileCT);
+				if ( tmpSTR.contains(theTst)) {
+					indColon = tmpSTR.indexOf(":");
+					tStart=indColon+1;
+					tEnd=tStart+8;
+					
+			        newDateStr = tmpSTR.substring(tStart, tEnd);
+			        newDateNM = newfiledir + "\\" + oldname + "." + newDateStr + ".ics";
+			        break;
+			  }
+			  whileCT++;
+			}
 		} catch (IOException e) { 
 			e.printStackTrace();	
 		}	// catch
