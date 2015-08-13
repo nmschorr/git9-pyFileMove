@@ -18,17 +18,8 @@ package com.nmschorr.SFCAL_standard;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
-
 import static java.lang.System.out;
-
 import org.apache.commons.io.FileUtils;
-
-
-
-
-
-//import org.apache.commons.lang.StringUtils;
-//import org.apache.commons.lang.StringUtils;
 import com.nmschorr.SFCAL_standard.SectionNew;
 
 /**
@@ -56,8 +47,7 @@ public class SFCALstandard extends SFCALstandardutil {
 			String infileNM= arryOfInFiles[fileInDirCNT];
 			String inFILEstr = indirMAIN +"\\" + infileNM;
 			   
-			out.println("----------- starting over in main-----------LOOP# " + fileInDirCNT+1);
-			out.println("-----------------------------------filename is: " + infileNM);
+			out.println("-- starting over in main LOOP# " + fileInDirCNT+1 +" filename is: " + infileNM);
 			
 			String finFILEnmWdir = mkDateFileNM(infileNM, indirMAIN, outDIR);
 			delFiles(finFILEnmWdir);  // delete the inFileName we made last time
@@ -69,13 +59,11 @@ public class SFCALstandard extends SFCALstandardutil {
 			
 			SectionNew.sectionTask(tOUTone, tOUTtwo, finFILEnmWdir);
 			
-			out.println("-----------------------------------datefilename is: " + finFILEnmWdir);
-			out.println("--------End of Loop------------NEW filename is: "+finFILEnmWdir);		
+			out.println("- datefilename is: " + finFILEnmWdir+"--------End of Loop------------NEW filename is: "+finFILEnmWdir);		
 			
 			fileInDirCNT++;		
 		}			
-		//FileUtils.waitFor(G_DATE_FILE, 2);
-		System.out.println("Finished Program");
+		out.println("Finished Program");
 	}
 
 	// new method: ----------------------------------------------------------------	
@@ -114,7 +102,7 @@ public class SFCALstandard extends SFCALstandardutil {
 		CharSequence badLINEFchars = "\\n";
 		String badLINEFstr = (String)badLINEFchars;
 		String newstr = "";
-		System.out.println("just entered gofixDES. oldstrg is: " +inSTRING );
+		out.println("just entered gofixDES. oldstrg is: " +inSTRING );
 
 		String tString = inSTRING.replaceAll("%0A","");  // get rid of CRs  - \n
 		if (tString.contains(badLINEFchars))    // for newline only
@@ -140,7 +128,7 @@ public class SFCALstandard extends SFCALstandardutil {
 			out.println("\n\n" + "!!!----- value of hmap retrieval: " + oldVal + " " + newVal);
 			if (localSTR.contains((CharSequence)oldVal)) {
 			    newstr = localSTR.replace(oldVal, newVal);
-				System.out.println("SPELLING ERROR!!!! ----------replaced string with new string... now fixed: " + newstr);
+				out.println("SPELLING ERROR!!!! ----------replaced string with new string... now fixed: " + newstr);
 			}
 		} //for
 	return newstr;
@@ -157,8 +145,7 @@ public class SFCALstandard extends SFCALstandardutil {
 		fixmeSTR = newTempStr.replace("Entering","Enters" );
 		newTempStr = fixmeSTR.replace("DESCRIPTION:The ","DESCRIPTION:" );
 
-		System.out.println("replaced string with new string... now fixed: " + newTempStr);
-		System.out.println("!!!! =======  !!!  value of instr:  " + fixmeSTR+ "return this new value  " + newTempStr);
+		out.println("new string... now fixed: " + newTempStr+ "value of instr:  " + fixmeSTR+ "return this new value  " + newTempStr);
 		return newTempStr;
 	}
 
@@ -167,7 +154,6 @@ public class SFCALstandard extends SFCALstandardutil {
 	static String fixSUMMARYsigns(String oldstrg) {
 		String tstring = oldstrg.replace("SUMMARY: ", "SUMMARY:");
 		oldstrg=tstring;
-		System.out.println("just entered fixSUMMARYsigns");
 		String newstr = "empty";
 		StringBuffer newbuf = new StringBuffer(oldstrg);
 		String[] signsList = {"Ari", "Tau","Gem", "Can", "Leo", 
@@ -179,30 +165,25 @@ public class SFCALstandard extends SFCALstandardutil {
 		String firstthird = oldstrg.substring(14,17);
 		String secondthird = oldstrg.substring(18,21);
 		String lastthird = oldstrg.substring(22,25);
-		System.out.println("first:  " + firstthird);
-		System.out.println("2nd  :  " + secondthird);
-		System.out.println("3rd  :  " + lastthird);
+		out.println("in fixSUMMARYsigns. first:  " + firstthird+" 2nd  :  " + secondthird+" 3rd  :  " + lastthird);
 		
 		for (int i=0; i<12; i++) {
 		    tempv = signsList[i];
 		    if (tempv.equals(lastthird)) {
-		    	System.out.println("found a sign match in 3rd column");
+		    	out.println("found a sign match in 3rd column");
 		    	signmatch = true;
 		    }
 		}
 //begin third column		    
 		String thirdrep = hm.get(lastthird);
-		System.out.println("found this in hash:  " + lastthird );
 		int start = 22;
 		int end = 25;
 		newbuf.delete(start, end); 
 		newbuf.insert(start,thirdrep);
-		System.out.println("new buf is: " + newbuf);		
+		out.println("found this in hash:  " + lastthird+"new buf is: " + newbuf);		
 		
 //begin second column
 		String secondrep = hm.get(secondthird);
-		System.out.println("value of signmatch:  " + signmatch );
-		System.out.println("found this in hash:  " + secondrep );
 		start = 18;
 		end = 21;
 		newbuf.delete(start, end); 
@@ -211,20 +192,18 @@ public class SFCALstandard extends SFCALstandardutil {
 		} else {
 			newbuf.insert(start,secondrep);
 		}
-		System.out.println("new buf is: " + newbuf);
+		out.println("value of signmatch:  " + signmatch+ "found this in hash:  " + secondrep+"new buf is: " + newbuf);
 				
 // begin first column		
 		String firstrep = hm.get(firstthird);
-		//String firstrep = hm.get(firstthird) + " ";
-		System.out.println("found this in hash:  " + firstrep );
 		start = 8;
 		end = 17;
 		newbuf.delete(start, end); 
 		newbuf.insert(8,firstrep);
-		System.out.println("new buf is: " + newbuf);
 		newstr =   newbuf.toString();
-		System.out.println("replaced string with new string... now fixed: " + newstr);
-		System.out.println("value of newstr:  " + newstr+ "return this new value  " + newstr);
+		out.println("found this in hash:  " + firstrep + "new buf is: " + newbuf);
+		out.println("replaced string with new string... now fixed: " + newstr);
+		out.println("value of newstr:  " + newstr+ "return this new value  " + newstr);
 		return newstr;
 	} // gofixhash
 	
@@ -243,8 +222,6 @@ public class SFCALstandard extends SFCALstandardutil {
 		spellhm.put("wilfull","willful");
 		spellhm.put("possibiities","possibilities");
 		spellhm.put("fantasise","fantasize");
-		//spellhm.put("Transiting ","");
-		//spellhm.put("Conjunction","Conjunct");
 		return spellhm;
 	}
 

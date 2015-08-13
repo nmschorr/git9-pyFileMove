@@ -22,16 +22,16 @@ public class SFCALstandardutil {
 	
 	// new method // --------------------------------------------------------------	 		
 	static void generalStringFixing(String origFILEnm, String tmpFILEnmONE ) {   
-		CharSequence SUMstr = "SUMMARY:Tr-Tr";
-		String cLINEtwo = "";
-		String DEStr = "DESCRIPTION";
-
 		List<String> nwARRY  =  new ArrayList<String>();
 		File origFILE = new File(origFILEnm);
 		File SFCALtempONE  =  new File(tmpFILEnmONE);
+		CharSequence SUMstr = "SUMMARY:Tr-Tr";
+		String cLINEtwo = "";
+		String DEStr = "DESCRIPTION";
 		String theDTENDline="";
-			G_VERBOSE = 1;
 		boolean tempboo = false;
+
+		G_VERBOSE = 1;
 
 		try {
 			List<String> origFILEARRY  =   FileUtils.readLines(origFILE);
@@ -65,6 +65,10 @@ public class SFCALstandardutil {
 					}  // SUMMARY:TR 	
 
 					
+					else if ( (cLINE.contains(";VALUE")) && ( cLINE.contains("DT")) )  { // moon for the day
+						nwARRY.add(cLINE );
+					}  // SUMMARY:TR 
+				
 					else if ( cLINE.contains("DTSTAR") ) {
 						if (!cLINE.contains("VALUE")) { //skip these; they are moon for the day
 							theDTENDline = chkAddDTEND(cLINE);
