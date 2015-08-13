@@ -17,12 +17,15 @@ public class SectionNew {
 	
 	
 	// new method: ----------------------------------------------------------------	
-	static void sectionTask(File theREADING_FROM_TMP_FILE, File finalFILE, File tmpFILtwo) {   // this part was done by perl script
+	static void sectionTask(String tFILEin, String finFILE, String tFILEtwo) {   // this part was done by perl script
 		int totInFileLines=0;
 		int totInfilesMinusNine=0;
 		int locLineCount=4;  // start at 5th line
 		String LINE_FEED = "\n";
-
+		File tmpFILtwo = new File(tFILEtwo);
+		File theREADING_FROM_TMP_FILE = new File(tFILEin);
+		File finalFILE = new File(finFILE);
+		
 		try {
 			List<String> tempFILE_ARRAY =  FileUtils.readLines(theREADING_FROM_TMP_FILE);
 			totInFileLines = tempFILE_ARRAY.size();

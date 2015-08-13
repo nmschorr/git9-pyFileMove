@@ -37,15 +37,15 @@ public class SFCALstandardutil {
 		String lineEND = "\n";
 
 		try {
-			List<String> genFileARRAY  =   FileUtils.readLines(origFILE);
-			int arraySIZE  =  genFileARRAY.size();
+			List<String> origFILEARRY  =   FileUtils.readLines(origFILE);
+			int arraySIZE  =  origFILEARRY.size();
 			int safeSIZE = arraySIZE-5;
 			System.out.println("realCOUNT:  " +  arraySIZE + "   safecount:  " +  safeSIZE);			
-			System.out.println("----------------------------------%%%%%%%##### total lines: " +  genFileARRAY.size());
+			System.out.println("----------------------------------%%%%%%%##### total lines: " +  origFILEARRY.size());
 			// get ics header lines in 1st-first four header lines of ics inFileName
 
 			// for each line in file:
-			for (String cLINE : genFileARRAY)  {
+			for (String cLINE : origFILEARRY)  {
 				keepGoing = checkLINEfunction(cLINE, safeSIZE) ;		
 				G_VERBOSE = 1;
 
@@ -174,7 +174,8 @@ public class SFCALstandardutil {
 		return bigstr;
 	}
 	
-	public static void delFiles(File f1) {
+	public static void delFiles(String f2in) {
+		File f1 = new File(f2in);
 		if ( f1.exists() ) {
 			f1.delete();  // delete the inFileName we made last time
 		}

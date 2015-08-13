@@ -34,33 +34,14 @@ import com.nmschorr.SFCAL_standard.SectionNew;
  */
 
 public class SFCALstandard extends SFCALstandardutil {
-	static List<String> tempFileList = new ArrayList<String>();
-	static List<String> dateStringFileList = new ArrayList<String>();
-	static int eventcount = 0;		 
 	static String indirMAIN = "E:\\sfcalfiles\\standard";
 	static String outDIR ="C:\\SFCALOUT\\standard";
 	static String outDIRTMP = outDIR + "\\tempfiles";
-	static String G_TEMPOUT_STRNAME;
- 	static String G_ORIG_FILE_NAME_WDIR;
-	final static String LINE_FEED = System.getProperty("line.separator");
+	final static String LFEED = System.getProperty("line.separator");
 	static int totalLineCount = 0;
 	static int totInFileLines;
 	static int currentCount = 0;
-	static int locLineCount;  // start at 5th line
-	static int newListSizeMinus;
-	static boolean checkToss = false;
-	public static File filesDir;
-	
-	public static String G_DATE_FILE_NAME;
-	public 	static File G_DATE_FILE;
-	public static String G_ORIG_FILE_NAME;
-	public static File G_ORIG_FILE;
-	public 	static File G_TEMP_FILE;
-	public 	static File G_TEMP_FILE2;
-	public 	static String G_DATE_FILE_NAME_DIR;
- 	static int yes;
- 	static String G_TEMPOUT_STRNAME2;
-	
+	static boolean checkToss = false;	
 	static int G_VERBOSE=0;
 	
 	 
@@ -74,38 +55,32 @@ public class SFCALstandard extends SFCALstandardutil {
 	int arraysize = 1;
 
 		while (fileInDirCNT < arraysize) {  
-			G_ORIG_FILE_NAME= arryOfInFiles[fileInDirCNT];
+			String infileNM= arryOfInFiles[fileInDirCNT];
 			   
 			out.println("----------- starting over in main-----------LOOP# " + fileInDirCNT+1);
-			out.println("-----------------------------------filename is: " + G_ORIG_FILE_NAME);
+			out.println("-----------------------------------filename is: " + infileNM);
 
-			G_ORIG_FILE_NAME_WDIR = indirMAIN +"\\" + G_ORIG_FILE_NAME;
-			G_ORIG_FILE = new File(G_ORIG_FILE_NAME_WDIR);
+			String inFILEstr = indirMAIN +"\\" + infileNM;
 				
-			G_DATE_FILE_NAME = make_new_file_date_name(G_ORIG_FILE_NAME);
-			G_DATE_FILE_NAME_DIR = outDIR + "\\" + G_DATE_FILE_NAME;
-			G_DATE_FILE = new File(G_DATE_FILE_NAME_DIR);
-			delFiles(G_DATE_FILE);  // delete the inFileName we made last time
-			out.println("-----------------------------------datefilename is: " + G_DATE_FILE_NAME_DIR);
+			String finFILEnmWdir = make_new_file_date_name(infileNM, outDIR);
+			String finFILEnmWdir = outDIR + "\\" + finalFILEnm;
+			delFiles(finFILEnmWdir);  // delete the inFileName we made last time
+			out.println("-----------------------------------datefilename is: " + finFILEnmWdir);
 			 
-			G_TEMPOUT_STRNAME = outDIRTMP + "\\SFCALtmp" + System.currentTimeMillis() +".ics";
-			G_TEMPOUT_STRNAME2 = outDIRTMP + "\\SFCALtmp" + System.currentTimeMillis() +"-2.ics";
-			G_TEMP_FILE = new File(G_TEMPOUT_STRNAME);
-			G_TEMP_FILE2 = new File(G_TEMPOUT_STRNAME2);
+			String tOUTone = outDIRTMP + "\\SFCALtmp" + System.currentTimeMillis() +".ics";
+			String tOUTtwo = outDIRTMP + "\\SFCALtmp" + System.currentTimeMillis() +"-2.ics";
+			//File G_TEMP_FILE = new File(G_TEMPOUT_STRNAME);
 				
-			mySleep(1);
-			generalStringFixing( G_ORIG_FILE_NAME_WDIR, G_TEMPOUT_STRNAME);
+			generalStringFixing( inFILEstr, tOUTone);
 			
-			SectionNew.sectionTask(G_TEMP_FILE, G_DATE_FILE, G_TEMP_FILE2);
-			//FileUtils.waitFor(G_DATE_FILE, 4);
+			SectionNew.sectionTask(tOUTone, inFILEstr, tOUTtwo);
 			
-			G_ORIG_FILE = null;
-			out.println("--------End of Loop------------NEW filename is: "+G_DATE_FILE);		
+			out.println("--------End of Loop------------NEW filename is: "+finalFILEnm);		
 			
 			fileInDirCNT++;		
 		}			
-		FileUtils.waitFor(G_DATE_FILE, 2);
-		System.out.println("Finished");
+		//FileUtils.waitFor(G_DATE_FILE, 2);
+		System.out.println("Finished Program");
 	}
 
 	
@@ -247,22 +222,25 @@ public class SFCALstandard extends SFCALstandardutil {
 
 	
 // new method // --------------------------------------------------------------	 	
-		static String make_new_file_date_name(String ORIG_INFILE_STR) {
+		static String make_new_file_date_name(String ORIG_INFILE_STR, String outDirnew) {
 			String LocalDateNmStr = null;
-
+			String finName="";
+			
 			try {
-				dateStringFileList =  FileUtils.readLines(G_ORIG_FILE);
-				String newDateString=dateStringFileList.get(5);
+				File nfile = new File(ORIG_INFILE_STR);
+				List<String> dateStringFileList2 =  FileUtils.readLines(nfile);
+				String newDateString=dateStringFileList2.get(5);
 				String newDateStr = newDateString.substring(8, 16);
 				verboseOut("new date string is: "+ newDateStr);
 				LocalDateNmStr = ORIG_INFILE_STR + "." + newDateStr + ".ics";
+				finName = outDirnew + "\\" + LocalDateNmStr;
 				verboseOut("new LocalDateNmStr string is: "+ LocalDateNmStr);
 
 			} catch (IOException e) { 
 				e.printStackTrace();	
 			}	// catch
 
-			return LocalDateNmStr; 
+			return finName; 
 		}
 		public static void verboseOut(String theoutline) {
 			if (G_VERBOSE==1) {
