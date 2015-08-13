@@ -18,84 +18,53 @@ import static com.nmschorr.SFCAL_standard.SFCALstandard.*;
 	
 public class SFCALstandardutil {
 	static final String newfront  =  "DTEND:";
-	static int myLINEct =0;
-	//static String NEWREPLACEDstring;
-	//static String perfectString;
-	// static String replacedSignString;
-	// static String voidFixedString;
-	//static boolean useSUMMARYstr = false;
-	//String[] plansArry = {"Sun", "Mon","Mer", "Ven", "Mar", "Jup", "Sat","Nep", "Ura", "Plu"};		
 	
 	
 	// new method // --------------------------------------------------------------	 		
 	static void generalStringFixing(String origFILEnm, String tmpFILEnmONE ) {   
-		boolean keepGoing = true;
 		CharSequence SUMstr = "SUMMARY:Tr-Tr";
-		String newLocLINE1 = "";
-		String newLocLINE2 = "";
+		String cLINEtwo = "";
 		String DEStr = "DESCRIPTION";
-		String LFEED = System.getProperty("line.separator");
 
 		List<String> nwARRY  =  new ArrayList<String>();
 		File origFILE = new File(origFILEnm);
 		File SFCALtempONE  =  new File(tmpFILEnmONE);
-		Map<String, String> newhash  =  makeNewhash();
-	
+		String theDTENDline="";
+			G_VERBOSE = 1;
+		boolean tempboo = false;
+
 		try {
 			List<String> origFILEARRY  =   FileUtils.readLines(origFILE);
 			int arraySIZE  =  origFILEARRY.size();
-			int safeSIZE = arraySIZE-5;
-			System.out.println("realCOUNT:  " +  arraySIZE + "   safecount:  " +  safeSIZE);			
+			System.out.println("orig file size:  " +  arraySIZE   );			
 			System.out.println("----------------------------------%%%%%%%##### total lines: " +  origFILEARRY.size());
 			// get ics header lines in 1st-first four header lines of ics inFileName
+			int lineCOUNT =0;
+			String cLINE;
 
 			// for each line in file:
-			for (String cLINE : origFILEARRY)  {
-				keepGoing = checkLINEfunction(cLINE, safeSIZE) ;		
-				G_VERBOSE = 1;
-
-				if (keepGoing == true ) { 
-					System.out.println("myLINEct:  " + myLINEct);
-					newLocLINE2  =   StringUtils.chomp(cLINE);  // chomp is removing the Z
-					String theDTENDline="";
-					cLINE  =   chkForWeirdChar(newLocLINE2);
-					
-					System.out.println("    char string is:         " + cLINE);
-   // the ifs start here
-					if ( cLINE.contains(SUMstr)) {  /// if TR-TR only lines
-						newLocLINE2 = fixSUMMARYsigns(cLINE) ;
-						nwARRY.add(cLINE);
-					}										
-					else if ( cLINE.contains(DEStr) || cLINE.startsWith(" "))   {  /// if TR-TR only lines
-						newLocLINE2 = fixDESCRIPTION_line(cLINE) ;
-						nwARRY.add(newLocLINE2);
+			while (lineCOUNT < arraySIZE) {
+				System.out.println("myLINEct:  " + lineCOUNT);
+				cLINE = origFILEARRY.get(lineCOUNT);
+				cLINEtwo  =   StringUtils.chomp(cLINE);  // chomp is removing the Z
+				cLINE  =   cLINEtwo;
+				System.out.println("    char string is:         " + cLINE);
+		// the ifs start here
+		// begin the IFS			
+				if ( cLINE.contains(SUMstr)) {  /// if TR-TR only lines
+					cLINEtwo = fixSUMMARYsigns(cLINE) ;
+					nwARRY.add(cLINEtwo);
+				}										
+				else if ( cLINE.contains(DEStr) || cLINE.startsWith(" "))   {  /// if TR-TR only lines
+						cLINEtwo = fixDESCRIPTION_line(cLINE) ;
+						nwARRY.add(cLINEtwo);
 					}										
 					else if (cLINE.startsWith("SUMMARY:Tr "))   { 
-						newLocLINE2 = cLINE.replace("Tr ", "");
-						
-						String oldPlanet = "";
-						String newPlanet = "";
-						String dchar = " D";  
-						String rchar = " R";  // MUST have a space first
-						
-						int cStart = newLocLINE2.length()-3;  // a space & there's a line ending too
-						int cEnd = newLocLINE2.length()-1;
-						String newSub = newLocLINE2.substring(cStart,cEnd);  // get the last char
-						
-						if (newSub.equals(rchar))  {  
-							newLocLINE1  = newLocLINE2.replace(rchar, " goes Retrograde");
-						}
-						else if (newSub.equals(dchar))  { /// if TR-TR only lines
-							newLocLINE1  = newLocLINE2.replace(dchar, " goes Direct");
-						}
-						
-						oldPlanet = newLocLINE1.substring(8,11);
-						if ( newhash.containsKey(oldPlanet)) {
-							newPlanet = (newhash.get(oldPlanet));
-						}
-						cLINE= newLocLINE1.replace(oldPlanet, newPlanet);
-						nwARRY.add(cLINE );
+						cLINEtwo= fixDirRetro(cLINE);
+						nwARRY.add(cLINEtwo );
 					}  // SUMMARY:TR 	
+
+					
 					else if ( cLINE.contains("DTSTAR") ) {
 						if (!cLINE.contains("VALUE")) { //skip these; they are moon for the day
 							theDTENDline = chkAddDTEND(cLINE);
@@ -107,20 +76,43 @@ public class SFCALstandardutil {
 						System.out.println("   writing ORIGINAL string to file         " + cLINE);
 						nwARRY.add(cLINE );
 					}
-					myLINEct++;
-					newLocLINE1 = "";
-					newLocLINE2 = "";
-				}	// if
-
-			}  //for string in array
+				lineCOUNT++;
+				if (lineCOUNT == 1899)
+					tempboo = true;
+				cLINEtwo =null;
+			}  // while lines in file arrray
 			System.out.println("Writing to file: " + SFCALtempONE.getName());
 			FileUtils.writeLines(SFCALtempONE, nwARRY);	
+			System.out.println("first end");
 		}  // try
-		catch (IOException e)  { 
-			e.printStackTrace();	 
-		}  // catch
+				catch (IOException e)  { 
+					e.printStackTrace();	 
+					}  // catch
 
 	}	// end of method
+
+
+	static String fixDirRetro(String cm) {
+		String charD = " D";  
+		String charR = " R";  // MUST have a space first
+		String cm2=null;
+		String cm3=null;
+		if (cm.startsWith("SUMMARY:Tr "))   { 
+			cm2 = cm.replace("Tr ", "");
+
+			int cStart = cm2.length()-3;  // a space & there's a line ending too
+			int cEnd = cm2.length()-1;
+			String newSub = cm2.substring(cStart,cEnd);  // get the last char
+
+			if (newSub.equals(charR))  {  
+				cm3  = cm2.replace(charR, " goes Retrograde");
+			}
+			else if (newSub.equals(charD))  { /// if TR-TR only lines
+				cm3  = cm2.replace(charD, " goes Direct");
+			}
+		}
+	return cm3;
+}
 	
 	
 	
@@ -219,11 +211,11 @@ static HashMap<String, String>  makeNewhash() {
 
 	
 	// new method // --------------------------------------------------------------	 	
-static boolean checkLINEfunction(String theLocLine, int safecount) {
+static boolean checkLINEfunction(String theLocLine) {
 			boolean KG = true;
-			if   ((theLocLine.length() > 0 ) && (theLocLine.length() < safecount) )   {
+			if   ((theLocLine.length() > 0 ) )   {
 
-				if   ((theLocLine.length() > 0 )  && (myLINEct < safecount) )   
+				if   ((theLocLine.length() > 0 ) )   
 					{ KG  =  true; } 
 				else { KG = false; }
 

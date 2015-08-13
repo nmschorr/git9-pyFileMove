@@ -17,7 +17,7 @@ public class SectionNew {
 	
 	
 	// new method: ----------------------------------------------------------------	
-	static void sectionTask(String tFILEin, String finFILE, String tFILEtwo) {   // this part was done by perl script
+	static void sectionTask(String tFILEin, String tFILEtwo,  String finFILE) {   // this part was done by perl script
 		int totInFileLines=0;
 		int totInfilesMinusNine=0;
 		int locLineCount=4;  // start at 5th line
@@ -25,7 +25,13 @@ public class SectionNew {
 		File tmpFILtwo = new File(tFILEtwo);
 		File theREADING_FROM_TMP_FILE = new File(tFILEin);
 		File finalFILE = new File(finFILE);
-		
+System.out.println("tFILEin: " + tFILEin);
+System.out.println("finFILE: " + finFILE);
+System.out.println("tFILEtwo: " + tFILEtwo);
+
+
+
+
 		try {
 			List<String> tempFILE_ARRAY =  FileUtils.readLines(theREADING_FROM_TMP_FILE);
 			totInFileLines = tempFILE_ARRAY.size();
@@ -82,9 +88,6 @@ public class SectionNew {
 			FileUtils.writeStringToFile(tmpFILtwo, "END:VCALENDAR"+LINE_FEED, true);	
 	// new code		
 			List<String> lastFILE_ARRAY =  FileUtils.readLines(tmpFILtwo);
-		//	List<String> lastFILE_ARRAY2 =  FileUtils.readLines(tmpFILtwo);
-		//	List<String> bigARRAY =  new ArrayList<String>() ;
-			//List<String> lastARRAY =  new ArrayList<String>();
 			int arSIZE = lastFILE_ARRAY.size();
 			int newARRAYSIZE=arSIZE;
 			String tline="";
