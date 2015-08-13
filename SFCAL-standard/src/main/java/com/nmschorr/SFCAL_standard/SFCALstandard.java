@@ -52,8 +52,8 @@ public class SFCALstandard extends SFCALstandardutil {
 			String finFILEnmWdir = mkDateFileNM(inFILEstr, infileNM, outDIR);
 			delFiles(finFILEnmWdir);  // delete the inFileName we made last time
 			 
-			String tOUTone = getTMPnmWdir(outDIRTMP,"1");
-			String tOUTtwo = getTMPnmWdir(outDIRTMP,"2");;
+			String tOUTone = getTMPnmWdir(outDIRTMP,"-one");
+			String tOUTtwo = getTMPnmWdir(outDIRTMP,"-two");;
 				
 			generalStringFixing( inFILEstr, tOUTone);
 			

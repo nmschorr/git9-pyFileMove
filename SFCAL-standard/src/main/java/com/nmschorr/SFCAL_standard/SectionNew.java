@@ -25,12 +25,9 @@ public class SectionNew {
 		File tmpFILtwo = new File(tFILEtwo);
 		File theREADING_FROM_TMP_FILE = new File(tFILEin);
 		File finalFILE = new File(finFILE);
-System.out.println("tFILEin: " + tFILEin);
-System.out.println("finFILE: " + finFILE);
-System.out.println("tFILEtwo: " + tFILEtwo);
-
-
-
+		System.out.println("tFILEin: " + tFILEin);
+		System.out.println("finFILE: " + finFILE);
+		System.out.println("tFILEtwo: " + tFILEtwo);
 
 		try {
 			List<String> tempFILE_ARRAY =  FileUtils.readLines(theREADING_FROM_TMP_FILE);
