@@ -65,8 +65,10 @@ public class SectionNew {
 					}
 					//tinyCounter++;
 				}  // tiny while
-
-				boolean checkToKeep = checkSUMMARYforToss(tinySectionList);	 // true is keep and write 
+				
+				boolean checkToKeep=true;
+				if (tinySectionList.size() > 6) 
+					checkToKeep = checkSUMMARYforToss(tinySectionList);	 // true is keep and write 
 
 				if (checkToKeep) {   // IF 	checkfortoss comes back TRUE, then write this section
 					FileUtils.writeLines(tmpFILtwo, tinySectionList, true);	

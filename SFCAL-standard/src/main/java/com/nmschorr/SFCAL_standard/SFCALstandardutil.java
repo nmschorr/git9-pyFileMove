@@ -15,18 +15,17 @@ import static com.nmschorr.SFCAL_standard.SFCALstandard.*;
 
 	
 public class SFCALstandardutil {
-	final static String LINE_FEED  =  System.getProperty("line.separator");
 	static final String newfront  =  "DTEND:";
-	static String NEWREPLACEDstring;
-	static String perfectString;
 	static int myLINEct =0;
-	static String replacedSignString;
-	static String voidFixedString;
+	//static String NEWREPLACEDstring;
+	//static String perfectString;
+	// static String replacedSignString;
+	// static String voidFixedString;
 	//static boolean useSUMMARYstr = false;
-	String[] plansArry = {"Sun", "Mon","Mer", "Ven", "Mar", "Jup", "Sat","Nep", "Ura", "Plu"};		
+	//String[] plansArry = {"Sun", "Mon","Mer", "Ven", "Mar", "Jup", "Sat","Nep", "Ura", "Plu"};		
 	
 	
-	
+	// new method // --------------------------------------------------------------	 		
 	static void generalStringFixing(String origFILEnm, String tmpFILEnmONE ) {   
 		String newLocLINE1 = "";
 		String newLocLINE2 = "";
@@ -61,13 +60,11 @@ public class SFCALstandardutil {
 					if ( cLINE.contains(SUMstr)) {  /// if TR-TR only lines
 						newLocLINE2 = fixSUMMARYsigns(cLINE) ;
 						nwARRY.add(cLINE+ LFEED);
-						//FileUtils.writeStringToFile(SFCALtempONE, newLocLINE2 + LFEED, true);	
 					}										
 					else if ( cLINE.contains(DEStr) || cLINE.startsWith(" "))   {  /// if TR-TR only lines
 	 					//StringUtils.chomp(cLINE);  // chomp is removing the Z
 						newLocLINE2 = fixDESCRIPTION_line(cLINE) ;
 						nwARRY.add(newLocLINE2+ LFEED);
-						//FileUtils.writeStringToFile(SFCALtempONE, newLocLINE2 + LFEED, true);	
 					}										
 					else if (cLINE.startsWith("SUMMARY:Tr "))   { 
 						newLocLINE2 = cLINE.replace("Tr ", "");
@@ -96,19 +93,15 @@ public class SFCALstandardutil {
 						}
 						cLINE= newLocLINE1.replace(oldPlanet, newPlanet);
 						nwARRY.add(cLINE + LFEED);
-						//FileUtils.writeStringToFile(SFCALtempONE, cLINE + LFEED, true);	
 					}  // SUMMARY:TR 	
 					else if ( cLINE.contains("DTSTAR") ) {
 						String theDTSTline = chkAddDTEND(cLINE);
 						nwARRY.add(cLINE + LFEED);
 						nwARRY.add(theDTSTline + LFEED);
-						//FileUtils.writeStringToFile(SFCALtempONE, cLINE + LFEED, true);  // start line
-					//	FileUtils.writeStringToFile(SFCALtempONE, theDTSTline + LFEED, true);
 				}
 					else {
 						System.out.println("   writing ORIGINAL string to file         " + cLINE);
 						nwARRY.add(cLINE + LFEED);
-						//FileUtils.writeStringToFile(SFCALtempONE, cLINE+ LFEED, true);	
 					}
 					myLINEct++;
 					newLocLINE1 = "";
@@ -116,6 +109,7 @@ public class SFCALstandardutil {
 				}	// if
 
 			}  //for string in array
+			System.out.println("Writing to file: " + SFCALtempONE.getName());
 			FileUtils.writeLines(SFCALtempONE, nwARRY);	
 		}  // try
 		catch (IOException e)  { 
@@ -124,6 +118,9 @@ public class SFCALstandardutil {
 
 	}	// end of method
 	
+	
+	
+	// new method // --------------------------------------------------------------	 	
 	static String chkAddDTEND (String theLine) {
 		if ( theLine.contains("DTSTAR") )   {  		// double check			
 			String newback = theLine.substring(8,23) + "Z";
@@ -135,7 +132,9 @@ public class SFCALstandardutil {
 		else return theLine;
 	}
 	
-	static HashMap<String, String>  makeNewhash() {
+
+	// new method // --------------------------------------------------------------	 	
+static HashMap<String, String>  makeNewhash() {
 		HashMap <String, String> localHash  =  new HashMap<String, String>();
 		localHash.put("Mon", "Moon");
 		
@@ -172,6 +171,7 @@ public class SFCALstandardutil {
 	}
 
 	
+	// new method // --------------------------------------------------------------	 	
 	static String myREPLACE(String bigstr, String oldStr, String newStr) {
 		if ( bigstr.contains(oldStr) ) {
 			bigstr.replace(oldStr, newStr);
@@ -179,6 +179,7 @@ public class SFCALstandardutil {
 		return bigstr;
 	}
 	
+	// new method // --------------------------------------------------------------	 	
 	public static void delFiles(String f2in) {
 		File f1 = new File(f2in);
 		if ( f1.exists() ) {
@@ -186,6 +187,7 @@ public class SFCALstandardutil {
 		}
 	}
 
+	// new method // --------------------------------------------------------------	 	
 	protected static void mySleep(int timewait) {
 		try {
 			Thread.sleep(timewait * 1000);	//sleep is in milliseconds
@@ -194,20 +196,24 @@ public class SFCALstandardutil {
 		} 
 	  } // mySleep
 	
+
+	// new method // --------------------------------------------------------------	 	
 	static String chkForWeirdChar(String checkLine) {
 		 
 		if (checkLine.contains( "\uFFFD"))  {
 			System.out.println("!!!---            ---FOUND WEIRD CHAR -----!!!!  !!!  ");
 			System.out.println(checkLine);	
 			String newStringy  =  checkLine.replace( "\uFFFD", " ");  
-			//String newStringy2  =  newStringy.replace( "'", " ");  
 			System.out.println("The fixed line: " + newStringy);
 			return newStringy;
 		}
 		else { return checkLine;
 			}
 		}
-		static boolean checkLINEfunction(String theLocLine, int safecount) {
+
+	
+	// new method // --------------------------------------------------------------	 	
+static boolean checkLINEfunction(String theLocLine, int safecount) {
 			boolean KG = true;
 			if   ((theLocLine.length() > 0 ) && (theLocLine.length() < safecount) )   {
 
@@ -236,6 +242,7 @@ public class SFCALstandardutil {
 		}
 		
 		
+		// new method // --------------------------------------------------------------	 	
 		static HashMap<String, String>  makemyhash() {
 			HashMap <String, String> myHashmap  =  new HashMap<String, String>();
 			myHashmap.put("Cn", "Cancer ");
