@@ -57,7 +57,7 @@ public class SFCALstandardutil {
 				if (keepGoing == true ) { 
 					System.out.println("myLINEct:  " + myLINEct);
 					newLocLINE2  =   StringUtils.chomp(cLINE);  // chomp is removing the Z
-					
+					String theDTENDline="";
 					cLINE  =   chkForWeirdChar(newLocLINE2);
 					
 					System.out.println("    char string is:         " + cLINE);
@@ -97,10 +97,10 @@ public class SFCALstandardutil {
 						nwARRY.add(cLINE );
 					}  // SUMMARY:TR 	
 					else if ( cLINE.contains("DTSTAR") ) {
-						if (!CLINE.contains("VALUE")) { //skip these; they are moon for the day
-						String theDTENDline = chkAddDTEND(cLINE);
-						nwARRY.add(cLINE );
-						nwARRY.add(theDTENDline );
+						if (!cLINE.contains("VALUE")) { //skip these; they are moon for the day
+							theDTENDline = chkAddDTEND(cLINE);
+							nwARRY.add(cLINE );
+							nwARRY.add(theDTENDline );
 						}
 					}
 					else {
@@ -135,7 +135,7 @@ public class SFCALstandardutil {
 			out.println("DTEND: new line is " + newDTEND);
 		}
 	}
-	return theLine;
+	return newDTEND;
 	}
 	
 
