@@ -153,30 +153,33 @@ public class SFCALstandard extends SFCALstandardutil {
 // new method // --------------------------------------------------------------	 	
 	static String fixSUMMARYsigns(String oldstrg, boolean isDIRorRET) {
 		String tstring = oldstrg.replace("SUMMARY: ", "SUMMARY:");
-		oldstrg=tstring;
+		 
 		String newstr = "empty";
-		StringBuffer newbuf = new StringBuffer(oldstrg);
+		StringBuffer newbuf = new StringBuffer(tstring);
 		String[] signsList = {"Ari", "Tau","Gem", "Can", "Leo", 
 				"Vir", "Lib","Sco", "Sag", "Cap", "Aqu", "Pis"};		
 		String tempv ="";
 		boolean signmatch =false;
 	 		 		
 		Map<String, String> hm  =  makeNewhash();
-		String firstthird = oldstrg.substring(14,17);
+		String firstthird = "";
 		String secondthird = "";
 		String lastthird = "";
-		out.println("in fixSUMMARYsigns. first:  " + firstthird+" 2nd  :  " + secondthird+" 3rd  :  " + lastthird);
 		
-		for (int i=0; i<12; i++) {
-		    tempv = signsList[i];
-		    if (tempv.equals(lastthird)) {
-		    	out.println("found a sign match in 3rd column");
-		    	signmatch = true;
-		    }
+		if (isDIRorRET==false) {
+			firstthird = tstring.substring(14,17);
+			for (int i=0; i<12; i++) {
+				tempv = signsList[i];
+				if (tempv.equals(lastthird)) {
+					out.println("found a sign match in 3rd column");
+					signmatch = true;
+				}
+			}
 		}
+		out.println("in fixSUMMARYsigns. first:  " + firstthird+" 2nd  :  " + secondthird+" 3rd  :  " + lastthird);
 //begin third column		    
 		if (isDIRorRET==false) {
-			lastthird = oldstrg.substring(22,25);
+			lastthird = tstring.substring(22,25);
 			String thirdrep = hm.get(lastthird);			int start = 22;
 			int end = 25;
 			newbuf.delete(start, end); 
@@ -185,7 +188,7 @@ public class SFCALstandard extends SFCALstandardutil {
 		}		
 //begin second column
 		if  (isDIRorRET==false) {
-			secondthird = oldstrg.substring(18,21);
+			secondthird = tstring.substring(18,21);
 			String secondrep = hm.get(secondthird);
 			int start = 18;
 			int end = 21;
@@ -198,13 +201,18 @@ public class SFCALstandard extends SFCALstandardutil {
 			out.println("value of signmatch:  " + signmatch+ "found this in hash:  " + secondrep+"new buf is: " + newbuf);
 		}			
 // begin first column		
-		String firstrep = hm.get(firstthird);
-		int start = 8;
-		int end = 17;
-		newbuf.delete(start, end); 
-		newbuf.insert(8,firstrep);
-		newstr =   newbuf.toString();
-		out.println("found this in hash:  " + firstrep + "new buf is: " + newbuf);
+		if (isDIRorRET==true ) firstthird = tstring.substring(8,11);
+		String longsign = hm.get(firstthird);
+		
+		newstr = tstring.replace(firstthird, longsign);
+		
+//		
+//		int start = 8;
+//		int end = 17;
+//		newbuf.delete(start, end); 
+//		newbuf.insert(8,firstrep);
+		//newstr =   newbuf.toString();
+		//out.println("found this in hash:  " + firstrep + "new buf is: " + newbuf);
 		out.println("replaced string with new string... now fixed: " + newstr);
 		out.println("value of newstr:  " + newstr+ "return this new value  " + newstr);
 		return newstr;

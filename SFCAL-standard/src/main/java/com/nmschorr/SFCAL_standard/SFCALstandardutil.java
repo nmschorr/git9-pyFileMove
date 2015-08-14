@@ -97,26 +97,27 @@ public class SFCALstandardutil {
 	}	// end of method
 
 
-	static String fixDirRetro(String cm) {
+	static String fixDirRetro(String retroString) {
 		String charD = " D";  
 		String charR = " R";  // MUST have a space first
-		String cm2=null;
-		String cm3=null;
-		if (cm.startsWith("SUMMARY:Tr "))   { 
-			cm2 = cm.replace("Tr ", "");
+		String retStringTwo="";
+		String tempSub="";
+		
+		if (retroString.startsWith("SUMMARY:Tr "))   { 
+			retStringTwo = retroString.replace("Tr ", "");
 
-			int cStart = cm2.length()-3;  // a space & there's a line ending too
-			int cEnd = cm2.length()-1;
-			String newSub = cm2.substring(cStart,cEnd);  // get the last char
+			int cStart = retStringTwo.length()-3;  // a space & there's a line ending too
+			int cEnd = retStringTwo.length()-1;
+			tempSub = retStringTwo.substring(cStart,cEnd);  // get the last char
 
-			if (newSub.equals(charR))  {  
-				cm3  = cm2.replace(charR, " goes Retrograde");
+			if (tempSub.equals(charR))  {  
+				retroString  = retStringTwo.replace(charR, " goes Retrograde");
 			}
-			else if (newSub.equals(charD))  { /// if TR-TR only lines
-				cm3  = cm2.replace(charD, " goes Direct");
+			else if (tempSub.equals(charD))  { /// if TR-TR only lines
+				retroString  = retStringTwo.replace(charD, " goes Direct");
 			}
 		}
-	return cm3;
+	return retroString;
 }
 	
 	
