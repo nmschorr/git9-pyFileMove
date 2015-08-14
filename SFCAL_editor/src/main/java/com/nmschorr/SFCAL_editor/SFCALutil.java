@@ -61,8 +61,8 @@ public class SFCALutil {
 					else { 	utilLINE1 = utilLINE2; }
 
 					if ( utilLINE1.substring(0,6).equals("DTSTAR") )   {   // add DTEND line, chg  start line ending to 5Z to add 5 secs	 			
-						newDTENDline = fixdt(utilLINE1);;
-						utilLINE2 = utilLINE1;
+						newDTENDline = createDTEND(utilLINE1);
+						utilLINE2 = fixDTSTART(utilLINE1);
 						addDTEND = true;
 						mockCT++;  // add extra line to count for extra DTEND string created
 					}
@@ -84,7 +84,7 @@ public class SFCALutil {
 
 	
 	//----new Method ===============================================================//
-	static String fixdt (String utline) {
+	static String createDTEND(String utline) {
 		String newDTENDstr = "";  		 
 		String partialEND = utline.substring(8,22) + "5Z";
 		newDTENDstr ="DTEND:" + partialEND;					
@@ -92,6 +92,13 @@ public class SFCALutil {
 		return newDTENDstr;
 	}
 	
+	static String fixDTSTART(String uline) {
+		String newstr = "";  		 
+		String partialEND = uline.substring(8,22) + "5Z";
+		newstr ="DTSTART:" + partialEND;					
+		verboseOut("DTSTART: new line is " + newstr);
+		return newstr;
+	}
 	
 //----new Method ===============================================================//
 	
@@ -146,8 +153,8 @@ public class SFCALutil {
 		HashMap <String, String> theHashmap = makemyhash();
 		
 		String tsign = theInputStr.substring(23,25);
-		String newmoon = theInputStr.substring(8,19);
-		if (newmoon.contains("New Moon")) {
+		String theMoon = theInputStr.substring(8,19);
+		if ((theMoon.contains("New Moon")) || (theMoon.contains("Full Moon")) ) {
 			answerst = theInputStr.replace(tsign, theHashmap.get(tsign));
 		}
 		else {
