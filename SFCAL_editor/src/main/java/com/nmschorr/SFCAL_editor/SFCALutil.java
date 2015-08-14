@@ -13,40 +13,36 @@ import java.util.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import static com.nmschorr.SFCAL_editor.SFCALeditor.*;
+import static java.lang.System.out;
 	
 
 public class SFCALutil {
-  	//static String CtmpDir="C:\\tmp";
 	final static String LFEED = System.getProperty("line.separator");
 	
 	static void generalStringFixing(String SFCALtempOneFilename, String infile) {   
-		String firstfront = "";
-		String partialEND = "";
-		String newDTENDstr = "";  
+		List<String> newLINEARRY = new ArrayList<String>();
+		String newDTENDline = "";
 		String utilLINE1 = "";
 		String utilLINE2 = "";
-		boolean addDTEND=false;
 		String curSTR = "";
+		File SFCALtempONE = new File(SFCALtempOneFilename);
+		File oldFILE = new File(infile);
+		boolean addDTEND=false;
 
 		try {
-			File SFCALtempONE = new File(SFCALtempOneFilename);
-			File oldFILE = new File(infile);
 			List<String> oldARRY =  FileUtils.readLines(oldFILE);
-			List<String> newLINEARRY = new ArrayList<String>();
-			System.out.println("----------------------------------%%%%%%%##### total lines: " +  oldARRY.size());
-			// get ics header lines in 1st-first four header lines of ics inFileName
-			// for each line in file:
+			out.println("--------------- %%%%%%%##### total lines: " +  oldARRY.size());
+			// get ics header lines first four header lines of ics inFile 
 			int arrySize = oldARRY.size();
-			System.out.println("array size: " + arrySize);
 			int mockCT = 0;
 			int realINLINEct = 0;
+
 			while (realINLINEct < arrySize)  {
 				utilLINE1 = "";
 				utilLINE2 = "";
 				curSTR = "";
-				newDTENDstr = "";
 				curSTR = oldARRY.get(realINLINEct);
-				System.out.println("mock line count: " + mockCT);
+				out.println("mock line count: " + mockCT);
 				addDTEND=false;
 			
 				if (curSTR.length() > 0 )
@@ -58,45 +54,43 @@ public class SFCALutil {
 					if (utilLINE1.startsWith("SUMMARY:")) {
 						utilLINE2 = replaceSigns(utilLINE1);
 					} else utilLINE2 = utilLINE1;
-					verboseOut("value of utilLINE2 is: "+ utilLINE2);				
 
 					if (utilLINE2.contains("Moon goes void")) {
 						utilLINE1 = "SUMMARY:Moon void of course";
 					}
 					else { 	utilLINE1 = utilLINE2; }
-					G_VERBOSE=1;
-					firstfront = utilLINE1.substring(0,6);
-					if ( firstfront.equals("DTSTAR") )   {   // add DTEND line, chg  start line ending to 5Z to add 5 secs	 			
-						String newDTSTART;
-						verboseOut("!!@@@@@  the original DTSTART line is  " + utilLINE1);
 
-						partialEND = utilLINE1.substring(8,22) + "5Z";
-						newDTSTART = "DTSTART:" + partialEND;
-						
-						newDTENDstr ="DTEND:" + partialEND;					
-						verboseOut("!!@@@@@  the new DTSTART line is  " + newDTSTART);
-						verboseOut("DTEND: new line is " + newDTENDstr);
+					if ( utilLINE1.substring(0,6).equals("DTSTAR") )   {   // add DTEND line, chg  start line ending to 5Z to add 5 secs	 			
+						newDTENDline = fixdt(utilLINE1);;
+						utilLINE2 = utilLINE1;
 						addDTEND = true;
-						utilLINE2 = newDTSTART;
-						mockCT++;
+						mockCT++;  // add extra line to count for extra DTEND string created
 					}
 					else { 	utilLINE2 = utilLINE1; }				
 				}  //if curSTR				
 				newLINEARRY.add(utilLINE2);
-				if (addDTEND) { 
-					newLINEARRY.add(newDTENDstr);  }
-				G_VERBOSE=0;
+				if (addDTEND==true) { 
+					newLINEARRY.add(newDTENDline);  }
 				realINLINEct++;
 				mockCT++;
 
 			} // for curSTR
 			FileUtils.writeLines(SFCALtempONE, newLINEARRY, LFEED, true);	
-			//mySleep(1);
 
 		}   catch (IOException e)  { 
 			e.printStackTrace();	 
 		}  // catch
 	}	/// end of method
+
+	
+	//----new Method ===============================================================//
+	static String fixdt (String utline) {
+		String newDTENDstr = "";  		 
+		String partialEND = utline.substring(8,22) + "5Z";
+		newDTENDstr ="DTEND:" + partialEND;					
+		verboseOut("DTEND: new line is " + newDTENDstr);
+		return newDTENDstr;
+	}
 	
 	
 //----new Method ===============================================================//
@@ -109,23 +103,22 @@ public class SFCALutil {
 	}
 
 	
+	//----new Method ===============================================================//
 	protected static void mySleep(int timewait) {
 		try {
 			Thread.sleep(timewait * 1000);	//sleep is in milliseconds
 		} catch (Exception e) {
-			System.out.println(e);
+			out.println(e);
 		} 
 	  } // mySleep
 	
 	
+	//----new Method ===============================================================//
 	static String checkForSignQuote(String checkLine) {
 		 
 		if (checkLine.contains( "\uFFFD"))  {
-			System.out.println("!!!---            ---FOUND WEIRD CHAR -----!!!!  !!!  ");
-			System.out.println(checkLine);	
+			out.println("!!!---            ---FOUND WEIRD CHAR in " + checkLine);	
 			String newStringy = checkLine.replace( "\uFFFD", " ");  
-			//String newStringy2 = newStringy.replace( "'", " ");  
-			System.out.println("The fixed line: " + newStringy);
 			return newStringy;
 		}
 		else { return checkLine;
@@ -133,33 +126,41 @@ public class SFCALutil {
 		}
 
 	
+	//----new Method ===============================================================//
 	static String checkForSigns(String origLine, String theVal, String theRep) {
 		String theFixedLine = "";
 		verboseOut("inside checkForSigns checking val rep: "+theVal + theRep);		
 		if (origLine.contains(theVal))  {
-			System.out.println("!!!---            ---FOUND sign CHAR -----!!!!  !!! \n"+origLine);
 			theFixedLine = origLine.replace( theVal, theRep);  
-			//theFixedLine = origLine.replace( "Cn", "Cancer ");  
-			System.out.println("------------------------The fixed line: " + theFixedLine);
+			out.println("---------FOUND sign CHAR ------------------The fixed line: " + theFixedLine);
 			return theFixedLine;
 		}
 		else return origLine;	
 	}
 
 		
+	//----new Method ===============================================================//
 	static String replaceSigns(String theInputStr) {
-		String answerst =null;
+		String answerst =theInputStr;
 		verboseOut("inside replaceSigns");		
 		HashMap <String, String> theHashmap = makemyhash();
-
-		for (String key : theHashmap.keySet()) {
-			answerst = checkForSigns(theInputStr, key, theHashmap.get(key));
+		
+		String tsign = theInputStr.substring(23,25);
+		String newmoon = theInputStr.substring(8,19);
+		if (newmoon.contains("New Moon")) {
+			answerst = theInputStr.replace(tsign, theHashmap.get(tsign));
+		}
+		else {
+			for (String key : theHashmap.keySet()) {       // check for other possibilities
+			   answerst = checkForSigns(theInputStr, key, theHashmap.get(key));
 		}   
+			}
 		verboseOut("val of answerst is: " + answerst);
 		return answerst;
 	}	
 
 	
+	//----new Method ===============================================================//
 	static HashMap<String, String>  makemyhash() {
 		HashMap <String, String> myHashmap = new HashMap<String, String>();
 		myHashmap.put("Cn", "Cancer ");
