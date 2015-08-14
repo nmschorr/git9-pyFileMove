@@ -82,8 +82,8 @@ public class SFCALstandardutil {
 						nwARRY.add(cLINE );
 					}
 				lineCOUNT++;
-				if (lineCOUNT == 1899)
-					tempboo = true;
+				//if (lineCOUNT == 1899)
+				//	tempboo = true;
 				cLINEtwo ="";
 			}  // while lines in file arrray
 			System.out.println("Writing to file: " + SFCALtempONE.getName());

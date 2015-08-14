@@ -152,34 +152,29 @@ public class SFCALstandard extends SFCALstandardutil {
 	
 // new method // --------------------------------------------------------------	 	
 	static String fixSUMMARYsigns(String oldstrg, boolean isDIRorRET) {
+		Map<String, String> hm  =  makeNewhash();
 		String tstring = oldstrg.replace("SUMMARY: ", "SUMMARY:");
 		 
 		String newstr = "empty";
 		StringBuffer newbuf = new StringBuffer(tstring);
-		String[] signsList = {"Ari", "Tau","Gem", "Can", "Leo", 
-				"Vir", "Lib","Sco", "Sag", "Cap", "Aqu", "Pis"};		
-		String tempv ="";
+
+		List<String> signsARRAY = (Arrays.asList("Ari", "Tau","Gem", "Can", "Leo", 
+			"Vir", "Lib","Sco", "Sag", "Cap", "Aqu", "Pis"));
 		boolean signmatch =false;
 	 		 		
-		Map<String, String> hm  =  makeNewhash();
 		String firstthird = "";
 		String secondthird = "";
 		String lastthird = "";
 		
 		if (isDIRorRET==false) {
+			lastthird = tstring.substring(22,25);
 			firstthird = tstring.substring(14,17);
-			for (int i=0; i<12; i++) {
-				tempv = signsList[i];
-				if (tempv.equals(lastthird)) {
-					out.println("found a sign match in 3rd column");
-					signmatch = true;
-				}
-			}
+			if (signsARRAY.contains(lastthird))				
+				signmatch = true;
 		}
 		out.println("in fixSUMMARYsigns. first:  " + firstthird+" 2nd  :  " + secondthird+" 3rd  :  " + lastthird);
 //begin third column		    
 		if (isDIRorRET==false) {
-			lastthird = tstring.substring(22,25);
 			String thirdrep = hm.get(lastthird);			int start = 22;
 			int end = 25;
 			newbuf.delete(start, end); 
@@ -201,20 +196,24 @@ public class SFCALstandard extends SFCALstandardutil {
 			out.println("value of signmatch:  " + signmatch+ "found this in hash:  " + secondrep+"new buf is: " + newbuf);
 		}			
 // begin first column		
-		if (isDIRorRET==true ) firstthird = tstring.substring(8,11);
-		String longsign = hm.get(firstthird);
+		if (isDIRorRET==true ) {
+			firstthird = tstring.substring(8,11);
+			String longsign = hm.get(firstthird);
+			newstr = tstring.replace(firstthird, longsign);
+		}
+		if (isDIRorRET==false ) {
+			String firstrep = hm.get(firstthird);
+
+			int start = 8;
+			int end = 17;
+			newbuf.delete(start, end); 
+			newbuf.insert(8,firstrep);
+			newstr =   newbuf.toString();
+			out.println("found this in hash:  " + firstrep + "new buf is: " + newbuf);
+			out.println("replaced string with new string... now fixed: " + newstr);
+			out.println("value of newstr:  " + newstr+ "return this new value  " + newstr);
+		}
 		
-		newstr = tstring.replace(firstthird, longsign);
-		
-//		
-//		int start = 8;
-//		int end = 17;
-//		newbuf.delete(start, end); 
-//		newbuf.insert(8,firstrep);
-		//newstr =   newbuf.toString();
-		//out.println("found this in hash:  " + firstrep + "new buf is: " + newbuf);
-		out.println("replaced string with new string... now fixed: " + newstr);
-		out.println("value of newstr:  " + newstr+ "return this new value  " + newstr);
 		return newstr;
 	} // gofixhash
 	
