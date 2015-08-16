@@ -119,11 +119,11 @@ public class ZacksTest extends ZacksUtil {
 		zDriver.findElement(By.xpath(signinval)).click();
 		assertEquals("Testing Signin",theTitle, zDriver.getTitle());	
 				
-		String tempstring = zDriver.getPageSource();
-		System.out.println(tempstring);
-		Object myob= zDriver.getClass();
-		System.out.println(myob.toString());
-
+//		String tempstring = zDriver.getPageSource();
+//		System.out.println(tempstring);
+//		Object myob= zDriver.getClass();
+//		System.out.println(myob.toString());
+//
 		//assertThat(zDriver.getTitle(), containsString("Zacks Investment Research:"));
 		//  <title>Zacks Investment Research: Stock Research, Analysis, &amp; Recommendations</title>
 	}
@@ -185,17 +185,33 @@ public class ZacksTest extends ZacksUtil {
 		// need to add check to sure the portfolio is there to delete
 		zDriver.get(portfolioUrl);
 		new Select(zDriver.findElement(By.id("port_id"))).selectByVisibleText(PF_NAME);;
-
-		mySleep(2);
-		zDriver.findElement(By.linkText("Delete this Portfolio")).click();
-		zDriver.findElement(By.id("chk")).click();
-		zDriver.findElement(By.name("btn_del")).click();
-		mySleep(2);
-		System.out.println("title is: " + zDriver.getTitle());
-		assertThat(zDriver.getTitle(), containsString("Stock Portfolio Management"));
-		// page : <title>Stock Portfolio Management - Zacks Investment Research</title>
+		boolean keepgoing = chklink();
+		if (keepgoing == true) {
+			mySleep(2);
+			zDriver.findElement(By.linkText("Delete this Portfolio")).click();
+			zDriver.findElement(By.id("chk")).click();
+			zDriver.findElement(By.name("btn_del")).click();
+			mySleep(2);
+			System.out.println("title is: " + zDriver.getTitle());
+			assertThat(zDriver.getTitle(), containsString("Stock Portfolio Management"));
+			// page : <title>Stock Portfolio Management - Zacks Investment Research</title>
+		}
 	}
 
+	
+	boolean chklink() {
+		try {
+			zDriver.findElement(By.linkText("Delete this Portfolio"));
+			return true;
+		}
+		catch (Exception  e)
+		{
+			out.println(e);
+			return false;
+		}
+	}
+	
+	
 	@After
 	public void tearDown() throws Exception {
 		gLogger.info("All done with tests. Quitting Webdriver and shutting down");
