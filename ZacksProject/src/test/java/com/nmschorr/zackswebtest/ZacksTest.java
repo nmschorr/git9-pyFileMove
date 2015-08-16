@@ -28,6 +28,8 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
+import static java.lang.System.out;
+
 // note: you need to have an account and password at zacks.com
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -58,8 +60,13 @@ public class ZacksTest extends ZacksUtil {
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
 
+	printMe("loginZacks(zacksMainUrl)");
 		loginZacks(zacksMainUrl);
+	printMe("deletePortfolio()");
+		deletePortfolio();
+	printMe("zacksAddPortfolio()");
 		zacksAddPortfolio();	    
+	printMe("logoutZacks()");
 		logoutZacks();
 	}
 
@@ -69,8 +76,11 @@ public class ZacksTest extends ZacksUtil {
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
 
+	printMe("loginZacks(zacksMainUrl)");
 		loginZacks(zacksMainUrl);
+	printMe("modifyPort()");
 		modifyPort();
+	printMe("logoutZacks()");
 		logoutZacks();
 	} 
 
@@ -80,8 +90,11 @@ public class ZacksTest extends ZacksUtil {
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
 
+	printMe("loginZacks(zacksMainUrl)");
 		loginZacks(zacksMainUrl);
+	printMe("deletePortfolio()");
 		deletePortfolio();
+	printMe("logoutZacks()");
 		logoutZacks();
 	} 
 	// end of tests
@@ -93,15 +106,24 @@ public class ZacksTest extends ZacksUtil {
 		printMethodName(eClass.class.getEnclosingMethod());
 
 		zDriver.get(localUrl);  // main Zacks page
+	printMe("setWindowSize()");
 		setWindowSize();
-
+		 
+	printMe("zDriver.findElement(By.linkText(Sign In)).click()");
 		zDriver.findElement(By.linkText("Sign In")).click();
 		zDriver.findElement(By.id("username")).clear();
 		zDriver.findElement(By.id("username")).sendKeys(usernameval);
 		zDriver.findElement(By.id("password")).clear();
+	printMe("zDriver.findElement(By.id(password)).sendKeys(pwordval)");
 		zDriver.findElement(By.id("password")).sendKeys(pwordval);	 
 		zDriver.findElement(By.xpath(signinval)).click();
 		assertEquals("Testing Signin",theTitle, zDriver.getTitle());	
+				
+		String tempstring = zDriver.getPageSource();
+		System.out.println(tempstring);
+		Object myob= zDriver.getClass();
+		System.out.println(myob.toString());
+
 		//assertThat(zDriver.getTitle(), containsString("Zacks Investment Research:"));
 		//  <title>Zacks Investment Research: Stock Research, Analysis, &amp; Recommendations</title>
 	}
@@ -109,20 +131,26 @@ public class ZacksTest extends ZacksUtil {
 	public static void zacksAddPortfolio() throws Exception {
 		// method to add portfolio, must be logged in first
 		class eClass {};	    
-		printMethodName(eClass.class.getEnclosingMethod()); 		
-
+		printMethodName(eClass.class.getEnclosingMethod()); 	
+	printMe("zDriver.get(portfolioUrl)");
 		zDriver.get(portfolioUrl);
 		assertEquals("Testing Portfolio Url Title", portfolioTitle, zDriver.getTitle());    
+	printMe("zDriver.findElement(By.linkText(Create a New Portfolio)).click()");
 		zDriver.findElement(By.linkText("Create a New Portfolio")).click(); 
 
 		String expectedTitle = "Stock Portfolio Management - Zacks Investment Research";
 		assertEquals(expectedTitle, zDriver.getTitle());
 
+
 		// add new portfolio entries
+	printMe("zDriver.findElement(By.name(port_name)).clear()");
 		zDriver.findElement(By.name("port_name")).clear();
 		zDriver.findElement(By.name("port_name")).sendKeys(PF_NAME);
 		zDriver.findElement(By.name("port_tck_name")).clear();
+	printMe("zDriver.findElement(By.id(port_tck_name)).sendKeys(aapl, msft, t, csco, irbt)");
 		zDriver.findElement(By.id("port_tck_name")).sendKeys("aapl, msft, t, csco, irbt");
+		out.println("running this next: " + "zDriver.findElement(By.id(submit)).click();");
+	printMe("zDriver.findElement(By.id(submit)).click()");
 		zDriver.findElement(By.id("submit")).click();
 		zDriver.findElement(By.xpath("//input[@value='Modify Portfolio Buys']")).click();  
 	}
@@ -132,11 +160,13 @@ public class ZacksTest extends ZacksUtil {
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());	
 
+	printMe("zDriver.get(portfolioUrl)");
 		zDriver.get(portfolioUrl);  // main Zacks page
 		String expectedTitle = "Stock Portfolio Management - Zacks Investment Research";
-		System.out.println("Expected title is: " + zDriver.getTitle());
+		out.println("Expected title is: " + zDriver.getTitle());
 		assertEquals("Testing Portfolio Url Title", expectedTitle, zDriver.getTitle());    
 
+	printMe("zDriver.findElement(By.linkText(Modify Previous Buys)).click()");
 		zDriver.findElement(By.linkText("Modify Previous Buys")).click();
 		zDriver.findElement(By.name("position[0][shares]")).clear();
 		zDriver.findElement(By.name("position[0][shares]")).sendKeys("22");
@@ -177,5 +207,9 @@ public class ZacksTest extends ZacksUtil {
 		//  String verificationErrorString = verificationErrors.toString();
 		//	  if (!"".equals(verificationErrorString)) {
 		//		  fail(verificationErrorString);
+	}
+	
+	public static void printMe(String toPrt) {
+		out.println("Running this next: " + toPrt);
 	}
 }

@@ -1,0 +1,66 @@
+2015-08-15 22:33:45.563 [main] TRACE com.nmschorr.zackswebtest.ZacksTest - entry
+2015-08-15 22:33:45.563 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Logger has been set up.
+2015-08-15 22:33:56.392 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - ?!!! The property value for signinval is //input[@value='Sign In']
+2015-08-15 22:33:56.392 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - ?!!! The property value for usernameval is nancyschorr@yahoo.com
+2015-08-15 22:33:56.392 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - ?!!! The property value for pwordval is pasadena
+2015-08-15 22:33:56.394 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Running Method: Test1LoginZacks
+2015-08-15 22:33:56.395 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Running Method: loginZacks
+2015-08-15 22:34:04.383 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Inside mySleep() and waiting 1
+2015-08-15 22:34:15.275 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Running Method: logoutZacks
+2015-08-15 22:34:25.683 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Running Method: deleteCookies
+2015-08-15 22:34:25.684 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting Zacks Cookies
+2015-08-15 22:34:25.759 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: cf60519feb1344e434b8444b746a915b --- Cookie Domain: .zacks.com --- Cookie Value: cdaeeeba9b4a4c5ebf042c0215a7bb0e
+2015-08-15 22:34:25.759 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: cf60519feb1344e434b8444b746a915b
+2015-08-15 22:34:25.876 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:25.877 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: __ybotu --- Cookie Domain: www.zacks.com --- Cookie Value: ide24wlatbum2asy25
+2015-08-15 22:34:25.877 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: __ybotu
+2015-08-15 22:34:26.018 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:26.018 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: __ybots --- Cookie Domain: www.zacks.com --- Cookie Value: ide24wla5b51m8d3kb.1.ide255436q809alj05.2
+2015-08-15 22:34:26.021 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: __ybots
+2015-08-15 22:34:26.093 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:26.093 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: __qca --- Cookie Domain: .zacks.com --- Cookie Value: P0-1088928707-1439703238620
+2015-08-15 22:34:26.093 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: __qca
+2015-08-15 22:34:26.163 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:26.163 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: undefined_s --- Cookie Domain: .zacks.com --- Cookie Value: First%20Visit
+2015-08-15 22:34:26.163 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: undefined_s
+2015-08-15 22:34:26.236 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:26.236 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: __ybotv --- Cookie Domain: www.zacks.com --- Cookie Value: 1439703249699
+2015-08-15 22:34:26.236 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: __ybotv
+2015-08-15 22:34:26.311 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:26.311 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: 30ab6b980ea72ab67bdeef438a48bd12 --- Cookie Domain: .zacks.com --- Cookie Value: cdaeeeba9b4a4c5ebf042c0215a7bb0e
+2015-08-15 22:34:26.311 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: 30ab6b980ea72ab67bdeef438a48bd12
+2015-08-15 22:34:26.384 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:26.384 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: __gads --- Cookie Domain: .zacks.com --- Cookie Value: ID=44d4612217dc9aab:T=1439703234:S=ALNI_MaBMamBV0NbAd4D5A5BrpJQie_u9A
+2015-08-15 22:34:26.384 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: __gads
+2015-08-15 22:34:26.461 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:26.461 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: __ybotz --- Cookie Domain: www.zacks.com --- Cookie Value: slot%3DLrec-top_201%2Ccpm%3D450%2Csize%3D300x250
+2015-08-15 22:34:26.461 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: __ybotz
+2015-08-15 22:34:26.532 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:26.532 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: s_cc --- Cookie Domain: .zacks.com --- Cookie Value: true
+2015-08-15 22:34:26.532 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: s_cc
+2015-08-15 22:34:26.604 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:26.604 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: PHPSESSID --- Cookie Domain: www.zacks.com --- Cookie Value: 0225d6doriq3p715tu17t62p32
+2015-08-15 22:34:26.604 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: PHPSESSID
+2015-08-15 22:34:26.677 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:26.677 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: modal_zim_adver --- Cookie Domain: www.zacks.com --- Cookie Value: image_a
+2015-08-15 22:34:26.677 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: modal_zim_adver
+2015-08-15 22:34:26.748 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:26.748 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: _sdsat_External Campaign Code --- Cookie Domain: www.zacks.com --- Cookie Value: 
+2015-08-15 22:34:26.749 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: _sdsat_External Campaign Code
+2015-08-15 22:34:26.833 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:26.833 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: ZTOKENID --- Cookie Domain: .www.zacks.com --- Cookie Value: 6fdb7d4646b758e81c339ee9d3456ca3
+2015-08-15 22:34:26.833 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: ZTOKENID
+2015-08-15 22:34:26.917 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:26.917 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: user_session --- Cookie Domain: .zacks.com --- Cookie Value: 9700fd9fec26867cb86c775575e17e49
+2015-08-15 22:34:26.917 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: user_session
+2015-08-15 22:34:26.989 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:26.989 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: s_p42 --- Cookie Domain: .zacks.com --- Cookie Value: %2F
+2015-08-15 22:34:26.989 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: s_p42
+2015-08-15 22:34:27.064 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:27.064 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: s_nr --- Cookie Domain: .zacks.com --- Cookie Value: 1439703249762-New
+2015-08-15 22:34:27.064 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: s_nr
+2015-08-15 22:34:27.134 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:27.135 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: CUSTOMER_ID --- Cookie Domain: .zacks.com --- Cookie Value: 747994540
+2015-08-15 22:34:27.135 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Deleting cookie: CUSTOMER_ID
+2015-08-15 22:34:27.210 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Done with cookies.
+2015-08-15 22:34:27.210 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Cookie Name: ZCCSUID --- Cookie Domain: .www.zacks.com --- Cookie Value: a0e79dc854ecc6a33943e0e798cfec32
