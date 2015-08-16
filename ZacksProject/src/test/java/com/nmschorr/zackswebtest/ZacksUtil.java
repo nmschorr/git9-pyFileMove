@@ -71,7 +71,7 @@ public class ZacksUtil {
 	private final static String outfileName = "E:\\Workspace\\firefox.log";	
 	protected final static String PF_NAME = "testportfolio";	
 	private final static String errorState = "DEBUG";
-	private final static Integer WAIT_TIME = 24;
+	protected final static Integer WAIT_TIME = 22;
 	private static boolean acceptNextAlert = true;
 	private File binaryFile;
 	static Properties theProperties;
@@ -128,10 +128,10 @@ public class ZacksUtil {
 
 		AlertThread thread2=new AlertThread();  
 		thread2.start();  
-		System.out.println("!!! executing new FirefoxDriver!");
+		System.out.println("! Executing new FirefoxDriver!");
 		WebDriver localDriver = new FirefoxDriver(ffBinary,ffoxProfile);	 // using this to see if bug goes away
 		//WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
-		System.out.println("!!! past new FirefoxDriver!");
+		System.out.println("Past new FirefoxDriver!");
 		localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
 		return localDriver;
 	}
@@ -153,7 +153,7 @@ public class ZacksUtil {
 	protected static String initValue(String val)  {
 		String errorString = "ERROR - no value present";
 		String newVal =  theProperties.getProperty(val, errorString);
-		gLogger.info("?!!! The property value for " + val + " is " + newVal );    	
+		gLogger.info("The property value for " + val + " is " + newVal );    	
 		return newVal;
 	}
 
@@ -171,7 +171,7 @@ public class ZacksUtil {
 	} 
 
 	protected static void createProperties()  {
-		System.out.println("!!!!! PROPNAME name is" + propname);
+		System.out.println("PROPNAME name is" + propname);
 		
 		
 		try {	 fiStream = new FileInputStream(propname);
@@ -248,7 +248,7 @@ public class ZacksUtil {
 			System.out.println("Firefoxdialog is not showing");
 		}
 		else{
-			System.out.println("Firefoxdialog !!! IS showing. Closing it now.");
+			System.out.println("Firefoxdialog IS showing. Closing it now.");
 			User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null); 			
 		}
 
@@ -256,7 +256,7 @@ public class ZacksUtil {
 			System.out.println("FirefoxContainerDialog is not showing");
 		}
 		else{
-			System.out.println("Firefoxdialog !!! IS showing. Closing it now.");
+			System.out.println("Firefoxdialog IS showing. Closing it now.");
 			User32.INSTANCE.SetForegroundWindow(hwndcontainer);   // bring to front
 			User32.INSTANCE.PostMessage(hwndcontainer, WinUser.WM_CLOSE, null, null); 			
 			//User32.INSTANCE.ShowWindow(hwndcontainer, 9 );        // SW_RESTORE
