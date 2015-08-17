@@ -31,6 +31,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.Select;
 
 import static java.lang.System.out;
@@ -102,9 +103,25 @@ public class ZacksTest extends ZacksUtil {
 		printMe("logoutZacks()");
 		logoutZacks();
 	} 
-	// end of tests
+	// end  
 
+	static void removeOverlay() {     // get rid of intrusive overlay alert ad
+		zDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); //for the entire test run
+		mySleep(2);
+	    boolean yesNo  = isElementPresent(By.cssSelector("img"));  // get rid of intrusive overlay alert ad
+	    if (yesNo == true)  zDriver.findElement(By.cssSelector("img")).click();
+		zDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
+	}
+    
 	// beginning of methods to support tests
+	static boolean isElementPresent(By by) {
+		    try {
+		      zDriver.findElement(by);
+		      return true;
+		    } catch (NoSuchElementException e) {
+		      return false;
+		    }
+		  }
 
 	public static void loginZacks(String localUrl) {  
 		class eClass {};	    
@@ -116,9 +133,9 @@ public class ZacksTest extends ZacksUtil {
 
 		printMe("zDriver.findElement(By.linkText(Sign In)).click()");
 		zDriver.findElement(By.linkText("Sign In")).click();
-		mySleep(1);
-		zDriver.findElement(By.id("close_window.png")).click();  // dismiss overriding alert dialog ad
-		mySleep(1);
+		
+		removeOverlay();
+
 		zDriver.findElement(By.id("username")).clear();
 
 		//zDriver.findElement(By.id("username")).sendKeys(usernameval);
@@ -197,7 +214,7 @@ public class ZacksTest extends ZacksUtil {
 		zDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); //for the entire test run
 		new Select(zDriver.findElement(By.id("port_id"))).selectByVisibleText(PF_NAME);
 		boolean keepgoing = chklink();
-		zDriver.findElement(By.id("close_window.png")).click();  // dismiss overriding alert dialog ad
+		removeOverlay();
 		if (keepgoing == true) {
 			mySleep(2);
 			zDriver.findElement(By.linkText("Delete this Portfolio")).click();
