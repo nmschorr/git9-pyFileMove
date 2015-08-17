@@ -125,15 +125,7 @@ public class ZacksTest extends ZacksUtil {
 	printMe("zDriver.findElement(By.id(password)).sendKeys(pwordval)");
 		zDriver.findElement(By.id("password")).sendKeys(pwordval);	 
 		zDriver.findElement(By.xpath(signinval)).click();
-		assertEquals("Testing Signin",theTitle, zDriver.getTitle());	
-				
-//		String tempstring = zDriver.getPageSource();
-//		System.out.println(tempstring);
-//		Object myob= zDriver.getClass();
-//		System.out.println(myob.toString());
-//
-		//assertThat(zDriver.getTitle(), containsString("Zacks Investment Research:"));
-		//  <title>Zacks Investment Research: Stock Research, Analysis, &amp; Recommendations</title>
+		assertEquals("Testing Signin",theTitle, zDriver.getTitle());					
 	}
 
 	public static void zacksAddPortfolio() throws Exception {
@@ -196,12 +188,13 @@ public class ZacksTest extends ZacksUtil {
 	}
 	
 	static void zfindt (String s, String t) {
-		out.println("Finding element " + s + "and typing: " + t);
+		out.println("Finding element: " + s + " and typing: " + t);
 		zDriver.findElement(By.name(s)).sendKeys(t);
 	}
 
 	public void deletePortfolio ()  {
 		// need to add check to sure the portfolio is there to delete
+		out.println("Deleting test portfolio only if it exists already.");
 		zDriver.get(portfolioUrl);
 		new Select(zDriver.findElement(By.id("port_id"))).selectByVisibleText(PF_NAME);;
 		boolean keepgoing = chklink();
@@ -219,7 +212,7 @@ public class ZacksTest extends ZacksUtil {
 
 	
 	boolean chklink() {
-		zDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS); //for the entire test run
+		zDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS); //for the entire test run
 		try {
 			zDriver.findElement(By.linkText("Delete this Portfolio"));
 			zDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
@@ -227,7 +220,7 @@ public class ZacksTest extends ZacksUtil {
 		}
 		catch (Exception  e)
 		{
-			out.println(e);
+			out.println("No portfolio found. " + e);
 			zDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
 			return false;
 		}
@@ -242,7 +235,7 @@ public class ZacksTest extends ZacksUtil {
 		gLogger.info("Quitting Webdriver and shutting down");
 		zDriver.quit();
 		mySleep(1);
-		gLogger.info("All done with tests and exiting.");
+		gLogger.info("All done with tests and exiting. Goodbye.");
 		//  String verificationErrorString = verificationErrors.toString();
 		//	  if (!"".equals(verificationErrorString)) {
 		//		  fail(verificationErrorString);

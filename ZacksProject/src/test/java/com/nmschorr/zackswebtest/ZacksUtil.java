@@ -110,8 +110,8 @@ public class ZacksUtil {
 		int screen_width;
 		Toolkit localToolkit = Toolkit.getDefaultToolkit();
 
-		screen_width = (int) localToolkit.getScreenSize().getWidth();
-		screen_height = (int) localToolkit.getScreenSize().getHeight()-222;  // make it shorter so we have some room
+		screen_width = (int) localToolkit.getScreenSize().getWidth()-42;
+		screen_height = (int) localToolkit.getScreenSize().getHeight()-392;  // make it shorter so we have some room
 
 		Dimension screenResolution = new Dimension(screen_width, screen_height );	
 		zDriver.manage().window().setPosition(new Point(0,0));
