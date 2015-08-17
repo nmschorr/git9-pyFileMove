@@ -27,6 +27,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.Toolkit;
 
+import static java.lang.System.out;
 import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
 
@@ -110,7 +111,7 @@ public class ZacksUtil {
 		int screen_width;
 		Toolkit localToolkit = Toolkit.getDefaultToolkit();
 
-		screen_width = (int) localToolkit.getScreenSize().getWidth()-42;
+		screen_width = (int) localToolkit.getScreenSize().getWidth()-72;
 		screen_height = (int) localToolkit.getScreenSize().getHeight()-392;  // make it shorter so we have some room
 
 		Dimension screenResolution = new Dimension(screen_width, screen_height );	
@@ -150,6 +151,7 @@ public class ZacksUtil {
 		pwordval = initValue("pwordval");
 	}
 
+
 	protected static String initValue(String val)  {
 		String errorString = "ERROR - no value present";
 		String newVal =  theProperties.getProperty(val, errorString);
@@ -157,9 +159,11 @@ public class ZacksUtil {
 		return newVal;
 	}
 
+
 	protected static void printMethodName (Method aMethod) {
 		gLogger.info("Running Method: " + aMethod.getName());	    		
 	}	
+
 
 	protected static void mySleep(int timewait) {
 		try {
@@ -170,10 +174,9 @@ public class ZacksUtil {
 		} 
 	} 
 
+	
 	protected static void createProperties()  {
 		System.out.println("PROPNAME name is" + propname);
-		
-		
 		try {	 fiStream = new FileInputStream(propname);
 		} catch (FileNotFoundException e) {  
 			System.out.println(e);
@@ -188,6 +191,7 @@ public class ZacksUtil {
 			fail("failure in createProperties()");
 		} 
 	}
+
 
 	protected static String closeAlertAndGetItsText() {
 		try {
@@ -204,6 +208,7 @@ public class ZacksUtil {
 		}
 	} 
 
+
 	protected void logoutZacks() throws Exception {  
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
@@ -211,6 +216,7 @@ public class ZacksUtil {
 		zDriver.findElement(By.id("logout")).click();
 		assertEquals("Testing Log Out", "Log Out - Zacks.com", zDriver.getTitle());
 	}
+
 
 	protected void deleteCookies() throws Exception {
 		class eClass {};	    
@@ -229,6 +235,7 @@ public class ZacksUtil {
 		} 	
 	}
 
+
 	protected static void createLogFile (FirefoxProfile fp) throws Exception {
 		File outfile = new File(outfileName);
 		if (!outfile.exists())  
@@ -237,6 +244,7 @@ public class ZacksUtil {
 		fp.setPreference("webdriver.log.driver", "DEBUG");
 		fp.setPreference("webdriver.log.file", outfileName);
 	}
+
 
 	protected static void dismissFirefoxCrashAlert() {
 		HWND hwnd = User32.INSTANCE.FindWindow
@@ -261,6 +269,31 @@ public class ZacksUtil {
 			User32.INSTANCE.PostMessage(hwndcontainer, WinUser.WM_CLOSE, null, null); 			
 			//User32.INSTANCE.ShowWindow(hwndcontainer, 9 );        // SW_RESTORE
 		}
+	}
+
+	
+	static void zfindt (String s, String t) {
+		out.println("Finding element: " + s + " and typing: " + t);
+		zDriver.findElement(By.name(s)).sendKeys(t);
+	}
+
+	
+	boolean chklink() {
+		zDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS); //for the entire test run
+		try {
+			zDriver.findElement(By.linkText("Delete this Portfolio"));
+			zDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
+			return true;
+		}
+		catch (Exception  e)
+		{
+			out.println("No portfolio found. " + e);
+			zDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
+			return false;
+		}
+	}
+	public static void printMe(String toPrt) {
+		out.println("Running this next: " + toPrt);
 	}
 }
 
