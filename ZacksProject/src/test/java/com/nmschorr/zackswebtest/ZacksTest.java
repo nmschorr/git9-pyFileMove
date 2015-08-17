@@ -44,10 +44,9 @@ public class ZacksTest extends ZacksUtil {
 
 	@Before  //run only once before all tests
 	public void setUp() throws Exception {		
-		//createProperties();
+		createProperties();
 		gLogger = zutil.createLogger();
 		zDriver = createDriver();
-		initStrings();
 	}
 
 	@Test
@@ -126,6 +125,11 @@ public class ZacksTest extends ZacksUtil {
 	public static void loginZacks(String localUrl) {  
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
+		
+		String errorString = "ERROR - no value present";
+		String signinval =  theProperties.getProperty("signinval", errorString);
+		String usernameval =  theProperties.getProperty("usernameval", errorString);
+		String pwordval =  theProperties.getProperty("pwordval", errorString);
 
 		zDriver.get(localUrl);  // main Zacks page
 		
@@ -138,7 +142,7 @@ public class ZacksTest extends ZacksUtil {
 		zDriver.findElement(By.id("username")).clear();
 
 		//zDriver.findElement(By.id("username")).sendKeys(usernameval);
-		zfindt("username",usernameval);
+		zfindAndType("username",usernameval);
 
 		zDriver.findElement(By.id("password")).clear();
 		printMe("zDriver.findElement(By.id(password)).sendKeys(pwordval)");
@@ -188,7 +192,7 @@ public class ZacksTest extends ZacksUtil {
 		zDriver.findElement(By.linkText("Modify Previous Buys")).click();
 		zDriver.findElement(By.name("position[0][shares]")).clear();
 
-		zfindt("position[0][shares]","22");
+		zfindAndType("position[0][shares]","22");
 		//zDriver.findElement(By.name("position[0][shares]")).sendKeys("22");
 
 		zDriver.findElement(By.name("position[1][shares]")).clear();
@@ -197,7 +201,7 @@ public class ZacksTest extends ZacksUtil {
 		zDriver.findElement(By.name("position[2][shares]")).sendKeys("44");
 		zDriver.findElement(By.name("position[3][shares]")).clear();
 
-		zfindt("position[3][shares]","55");
+		zfindAndType("position[3][shares]","55");
 		//zDriver.findElement(By.name("position[3][shares]")).sendKeys("55");
 
 		zDriver.findElement(By.name("position[4][shares]")).clear();

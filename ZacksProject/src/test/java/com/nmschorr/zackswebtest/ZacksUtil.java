@@ -120,30 +120,31 @@ public class ZacksUtil {
 		Dimension screenResolution = new Dimension(screen_width, screen_height );	
 		zDriver.manage().window().setPosition(new Point(0,0));
 		zDriver.manage().window().setSize(screenResolution);
-		mySleep(1, Thread.currentThread());
+		//mySleep(1, Thread.currentThread());
 	}
 
 	protected WebDriver createDriver() throws AWTException, InterruptedException {
 		System.out.println("Just entered createDriver()");
-		ProfilesIni allProfiles = new ProfilesIni();
-		FirefoxProfile myProfile = allProfiles.getProfile("a817ys2n.default");		
-			//ffoxProfile =  new FirefoxProfile(); 	
-		myProfile.setPreference("signon.rememberSignons", false);
-		binaryFile = new File(fString);
-		ffBinary = new FirefoxBinary(binaryFile);
+		String profPath = "C:\\Users\\user\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\a817ys2n.default";
+		 
+	     
+		 File ff = new File(profPath);
+		 FirefoxProfile ffprofil22 = new FirefoxProfile(ff);
+
+			//myProfile.setPreference("signon.rememberSignons", false);
+			//ffBinary = new FirefoxBinary(binaryFile);
 			//ffoxProfile.setPreference("webdriver.firefox.bin", "E:\\FirefoxTesting\\firefox.exe");
-			//C:\Program Files (x86)\Mozilla Firefox
-	    ffoxProfile.setPreference("webdriver.firefox.bin", "C:\\Program Files (x86)\\Mozilla Firefox");
 		
 		
-		AlertThread thread2=new AlertThread();  
-		thread2.start();  
-		System.out.println("! Executing new FirefoxDriver!");
-		WebDriver localDriver = new FirefoxDriver(ffBinary,myProfile);	 // using this to see if bug goes away
-			//WebDriver localDriver = new FirefoxDriver(ffBinary,ffoxProfile);	 // using this to see if bug goes away
+		//AlertThread thread2=new AlertThread();  
+		//thread2.start();  
+		System.out.println("! Starting new FirefoxDriver !");
+			//WebDriver localDriver = new FirefoxDriver(ffBinary,myProfile);	 // using this to see if bug goes away
 			//WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
-		System.out.println("Past new FirefoxDriver!");
-		localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
+		WebDriver localDriver = new FirefoxDriver(ffprofil22);
+		
+		System.out.println("Done creating FirefoxDriver!");
+		//localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
 		return localDriver;
 	}
 
@@ -282,7 +283,7 @@ public class ZacksUtil {
 	}
 
 	
-	static void zfindt (String s, String t) {
+	static void zfindAndType (String s, String t) {
 		out.println("Finding element: " + s + " and typing: " + t);
 		zDriver.findElement(By.name(s)).sendKeys(t);
 	}

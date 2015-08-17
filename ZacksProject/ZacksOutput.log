@@ -1,0 +1,18 @@
+2015-08-17 15:20:26.640 [main] TRACE com.nmschorr.zackswebtest.ZacksTest - entry
+2015-08-17 15:20:26.641 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Logger has been set up.
+2015-08-17 15:20:37.303 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Running Method: Test1LoginZacks
+2015-08-17 15:20:37.303 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Running Method: loginZacks
+2015-08-17 15:20:52.836 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Running Method: logoutZacks
+2015-08-17 15:20:54.810 [main] TRACE com.nmschorr.zackswebtest.ZacksTest - exit with(false)
+2015-08-17 15:20:54.811 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Quitting Webdriver and shutting down
+2015-08-17 15:21:02.530 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Inside mySleep() and waiting 1
+2015-08-17 15:21:03.531 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - All done with tests and exiting. Goodbye.
+2015-08-17 15:21:03.541 [main] TRACE com.nmschorr.zackswebtest.ZacksTest - entry
+2015-08-17 15:21:03.541 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Logger has been set up.
+2015-08-17 15:21:07.524 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Running Method: Test2ZacksAddPortfolio
+2015-08-17 15:21:07.524 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Running Method: loginZacks
+2015-08-17 15:21:33.494 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Inside mySleep() and waiting 1
+2015-08-17 15:21:57.592 [main] TRACE com.nmschorr.zackswebtest.ZacksTest - exit with(false)
+2015-08-17 15:21:57.593 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Quitting Webdriver and shutting down
+2015-08-17 15:22:05.073 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - Inside mySleep() and waiting 1
+2015-08-17 15:22:06.073 [main] INFO  com.nmschorr.zackswebtest.ZacksTest - All done with tests and exiting. Goodbye.
