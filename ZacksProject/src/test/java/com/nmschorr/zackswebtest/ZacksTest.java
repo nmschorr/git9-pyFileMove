@@ -106,11 +106,10 @@ public class ZacksTest extends ZacksUtil {
 	// end  
 
 	static void removeOverlay() {     // get rid of intrusive overlay alert ad
-		zDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); //for the entire test run
-		mySleep(2);
+		printMe("About to dismiss overlay.");
 	    boolean yesNo  = isElementPresent(By.cssSelector("img"));  // get rid of intrusive overlay alert ad
-	    if (yesNo == true)  zDriver.findElement(By.cssSelector("img")).click();
-		zDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
+		out.println("Value of finding overlay: " + yesNo);
+    if (yesNo == true)  zDriver.findElement(By.cssSelector("img")).click();
 	}
     
 	// beginning of methods to support tests
@@ -123,19 +122,19 @@ public class ZacksTest extends ZacksUtil {
 		    }
 		  }
 
+
 	public static void loginZacks(String localUrl) {  
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
 
 		zDriver.get(localUrl);  // main Zacks page
+		
+		removeOverlay();
 		printMe("setWindowSize()");
 		setWindowSize();
 
-		printMe("zDriver.findElement(By.linkText(Sign In)).click()");
-		zDriver.findElement(By.linkText("Sign In")).click();
-		
-		removeOverlay();
-
+		printMe("zDriver.findElement(By.linkText(Sign In)).click()");				
+		zDriver.findElement(By.linkText("Sign In")).click();		
 		zDriver.findElement(By.id("username")).clear();
 
 		//zDriver.findElement(By.id("username")).sendKeys(usernameval);
@@ -226,29 +225,6 @@ public class ZacksTest extends ZacksUtil {
 			// page : <title>Stock Portfolio Management - Zacks Investment Research</title>
 		}
 		zDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
-	}
-
-
-	static void zfindt (String s, String t) {
-		out.println("Finding element: " + s + " and typing: " + t);
-		zDriver.findElement(By.name(s)).sendKeys(t);
-	}
-	boolean chklink() {
-		zDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS); //for the entire test run
-		try {
-			zDriver.findElement(By.linkText("Delete this Portfolio"));
-			zDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
-			return true;
-		}
-		catch (Exception  e)
-		{
-			out.println("No portfolio found. " + e);
-			zDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
-			return false;
-		}
-	}
-	public static void printMe(String toPrt) {
-		out.println("Running this next: " + toPrt);
 	}
 
 
