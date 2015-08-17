@@ -44,7 +44,7 @@ public class ZacksTest extends ZacksUtil {
 
 	@Before  //run only once before all tests
 	public void setUp() throws Exception {		
-		createProperties();
+		//createProperties();
 		gLogger = zutil.createLogger();
 		zDriver = createDriver();
 		initStrings();
@@ -129,7 +129,7 @@ public class ZacksTest extends ZacksUtil {
 
 		zDriver.get(localUrl);  // main Zacks page
 		
-		removeOverlay();
+		//removeOverlay();
 		printMe("setWindowSize()");
 		setWindowSize();
 
@@ -215,11 +215,11 @@ public class ZacksTest extends ZacksUtil {
 		boolean keepgoing = chklink();
 		removeOverlay();
 		if (keepgoing == true) {
-			mySleep(2);
+			mySleep(1, Thread.currentThread());
 			zDriver.findElement(By.linkText("Delete this Portfolio")).click();
 			zDriver.findElement(By.id("chk")).click();
 			zDriver.findElement(By.name("btn_del")).click();
-			mySleep(2);
+			mySleep(1, Thread.currentThread());
 			System.out.println("title is: " + zDriver.getTitle());
 			assertThat(zDriver.getTitle(), containsString("Stock Portfolio Management"));
 			// page : <title>Stock Portfolio Management - Zacks Investment Research</title>
@@ -235,7 +235,7 @@ public class ZacksTest extends ZacksUtil {
 		thread3.start();  
 		gLogger.info("Quitting Webdriver and shutting down");
 		zDriver.quit();
-		mySleep(1);
+		mySleep(1, Thread.currentThread());
 		gLogger.info("All done with tests and exiting. Goodbye.");
 		//  String verificationErrorString = verificationErrors.toString();
 		//	  if (!"".equals(verificationErrorString)) {
