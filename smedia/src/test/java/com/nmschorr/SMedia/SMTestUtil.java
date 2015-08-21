@@ -7,7 +7,7 @@
  * 
  */
 
-package com.nmschorr.smedia;
+package com.nmschorr.SMedia;
 
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;

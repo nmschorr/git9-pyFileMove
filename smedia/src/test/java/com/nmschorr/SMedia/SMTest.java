@@ -1,4 +1,4 @@
-package com.nmschorr.smedia;
+package com.nmschorr.SMedia;
 
 /***
  * SMTest.java by Nancy M. Schorr, 2015
@@ -35,7 +35,8 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.Select;
 
 import static java.lang.System.out;
-import com.nmschorr.smedia.SMTestUtil;
+
+import com.nmschorr.SMedia.SMTestUtil;
 
 // note: you need to have an account and password at SM.com
 
