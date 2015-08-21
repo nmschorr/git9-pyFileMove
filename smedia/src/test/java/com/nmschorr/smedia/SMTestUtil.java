@@ -63,11 +63,11 @@ public class SMTestUtil {
 	protected final static String fString = "E:\\FirefoxTesting\\firefox.exe";
 	protected final static String portfolioTitle = "Stock Portfolio Management - SMTest Investment Research";    
 	protected final static String theTitle = "SMTest Investment Research: Stock Research, Analysis, & Recommendations";
-	protected final static String portfolioUrl = "http://www.zacks.com/portfolios/my-stock-portfolio/";
+	protected final static String portfolioUrl = "http://www.schorrmedia.com/portfolios/my-stock-portfolio/";
 	protected final static String SMTestMainUrl = "http://208.65.116.3";
-	//protected final static String zacksMainUrl = "http://www.zacks.com/";
-	private final static String dirname = "C:\\Users\\user\\git2\\ZacksProject\\PropertyFiles\\" ;
-	private final static String pname = "Zacksprops.properties" ;
+	//protected final static String schorrmediaMainUrl = "http://www.schorrmedia.com/";
+	private final static String dirname = "C:\\Users\\user\\git2\\schorrmediaProject\\PropertyFiles\\" ;
+	private final static String pname = "schorrmediaprops.properties" ;
 	private final static String propname = dirname + pname ;
 
 	private final static String outfileName = "E:\\Workspace\\firefox.log";	
@@ -224,7 +224,7 @@ public class SMTestUtil {
 		printMethodName(eClass.class.getEnclosingMethod());
 		// deleteCookies();		
 		zDriver.findElement(By.id("logout")).click();
-		assertEquals("Testing Log Out", "Log Out - Zacks.com", zDriver.getTitle());
+		assertEquals("Testing Log Out", "Log Out - schorrmedia.com", zDriver.getTitle());
 	}
 
 
