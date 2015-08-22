@@ -26,6 +26,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 //import static org.hamcrest.CoreMatchers.containsString;
 //import static org.junit.Assert.*;
@@ -107,7 +108,33 @@ public class SMTest extends SMTestUtils {
 		// method to add portfolio, must be logged in first
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod()); 	
+
 		zDriver.get(baseUrl);
+		assertTrue(isElementPresent(By.linkText("Home")));
+	    mySleep(2);
+
+		zDriver.findElement(By.linkText("Websites")).click();		 
+	    assertEquals("   Websites    | Schorr Media", zDriver.getTitle());
+	    mySleep(2);
+	    
+	    zDriver.findElement(By.linkText("Video")).click();
+	    assertEquals("Ustream YouTube", zDriver.getTitle());
+	    mySleep(2);
+	
+		zDriver.findElement(By.linkText("Social Media")).click();
+	    assertEquals("   Social Media    | Schorr Media", zDriver.getTitle());
+	    mySleep(2);
+	
+		zDriver.findElement(By.linkText("Database")).click();
+	    assertEquals("Database | Schorr Media", zDriver.getTitle());
+	    mySleep(2);
+
+		zDriver.findElement(By.linkText("About Us")).click();
+	    assertEquals("  About Us   | Schorr Media", zDriver.getTitle());
+	    mySleep(2);
+
+		
+		
 	}
 
 	public static void modifyPort() throws Exception {
