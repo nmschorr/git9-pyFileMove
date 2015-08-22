@@ -63,7 +63,7 @@ public class SMTestUtils {
 	protected final static String fString = "E:\\FirefoxTesting\\firefox.exe";
 	protected final static String portfolioTitle = "Stock Portfolio Management - SMTest Investment Research";    
 	protected final static String theTitle = "SMTest Investment Research: Stock Research, Analysis, & Recommendations";
-	protected final static String baseUrl = "http://www.schorrmedia.com/";
+	protected final static String baseUrl = "http://jetgalaxy.com/wordpress/";
 	protected final static String SMTestMainUrl = "http://208.65.116.3";
 	//protected final static String schorrmediaMainUrl = "http://www.schorrmedia.com/";
 	private final static String dirname = "C:\\Users\\user\\git2\\schorrmediaProject\\PropertyFiles\\" ;

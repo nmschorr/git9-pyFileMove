@@ -108,20 +108,26 @@ public class SMTest extends SMTestUtils {
 		// method to add portfolio, must be logged in first
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod()); 	
-	    mySleep(5);
+	    mySleep(2);
 
 		zDriver.get(baseUrl);
-	    mySleep(5);
+	    mySleep(2);
 	    assertEquals("Schorr Media provides internet and social media services to businesses", zDriver.getTitle());
 	    out.println("past first test");
 	    mySleep(2);
 
+	    String newtitle=zDriver.getTitle();
 	    zDriver.findElement(By.linkText("Home")).click();
-		zDriver.findElement(By.linkText("Websites")).click();	
+		zDriver.findElement(By.linkText("   Websites   ")).click();	
 	    out.println("just clicked");
-		
-	    assertEquals("   Websites    | Schorr Media", zDriver.getTitle());
 	    mySleep(2);
+
+	    String newtitle2=zDriver.getTitle();
+	    String expectSt="   Websites    | Schorr Media";
+	    assert(expectSt.contains("Websites"));
+	    assertEquals(expectSt, newtitle2);
+	    mySleep(2);
+	    assert(expectSt.contains("Websites"));
 	    
 	    zDriver.findElement(By.linkText("Video")).click();
 	    assertEquals("Ustream YouTube", zDriver.getTitle());
