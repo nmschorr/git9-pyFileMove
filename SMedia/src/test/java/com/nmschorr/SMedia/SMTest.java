@@ -107,7 +107,7 @@ public class SMTest extends SMTestUtils {
 		// method to add portfolio, must be logged in first
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod()); 	
-		printMe("zDriver.get(portfolioUrl)");
+		zDriver.get(baseUrl);
 	}
 
 	public static void modifyPort() throws Exception {
@@ -122,7 +122,7 @@ public class SMTest extends SMTestUtils {
 	public void deletePortfolio ()  {
 		// need to add check to sure the portfolio is there to delete
 		out.println("Deleting test portfolio only if it exists already.");
-		zDriver.get(portfolioUrl);
+		zDriver.get(baseUrl);
 		zDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); //for the entire test run
 	}
 

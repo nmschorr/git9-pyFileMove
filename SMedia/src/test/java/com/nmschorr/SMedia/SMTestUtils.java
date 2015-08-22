@@ -63,7 +63,7 @@ public class SMTestUtils {
 	protected final static String fString = "E:\\FirefoxTesting\\firefox.exe";
 	protected final static String portfolioTitle = "Stock Portfolio Management - SMTest Investment Research";    
 	protected final static String theTitle = "SMTest Investment Research: Stock Research, Analysis, & Recommendations";
-	protected final static String portfolioUrl = "http://www.schorrmedia.com/portfolios/my-stock-portfolio/";
+	protected final static String baseUrl = "http://www.schorrmedia.com";
 	protected final static String SMTestMainUrl = "http://208.65.116.3";
 	//protected final static String schorrmediaMainUrl = "http://www.schorrmedia.com/";
 	private final static String dirname = "C:\\Users\\user\\git2\\schorrmediaProject\\PropertyFiles\\" ;
@@ -124,26 +124,9 @@ public class SMTestUtils {
 
 	protected WebDriver createDriver() throws AWTException, InterruptedException {
 		System.out.println("Just entered createDriver()");
-		String profPath = "C:\\Users\\user\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\x.default";
-		 
-	     
-		 File ff = new File(profPath);
-		 FirefoxProfile ffprofil22 = new FirefoxProfile(ff);
-
-			//myProfile.setPreference("signon.rememberSignons", false);
-			//ffBinary = new FirefoxBinary(binaryFile);
-			//ffoxProfile.setPreference("webdriver.firefox.bin", "E:\\FirefoxTesting\\firefox.exe");
-		
-		
-		//AlertThread thread2=new AlertThread();  
-		//thread2.start();  
 		System.out.println("! Starting new FirefoxDriver !");
-			//WebDriver localDriver = new FirefoxDriver(ffBinary,myProfile);	 // using this to see if bug goes away
-			//WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
-		WebDriver localDriver = new FirefoxDriver(ffprofil22);
-		
+		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
 		System.out.println("Done creating FirefoxDriver!");
-		//localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
 		return localDriver;
 	}
 
