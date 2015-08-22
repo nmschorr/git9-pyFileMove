@@ -111,10 +111,15 @@ public class SMTest extends SMTestUtils {
 	    mySleep(5);
 
 		zDriver.get(baseUrl);
-		assertTrue(isElementPresent(By.linkText("Home")));
+	    mySleep(5);
+	    assertEquals("Schorr Media provides internet and social media services to businesses", zDriver.getTitle());
+	    out.println("past first test");
 	    mySleep(2);
 
-		zDriver.findElement(By.linkText("Websites")).click();		 
+	    zDriver.findElement(By.linkText("Home")).click();
+		zDriver.findElement(By.linkText("Websites")).click();	
+	    out.println("just clicked");
+		
 	    assertEquals("   Websites    | Schorr Media", zDriver.getTitle());
 	    mySleep(2);
 	    

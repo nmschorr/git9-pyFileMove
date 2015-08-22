@@ -129,6 +129,7 @@ public class SMTestUtils {
 		thread2.start();  
 		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
 		System.out.println("Done creating FirefoxDriver!");
+		localDriver.manage().timeouts().implicitlyWait(22, TimeUnit.SECONDS); //for the entire test run
 		return localDriver;
 	}
 
