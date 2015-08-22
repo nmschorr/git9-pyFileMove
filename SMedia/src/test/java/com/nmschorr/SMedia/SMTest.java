@@ -63,7 +63,7 @@ public class SMTest extends SMTestUtils {
 
 	}
 
-	@Test
+	//@Test
 	public void Test2Links() throws Exception {
 		// test adding a portfolio
 		class eClass {};	    
