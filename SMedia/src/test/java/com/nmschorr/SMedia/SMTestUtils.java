@@ -59,7 +59,7 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 @SuppressWarnings("unused")
 public class SMTestUtils {
 	protected static WebDriver zDriver;
-	public static Logger gLogger;
+ 	public static Logger gLogger;
 	protected final static String fString = "E:\\FirefoxTesting\\firefox.exe";
 	protected final static String portfolioTitle = "Stock Portfolio Management - SMTest Investment Research";    
 	protected final static String theTitle = "SMTest Investment Research: Stock Research, Analysis, & Recommendations";
@@ -157,13 +157,13 @@ public class SMTestUtils {
 
 
 	protected static void printMethodName (Method aMethod) {
-		gLogger.info("Running Method: " + aMethod.getName());	    		
+	//	gLogger.info("Running Method: " + aMethod.getName());	    		
 	}	
 
 
 	protected static void mySleep(int timewait) {
 		try {
-			gLogger.info("Inside mySleep() " + "and waiting " + timewait);	
+			//gLogger.info("Inside mySleep() " + "and waiting " + timewait);	
 			Thread.sleep(timewait * 1000);	//sleep is in milliseconds
 		} catch (Exception e) {
 			System.out.println(e);
