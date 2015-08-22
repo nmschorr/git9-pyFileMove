@@ -108,6 +108,7 @@ public class SMTest extends SMTestUtils {
 		// method to add portfolio, must be logged in first
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod()); 	
+	    mySleep(5);
 
 		zDriver.get(baseUrl);
 		assertTrue(isElementPresent(By.linkText("Home")));

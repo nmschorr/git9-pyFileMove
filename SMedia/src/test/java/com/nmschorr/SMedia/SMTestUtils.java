@@ -125,6 +125,8 @@ public class SMTestUtils {
 	protected WebDriver createDriver() throws AWTException, InterruptedException {
 		System.out.println("Just entered createDriver()");
 		System.out.println("! Starting new FirefoxDriver !");
+		AlertThread thread2=new AlertThread();  
+		thread2.start();  
 		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
 		System.out.println("Done creating FirefoxDriver!");
 		return localDriver;
