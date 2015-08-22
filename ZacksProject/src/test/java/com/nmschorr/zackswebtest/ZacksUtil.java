@@ -64,7 +64,8 @@ public class ZacksUtil {
 	protected final static String portfolioTitle = "Stock Portfolio Management - Zacks Investment Research";    
 	protected final static String theTitle = "Zacks Investment Research: Stock Research, Analysis, & Recommendations";
 	protected final static String portfolioUrl = "http://www.zacks.com/portfolios/my-stock-portfolio/";
-	protected final static String zacksMainUrl = "http://www.zacks.com/";
+	protected final static String zacksMainUrl = "http://208.65.116.3";
+	//protected final static String zacksMainUrl = "http://www.zacks.com/";
 	private final static String dirname = "C:\\Users\\user\\git2\\ZacksProject\\PropertyFiles\\" ;
 	private final static String pname = "Zacksprops.properties" ;
 	private final static String propname = dirname + pname ;
@@ -92,10 +93,12 @@ public class ZacksUtil {
 			try {		
 				Robot robot = new Robot();
 				robot.delay(1000);		
-				Thread.sleep(7000);
+				Thread.currentThread();
+				Thread.sleep(6000);
 
 				dismissFirefoxCrashAlert();  // closes Firefox error alerts
 
+				Thread.currentThread();
 				Thread.sleep(2000);
 				//		following is alternate method
 				//				robot.mouseMove(855, 351);    
@@ -117,23 +120,31 @@ public class ZacksUtil {
 		Dimension screenResolution = new Dimension(screen_width, screen_height );	
 		zDriver.manage().window().setPosition(new Point(0,0));
 		zDriver.manage().window().setSize(screenResolution);
-		mySleep(1);
+		//mySleep(1, Thread.currentThread());
 	}
 
 	protected WebDriver createDriver() throws AWTException, InterruptedException {
 		System.out.println("Just entered createDriver()");
-		ffoxProfile =  new FirefoxProfile(); 	
-		binaryFile = new File(fString);
-		ffBinary = new FirefoxBinary(binaryFile);
-		ffoxProfile.setPreference("webdriver.firefox.bin", "E:\\FirefoxTesting\\firefox.exe");
+		String profPath = "C:\\Users\\user\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\a817ys2n.default";
+		 
+	     
+		 File ff = new File(profPath);
+		 FirefoxProfile ffprofil22 = new FirefoxProfile(ff);
 
-		AlertThread thread2=new AlertThread();  
-		thread2.start();  
-		System.out.println("! Executing new FirefoxDriver!");
-		WebDriver localDriver = new FirefoxDriver(ffBinary,ffoxProfile);	 // using this to see if bug goes away
-		//WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
-		System.out.println("Past new FirefoxDriver!");
-		localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
+			//myProfile.setPreference("signon.rememberSignons", false);
+			//ffBinary = new FirefoxBinary(binaryFile);
+			//ffoxProfile.setPreference("webdriver.firefox.bin", "E:\\FirefoxTesting\\firefox.exe");
+		
+		
+		//AlertThread thread2=new AlertThread();  
+		//thread2.start();  
+		System.out.println("! Starting new FirefoxDriver !");
+			//WebDriver localDriver = new FirefoxDriver(ffBinary,myProfile);	 // using this to see if bug goes away
+			//WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
+		WebDriver localDriver = new FirefoxDriver(ffprofil22);
+		
+		System.out.println("Done creating FirefoxDriver!");
+		//localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
 		return localDriver;
 	}
 
@@ -165,10 +176,10 @@ public class ZacksUtil {
 	}	
 
 
-	protected static void mySleep(int timewait) {
+	protected static void mySleep(int timewait, Thread tThread) {
 		try {
 			gLogger.info("Inside mySleep() " + "and waiting " + timewait);	
-			Thread.sleep(timewait * 1000);	//sleep is in milliseconds
+			tThread.sleep(timewait * 1000);	//sleep is in milliseconds
 		} catch (Exception e) {
 			System.out.println(e);
 		} 
@@ -212,7 +223,7 @@ public class ZacksUtil {
 	protected void logoutZacks() throws Exception {  
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
-		deleteCookies();		
+		// deleteCookies();		
 		zDriver.findElement(By.id("logout")).click();
 		assertEquals("Testing Log Out", "Log Out - Zacks.com", zDriver.getTitle());
 	}
@@ -272,7 +283,7 @@ public class ZacksUtil {
 	}
 
 	
-	static void zfindt (String s, String t) {
+	static void zfindAndType (String s, String t) {
 		out.println("Finding element: " + s + " and typing: " + t);
 		zDriver.findElement(By.name(s)).sendKeys(t);
 	}

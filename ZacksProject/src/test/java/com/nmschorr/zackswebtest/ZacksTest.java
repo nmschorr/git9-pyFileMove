@@ -47,7 +47,6 @@ public class ZacksTest extends ZacksUtil {
 		createProperties();
 		gLogger = zutil.createLogger();
 		zDriver = createDriver();
-		initStrings();
 	}
 
 	@Test
@@ -126,10 +125,15 @@ public class ZacksTest extends ZacksUtil {
 	public static void loginZacks(String localUrl) {  
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
+		
+		String errorString = "ERROR - no value present";
+		String signinval =  theProperties.getProperty("signinval", errorString);
+		String usernameval =  theProperties.getProperty("usernameval", errorString);
+		String pwordval =  theProperties.getProperty("pwordval", errorString);
 
 		zDriver.get(localUrl);  // main Zacks page
 		
-		removeOverlay();
+		//removeOverlay();
 		printMe("setWindowSize()");
 		setWindowSize();
 
@@ -138,7 +142,7 @@ public class ZacksTest extends ZacksUtil {
 		zDriver.findElement(By.id("username")).clear();
 
 		//zDriver.findElement(By.id("username")).sendKeys(usernameval);
-		zfindt("username",usernameval);
+		zfindAndType("username",usernameval);
 
 		zDriver.findElement(By.id("password")).clear();
 		printMe("zDriver.findElement(By.id(password)).sendKeys(pwordval)");
@@ -188,7 +192,7 @@ public class ZacksTest extends ZacksUtil {
 		zDriver.findElement(By.linkText("Modify Previous Buys")).click();
 		zDriver.findElement(By.name("position[0][shares]")).clear();
 
-		zfindt("position[0][shares]","22");
+		zfindAndType("position[0][shares]","22");
 		//zDriver.findElement(By.name("position[0][shares]")).sendKeys("22");
 
 		zDriver.findElement(By.name("position[1][shares]")).clear();
@@ -197,7 +201,7 @@ public class ZacksTest extends ZacksUtil {
 		zDriver.findElement(By.name("position[2][shares]")).sendKeys("44");
 		zDriver.findElement(By.name("position[3][shares]")).clear();
 
-		zfindt("position[3][shares]","55");
+		zfindAndType("position[3][shares]","55");
 		//zDriver.findElement(By.name("position[3][shares]")).sendKeys("55");
 
 		zDriver.findElement(By.name("position[4][shares]")).clear();
@@ -213,13 +217,13 @@ public class ZacksTest extends ZacksUtil {
 		zDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); //for the entire test run
 		new Select(zDriver.findElement(By.id("port_id"))).selectByVisibleText(PF_NAME);
 		boolean keepgoing = chklink();
-		removeOverlay();
+		//removeOverlay();
 		if (keepgoing == true) {
-			mySleep(2);
+			mySleep(1, Thread.currentThread());
 			zDriver.findElement(By.linkText("Delete this Portfolio")).click();
 			zDriver.findElement(By.id("chk")).click();
 			zDriver.findElement(By.name("btn_del")).click();
-			mySleep(2);
+			mySleep(1, Thread.currentThread());
 			System.out.println("title is: " + zDriver.getTitle());
 			assertThat(zDriver.getTitle(), containsString("Stock Portfolio Management"));
 			// page : <title>Stock Portfolio Management - Zacks Investment Research</title>
@@ -235,7 +239,7 @@ public class ZacksTest extends ZacksUtil {
 		thread3.start();  
 		gLogger.info("Quitting Webdriver and shutting down");
 		zDriver.quit();
-		mySleep(1);
+		mySleep(1, Thread.currentThread());
 		gLogger.info("All done with tests and exiting. Goodbye.");
 		//  String verificationErrorString = verificationErrors.toString();
 		//	  if (!"".equals(verificationErrorString)) {
