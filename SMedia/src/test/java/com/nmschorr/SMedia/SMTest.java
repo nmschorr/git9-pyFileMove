@@ -19,6 +19,7 @@ package com.nmschorr.SMedia;
 
 
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.runners.MethodSorters;
@@ -26,14 +27,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-//import static org.hamcrest.CoreMatchers.containsString;
-//import static org.junit.Assert.*;
+import static org.junit.Assert.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 //import org.openqa.selenium.support.ui.Select;
+
+import org.openqa.selenium.WebElement;
 
 import static java.lang.System.out;
 
@@ -129,9 +130,19 @@ public class SMTest extends SMTestUtils {
 	    assert(newtitle2.contains(" Websites "));
 	    assert(newtitle2.contains("| Schorr Media"));
 	    		//   assertEquals("Checking Websites Link", expectSt, newtitle2);  // docesn't work for same weird reason
-	    By myb = new By();
+	    //By myb = new By();
 	    
-	    Object myob = By.linkText("Video");
+	    List<WebElement> myarry = null;
+	    List<WebElement> myarry2 = null;
+	    myarry2 = zDriver.findElements( By.cssSelector("li[id^=menu-item]"));  //works!!!!
+	    for (int i=0; i< myarry2.size(); i++) {
+	    	System.out.println(myarry2[i]);
+	    }
+
+	    myarry = zDriver.findElements(By.tagName("a"));  //works!
+	    
+	    Object myob = By.cssSelector("li[id=menu-item-141]" ) ;
+	    
 	    zDriver.findElement(By.linkText("Video")).click();
 	    out.println("just clicked Video");
 	    mySleep(2);
