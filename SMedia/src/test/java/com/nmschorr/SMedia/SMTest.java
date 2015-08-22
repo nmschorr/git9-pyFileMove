@@ -47,7 +47,7 @@ public class SMTest extends SMTestUtils {
 
 	@Before  //run only once before all tests
 	public void setUp() throws Exception {		
-		createProperties();
+		//createProperties();
 		gLogger = zutil.createLogger();
 		zDriver = createDriver();
 	}
