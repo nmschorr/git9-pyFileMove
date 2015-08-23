@@ -35,6 +35,7 @@ import org.openqa.selenium.NoSuchElementException;
 //import org.openqa.selenium.support.ui.Select;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import static java.lang.System.out;
 
@@ -118,14 +119,9 @@ public class SMTest extends SMTestUtils {
 	    String socialMenuID = "li[id=menu-item-142]";
 	    String databaseMenuID = "li[id=menu-item-418]";
 	    String aboutMenuID = "li[id=menu-item-419]";
+	
+	    experimnt();
 	    
-	    
-	    List<WebElement> myarry2 = zDriver.findElements( By.cssSelector("li[id^=menu-item]"));  //works!!!!
-	    for (WebElement ww :   myarry2) {
-	    	System.out.println("attribute line: " + ww.getAttribute("id"));
-	    }
-	    By byobj = By.cssSelector("li[id=menu-item-141]" ) ;
-
 	    
 	    zDriver.findElement( By.cssSelector("li[id=menu-item-400]")   ).click();	
 	    assertEquals("Schorr Media provides internet and social media services to businesses", zDriver.getTitle());
@@ -156,6 +152,40 @@ public class SMTest extends SMTestUtils {
 			
 	}
 
+	static void experimnt() {
+ 		
+		List <WebElement> wtag = zDriver.findElements(By.tagName("a"));  //works!  
+		for (WebElement www :   wtag) {
+	    	System.out.println("attribute line: " + www.getAttribute("id"));
+	    	System.out.println("tagname line: " +www.getTagName());
+	    	System.out.println("tostring line: " +www.toString());
+	    	System.out.println("text line: " +www.getText());
+	    }
+    	System.out.println("-----------------starting next loop" + "\n");
+	
+		List <WebElement> webel = ((FirefoxDriver) zDriver).findElementsByTagName("a");  //works!  
+
+		for (WebElement www :   webel) {
+	    	System.out.println("attribute line: " + www.getAttribute("id"));
+	    	System.out.println("tagname line: " +www.getTagName());
+	    	System.out.println("tostring line: " +www.toString());
+	    	System.out.println("text line: " +www.getText());
+	    }
+    
+	    
+	    
+	    List<WebElement> myarry2 = zDriver.findElements( By.cssSelector("li[id^=menu-item]"));  //works!!!!
+	    for (WebElement ww :   myarry2) {
+	    	System.out.println("attribute line: " + ww.getAttribute("id"));
+	    }
+	    By byobj = By.cssSelector("li[id=menu-item-141]" ) ;
+		
+		
+		
+	}
+	
+	
+	
 	public static void modifyPort() throws Exception {
 		// modify portfolio - add shares
 		class eClass {};	    
