@@ -106,20 +106,28 @@ public class SMTest extends SMTestUtils {
 
 
 	public static void CheckMenus() throws Exception {
-		// method to add portfolio, must be logged in first
+		// checks to see that all items in main menubar are functioning ok
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod()); 	
 		zDriver.get(baseUrl);
 	    mySleep(2);
 			
-	    String homeMenuID = "li[id=menu-item-140]";
+	    String homeMenuID = "li[id=menu-item-400]";
 	    String websiteMenuID = "li[id=menu-item-143]";
 	    String videoMenuID = "li[id=menu-item-141]";
 	    String socialMenuID = "li[id=menu-item-142]";
 	    String databaseMenuID = "li[id=menu-item-418]";
 	    String aboutMenuID = "li[id=menu-item-419]";
 	    
-	    zDriver.findElement(By.cssSelector(homeMenuID));
+	    
+	    List<WebElement> myarry2 = zDriver.findElements( By.cssSelector("li[id^=menu-item]"));  //works!!!!
+	    for (WebElement ww :   myarry2) {
+	    	System.out.println("attribute line: " + ww.getAttribute("id"));
+	    }
+	    By byobj = By.cssSelector("li[id=menu-item-141]" ) ;
+
+	    
+	    zDriver.findElement( By.cssSelector("li[id=menu-item-400]")   ).click();	
 	    assertEquals("Schorr Media provides internet and social media services to businesses", zDriver.getTitle());
 	    out.println("just clicked Home");
 	    
@@ -127,15 +135,8 @@ public class SMTest extends SMTestUtils {
 	    assert(zDriver.getTitle().contains("Websites"));
 	    assert(zDriver.getTitle().contains("| Schorr Media"));
 	    out.println("just clicked Websites");
-	    
-//	    List<WebElement> myarry2 = zDriver.findElements( By.cssSelector("li[id^=menu-item]"));  //works!!!!
-//	    for (WebElement ww :   myarry2) {
-//	    	System.out.println("attribute line: " + ww.getAttribute("id"));
-//	    }
-//	    By byobj = By.cssSelector("li[id=menu-item-141]" ) ;
 
-	    
-	    
+	    	    
 	    zDriver.findElement( By.cssSelector(videoMenuID)   ).click();	
 	    assert(zDriver.getTitle().contains("Video"));
 	    out.println("just clicked Video");
@@ -152,8 +153,7 @@ public class SMTest extends SMTestUtils {
 	    assert(zDriver.getTitle().contains("About"));
 	    out.println("just clicked About Us");
 
-		
-		
+			
 	}
 
 	public static void modifyPort() throws Exception {
