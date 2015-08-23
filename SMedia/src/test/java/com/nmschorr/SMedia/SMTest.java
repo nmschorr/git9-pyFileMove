@@ -109,61 +109,48 @@ public class SMTest extends SMTestUtils {
 		// method to add portfolio, must be logged in first
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod()); 	
-	    mySleep(2);
-
 		zDriver.get(baseUrl);
 	    mySleep(2);
+			
+	    String homeMenuID = "li[id=menu-item-140]";
+	    String websiteMenuID = "li[id=menu-item-143]";
+	    String videoMenuID = "li[id=menu-item-141]";
+	    String socialMenuID = "li[id=menu-item-142]";
+	    String databaseMenuID = "li[id=menu-item-418]";
+	    String aboutMenuID = "li[id=menu-item-419]";
+	    
+	    zDriver.findElement(By.cssSelector(homeMenuID));
 	    assertEquals("Schorr Media provides internet and social media services to businesses", zDriver.getTitle());
-	    out.println("past first test");
-
-	    //String newtitle=zDriver.getTitle();
-	    zDriver.findElement(By.linkText("Home")).click();
-	    mySleep(2);
-		
+	    out.println("just clicked Home");
 	    
-	    zDriver.findElement(By.linkText("   Websites   ")).click();	
-	    mySleep(2);
+	    zDriver.findElement( By.cssSelector(websiteMenuID)   ).click();	
+	    assert(zDriver.getTitle().contains("Websites"));
+	    assert(zDriver.getTitle().contains("| Schorr Media"));
 	    out.println("just clicked Websites");
+	    
+//	    List<WebElement> myarry2 = zDriver.findElements( By.cssSelector("li[id^=menu-item]"));  //works!!!!
+//	    for (WebElement ww :   myarry2) {
+//	    	System.out.println("attribute line: " + ww.getAttribute("id"));
+//	    }
+//	    By byobj = By.cssSelector("li[id=menu-item-141]" ) ;
 
-	    String newtitle2=zDriver.getTitle();
-	    	// String expectSt="   Websites    | Schorr Media";
-	    assert(newtitle2.contains(" Websites "));
-	    assert(newtitle2.contains("| Schorr Media"));
-	    		//   assertEquals("Checking Websites Link", expectSt, newtitle2);  // docesn't work for same weird reason
-	    //By myb = new By();
 	    
-	    List<WebElement> myarry = null;
-	    List<WebElement> myarry2 = null;
-	    myarry2 = zDriver.findElements( By.cssSelector("li[id^=menu-item]"));  //works!!!!
-	    for (int i=0; i< myarry2.size(); i++) {
-	    	System.out.println(myarry2[i]);
-	    }
-
-	    myarry = zDriver.findElements(By.tagName("a"));  //works!
 	    
-	    Object myob = By.cssSelector("li[id=menu-item-141]" ) ;
-	    
-	    zDriver.findElement(By.linkText("Video")).click();
+	    zDriver.findElement( By.cssSelector(videoMenuID)   ).click();	
+	    assert(zDriver.getTitle().contains("Video"));
 	    out.println("just clicked Video");
-	    mySleep(2);
-	    String newtitle3 = zDriver.getTitle();
-	    		//assertEquals("Checking Video Link","Ustream YouTube", zDriver.getTitle());
-	    assert(newtitle3.contains("Ustream YouTube"));
-	
-		zDriver.findElement(By.linkText("Social Media")).click();
+	    
+	    zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
+	    assert(zDriver.getTitle().contains("Social"));
 	    out.println("just clicked Social Media");
-	    assertEquals("Checking Social Media Link","   Social Media    | Schorr Media", zDriver.getTitle());
-	    mySleep(2);
-	
-		zDriver.findElement(By.linkText("Database")).click();
+	    
+	    zDriver.findElement( By.cssSelector(databaseMenuID)   ).click();	
+	    assert(zDriver.getTitle().contains("Database"));
 	    out.println("just clicked Database");
-	    assertEquals("Checking Database Link","Database | Schorr Media", zDriver.getTitle());
-	    mySleep(2);
-
-		zDriver.findElement(By.linkText("About Us")).click();
+    
+	    zDriver.findElement( By.cssSelector(aboutMenuID)   ).click();	
+	    assert(zDriver.getTitle().contains("About"));
 	    out.println("just clicked About Us");
-	    assertEquals("Checking About Us Link","  About Us   | Schorr Media", zDriver.getTitle());
-	    mySleep(2);
 
 		
 		
