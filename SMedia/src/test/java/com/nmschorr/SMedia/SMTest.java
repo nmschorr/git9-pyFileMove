@@ -18,50 +18,42 @@ package com.nmschorr.SMedia;
  */
 
 
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import org.junit.runners.MethodSorters;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
-//import org.openqa.selenium.support.ui.Select;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+//import org.openqa.selenium.support.ui.Select;
 
+import static org.junit.Assert.*;
 import static java.lang.System.out;
 
-import com.nmschorr.SMedia.SMTestUtils;
-
-// note: you need to have an account and password at SM.com
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SMTest extends SMTestUtils {
-	SMTestUtils zutil = new SMTestUtils();
+	//SMTestUtils zutil = new SMTestUtils();
 
 	@Before  //run only once before all tests
 	public void setUp() throws Exception {		
 		//createProperties();
-		gLogger = zutil.createLogger();
+		gLogger = createLogger();
 		zDriver = createDriver();
 	}
 
 	@Test
 	public void Test1Menus() throws Exception {
 		// eClass is an empty class there just for returning the local method name
-		// test logging in only	    
+		// test logging and menubar     
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
 		
-		CheckMenus();
+		checkMainMenubar();
 
 	}
 
@@ -71,7 +63,7 @@ public class SMTest extends SMTestUtils {
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
 
-		CheckMenus();
+		checkMainMenubar();
 	}
 
 	//@Test
@@ -80,7 +72,7 @@ public class SMTest extends SMTestUtils {
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
 
-		CheckMenus();
+		checkMainMenubar();
 
 	} 
 
@@ -90,7 +82,7 @@ public class SMTest extends SMTestUtils {
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
 
-		CheckMenus();
+		checkMainMenubar();
 	} 
 	// end  
 
@@ -104,107 +96,61 @@ public class SMTest extends SMTestUtils {
 		    }
 		  }
 
+	 //asertThat, assertEquals
 
 
-	void CheckMenus() throws Exception {
+	void checkMainMenubar() throws Exception {
 		// checks to see that all items in main menubar are functioning ok
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod()); 	
 		zDriver.get(baseUrl);
-	    mySleep(2);
-try {			
-	/// cssSelectors just stopped working for some unk reason
-//	    String homeMenuID = "li[id=menu-item-400]";
-//	    String websiteMenuID = "li[id=menu-item-143]";
-//	    String videoMenuID = "li[id=menu-item-141]";
-//	    String socialMenuID = "li[id=menu-item-142]";
-//	    String databaseMenuID = "li[id=menu-item-418]";
-//	    String aboutMenuID = "li[id=menu-item-419]";
-	
-    String homeXpath = "html/body/div/div[2]/div[1]/div/ul/li[1]/a";
-    String websiteXpath = "html/body/div/div[2]/div[1]/div/ul/li[2]/a]";
-    String videoXpath = "html/body/div/div[2]/div[1]/div/ul/li[3]/a";
-    String socialXpath = "html/body/div/div[2]/div[1]/div/ul/li[4]/a";
-    String databaseXpath = "/html/body/div/div[2]/div[1]/div/ul/li[5]/a";
-    String aboutXpath = "html/body/div/div[2]/div[1]/div/ul/li[6]/a";
-    List <WebElement> mytaglist = experimnt();
-	    
-	    
-	    zDriver.findElement( By.xpath(homeXpath)   ).click();	
-	    mySleep(2);
-	    out.println("just clicked Home");
-	    String tt = zDriver.getTitle();
-	    out.println("title found is: " + zDriver.getTitle());
-	    assert(zDriver.getTitle().contains("Schorr Media provides internet"));
-	    
-//Websites menuitem
-	    List<WebElement> taglist=zDriver.findElements(By.tagName("li"));
-	    
-	    for (WebElement sss : taglist){ 
-	    	out.println(sss.toString());
-	    }
-	    
- 	    zDriver.findElement( By.cssSelector("#menu-item-141 > a")).click();   
- 	     /// this worked  -- "#menu-item-141 > a"
- 	    
-	    out.println("just clicked Websites");
-	    mySleep(1);
-	    String tt2 = zDriver.getTitle();
-	    out.println("title found is: " + zDriver.getTitle());
+		mySleep(2);
 
-	    	    
-	    zDriver.findElement( By.xpath(videoXpath)   ).click();	
-	    mySleep(2);
-	    out.println("just clicked Video");
-	    String tt3 = zDriver.getTitle();
-	    out.println("title found is: " + zDriver.getTitle());
-	    assert(zDriver.getTitle().contains("Video"));
-	    
-	    zDriver.findElement( By.xpath(socialXpath)   ).click();	
-	    mySleep(2);
-	    out.println("just clicked Social Media");
-	    out.println("title found is: " + zDriver.getTitle());
-	    assert(zDriver.getTitle().contains("Social"));
-	    
-	    zDriver.findElement( By.xpath(databaseXpath)   ).click();	
-	    mySleep(2);
-	    out.println("just clicked Database");
-	    out.println("title found is: " + zDriver.getTitle());
-	    assert(zDriver.getTitle().contains("Database"));
-    
-	    zDriver.findElement( By.xpath(aboutXpath)   ).click();	
-	    mySleep(2);
-	    out.println("just clicked About Us");
-	    out.println("title found is: " + zDriver.getTitle());
-	    assert(zDriver.getTitle().contains("About"));
+		String homeMenuID = "li[id=menu-item-400]";
+		String websiteMenuID = "#menu-item-143 > a";
+		String videoMenuID = "#menu-item-141 > a";
+		String socialMenuID = "#menu-item-142 > a";
+		String databaseMenuID = "#menu-item-418 > a";
+		String aboutMenuID = "#menu-item-419 > a";
 
-		} catch (Exception e) { 
-			out.println (e);
-		}
-		}
+		String homeXpath = "html/body/div/div[2]/div[1]/div/ul/li[1]/a";
+		String websiteXpath = "html/body/div/div[2]/div[1]/div/ul/li[2]/a]";
+		String videoXpath = "html/body/div/div[2]/div[1]/div/ul/li[3]/a";
+		String socialXpath = "html/body/div/div[2]/div[1]/div/ul/li[4]/a";
+		String databaseXpath = "/html/body/div/div[2]/div[1]/div/ul/li[5]/a";
+		String aboutXpath = "html/body/div/div[2]/div[1]/div/ul/li[6]/a";
 
-	static List<WebElement> experimnt() {
-    	System.out.println("-----------------Inside experiment");		
-    	System.out.println("-----------------starting next loop" + "\n");
+		//Home menuitem	    
+		zDriver.findElement( By.xpath(homeXpath)   ).click();	
+		mySleep(2);
+		out.println("just clicked Home"+"\n"+"title found is: " + zDriver.getTitle());
+		assert(zDriver.getTitle().contains("Schorr Media provides internet"));
+		//Websites menuitem
+		zDriver.findElement( By.cssSelector("#menu-item-141 > a")).click();    	    
+		mySleep(2);
+		out.println("just clicked Websites"+"\n"+"title found is: " + zDriver.getTitle());
+		assert(zDriver.getTitle().contains("Websites"));
 
-    	List <WebElement> wtag = zDriver.findElements(By.tagName("a"));  //works!  
-		for (WebElement www :   wtag) {
-	    	System.out.println("text line: " +www.getText());
-	    }
-	    
-//		List <WebElement> webel = ((FirefoxDriver) zDriver).findElementsByTagName("a");  //works!  
-	    List<WebElement> myarry2 = zDriver.findElements( By.cssSelector("li[id^=menu-item]"));  //works!!!!
-	    for (WebElement ww :   myarry2) {
-	    	System.out.println("attribute line: " + ww.getAttribute("id"));
-	    	System.out.println("tagname line: " + ww.getTagName());
-	    	System.out.println("tostring line: " +ww.toString());
-	    }
-//	    By byobj = By.cssSelector("li[id=menu-item-141]" ) ;
-		
-		return wtag;
-		
+		zDriver.findElement( By.cssSelector(videoMenuID)   ).click();	
+		mySleep(2);
+		out.println("just clicked Video"+"\n"+"title found is: " + zDriver.getTitle());
+		assert(zDriver.getTitle().contains("Video"));
+
+		zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
+		mySleep(2);
+		out.println("just clicked Social Media"+"\n"+"title found is: " + zDriver.getTitle());
+		assert(zDriver.getTitle().contains("Social"));
+
+		zDriver.findElement( By.cssSelector(databaseMenuID)   ).click();	
+		mySleep(2);
+		out.println("just clicked Database"+"\n"+"title found is: " + zDriver.getTitle());
+		assert(zDriver.getTitle().contains("Database"));
+
+		zDriver.findElement( By.cssSelector(aboutMenuID)   ).click();	
+		mySleep(2);
+		out.println("just clicked About Us"+"\n"+"title found is: " + zDriver.getTitle());
+		assert(zDriver.getTitle().contains("About"));
 	}
-	
 	
 	
 	public static void modifyPort() throws Exception {
