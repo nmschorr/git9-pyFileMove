@@ -106,7 +106,7 @@ public class SMTest extends SMTestUtils {
 
 
 
-	public static void CheckMenus() throws Exception {
+	void CheckMenus() throws Exception {
 		// checks to see that all items in main menubar are functioning ok
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod()); 	
@@ -138,9 +138,15 @@ try {
 	    assert(zDriver.getTitle().contains("Schorr Media provides internet"));
 	    
 //Websites menuitem
-    
- 	    zDriver.findElement( By.cssSelector("li#menu-item-143")).click();   
- 	     
+	    List<WebElement> taglist=zDriver.findElements(By.tagName("li"));
+	    
+	    for (WebElement sss : taglist){ 
+	    	out.println(sss.toString());
+	    }
+	    
+ 	    zDriver.findElement( By.cssSelector("#menu-item-141 > a")).click();   
+ 	     /// this worked  -- "#menu-item-141 > a"
+ 	    
 	    out.println("just clicked Websites");
 	    mySleep(1);
 	    String tt2 = zDriver.getTitle();
