@@ -33,11 +33,18 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import static org.junit.Assert.*;
 import static java.lang.System.out;
+import static org.hamcrest.CoreMatchers.containsString;
 
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SMTest extends SMTestUtils {
 	//SMTestUtils zutil = new SMTestUtils();
+	String homeMenuID = "li[id=menu-item-400]";
+	String websiteMenuID = "#menu-item-143 > a";
+	String videoMenuID = "#menu-item-141 > a";
+	String socialMenuID = "#menu-item-142 > a";
+	String databaseMenuID = "#menu-item-418 > a";
+	String aboutMenuID = "#menu-item-419 > a";
 
 	@Before  //run only once before all tests
 	public void setUp() throws Exception {		
@@ -46,7 +53,7 @@ public class SMTest extends SMTestUtils {
 		zDriver = createDriver();
 	}
 
-	@Test
+	//@Test
 	public void Test1Menus() throws Exception {
 		// eClass is an empty class there just for returning the local method name
 		// test logging and menubar     
@@ -57,13 +64,13 @@ public class SMTest extends SMTestUtils {
 
 	}
 
-	//@Test
+	@Test
 	public void Test2Links() throws Exception {
 		// test adding a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
 
-		checkMainMenubar();
+		checkLinks();
 	}
 
 	//@Test
@@ -106,12 +113,6 @@ public class SMTest extends SMTestUtils {
 		zDriver.get(baseUrl);
 		mySleep(2);
 
-		String homeMenuID = "li[id=menu-item-400]";
-		String websiteMenuID = "#menu-item-143 > a";
-		String videoMenuID = "#menu-item-141 > a";
-		String socialMenuID = "#menu-item-142 > a";
-		String databaseMenuID = "#menu-item-418 > a";
-		String aboutMenuID = "#menu-item-419 > a";
 
 		String homeXpath = "html/body/div/div[2]/div[1]/div/ul/li[1]/a";
 		String websiteXpath = "html/body/div/div[2]/div[1]/div/ul/li[2]/a]";
@@ -125,8 +126,9 @@ public class SMTest extends SMTestUtils {
 		mySleep(2);
 		out.println("just clicked Home"+"\n"+"title found is: " + zDriver.getTitle());
 		assert(zDriver.getTitle().contains("Schorr Media provides internet"));
+
 		//Websites menuitem
-		zDriver.findElement( By.cssSelector("#menu-item-141 > a")).click();    	    
+		zDriver.findElement( By.cssSelector(websiteMenuID)).click();    	    
 		mySleep(2);
 		out.println("just clicked Websites"+"\n"+"title found is: " + zDriver.getTitle());
 		assert(zDriver.getTitle().contains("Websites"));
@@ -134,7 +136,7 @@ public class SMTest extends SMTestUtils {
 		zDriver.findElement( By.cssSelector(videoMenuID)   ).click();	
 		mySleep(2);
 		out.println("just clicked Video"+"\n"+"title found is: " + zDriver.getTitle());
-		assert(zDriver.getTitle().contains("Video"));
+		assert(zDriver.getTitle().contains("YouTube"));
 
 		zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
 		mySleep(2);
@@ -151,6 +153,47 @@ public class SMTest extends SMTestUtils {
 		out.println("just clicked About Us"+"\n"+"title found is: " + zDriver.getTitle());
 		assert(zDriver.getTitle().contains("About"));
 	}
+	
+	void checkLinks() {
+		// checks to see that all links functioning ok
+		class eClass {};	    
+		printMethodName(eClass.class.getEnclosingMethod()); 	
+		zDriver.get(baseUrl);
+		mySleep(2);
+		
+		zDriver.findElement( By.cssSelector(websiteMenuID)).click();    	    
+		mySleep(2);
+		out.println("just clicked Websites"+"\n"+"title found is: " + zDriver.getTitle());
+
+		zDriver.findElement(By.cssSelector(".entry>pre>span>a>span")).click();
+		mySleep(2);
+		out.println("just clicked Vitamin Center"+"\n"+"title found is: " + zDriver.getTitle());
+	    assertThat( zDriver.getTitle(), containsString("Vitamin Center Agoura Hills"))  ;
+	    // assertEquals("Vitamin Center Agoura Hills | Hereâ€™s To Your Health", zDriver.getTitle());
+	    zDriver.navigate().back();
+	    
+		//zDriver.findElement(By.cssSelector(".entry>pre>span>a>span")).click();
+	  	zDriver.findElement(By.xpath("//div[@id='post-139']/div/pre/span[2]/a/span")).click();
+		mySleep(2);
+		out.println("just clicked NCGR LA"+"\n"+"title found is: " + zDriver.getTitle());
+	    assertEquals("NCGR LA", zDriver.getTitle());
+	    zDriver.navigate().back();
+    
+	    zDriver.findElement(By.xpath("//div[@id='post-139']/div/pre/span[3]/a/span")).click();
+	    mySleep(2);
+	    out.println("just clicked Bukkwyd"+"\n"+"title found is: " + zDriver.getTitle());
+	    assertThat( zDriver.getTitle(), containsString("Frank Bukkwyd"))  ;
+	    zDriver.navigate().back();
+    
+	    zDriver.findElement(By.linkText("Deja Vu Designs")).click();
+	    mySleep(2);
+	    out.println("just clicked Deja Vu Designs"+"\n"+"title found is: " + zDriver.getTitle());
+	    assertThat( zDriver.getTitle(), containsString("Welcome to DJV Design"))  ;
+	    zDriver.navigate().back();
+	}
+	
+	
+	
 	
 	
 	public static void modifyPort() throws Exception {
