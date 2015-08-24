@@ -191,12 +191,14 @@ public class SMTest extends SMTestUtils {
 	    assertThat( zDriver.getTitle(), containsString("Welcome to DJV Design"))  ;
 	    zDriver.navigate().back();
 
+	    // new page
 		zDriver.findElement( By.cssSelector(videoMenuID)   ).click();	
 		mySleep(2);
 		out.println("just clicked Video"+"\n"+"title found is: " + zDriver.getTitle());
 		assert(zDriver.getTitle().contains("YouTube"));
 
-	    zDriver.findElement(By.cssSelector(".entry>p>a")).click();
+	    assertEquals("Precision Audiosonics", zDriver.findElement(By.linkText("Precision Audiosonics")).getText());
+	    zDriver.findElement(By.linkText("Precision Audiosonics")).click();
 	    mySleep(2);
 	    out.println("just clicked Precision"+"\n"+"title found is: " + zDriver.getTitle());
 	    assertThat( zDriver.getTitle(), containsString("Home Page"))  ;
@@ -212,10 +214,16 @@ public class SMTest extends SMTestUtils {
 	
 	    assertTrue(isElementPresent(By.xpath("//img[@title='ID-10038519-camera']")));
 	    out.println("just checked if Camera image is present"+"\n"+"title found is: " + zDriver.getTitle());
-
-	    assertTrue(isElementPresent(By.cssSelector("//img[alt=Facebook]")));
-	    assertTrue(isElementPresent(By.cssSelector("//img[alt=Twitter]")));
 	    
+	    out.println("Checking if Social Icon images are present");
+	    assertTrue(isElementPresent(By.cssSelector("img[alt=\"Facebook\"]")));
+	    assertTrue(isElementPresent(By.cssSelector("img[alt=\"Twitter\"]")));
+	    assertTrue(isElementPresent(By.cssSelector("img[alt=\"Youtube\"]")));
+	    assertTrue(isElementPresent(By.cssSelector("img[alt=\"LinkedIn\"]")));
+	    out.println("Finished checking if Social Icon images are present");
+
+	    assertEquals("TechCrunch", zDriver.findElement(By.linkText("TechCrunch")).getText());
+	    out.println("Finished checking if TechCrunch link is present");
 	}
 	
 	
