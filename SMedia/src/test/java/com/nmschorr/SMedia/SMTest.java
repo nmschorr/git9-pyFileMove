@@ -127,7 +127,7 @@ try {
     String socialXpath = "html/body/div/div[2]/div[1]/div/ul/li[4]/a";
     String databaseXpath = "/html/body/div/div[2]/div[1]/div/ul/li[5]/a";
     String aboutXpath = "html/body/div/div[2]/div[1]/div/ul/li[6]/a";
-	  //  experimnt();
+    List <WebElement> mytaglist = experimnt();
 	    
 	    
 	    zDriver.findElement( By.xpath(homeXpath)   ).click();	
@@ -138,11 +138,11 @@ try {
 	    assert(zDriver.getTitle().contains("Schorr Media provides internet"));
 	    
 //Websites menuitem
-	    
-	    WebElement wreal2 = zDriver.findElement( By.xpath("html/body/div[1]/div[2]/div[1]/div/ul/li[2]/a") );    
-	    wreal2.click();
+    
+ 	    zDriver.findElement( By.cssSelector("li#menu-item-143")).click();   
+ 	     
 	    out.println("just clicked Websites");
-	    mySleep(3);
+	    mySleep(1);
 	    String tt2 = zDriver.getTitle();
 	    out.println("title found is: " + zDriver.getTitle());
 
@@ -177,7 +177,7 @@ try {
 		}
 		}
 
-	static void experimnt() {
+	static List<WebElement> experimnt() {
     	System.out.println("-----------------Inside experiment");		
     	System.out.println("-----------------starting next loop" + "\n");
 
@@ -195,7 +195,7 @@ try {
 	    }
 //	    By byobj = By.cssSelector("li[id=menu-item-141]" ) ;
 		
-		
+		return wtag;
 		
 	}
 	
