@@ -190,6 +190,32 @@ public class SMTest extends SMTestUtils {
 	    out.println("just clicked Deja Vu Designs"+"\n"+"title found is: " + zDriver.getTitle());
 	    assertThat( zDriver.getTitle(), containsString("Welcome to DJV Design"))  ;
 	    zDriver.navigate().back();
+
+		zDriver.findElement( By.cssSelector(videoMenuID)   ).click();	
+		mySleep(2);
+		out.println("just clicked Video"+"\n"+"title found is: " + zDriver.getTitle());
+		assert(zDriver.getTitle().contains("YouTube"));
+
+	    zDriver.findElement(By.cssSelector(".entry>p>a")).click();
+	    mySleep(2);
+	    out.println("just clicked Precision"+"\n"+"title found is: " + zDriver.getTitle());
+	    assertThat( zDriver.getTitle(), containsString("Home Page"))  ;
+	    zDriver.navigate().back();
+	
+
+	    assertEquals("The Wine Dude", zDriver.findElement(By.linkText("The Wine Dude")).getText());
+	    zDriver.findElement(By.linkText("The Wine Dude")).click();
+	    mySleep(2);
+	    out.println("just clicked The Wine Dude"+"\n"+"title found is: " + zDriver.getTitle());
+	    assertThat( zDriver.getTitle(), containsString("The Wine Dude"))  ;
+	    zDriver.navigate().back();
+	
+	    assertTrue(isElementPresent(By.xpath("//img[@title='ID-10038519-camera']")));
+	    out.println("just checked if Camera image is present"+"\n"+"title found is: " + zDriver.getTitle());
+
+	    assertTrue(isElementPresent(By.cssSelector("//img[alt=Facebook]")));
+	    assertTrue(isElementPresent(By.cssSelector("//img[alt=Twitter]")));
+	    
 	}
 	
 	
