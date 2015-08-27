@@ -159,7 +159,7 @@ public class SFCALeditor extends SFCALutil {
 				// then check each section for voids etc  then correct
 
 				while (tinyCounter < 10) {         //tiny while
-					while (locLineCount < totLines ) {         //tiny while
+					while ((locLineCount < totLines ) && (tinyCounter < 10)) {         //tiny while
 						
 					String theString = inARRAY.get(locLineCount);  //get one string
 					tinySectionList.add(theString);
@@ -175,16 +175,20 @@ public class SFCALeditor extends SFCALutil {
 		// then change last two chars of line 3 to 0Z
 
 	
+	String lineOne = tinySectionList.get(1);
+	String lineTwo = tinySectionList.get(2);
 	String lineSix = tinySectionList.get(6);
-	List <String> tinylist = new ArrayList <String>();
-	tinylist.add("New Moon");
-	tinylist.add("Full MOon");
-	tinylist.add("Eclipse");
+	List <String> moonsList = new ArrayList <String>();
+	moonsList.add("New Moon");
+	moonsList.add("Full Moon");
+	moonsList.add("Eclipse");
 	
-	for (String neweststr : tinylist) {
-		if (lineSix.contains(neweststr)) {
-				String betterstr = lineSix.replace("5Z", "0Z");
-				tinySectionList.set(3,betterstr);
+	for (String excStr : moonsList) {
+		if (lineSix.contains(excStr)) {
+				String betterOne = lineOne.replace("5Z", "0Z");
+				String betterTwo = lineTwo.replace("5Z", "0Z");
+				tinySectionList.set(1, betterOne);
+				tinySectionList.set(2, betterTwo);
 		}	
 	}
 				

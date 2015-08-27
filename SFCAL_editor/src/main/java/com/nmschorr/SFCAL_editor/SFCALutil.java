@@ -90,8 +90,7 @@ public class SFCALutil {
 		partialEND = utline.substring(8,22) + "5Z";
 		newDTENDstr ="DTEND:" + partialEND;					
 		verboseOut("DTEND: new line is " + newDTENDstr);
-		return newDTENDstr;
-	|
+		return newDTENDstr;	
 	}
 	
 	static String fixDTSTART(String uline) {
