@@ -140,7 +140,10 @@ public class SFCALeditor extends SFCALutil {
 		moonsList.add("New Moon");
 		moonsList.add("Full Moon");
 		moonsList.add("Eclipse");
-		
+		String lineOne = "";
+		String lineTwo = "";
+		String lineSix = "";
+
 		try {
 			inARRAY =  FileUtils.readLines(infileORIG);
 			totLines = inARRAY.size();
@@ -164,52 +167,43 @@ public class SFCALeditor extends SFCALutil {
 				// then check each section for voids etc  then correct
 
 				//while (tinyCounter < 10) {         //tiny while
-					while ((locLineCount < totLines ) && (tinyCounter < 10)) {         //tiny while
-						
+				while ((locLineCount < totLines ) && (tinyCounter < 10)) {         //tiny while
+
 					String theString = inARRAY.get(locLineCount);  //get one string
 					tinySectionList.add(theString);
 					locLineCount++;
 					tinyCounter++;
-					}  // tiny while
+				}  // tiny while
 				// }
 				shouldKEEP = ckToKEEP(tinySectionList);	 
-		// right here - check tinySectionList for Full, New and Eclipse
-		// and change the end of DTEND to "05"
-		// if line 6 contains "Full Moon" or "New Moon" or Eclipse
-		// then change last two chars of line 3 to 0Z
 
-	
-	String lineOne = tinySectionList.get(1);
-	String lineTwo = tinySectionList.get(2);
-	String lineSix = tinySectionList.get(6);
-	
-	for (String excStr : moonsList) {
-		if (lineSix.contains(excStr)) {
-				String betterOne = lineOne.replace("5Z", "0Z");
-				String betterTwo = lineTwo.replace("5Z", "0Z");
-				tinySectionList.set(1, betterOne);
-				tinySectionList.set(2, betterTwo);
-		}	
-	}
 				
-				
-				
-				
-				
-				
-				
-				
+				// Next - check tinySectionList for Full, New and Eclipse
+				// and change the end of DTEND to "05"
+				// if line 6 contains "Full Moon" or "New Moon" or Eclipse
+				// then change last two chars of line 3 to 0Z
+
+				lineOne = tinySectionList.get(1);
+				lineTwo = tinySectionList.get(2);
+
+				for (String excStr : moonsList) {
+					if (tinySectionList.get(6).contains(excStr)) {
+						tinySectionList.set(1, lineOne.replace("5Z", "0Z"));
+						tinySectionList.set(2, lineTwo.replace("5Z", "0Z"));
+					}	
+				}		
+
 				if (shouldKEEP == true) {   // IF 	checkfortoss comes back TRUE, then write this section
 					outARRAY.addAll( tinySectionList);
-					}
-			tinyCounter=0;
+				}
+				tinyCounter=0;
 
 			} //  // while locLineCount
-			String lastLine = outARRAY.get( outARRAY.size()-1);  // the last line of the array
-			if (lastLine.equals("")) {
-				out.println("Removing last blank line of array.");
-				outARRAY.remove(outARRAY.size()-1);
-			}
+				//			String lastLine = outARRAY.get( outARRAY.size()-1);  // the last line of the array
+				//			if (lastLine.equals("")) {
+				//				out.println("Removing last blank line of array.");
+				//				outARRAY.remove(outARRAY.size()-1);
+				//			}
 			FileUtils.writeLines(dateFILE_OUT, outARRAY, true);	
 			FileUtils.writeStringToFile(dateFILE_OUT, "END:VCALENDAR", true);
 		 
