@@ -136,6 +136,10 @@ public class SFCALeditor extends SFCALutil {
 		int totLines=0;
 		int locLineCount=4;  // start at 5th line
 		inARRAY.clear();
+		List <String> moonsList = new ArrayList <String>();
+		moonsList.add("New Moon");
+		moonsList.add("Full Moon");
+		moonsList.add("Eclipse");
 		
 		try {
 			inARRAY =  FileUtils.readLines(infileORIG);
@@ -149,7 +153,8 @@ public class SFCALeditor extends SFCALutil {
 				outARRAY.add(inARRAY.get(i));
 			}
 
-			while ( locLineCount < totLines )  
+			int goLines = totLines-2;
+			while ( locLineCount < goLines )  
 			{  // while there are still lines left in array // starting on 5th line, load
 				tinyCounter = 0;
 				tinySectionList = null;
@@ -158,7 +163,7 @@ public class SFCALeditor extends SFCALutil {
 				// first load sections of 10x lines each into smaller arrarys
 				// then check each section for voids etc  then correct
 
-				while (tinyCounter < 10) {         //tiny while
+				//while (tinyCounter < 10) {         //tiny while
 					while ((locLineCount < totLines ) && (tinyCounter < 10)) {         //tiny while
 						
 					String theString = inARRAY.get(locLineCount);  //get one string
@@ -166,8 +171,7 @@ public class SFCALeditor extends SFCALutil {
 					locLineCount++;
 					tinyCounter++;
 					}  // tiny while
-				}
-
+				// }
 				shouldKEEP = ckToKEEP(tinySectionList);	 
 		// right here - check tinySectionList for Full, New and Eclipse
 		// and change the end of DTEND to "05"
@@ -178,10 +182,6 @@ public class SFCALeditor extends SFCALutil {
 	String lineOne = tinySectionList.get(1);
 	String lineTwo = tinySectionList.get(2);
 	String lineSix = tinySectionList.get(6);
-	List <String> moonsList = new ArrayList <String>();
-	moonsList.add("New Moon");
-	moonsList.add("Full Moon");
-	moonsList.add("Eclipse");
 	
 	for (String excStr : moonsList) {
 		if (lineSix.contains(excStr)) {
@@ -201,7 +201,8 @@ public class SFCALeditor extends SFCALutil {
 				
 				if (shouldKEEP == true) {   // IF 	checkfortoss comes back TRUE, then write this section
 					outARRAY.addAll( tinySectionList);
-				}
+					}
+			tinyCounter=0;
 
 			} //  // while locLineCount
 			String lastLine = outARRAY.get( outARRAY.size()-1);  // the last line of the array
@@ -210,7 +211,8 @@ public class SFCALeditor extends SFCALutil {
 				outARRAY.remove(outARRAY.size()-1);
 			}
 			FileUtils.writeLines(dateFILE_OUT, outARRAY, true);	
-			 
+			FileUtils.writeStringToFile(dateFILE_OUT, "END:VCALENDAR", true);
+		 
 			System.out.println("!!! INSIDE sectiontask. filename  - "+ dateFILE_OUT.getName());			
 		}  // try  
 		catch (IOException e) {  	e.printStackTrace();	 }	// catch
@@ -220,7 +222,7 @@ public class SFCALeditor extends SFCALutil {
 // new method: ----------------------------------------------------------------
 	static boolean ckToKEEP(List<String> tinyList) {  // returns true to write
 		String sl = tinyList.get(6);
-		out.println("\n\n"+"               %%%%%%%%%%%%%%%%% starting over in checkForTossouts");
+		out.println("\n\n"+"               %%%%%%%%%%%%%%%%% starting over in ckToKEEP");
 		out.println("The string is:  " + sl );
 
 		if ( (sl.contains("SUMMARY")) && (sl.contains("Eclipse")) )
