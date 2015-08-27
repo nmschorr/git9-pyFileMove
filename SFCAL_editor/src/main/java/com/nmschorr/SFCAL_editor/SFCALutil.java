@@ -85,11 +85,13 @@ public class SFCALutil {
 	
 	//----new Method ===============================================================//
 	static String createDTEND(String utline) {
-		String newDTENDstr = "";  		 
-		String partialEND = utline.substring(8,22) + "5Z";
+		String partialEND ="";
+		String newDTENDstr = "";  
+		partialEND = utline.substring(8,22) + "5Z";
 		newDTENDstr ="DTEND:" + partialEND;					
 		verboseOut("DTEND: new line is " + newDTENDstr);
 		return newDTENDstr;
+	|
 	}
 	
 	static String fixDTSTART(String uline) {
