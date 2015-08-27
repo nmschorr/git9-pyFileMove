@@ -39,7 +39,8 @@ import static org.hamcrest.CoreMatchers.containsString;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SMTest extends SMTestUtils {
 	//SMTestUtils zutil = new SMTestUtils();
-	String homeMenuID = "li[id=menu-item-400]";
+	//String homeMenuID = "li[id=menu-item-400]";
+	String homeMenuID = "#menu-item-400";
 	String websiteMenuID = "#menu-item-143 > a";
 	String videoMenuID = "#menu-item-141 > a";
 	String socialMenuID = "#menu-item-142 > a";
@@ -73,13 +74,13 @@ public class SMTest extends SMTestUtils {
 		checkLinks();
 	}
 
-	//@Test
+	@Test
 	public void Test3Search() throws Exception {
 		// test modifying a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
 
-		checkMainMenubar();
+		checkLinksAndSearch();
 
 	} 
 
@@ -105,7 +106,20 @@ public class SMTest extends SMTestUtils {
 
 	 //asertThat, assertEquals
 
+	void checkLinksAndSearch() throws Exception {
+		// checks to see that links and search box work
+		class eClass {};	    
+		printMethodName(eClass.class.getEnclosingMethod()); 	
+		zDriver.get(baseUrl);
+		mySleep(2);
 
+		zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
+
+	
+	
+	}
+	
+	
 	void checkMainMenubar() throws Exception {
 		// checks to see that all items in main menubar are functioning ok
 		class eClass {};	    
@@ -115,14 +129,15 @@ public class SMTest extends SMTestUtils {
 
 
 		String homeXpath = "html/body/div/div[2]/div[1]/div/ul/li[1]/a";
-		String websiteXpath = "html/body/div/div[2]/div[1]/div/ul/li[2]/a]";
-		String videoXpath = "html/body/div/div[2]/div[1]/div/ul/li[3]/a";
-		String socialXpath = "html/body/div/div[2]/div[1]/div/ul/li[4]/a";
-		String databaseXpath = "/html/body/div/div[2]/div[1]/div/ul/li[5]/a";
-		String aboutXpath = "html/body/div/div[2]/div[1]/div/ul/li[6]/a";
+		//		String websiteXpath = "html/body/div/div[2]/div[1]/div/ul/li[2]/a]";
+		//		String videoXpath = "html/body/div/div[2]/div[1]/div/ul/li[3]/a";
+		//		String socialXpath = "html/body/div/div[2]/div[1]/div/ul/li[4]/a";
+		//		String databaseXpath = "/html/body/div/div[2]/div[1]/div/ul/li[5]/a";
+		//		String aboutXpath = "html/body/div/div[2]/div[1]/div/ul/li[6]/a";
 
 		//Home menuitem	    
-		zDriver.findElement( By.xpath(homeXpath)   ).click();	
+		//zDriver.findElement( By.xpath(homeXpath)   ).click();	
+		zDriver.findElement( By.xpath(homeMenuID)   ).click();	
 		mySleep(2);
 		out.println("just clicked Home"+"\n"+"title found is: " + zDriver.getTitle());
 		assert(zDriver.getTitle().contains("Schorr Media provides internet"));
