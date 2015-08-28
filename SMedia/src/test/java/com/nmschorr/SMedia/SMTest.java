@@ -112,6 +112,9 @@ public class SMTest extends SMTestUtils {
 		printMethodName(eClass.class.getEnclosingMethod()); 	
 		zDriver.get(baseUrl);
 		mySleep(2);
+	    out.println("About to test social media page links");
+	    WebElement mystr = zDriver.findElement( By.cssSelector(socialMenuID)   );
+	    String thetext = mystr.getText();
 
 		zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
 
@@ -123,9 +126,16 @@ public class SMTest extends SMTestUtils {
 	
 	    // not going to these pages - not sure they allow it
 	    assertTrue(isElementPresent(By.linkText("Arthyr Chadbourne Fan Page"))); //facebook
-	    assertTrue(isElementPresent(By.linkText("Frank Bukkwyd's Blog"))); 
-	    
-		zDriver.findElement(By.xpath("html/body/div/div[2]/div[2]/div/div/p[8]/a")).click();  //wiki 
+	    assertTrue(isElementPresent(By.partialLinkText("Arthyr Chadbourne"))); //facebook
+	    assertTrue(isElementPresent(By.partialLinkText("Frank Bukkwyd"))); //facebook
+	    assertTrue(isElementPresent(By.id("7557"))); // Bukkwyd link-title won't work because of single quote
+		out.println("links all there");
+    
+					////boolean fa = isElementPresent(By.linkText("Frank Bukkwyd\\'s Blog"));
+					////boolean fb = isElementPresent(By.linkText("Frank Bukkwydâ€™s Blog"));
+					//boolean fz = isElementPresent(By.linkText(tempStrr));
+	     
+	    assertTrue(isElementPresent(By.partialLinkText("Social Media Defined"))); //facebook
 		mySleep(2);
 		out.println("just clicked Social Media"+"\n"+"title found is: " + zDriver.getTitle());
 	    assertThat( zDriver.getTitle(), containsString("Wikipedia"))  ;
@@ -144,11 +154,20 @@ public class SMTest extends SMTestUtils {
 	    assertTrue(isElementPresent(By.linkText("LinkedIn profile"))); 
 		zDriver.findElement(By.xpath(".entry>p>a")).click();  //resume, first link
 	    assertThat( zDriver.getTitle(), containsString("Nancy Schorr"))  ;
-	     // check search box
 	    // change all printlns to logger
-	    // rem extra junk in utils
 	    // make sure site logger works
+	    // rem extra junk in utils
 	    // test guestbook
+	    out.println("About to test search box");
+	    zDriver.findElement(By.id("s")).clear();  // search box
+	    zDriver.findElement(By.id("s")).sendKeys("office");
+	    zDriver.findElement(By.id("searchsubmit")).click();
+		mySleep(2);
+	    assertTrue(isElementPresent(By.partialLinkText("About Us"))); 
+	    out.println("Search box ok");
+	
+		
+		
 	}
 	
 
