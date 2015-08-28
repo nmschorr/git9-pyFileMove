@@ -70,7 +70,7 @@ public class SMTest extends SMTestUtils {
 		// test modifying a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
-		checkLinksAndSearch();
+		//checkLinksAndSearch();
 
 	} 
 
