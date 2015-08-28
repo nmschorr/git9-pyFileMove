@@ -61,17 +61,12 @@ public class SMTestUtils {
 	protected static WebDriver zDriver;
  	public static Logger gLogger;
 	protected final static String fString = "E:\\FirefoxTesting\\firefox.exe";
-	protected final static String portfolioTitle = "Stock Portfolio Management - SMTest Investment Research";    
-	protected final static String theTitle = "SMTest Investment Research: Stock Research, Analysis, & Recommendations";
 	protected final static String baseUrl = "http://jetgalaxy.com/wordpress/";
-	protected final static String SMTestMainUrl = "http://208.65.116.3";
-	//protected final static String schorrmediaMainUrl = "http://www.schorrmedia.com/";
 	private final static String dirname = "C:\\Users\\user\\git2\\schorrmediaProject\\PropertyFiles\\" ;
 	private final static String pname = "schorrmediaprops.properties" ;
 	private final static String propname = dirname + pname ;
 
 	private final static String outfileName = "E:\\Workspace\\firefox.log";	
-	protected final static String PF_NAME = "testportfolio";	
 	private final static String errorState = "DEBUG";
 	protected final static Integer WAIT_TIME = 22;
 	private static boolean acceptNextAlert = true;
@@ -143,8 +138,6 @@ public class SMTestUtils {
 
 	protected static  void  initStrings()  {
 		signinval = initValue("signinval");
-		usernameval = initValue("usernameval");
-		pwordval = initValue("pwordval");
 	}
 
 
@@ -186,49 +179,6 @@ public class SMTestUtils {
 			System.out.println(e);
 			fail("failure in createProperties()");
 		} 
-	}
-
-
-	protected static String closeAlertAndGetItsText() {
-		try {
-			Alert alert = zDriver.switchTo().alert();
-			String alertText = alert.getText();
-			if (acceptNextAlert) {
-				alert.accept();
-			} else {
-				alert.dismiss();
-			}
-			return alertText;
-		} finally {
-			acceptNextAlert = true;
-		}
-	} 
-
-
-	protected void logoutSM() throws Exception {  
-		class eClass {};	    
-		printMethodName(eClass.class.getEnclosingMethod());
-		// deleteCookies();		
-		zDriver.findElement(By.id("logout")).click();
-		assertEquals("Testing Log Out", "Log Out - schorrmedia.com", zDriver.getTitle());
-	}
-
-
-	protected void deleteCookies() throws Exception {
-		class eClass {};	    
-		printMethodName(eClass.class.getEnclosingMethod());
-		gLogger.info("Deleting SMTest Cookies");
-
-		Set<Cookie> cookies = zDriver.manage().getCookies();
-		Iterator<Cookie> itr = cookies.iterator();
-
-		while (itr.hasNext()){
-			Cookie c = itr.next();
-			gLogger.info("Cookie Name: " + c.getName() + " --- " + "Cookie Domain: " + c.getDomain() + " --- " + "Cookie Value: " + c.getValue());
-			gLogger.info("Deleting cookie: "  +  c.getName());
-			zDriver.manage().deleteCookieNamed(c.toString());
-			gLogger.info("Done with cookies.");
-		} 	
 	}
 
 
