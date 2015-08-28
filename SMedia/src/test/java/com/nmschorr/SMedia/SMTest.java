@@ -65,7 +65,7 @@ public class SMTest extends SMTestUtils {
 
 	}
 
-	@Test
+	//@Test
 	public void Test2Links() throws Exception {
 		// test adding a portfolio
 		class eClass {};	    
@@ -115,10 +115,43 @@ public class SMTest extends SMTestUtils {
 
 		zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
 
+		zDriver.findElement(By.xpath("//div/a")).click();  //ncgrla meetup
+		mySleep(2);
+		out.println("just clicked NCGR-LA"+"\n"+"title found is: " + zDriver.getTitle());
+	    assertThat( zDriver.getTitle(), containsString("NCGR Los Angeles"))  ;
+	    zDriver.navigate().back();
 	
+	    // not going to these pages - not sure they allow it
+	    assertTrue(isElementPresent(By.linkText("Arthyr Chadbourne Fan Page"))); //facebook
+	    assertTrue(isElementPresent(By.linkText("Frank Bukkwyd's Blog"))); 
+	    
+		zDriver.findElement(By.xpath("html/body/div/div[2]/div[2]/div/div/p[8]/a")).click();  //wiki 
+		mySleep(2);
+		out.println("just clicked Social Media"+"\n"+"title found is: " + zDriver.getTitle());
+	    assertThat( zDriver.getTitle(), containsString("Wikipedia"))  ;
+	    zDriver.navigate().back();
+	    checkSocialIcons();
+
+	    //new page
+		zDriver.findElement( By.cssSelector(aboutMenuID)   ).click();	
+		mySleep(2);
+		out.println("just clicked About Us"+"\n"+"title found is: " + zDriver.getTitle());
 	
+	    assertTrue(isElementPresent(By.cssSelector("#4747474"))); // Thermometer image
+	    checkSocialIcons();
+
+	    assertTrue(isElementPresent(By.linkText("resume"))); //facebook
+	    assertTrue(isElementPresent(By.linkText("LinkedIn profile"))); 
+		zDriver.findElement(By.xpath(".entry>p>a")).click();  //resume, first link
+	    assertThat( zDriver.getTitle(), containsString("Nancy Schorr"))  ;
+	     // check search box
+	    // change all printlns to logger
+	    // rem extra junk in utils
+	    // make sure site logger works
+	    // test guestbook
 	}
 	
+
 	
 	void checkMainMenubar() throws Exception {
 		// checks to see that all items in main menubar are functioning ok
@@ -230,6 +263,10 @@ public class SMTest extends SMTestUtils {
 	    assertTrue(isElementPresent(By.xpath("//img[@title='ID-10038519-camera']")));
 	    out.println("just checked if Camera image is present"+"\n"+"title found is: " + zDriver.getTitle());
 	    
+	    checkSocialIcons();
+	}
+	
+	void checkSocialIcons() {
 	    out.println("Checking if Social Icon images are present");
 	    assertTrue(isElementPresent(By.cssSelector("img[alt=\"Facebook\"]")));
 	    assertTrue(isElementPresent(By.cssSelector("img[alt=\"Twitter\"]")));
@@ -239,9 +276,8 @@ public class SMTest extends SMTestUtils {
 
 	    assertEquals("TechCrunch", zDriver.findElement(By.linkText("TechCrunch")).getText());
 	    out.println("Finished checking if TechCrunch link is present");
-	}
-	
-	
+	}	
+		
 	
 	
 	
