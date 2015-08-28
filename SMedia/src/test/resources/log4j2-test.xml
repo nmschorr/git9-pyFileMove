@@ -13,7 +13,7 @@
 	</Appenders>
 	
 	<Loggers>
-		<Root level="all" additivity="false">
+		<Root level="All" additivity="false">
 			<AppenderRef ref="console" />
 			<AppenderRef ref="MyFile" />
 		</Root>
