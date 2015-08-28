@@ -137,7 +137,7 @@ public class SMTest extends SMTestUtils {
 	   // boolean tempBoo = isElementPresent(By.className("thermometer")); // Thermometer image
 	    assertTrue(isElementPresent(By.className("thermometer"))); // Thermometer image
 	    checkSocialIcons();
- DEBUG
+
 	    assertTrue(isElementPresent(By.linkText("LinkedIn profile"))); 
 		zDriver.findElement(By.partialLinkText("resume")).click();  //resume, first link
 	    assertThat( zDriver.getTitle(), containsString("Nancy Schorr"))  ;
