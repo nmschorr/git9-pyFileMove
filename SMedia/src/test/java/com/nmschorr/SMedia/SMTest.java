@@ -134,12 +134,17 @@ public class SMTest extends SMTestUtils {
 		gLogger.info("just clicked About Us. Title found is: " + zDriver.getTitle());
 	
 		gLogger.info("Testing About Us elements, images, links, etc.");
-	    assertTrue(isElementPresent(By.id("#4747474"))); // Thermometer image
+	   // boolean tempBoo = isElementPresent(By.className("thermometer")); // Thermometer image
+	    assertTrue(isElementPresent(By.className("thermometer"))); // Thermometer image
 	    checkSocialIcons();
-
+ 
 	    assertTrue(isElementPresent(By.linkText("LinkedIn profile"))); 
 		zDriver.findElement(By.partialLinkText("resume")).click();  //resume, first link
 	    assertThat( zDriver.getTitle(), containsString("Nancy Schorr"))  ;
+	    zDriver.navigate().back();
+		mySleep(2);
+    
+	    
 	    gLogger.info("About to test search box");
 	    zDriver.findElement(By.id("s")).clear();  // search box
 	    zDriver.findElement(By.id("s")).sendKeys("office");
@@ -147,6 +152,7 @@ public class SMTest extends SMTestUtils {
 		mySleep(2);
 	    assertTrue(isElementPresent(By.partialLinkText("About Us"))); 
 	    gLogger.info("Search box ok");		
+	    gLogger.info("End of tests. All tests complete.");		
 	}
 
 	
