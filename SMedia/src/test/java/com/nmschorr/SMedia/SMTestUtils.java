@@ -9,79 +9,47 @@
 
 package com.nmschorr.SMedia;
 
-import java.lang.reflect.Modifier;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
 import java.lang.reflect.Method;
-import java.util.Iterator;
 import java.util.Properties;
-import java.util.Set;
-import java.util.regex.Pattern;
 import java.util.concurrent.TimeUnit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.awt.AWTException;
 import java.awt.Robot;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.awt.Toolkit;
 
 import static java.lang.System.out;
 import static org.junit.Assert.fail;
-import static org.junit.Assert.assertEquals;
-
-import org.openqa.selenium.Alert;
-import org.openqa.selenium.Cookie;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.By; 
 import org.openqa.selenium.Point; 
-import org.openqa.selenium.firefox.FirefoxBinary;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.firefox.internal.ProfilesIni;
-import org.openqa.selenium.support.ui.Select;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinUser;
-import com.sun.jna.platform.win32.User32;
-import com.sun.jna.platform.win32.WinUser;
-import com.sun.jna.platform.win32.WinDef.HWND;
 
-
-// note: you need to have a SMTest.com acct & be logged in at SMTest.com
-
-
-@SuppressWarnings("unused")
+// @SuppressWarnings("unused")
 public class SMTestUtils {
 	protected static WebDriver zDriver;
  	public static Logger gLogger;
-	protected final static String fString = "E:\\FirefoxTesting\\firefox.exe";
 	protected final static String baseUrl = "http://jetgalaxy.com/wordpress/";
 	private final static String dirname = "C:\\Users\\user\\git2\\schorrmediaProject\\PropertyFiles\\" ;
 	private final static String pname = "schorrmediaprops.properties" ;
 	private final static String propname = dirname + pname ;
-
 	private final static String outfileName = "E:\\Workspace\\firefox.log";	
-	private final static String errorState = "DEBUG";
 	protected final static Integer WAIT_TIME = 22;
-	private static boolean acceptNextAlert = true;
-	private File binaryFile;
 	static Properties theProperties;
-	static FirefoxProfile ffoxProfile;
 	static String signinval;
-	static String usernameval;
-	static String pwordval;
-	static FirefoxBinary ffBinary;
 	static StringBuffer verificationErrors;
 	static FileInputStream fiStream;
 
-	class AlertThread extends Thread {  
-		// This inner class will dismiss the Firefox crash alert
+	
+	class AlertThread extends Thread {  // Dismiss the Firefox crash alert
 		@Override
 		public void run(){  
 			System.out.println("2nd thread is running...");  
@@ -90,9 +58,7 @@ public class SMTestUtils {
 				robot.delay(1000);		
 				Thread.currentThread();
 				Thread.sleep(6000);
-
 				dismissFirefoxCrashAlert();  // closes Firefox error alerts
-
 				Thread.currentThread();
 				Thread.sleep(2000);
 				//		following is alternate method
@@ -103,31 +69,35 @@ public class SMTestUtils {
 		}  
 	}
 
+	
 	protected static void setWindowSize() {
 		//	replaces: zDriver.manage().window().maximize();
 		int screen_height;
 		int screen_width;
 		Toolkit localToolkit = Toolkit.getDefaultToolkit();
 
-		screen_width = (int) localToolkit.getScreenSize().getWidth()-72;
+		screen_width = (int) localToolkit.getScreenSize().getWidth()-172;
 		screen_height = (int) localToolkit.getScreenSize().getHeight()-392;  // make it shorter so we have some room
 
-		Dimension screenResolution = new Dimension(screen_width, screen_height );	
+		//Dimension screenResolution = new Dimension(screen_width, screen_height );	
+		Dimension winSize = new Dimension(964, 590 );	
 		zDriver.manage().window().setPosition(new Point(0,0));
-		zDriver.manage().window().setSize(screenResolution);
+		zDriver.manage().window().setSize(winSize);
 	}
 
-	protected WebDriver createDriver() throws AWTException, InterruptedException {
-		System.out.println("Just entered createDriver()");
-		System.out.println("! Starting new FirefoxDriver !");
+	
+	protected WebDriver createDriver(Logger tLogger) throws AWTException, InterruptedException {
+		tLogger.info("Just entered createDriver()");
+		tLogger.info("! Starting new FirefoxDriver !");
 		AlertThread thread2=new AlertThread();  
 		thread2.start();  
 		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
-		System.out.println("Done creating FirefoxDriver!");
-		localDriver.manage().timeouts().implicitlyWait(22, TimeUnit.SECONDS); //for the entire test run
+		tLogger.info("Done creating FirefoxDriver!");
+		localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
 		return localDriver;
 	}
 
+	
 	Logger createLogger()  {
 		Logger aLogger = LogManager.getLogger(SMTest.class.getName());
 		verificationErrors = new StringBuffer();
@@ -136,21 +106,9 @@ public class SMTestUtils {
 		return aLogger;
 	}
 
-	protected static  void  initStrings()  {
-		signinval = initValue("signinval");
-	}
-
-
-	protected static String initValue(String val)  {
-		String errorString = "ERROR - no value present";
-		String newVal =  theProperties.getProperty(val, errorString);
-		gLogger.info("The property value for " + val + " is " + newVal );    	
-		return newVal;
-	}
-
 
 	protected static void printMethodName (Method aMethod) {
-	//	gLogger.info("Running Method: " + aMethod.getName());	    		
+	 	gLogger.info("Running Method: " + aMethod.getName());	    		
 	}	
 
 
@@ -218,26 +176,6 @@ public class SMTestUtils {
 	}
 
 	
-	static void zfindAndType (String s, String t) {
-		out.println("Finding element: " + s + " and typing: " + t);
-		zDriver.findElement(By.name(s)).sendKeys(t);
-	}
-
-	
-	boolean chklink() {
-		zDriver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS); //for the entire test run
-		try {
-			zDriver.findElement(By.linkText("Delete this Portfolio"));
-			zDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
-			return true;
-		}
-		catch (Exception  e)
-		{
-			out.println("No portfolio found. " + e);
-			zDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
-			return false;
-		}
-	}
 	public static void printMe(String toPrt) {
 		out.println("Running this next: " + toPrt);
 	}
