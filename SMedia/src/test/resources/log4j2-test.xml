@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="WARN">
 	<Appenders>
-		<Console name="console" target="SYSTEM_OUT">
+		<Console name="console" target="SYSTEM_OUT" debug="true">
 			<PatternLayout
 				pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
 		</Console>
 		<File name="MyFile" fileName="./SMediaOutput.log" immediateFlush="false"
-			append="false">
+			append="false" debug="true">
 			<PatternLayout
 				pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
 		</File>
 	</Appenders>
 	
 	<Loggers>
-		<Root level="All" additivity="false">
+		<Root level="All" additivity="false" debug="true">
 			<AppenderRef ref="console" />
 			<AppenderRef ref="MyFile" />
 		</Root>
