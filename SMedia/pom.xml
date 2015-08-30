@@ -25,8 +25,8 @@
 		<my.time>${maven.build.timestamp}</my.time>
 		<mysuredir>C:\Users\user\git2\SMedia\target\surefire-reports${my.time}\</mysuredir>
 		<mybasedir>C:\Users\user\git2\SMedia</mybasedir>
- </properties>
- 
+	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -46,10 +46,10 @@
 			<version>2.45.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-surefire-plugin</artifactId>
-			<version>2.18.1</version>
-			<type>maven-plugin</type>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-surefire-plugin</artifactId>
+	<version>2.18.1</version>
+	<type>maven-plugin</type>
 		</dependency>
 		<dependency>
 			<groupId>net.java.dev.jna</groupId>
@@ -85,15 +85,15 @@
 				</configuration>
 			</plugin>
 
-			<plugin>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.18.1</version>
-	 <configuration>
-            <redirectTestOutputToFile>true</redirectTestOutputToFile>
-   					<outputDirectory>${mysuredir}</outputDirectory>
-        </configuration>
-        			<executions>
-					<execution>
+	<plugin>
+		<artifactId>maven-surefire-plugin</artifactId>
+		<version>2.18.1</version>
+		<configuration>
+		<!--		<reportsDirectory>${mysuredir}</reportsDirectory>  -->
+			<redirectTestOutputToFile>true</redirectTestOutputToFile>
+		</configuration>
+		<executions>
+			<execution>
 						<id>default-test</id>
 						<phase>test</phase>
 						<goals>
