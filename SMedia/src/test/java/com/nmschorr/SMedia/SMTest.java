@@ -37,6 +37,8 @@ public class SMTest extends SMTestUtils {
 	String socialMenuID = "#menu-item-142 > a";
 	String databaseMenuID = "#menu-item-418 > a";
 	String aboutMenuID = "#menu-item-419 > a";
+	String guestBookLink = "http://jetgalaxy.com/wordpress/guestbook/";
+	static final int SLEEPTIME=2;
 
 	@Before  //run only once before all tests
 	public void setUp() throws Exception {		
@@ -65,22 +67,22 @@ public class SMTest extends SMTestUtils {
 	}
 
 	
-	@Test
+	//@Test
 	public void Test3Search() throws Exception {
 		// test modifying a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
-		//checkLinksAndSearch();
+		checkLinksAndSearch();
 
 	} 
 
 	
-	//@Test
+	@Test
 	public void Test4Guestbook() throws Exception {
 		// test deleting a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
-		checkMainMenubar();
+		checkGuestBook();
 	} 
 	// end of tests
 
@@ -94,20 +96,33 @@ public class SMTest extends SMTestUtils {
 		}
 	}
 
-
+	void checkGuestBook() throws Exception {
+		// checks to see that links and search box work
+		class eClass {};	    
+		printMethodName(eClass.class.getEnclosingMethod()); 	
+		zDriver.get(baseUrl);
+		mySleep(SLEEPTIME);
+		setWindowSize();
+		gLogger.info("About to test Guest Book");
+		zDriver.get(guestBookLink);
+	    boolean myboo = isElementPresent(By.className("entry-title")); // Thermometer image
+	   // zDriver.findElement( By.
+		zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
+	}
+	
 	void checkLinksAndSearch() throws Exception {
 		// checks to see that links and search box work
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod()); 	
 		zDriver.get(baseUrl);
-		mySleep(2);
+		mySleep(SLEEPTIME);
 		setWindowSize();
 		gLogger.info("About to test social media page links");
 
 		zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
 
 		zDriver.findElement(By.xpath("//div/a")).click();  //ncgrla meetup
-		mySleep(2);
+		mySleep(SLEEPTIME);
 		gLogger.info("just clicked NCGR-LA. Title found is: " + zDriver.getTitle());
 	    assertThat( zDriver.getTitle(), containsString("NCGR Los Angeles"))  ;
 	    zDriver.navigate().back();
@@ -120,7 +135,7 @@ public class SMTest extends SMTestUtils {
 	    gLogger.info("links all there");
     	     
 		zDriver.findElement(By.partialLinkText("Social Media Defined")).click(); //wiki
-		mySleep(2);
+		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Social Media. Title found is: " + zDriver.getTitle());
 	    assertThat( zDriver.getTitle(), containsString("Wikipedia"))  ;
 	    zDriver.navigate().back();
@@ -130,7 +145,7 @@ public class SMTest extends SMTestUtils {
 	    //new page
 		gLogger.info("Testing About Us page");
 		zDriver.findElement( By.cssSelector(aboutMenuID)   ).click();	
-		mySleep(2);
+		mySleep(SLEEPTIME);
 		gLogger.info("just clicked About Us. Title found is: " + zDriver.getTitle());
 	
 		gLogger.info("Testing About Us elements, images, links, etc.");
@@ -142,14 +157,14 @@ public class SMTest extends SMTestUtils {
 		zDriver.findElement(By.partialLinkText("resume")).click();  //resume, first link
 	    assertThat( zDriver.getTitle(), containsString("Nancy Schorr"))  ;
 	    zDriver.navigate().back();
-		mySleep(2);
+		mySleep(SLEEPTIME);
     
 	    
 	    gLogger.info("About to test search box");
 	    zDriver.findElement(By.id("s")).clear();  // search box
 	    zDriver.findElement(By.id("s")).sendKeys("office");
 	    zDriver.findElement(By.id("searchsubmit")).click();
-		mySleep(2);
+		mySleep(SLEEPTIME);
 	    assertTrue(isElementPresent(By.partialLinkText("About Us"))); 
 	    gLogger.info("Search box ok");		
 	    gLogger.info("End of tests. All tests complete.");		
@@ -161,40 +176,40 @@ public class SMTest extends SMTestUtils {
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod()); 	
 		zDriver.get(baseUrl);
-		mySleep(2);
+		mySleep(SLEEPTIME);
 		setWindowSize();
 
 			//		String websiteXpath = "html/body/div/div[2]/div[1]/div/ul/li[2]/a]";
 			//		String videoXpath = "html/body/div/div[2]/div[1]/div/ul/li[3]/a";	
 			//zDriver.findElement( By.xpath(homeXpath)   ).click();	
 		zDriver.findElement( By.xpath(homeMenuID)   ).click();	
-		mySleep(2);
+		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Home. Title found is: " + zDriver.getTitle());
 		assert(zDriver.getTitle().contains("Schorr Media provides internet"));
 
 		//Websites menuitem
 		zDriver.findElement( By.cssSelector(websiteMenuID)).click();    	    
-		mySleep(2);
+		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Websites. Title found is: " + zDriver.getTitle());
 		assert(zDriver.getTitle().contains("Websites"));
 
 		zDriver.findElement( By.cssSelector(videoMenuID)   ).click();	
-		mySleep(2);
+		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Video. Title found is: " + zDriver.getTitle());
 		assert(zDriver.getTitle().contains("YouTube"));
 
 		zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
-		mySleep(2);
+		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Social Media. Title found is: " + zDriver.getTitle());
 		assert(zDriver.getTitle().contains("Social"));
 
 		zDriver.findElement( By.cssSelector(databaseMenuID)   ).click();	
-		mySleep(2);
+		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Database. Title found is: " + zDriver.getTitle());
 		assert(zDriver.getTitle().contains("Database"));
 
 		zDriver.findElement( By.cssSelector(aboutMenuID)   ).click();	
-		mySleep(2);
+		mySleep(SLEEPTIME);
 		gLogger.info("just clicked About Us. Title found is: " + zDriver.getTitle());
 		assert(zDriver.getTitle().contains("About"));
 	}
@@ -204,15 +219,15 @@ public class SMTest extends SMTestUtils {
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod()); 	
 		zDriver.get(baseUrl);
-		mySleep(2);
+		mySleep(SLEEPTIME);
 		setWindowSize();
 		
 		zDriver.findElement( By.cssSelector(websiteMenuID)).click();    	    
-		mySleep(2);
+		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Websites. Title found is: " + zDriver.getTitle());
 
 		zDriver.findElement(By.cssSelector(".entry>pre>span>a>span")).click();
-		mySleep(2);
+		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Vitamin Center. Title found is: " + zDriver.getTitle());
 	    assertThat( zDriver.getTitle(), containsString("Vitamin Center Agoura Hills"))  ;
 	    // assertEquals("Vitamin Center Agoura Hills | Hereâ€™s To Your Health", zDriver.getTitle());
