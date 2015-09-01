@@ -130,12 +130,14 @@ public class SMTest extends SMTestUtils {
 
 	 zDriver.findElement( By.cssSelector("#gwolle_gb_content")).clear();
 	 zDriver.findElement( By.cssSelector("#gwolle_gb_content")).sendKeys("Nice Website, thanks!");
+	 mySleep(5);
 
-	 zDriver.findElement( By.cssSelector("#gwolle_gb_submit")).click();
-	 mySleep(SLEEPTIME);
+	 zDriver.findElement( By.cssSelector("input[type='submit']")).click();
+	 mySleep(9);
 	 
-	 boolean feedBack = zDriver.findElement(By.cssSelector("body")).getText().contains("Joe");	
-	 System.out.println("value of feedback is "+ feedBack);
+	 boolean feedBack = zDriver.findElement(By.cssSelector("body")).getText().contains("Thank you for your entry");	
+	 System.out.println("Should be true: alue of feedback is "+ feedBack);
+	 mySleep(9);
 	 
 	 String placeHolder = "";
 	}
