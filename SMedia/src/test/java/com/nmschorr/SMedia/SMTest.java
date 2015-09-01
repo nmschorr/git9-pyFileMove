@@ -40,7 +40,7 @@ public class SMTest extends SMTestUtils {
 	String databaseMenuID = "#menu-item-418 > a";
 	String aboutMenuID = "#menu-item-419 > a";
 	String guestBookLink = "http://jetgalaxy.com/wordpress/guestbook/";
-	static final int SLEEPTIME=2;
+	static final int SLEEPTIME=1;
 
 	@Before  //run only once before all tests
 	public void setUp() throws Exception {		
@@ -118,8 +118,26 @@ public class SMTest extends SMTestUtils {
 	    String buttonCss = "";
 	    WebElement anotherboo = zDriver.findElement( By.cssSelector("input[type='button']"));
 	    WebElement anotherboo2 = zDriver.findElement( By.cssSelector("input[type=button]"));
-		zDriver.findElement( By.cssSelector("input[type='button']")).click();	
-	    String sssCss = "";
+	 zDriver.findElement( By.cssSelector("#gwolle_gb_write_button>input")).click();	
+	 zDriver.findElement( By.cssSelector("#gwolle_gb_author_name")).clear();
+	 zDriver.findElement( By.cssSelector("#gwolle_gb_author_name")).sendKeys("Joe");
+
+	 zDriver.findElement( By.cssSelector("#gwolle_gb_author_origin")).clear();
+	 zDriver.findElement( By.cssSelector("#gwolle_gb_author_origin")).sendKeys("Somewhere, USA");
+
+	 zDriver.findElement( By.cssSelector("#gwolle_gb_author_email")).clear();
+	 zDriver.findElement( By.cssSelector("#gwolle_gb_author_email")).sendKeys("joe@xyz.com");
+
+	 zDriver.findElement( By.cssSelector("#gwolle_gb_content")).clear();
+	 zDriver.findElement( By.cssSelector("#gwolle_gb_content")).sendKeys("Nice Website, thanks!");
+
+	 zDriver.findElement( By.cssSelector("#gwolle_gb_submit")).click();
+	 mySleep(SLEEPTIME);
+	 
+	 boolean feedBack = zDriver.findElement(By.cssSelector("body")).getText().contains("Joe");	
+	 System.out.println("value of feedback is "+ feedBack);
+	 
+	 String placeHolder = "";
 	}
 	
 	void checkLinksAndSearch() throws Exception {
