@@ -25,6 +25,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebElement;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.containsString;
 
@@ -105,9 +107,19 @@ public class SMTest extends SMTestUtils {
 		setWindowSize();
 		gLogger.info("About to test Guest Book");
 		zDriver.get(guestBookLink);
-	    boolean myboo = isElementPresent(By.className("entry-title")); // Thermometer image
-	   // zDriver.findElement( By.
-		zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
+	    boolean myboo = isElementPresent(By.className("entry-title")); //  
+	   
+		String plsSignText = "Please sign our Guestbook";
+	    WebElement ele = zDriver.findElement(By.cssSelector("body"));	
+	    String elementTxt = ele.getText();
+	    boolean containsTxtBoo = elementTxt.contains(plsSignText);	
+	   // boolean feedBack = zDriver.findElement(By.cssSelector("body")).getText().contains(myt);	
+	    assertTrue(containsTxtBoo);
+	    String buttonCss = "";
+	    WebElement anotherboo = zDriver.findElement( By.cssSelector("input[type='button']"));
+	    WebElement anotherboo2 = zDriver.findElement( By.cssSelector("input[type=button]"));
+		zDriver.findElement( By.cssSelector("input[type='button']")).click();	
+	    String sssCss = "";
 	}
 	
 	void checkLinksAndSearch() throws Exception {
