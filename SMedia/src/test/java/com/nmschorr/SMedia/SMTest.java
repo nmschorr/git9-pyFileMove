@@ -18,6 +18,9 @@ package com.nmschorr.SMedia;
  */
 
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import org.junit.runners.MethodSorters;
 import org.junit.After;
 import org.junit.Before;
@@ -129,11 +132,21 @@ public class SMTest extends SMTestUtils {
 	 zDriver.findElement( By.cssSelector("#gwolle_gb_author_email")).sendKeys("joe@xyz.com");
 
 	 zDriver.findElement( By.cssSelector("#gwolle_gb_content")).clear();
-	 zDriver.findElement( By.cssSelector("#gwolle_gb_content")).sendKeys("Nice Website, thanks!");
+	 
+	 Date date= new Date();
+     //getTime() returns current time in milliseconds
+ long time = date.getTime();
+     //Passed the milliseconds to constructor of Timestamp class 
+ Timestamp ts = new Timestamp(time);
+ System.out.println("Current Time Stamp: "+ts); 
+	 
+	 
+	 
+	 zDriver.findElement( By.cssSelector("#gwolle_gb_content")).sendKeys(ts+"Nice Website, thanks!");
 	 mySleep(5);
 
-	 zDriver.findElement( By.cssSelector("input[type='submit']")).click();
-	 mySleep(9);
+	 zDriver.findElement( By.cssSelector("input[type=submit]")).click();
+	 mySleep(5);
 	 
 	 boolean feedBack = zDriver.findElement(By.cssSelector("body")).getText().contains("Thank you for your entry");	
 	 System.out.println("Should be true: alue of feedback is "+ feedBack);
