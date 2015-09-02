@@ -57,12 +57,9 @@ public class SFCALeditor extends SFCALutil {
 			sectionTask(tempNMwDIR, dateNMwDIR);
 			
 			out.println("------------------NEW filename w/dir is: "+dateNMwDIR + "\n" +" --End of Loop");					
-			System.out.println("Finished Loop");
-			mySleep(2);
 			myCount++;		
 		}			
-		mySleep(1);
-		System.out.println("Finished Program");
+		System.out.println("Finished");
 	}
 
 
@@ -139,7 +136,14 @@ public class SFCALeditor extends SFCALutil {
 		int totLines=0;
 		int locLineCount=4;  // start at 5th line
 		inARRAY.clear();
-		
+		List <String> moonsList = new ArrayList <String>();
+		moonsList.add("New Moon");
+		moonsList.add("Full Moon");
+		moonsList.add("Eclipse");
+		String lineOne = "";
+		String lineTwo = "";
+		String lineSix = "";
+
 		try {
 			inARRAY =  FileUtils.readLines(infileORIG);
 			totLines = inARRAY.size();
@@ -152,7 +156,8 @@ public class SFCALeditor extends SFCALutil {
 				outARRAY.add(inARRAY.get(i));
 			}
 
-			while ( locLineCount < totLines )  
+			int goLines = totLines-2;
+			while ( locLineCount < goLines )  
 			{  // while there are still lines left in array // starting on 5th line, load
 				tinyCounter = 0;
 				tinySectionList = null;
@@ -161,57 +166,60 @@ public class SFCALeditor extends SFCALutil {
 				// first load sections of 10x lines each into smaller arrarys
 				// then check each section for voids etc  then correct
 
-				while (tinyCounter < 10) {         //tiny while
-					if (locLineCount < totLines ) {         // sometimes starts too late
-						String theString = inARRAY.get(locLineCount);  //get one string
-						tinySectionList.add(theString);
-						}  // if
+				//while (tinyCounter < 10) {         //tiny while
+				while ((locLineCount < totLines ) && (tinyCounter < 10)) {         //tiny while
+
+					String theString = inARRAY.get(locLineCount);  //get one string
+					tinySectionList.add(theString);
 					locLineCount++;
 					tinyCounter++;
-				}
-
+				}  // tiny while
+				// }
 				shouldKEEP = ckToKEEP(tinySectionList);	 
+
+				
+				// Next - check tinySectionList for Full, New and Eclipse
+				// and change the end of DTEND to "05"
+				// if line 6 contains "Full Moon" or "New Moon" or Eclipse
+				// then change last two chars of line 3 to 0Z
+
+				lineOne = tinySectionList.get(1);
+				lineTwo = tinySectionList.get(2);
+
+				for (String excStr : moonsList) {
+					if (tinySectionList.get(6).contains(excStr)) {
+						tinySectionList.set(1, lineOne.replace("5Z", "0Z"));
+						tinySectionList.set(2, lineTwo.replace("5Z", "0Z"));
+					}	
+				}		
 
 				if (shouldKEEP == true) {   // IF 	checkfortoss comes back TRUE, then write this section
 					outARRAY.addAll( tinySectionList);
 				}
+				tinyCounter=0;
 
 			} //  // while locLineCount
-			
-			//outARRAY=remLastLine(outARRAY);
+				//			String lastLine = outARRAY.get( outARRAY.size()-1);  // the last line of the array
+				//			if (lastLine.equals("")) {
+				//				out.println("Removing last blank line of array.");
+				//				outARRAY.remove(outARRAY.size()-1);
+				//			}
 			FileUtils.writeLines(dateFILE_OUT, outARRAY, true);	
-			 
+			FileUtils.writeStringToFile(dateFILE_OUT, "END:VCALENDAR", true);
+		 
 			System.out.println("!!! INSIDE sectiontask. filename  - "+ dateFILE_OUT.getName());			
 		}  // try  
 		catch (IOException e) {  	e.printStackTrace();	 }	// catch
 	}  // end
 
 	
-	static List<String> remLastLine(List<String> inARY) {
-		String lastLine = inARY.get( inARY.size()-1);  // the last line of the array
-		if (lastLine.equals("")) {
-			out.println("Removing last blank line of array.");
-			inARY.remove(inARY.size()-1);
-		}
-		return inARY;
-	}
-	
-	
 // new method: ----------------------------------------------------------------
 	static boolean ckToKEEP(List<String> tinyList) {  // returns true to write
-		String firstline = tinyList.get(0);
-		String sl= "";  // for END:VCALENDAR only which would be a tinyArray of 1 line
-		
-		if  ( tinyList.size() > 6 )
-			sl = tinyList.get(6);
-		
-		out.println("\n\n"+"               %%%%%%%%%%%%%%%%% starting over in checkForTossouts");
+		String sl = tinyList.get(6);
+		out.println("\n\n"+"               %%%%%%%%%%%%%%%%% starting over in ckToKEEP");
 		out.println("The string is:  " + sl );
 
-		if (firstline.startsWith("END:VCALENDAR")) 
-			return true; //keep
-		
-		else if ( (sl.contains("SUMMARY")) && (sl.contains("Eclipse")) )
+		if ( (sl.contains("SUMMARY")) && (sl.contains("Eclipse")) )
 		{
 			out.println("==========    ===== !!!!! reg method FOUND ECLIPSE!!! !!  !  ========== writing: "+ sl);		
 			return true;  //keep
@@ -223,9 +231,6 @@ public class SFCALeditor extends SFCALutil {
 			out.println("==========    ===== !!!!! reg method FOUND ! ========== writing: "+ sl);		
 			return true; //keep
 		}
-		else if (firstline.startsWith("END:VCALENDAR")) 
-				return true; //keep
-
 		else  {
 			return false;  // don't keep
 		}
