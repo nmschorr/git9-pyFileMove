@@ -86,20 +86,20 @@ public class SMTestUtils {
 	}
 
 	
-	protected WebDriver createDriver() throws AWTException, InterruptedException {
-	//protected WebDriver createDriver(Logger tLogger) throws AWTException, InterruptedException {
-		//tLogger.info("Just entered createDriver()");
-		//tLogger.info("! Starting new FirefoxDriver !");
+	protected WebDriver createDriver(Logger tLogger) throws AWTException, InterruptedException {
+		tLogger.info("Just entered createDriver()");
+		tLogger.info("! Starting new FirefoxDriver !");
 		AlertThread thread2=new AlertThread();  
 		thread2.start();  
 		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
-		//tLogger.info("Done creating FirefoxDriver!");
+		tLogger.info("Done creating FirefoxDriver!");
 		localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
 		return localDriver;
 	}
 
 	
 	Logger createLogger()  {
+		out.println("Inside createLogger - Logger is being set up.");
 		Logger aLogger = LogManager.getLogger(SMTest.class.getName());
 		verificationErrors = new StringBuffer();
 		aLogger.entry();
