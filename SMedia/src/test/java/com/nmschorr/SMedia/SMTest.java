@@ -22,6 +22,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import org.junit.runners.MethodSorters;
+import org.junit.AfterClass;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
@@ -43,7 +44,8 @@ public class SMTest extends SMTestUtils {
 	String databaseMenuID = "#menu-item-418 > a";
 	String aboutMenuID = "#menu-item-419 > a";
 	String guestBookLink = "http://jetgalaxy.com/wordpress/guestbook/";
-	static final int SLEEPTIME=1;
+	static final int SLEEPTIME=2;
+	static final int LONGSLEEPTIME=5;
 	
 
 	@Before  //run only once before all tests
@@ -53,8 +55,8 @@ public class SMTest extends SMTestUtils {
 		zDriver = createDriver(gLogger);
 	}
 
-	@Test
-	public void Test1Menus() throws Exception {
+	//@Test
+	public void test1Menus() throws Exception {
 		// eClass is an empty class there just for returning the local method name
 		// test logging and menubar     
 		class eClass {};	    
@@ -63,8 +65,8 @@ public class SMTest extends SMTestUtils {
 	}
 
 
-	@Test
-	public void Test2Links() throws Exception {
+	//@Test
+	public void test2Links() throws Exception {
 		// test adding a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
@@ -72,8 +74,8 @@ public class SMTest extends SMTestUtils {
 	}
 
 
-	@Test
-	public void Test3Search() throws Exception {
+	//@Test
+	public void test3Search() throws Exception {
 		// test modifying a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
@@ -82,7 +84,7 @@ public class SMTest extends SMTestUtils {
 
 
 	@Test
-	public void Test4Guestbook() throws Exception {
+	public void test4Guestbook() throws Exception {
 		// test deleting a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
@@ -106,10 +108,11 @@ public class SMTest extends SMTestUtils {
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod()); 	
 		zDriver.get(baseUrl);
-		mySleep(SLEEPTIME);
+		mySleep(LONGSLEEPTIME);
 		setWindowSize();
 		zDriver.get(guestBookLink);  // get the guestbook page
 		gLogger.info("Requested Guestbook page");
+		mySleep(LONGSLEEPTIME);
 		boolean myboo = isElementPresent(By.className("entry-title")); //  
 
 		String plsSignText = "Please sign our Guestbook";
@@ -122,16 +125,20 @@ public class SMTest extends SMTestUtils {
 		WebElement anotherboo2 = zDriver.findElement( By.cssSelector("input[type=button]"));
 		gLogger.info("Should be inside the GuestBook");
 		gLogger.info("Entering GuestBook info for an entry");
+		mySleep(SLEEPTIME);
 		zDriver.findElement( By.cssSelector("#gwolle_gb_write_button>input")).click();	
 		zDriver.findElement( By.cssSelector("#gwolle_gb_author_name")).clear();
 		zDriver.findElement( By.cssSelector("#gwolle_gb_author_name")).sendKeys("Joe");
+		mySleep(SLEEPTIME);
 
 		zDriver.findElement( By.cssSelector("#gwolle_gb_author_origin")).clear();
 		zDriver.findElement( By.cssSelector("#gwolle_gb_author_origin")).sendKeys("Somewhere, USA");
 		gLogger.info("Part way through Guestbook entries");
+		mySleep(SLEEPTIME);
 
 		zDriver.findElement( By.cssSelector("#gwolle_gb_author_email")).clear();
 		zDriver.findElement( By.cssSelector("#gwolle_gb_author_email")).sendKeys("joe@xyz.com");
+		mySleep(SLEEPTIME);
 
 		zDriver.findElement( By.cssSelector("#gwolle_gb_content")).clear();
 
@@ -143,18 +150,18 @@ public class SMTest extends SMTestUtils {
 		String inputString = "Nice Website, thanks!"+"\n"+ts;
 		gLogger.info("Going to enter: "+inputString); 
 		zDriver.findElement( By.cssSelector("#gwolle_gb_content")).sendKeys(inputString);
-		mySleep(3);
+		mySleep(SLEEPTIME);
 		gLogger.info("About to click ");
 
 		zDriver.findElement( By.cssSelector("input[type=submit]")).click();
 		gLogger.info("Clicked submit ");
-		mySleep(3);
+		mySleep(SLEEPTIME);
 
 		boolean feedBack = zDriver.findElement(By.cssSelector("body")).getText().contains("Thank you for your entry");	
 		System.out.println("Should be true: value of feedback is "+ feedBack);
 		assertTrue(feedBack);
 		System.out.println("If we got this far, everything is ok");		 
-		mySleep(3);	 
+		mySleep(SLEEPTIME);
 	}
 
 	
@@ -344,7 +351,12 @@ public class SMTest extends SMTestUtils {
 		gLogger.info("Quitting Webdriver and shutting down");
 		zDriver.quit();
 		mySleep(1);
-		gLogger.info("All done with tests and exiting. Goodbye.");
+		gLogger.info("All done with this test and exiting.");
 	}
-
+	
+	
+	@AfterClass
+	public static void afterClass() {
+		System.out.println("Done with Test Suite. Goodbye.");
+	}
 }
