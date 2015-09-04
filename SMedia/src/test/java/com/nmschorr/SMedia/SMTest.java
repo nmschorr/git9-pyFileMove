@@ -108,11 +108,11 @@ public class SMTest extends SMTestUtils {
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod()); 	
 		zDriver.get(baseUrl);
-		mySleep(LONGSLEEPTIME);
+		mySleep(SLEEPTIME);
 		setWindowSize();
 		zDriver.get(guestBookLink);  // get the guestbook page
 		gLogger.info("Requested Guestbook page");
-		mySleep(LONGSLEEPTIME);
+		mySleep(SLEEPTIME);
 		boolean myboo = isElementPresent(By.className("entry-title")); //  
 
 		String plsSignText = "Please sign our Guestbook";
