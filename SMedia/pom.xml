@@ -22,8 +22,6 @@
 		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<my.time>${maven.build.timestamp}</my.time>
-		<mysuredir>C:\Users\user\git2\SMedia\target\surefire-reports${my.time}\</mysuredir>
 		<mybasedir>C:\Users\user\git2\SMedia</mybasedir>
 	</properties>
 
@@ -88,10 +86,6 @@
 	<plugin>
 		<artifactId>maven-surefire-plugin</artifactId>
 		<version>2.18.1</version>
-		<configuration>
-		<!--		<reportsDirectory>${mysuredir}</reportsDirectory>  -->
-			<redirectTestOutputToFile>true</redirectTestOutputToFile>
-		</configuration>
 		<executions>
 			<execution>
 						<id>default-test</id>
@@ -113,7 +107,6 @@
 				<version>3.4</version>
 				<configuration>
 					<property value="\" name="file.separator" />
-   					<outputDirectory>${mysuredir}</outputDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -126,35 +119,23 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jxr-plugin</artifactId>
 				<version>2.5</version>
-				<configuration>
-   					<outputDirectory>${mysuredir}</outputDirectory>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
 				<version>2.18.1</version>
-		
-				<configuration>
-   					<outputDirectory>${mysuredir}</outputDirectory>
-					<outputName>SMediaSurefire${my.time}</outputName>
-				</configuration>
 			</plugin>
- <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <version>3.4</version>
-                <configuration>
-   					<outputDirectory>${mysuredir}</outputDirectory>
-                  </configuration>
-            </plugin>
-  	<plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.4</version>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-project-info-reports-plugin</artifactId>
 				<version>2.8</version>
-					 <!--  below reduces endless info in console about report gen -->
-				<configuration>  
-   					<outputDirectory>${mysuredir}</outputDirectory>
+				<!-- below reduces endless info in console about report gen -->
+				<configuration>
 					<dependencyLocationsEnabled>false</dependencyLocationsEnabled>
 					<dependencyDetailsEnabled>false</dependencyDetailsEnabled>
 				</configuration>

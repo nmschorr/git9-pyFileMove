@@ -47,16 +47,28 @@ public class SMTest extends SMTestUtils {
 	static final int SLEEPTIME=2;
 	static final int LONGSLEEPTIME=5;
 	
-
+	 
+ 
 	@Before  //run only once before all tests
 	public void setUp() throws Exception {		
 		//createProperties();  // if we need properties this is where they would get initialized
-		System.out.println("-------------------3testing system.out.println. ");
-		gLogger = createLogger();
-		zDriver = createDriver(gLogger);
-		System.out.println("-------------------4testing system.out.println. ");
+		System.out.println("-------------------1testing system.out.println. ");
+		System.out.println("-------------------1testing system.out.println. ");
+//		gLogger = null;
+		//gLogger = createLogger();
+	    // BasicConfigurator.configure();
+//		zDriver = createDriver();
+		//zDriver = createDriver(gLogger);
+		System.out.println("-------------------2testing system.out.println. ");
 	}
 
+	@Test
+	public void testoutput() throws Exception {
+		System.out.println("-------------------inside first test of system.out.println. ");
+	}
+
+		
+		
 	//@Test
 	public void test1Menus() throws Exception {
 		// eClass is an empty class there just for returning the local method name
@@ -85,7 +97,7 @@ public class SMTest extends SMTestUtils {
 	} 
 
 
-	@Test
+	//@Test
 	public void test4Guestbook() throws Exception {
 		// test deleting a portfolio
 		class eClass {};	    
