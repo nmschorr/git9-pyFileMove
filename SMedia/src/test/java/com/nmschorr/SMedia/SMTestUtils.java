@@ -1,11 +1,11 @@
-/***
+/*
  * SMTestUtil.java by Nancy M. Schorr, 2015
  * 
  * This is a set of Utilities used by SMTest.java.
  *
- * Please see Readme.rtf or Readme.txt for more information.
+ * Please see Readme.md or Readme.txt for more information.
  * 
- */
+*/
 
 package com.nmschorr.SMedia;
 

@@ -1,6 +1,6 @@
 package com.nmschorr.SMedia;
 
-/***
+/*
  * SMTest.java by Nancy M. Schorr, 2015
  * 
  * This test suite executes four tests against schorrmedia.com
@@ -15,7 +15,7 @@ package com.nmschorr.SMedia;
  *
  * Please see README.md for more information.
  * 
- */
+*/ 
 
 
 import java.sql.Timestamp;
@@ -44,6 +44,7 @@ public class SMTest extends SMTestUtils {
 	String aboutMenuID = "#menu-item-419 > a";
 	String guestBookLink = "http://jetgalaxy.com/wordpress/guestbook/";
 	static final int SLEEPTIME=1;
+	
 
 	@Before  //run only once before all tests
 	public void setUp() throws Exception {		
@@ -52,7 +53,7 @@ public class SMTest extends SMTestUtils {
 		zDriver = createDriver(gLogger);
 	}
 
-	//@Test
+	@Test
 	public void Test1Menus() throws Exception {
 		// eClass is an empty class there just for returning the local method name
 		// test logging and menubar     
@@ -62,7 +63,7 @@ public class SMTest extends SMTestUtils {
 	}
 
 
-	//@Test
+	@Test
 	public void Test2Links() throws Exception {
 		// test adding a portfolio
 		class eClass {};	    
@@ -71,7 +72,7 @@ public class SMTest extends SMTestUtils {
 	}
 
 
-	//@Test
+	@Test
 	public void Test3Search() throws Exception {
 		// test modifying a portfolio
 		class eClass {};	    
