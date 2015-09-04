@@ -38,8 +38,8 @@ public class SMTestUtils {
 	protected static WebDriver zDriver;
  	public static Logger gLogger;
 	protected final static String baseUrl = "http://jetgalaxy.com/wordpress/";
-//	private final static String dirname = "C:\\Users\\user\\git2\\SMedia\\PropertyFiles\\" ;
-//	private final static String pname = "schorrmediaprops.properties" ;
+	private final static String dirname = "C:\\Users\\user\\git2\\SMedia\\PropertyFiles\\" ;
+	private final static String pname = "schorrmediaprops.properties" ;
 	private final static String propname = dirname + pname ;
 	private final static String outfileName = "E:\\Workspace\\firefox.log";	
 	protected final static Integer WAIT_TIME = 12;

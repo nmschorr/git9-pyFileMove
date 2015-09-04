@@ -51,8 +51,10 @@ public class SMTest extends SMTestUtils {
 	@Before  //run only once before all tests
 	public void setUp() throws Exception {		
 		//createProperties();  // if we need properties this is where they would get initialized
+		System.out.println("-------------------3testing system.out.println. ");
 		gLogger = createLogger();
 		zDriver = createDriver(gLogger);
+		System.out.println("-------------------4testing system.out.println. ");
 	}
 
 	//@Test
@@ -88,7 +90,9 @@ public class SMTest extends SMTestUtils {
 		// test deleting a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
+		System.out.println("-------------------testing system.out.println. ");
 		checkGuestBook();
+		System.out.println("-------------------testing system.out.println2. ");
 	} 
 	// end of tests
 
