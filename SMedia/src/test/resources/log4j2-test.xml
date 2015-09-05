@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<Configuration status="trace">
 	<Appenders>
 		<Console name="console" target="SYSTEM_OUT">
 			<PatternLayout
 				pattern="[%-5level] %d{yyyyMMdd-HHmmss} [%t] %c{1}- %msg%n" />
 		</Console>
-		<File name="MyFile" fileName="./logs/smout.log" immediateFlush="false"
-			append="false">
-			<PatternLayout
-				pattern="%d{yyyy-MMdd-HH:mm:ss} [%t] %-5level %logger{36}- %msg%n" />
-		</File>
-	</Appenders>
 	
+	<RollingFile name="smtrace" fileName="C:\Users\user\git2\SMedia\logs\smtrace.log"
+		filePattern="C:\Users\user\git2\SMedia\logs\smtrace-%d{yyyyMMddHHmmss}.log">
+		<PatternLayout>
+			<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+			</pattern>
+		</PatternLayout>
+		<Policies>
+		 <OnStartupTriggeringPolicy />
+				
+		</Policies>
+	</RollingFile>
+
+	</Appenders>
+
 	<Loggers>
+	
 		<Root level="all" additivity="false">
+			<AppenderRef ref="smtrace" level="all" />
 			<AppenderRef ref="console" />
-			<AppenderRef ref="MyFile" />
 		</Root>
 	</Loggers>
 </Configuration>

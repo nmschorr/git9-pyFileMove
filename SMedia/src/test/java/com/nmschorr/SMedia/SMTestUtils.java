@@ -98,7 +98,7 @@ public class SMTestUtils {
 	
 	Logger createLogger()  {
 		out.println("\n" + "Inside createLogger - Logger is being set up. New test beginning.");
-		Logger aLogger = LogManager.getLogger(SMTest.class.getName());
+		Logger aLogger = LogManager.getLogger("smtrace");
 		verificationErrors = new StringBuffer();
 		//aLogger.entry();
 		aLogger.info("Logger has been set up.");
