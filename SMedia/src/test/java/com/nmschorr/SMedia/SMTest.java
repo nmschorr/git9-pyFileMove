@@ -3,7 +3,7 @@ package com.nmschorr.SMedia;
 /*
  * SMTest.java by Nancy M. Schorr, 2015
  * 
- * This test suite executes four tests against schorrmedia.com
+ * This test suite executes four tests against schorrmedia.com (jetgalaxy.com/wordpress)
  * 
  * Note: 
  *
@@ -37,11 +37,10 @@ import static org.hamcrest.CoreMatchers.containsString;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SMTest extends SMTestUtils {
-	String homeMenuID = "#menu-item-400";
 	String websiteMenuID = "#menu-item-143 > a";
 	String videoMenuID = "#menu-item-141 > a";
 	String socialMenuID = "#menu-item-142 > a";
-	String databaseMenuID = "#menu-item-418 > a";
+	String automationMenuID = "#menu-item-418 > a";
 	String aboutMenuID = "#menu-item-419 > a";
 	String guestBookLink = "http://jetgalaxy.com/wordpress/guestbook/";
 	static final int SLEEPTIME=2;
@@ -53,6 +52,7 @@ public class SMTest extends SMTestUtils {
 				//createProperties();  // if we need properties this is where they would get initialized
 		gLogger = createLogger();
 		zDriver = createDriver(gLogger);
+		gLogger.info("Logger and Driver setup. Done with setUp().");
 	}		
 
 	
@@ -62,6 +62,7 @@ public class SMTest extends SMTestUtils {
 		// test logging and menubar     
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
+		gLogger.info("Starting new test: " + eClass.class.getEnclosingMethod());
 		checkMainMenubar();
 	}
 
@@ -71,6 +72,7 @@ public class SMTest extends SMTestUtils {
 		// test adding a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
+		gLogger.info("Starting new test: " + eClass.class.getEnclosingMethod());
 		checkLinks();
 	}
 
@@ -80,6 +82,7 @@ public class SMTest extends SMTestUtils {
 		// test modifying a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
+		gLogger.info("Starting new test: " + eClass.class.getEnclosingMethod());
 		checkLinksAndSearch();
 	} 
 
@@ -89,9 +92,8 @@ public class SMTest extends SMTestUtils {
 		// test deleting a portfolio
 		class eClass {};	    
 		printMethodName(eClass.class.getEnclosingMethod());
-		System.out.println("-------------------testing system.out.println. ");
+		gLogger.info("Starting new test: " + eClass.class.getEnclosingMethod());
 		checkGuestBook();
-		System.out.println("-------------------testing system.out.println2. ");
 	} 
 	// end of tests
 
@@ -151,7 +153,7 @@ public class SMTest extends SMTestUtils {
 		Timestamp ts = new Timestamp(time);
 		gLogger.info("Current Time Stamp: "+ts); 
 
-		String inputString = "Nice Website, thanks!"+"\n"+ts;
+		String inputString = "Nice Website, thanks! Date time now: "+ ts;
 		gLogger.info("Going to enter: "+inputString); 
 		zDriver.findElement( By.cssSelector("#gwolle_gb_content")).sendKeys(inputString);
 		mySleep(SLEEPTIME);
@@ -162,9 +164,9 @@ public class SMTest extends SMTestUtils {
 		mySleep(SLEEPTIME);
 
 		boolean feedBack = zDriver.findElement(By.cssSelector("body")).getText().contains("Thank you for your entry");	
-		System.out.println("Should be true: value of feedback is "+ feedBack);
+		gLogger.info.println("Should be true: value of feedback is "+ feedBack);
 		assertTrue(feedBack);
-		System.out.println("If we got this far, everything is ok");		 
+		gLogger.info("If we got this far, everything is ok");		 
 		mySleep(SLEEPTIME);
 	}
 
@@ -238,36 +240,31 @@ public class SMTest extends SMTestUtils {
 		mySleep(SLEEPTIME);
 		setWindowSize();
 
-		zDriver.findElement( By.xpath(homeMenuID)   ).click();	
-		mySleep(SLEEPTIME);
-		gLogger.info("just clicked Home. Title found is: " + zDriver.getTitle());
-		assert(zDriver.getTitle().contains("Schorr Media provides internet"));
-
 		//Websites menuitem
 		zDriver.findElement( By.cssSelector(websiteMenuID)).click();    	    
 		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Websites. Title found is: " + zDriver.getTitle());
-		assert(zDriver.getTitle().contains("Websites"));
+		assertTrue(zDriver.getTitle().contains("Websites"));
 
 		zDriver.findElement( By.cssSelector(videoMenuID)   ).click();	
 		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Video. Title found is: " + zDriver.getTitle());
-		assert(zDriver.getTitle().contains("YouTube"));
+		assertTrue(zDriver.getTitle().contains("YouTube"));
 
 		zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
 		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Social Media. Title found is: " + zDriver.getTitle());
-		assert(zDriver.getTitle().contains("Social"));
+		assertTrue(zDriver.getTitle().contains("Social"));
 
-		zDriver.findElement( By.cssSelector(databaseMenuID)   ).click();	
+		zDriver.findElement( By.cssSelector(automationMenuID)   ).click();	
 		mySleep(SLEEPTIME);
-		gLogger.info("just clicked Database. Title found is: " + zDriver.getTitle());
-		assert(zDriver.getTitle().contains("Database"));
+		gLogger.info("just clicked Automation. Title found is: " + zDriver.getTitle());
+		assertTrue(zDriver.getTitle().contains("Automation"));
 
 		zDriver.findElement( By.cssSelector(aboutMenuID)   ).click();	
 		mySleep(SLEEPTIME);
 		gLogger.info("just clicked About Us. Title found is: " + zDriver.getTitle());
-		assert(zDriver.getTitle().contains("About"));
+		assertTrue(zDriver.getTitle().contains("About"));
 	}
 
 	
@@ -311,7 +308,7 @@ public class SMTest extends SMTestUtils {
 		zDriver.findElement( By.cssSelector(videoMenuID)   ).click();	
 		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Video. Title found is: " + zDriver.getTitle());
-		assert(zDriver.getTitle().contains("YouTube"));
+		assertTrue(zDriver.getTitle().contains("YouTube"));
 
 		assertEquals("Precision Audiosonics", zDriver.findElement(By.linkText("Precision Audiosonics")).getText());
 		zDriver.findElement(By.linkText("Precision Audiosonics")).click();
@@ -349,13 +346,13 @@ public class SMTest extends SMTestUtils {
 
 	@After
 	public void tearDown() throws Exception {
-		gLogger.exit(false);
 		AlertThread thread3=new AlertThread();  
 		thread3.start();  
 		gLogger.info("Quitting Webdriver and shutting down");
 		zDriver.quit();
 		mySleep(1);
-		gLogger.info("All done with this test and exiting.");
+		gLogger.info("All done with this test.");
+		//gLogger.exit(false);
 	}
 	
 	

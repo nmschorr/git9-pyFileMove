@@ -47,12 +47,14 @@ public class SMTestUtils {
 	static String signinval;
 	static StringBuffer verificationErrors;
 	static FileInputStream fiStream;
+ 	public static Logger bLogger =  LogManager.getLogger(SMTest.class.getName());
 
 	
 	class AlertThread extends Thread {  // Dismiss the Firefox crash alert
 		@Override
 		public void run(){  
-			System.out.println("2nd thread is running...");  
+			//System.out.println("2nd thread is running...");  
+			bLogger.info("2nd thread is running...");  
 			try {		
 				Robot robot = new Robot();
 				robot.delay(1000);		
@@ -99,10 +101,10 @@ public class SMTestUtils {
 
 	
 	Logger createLogger()  {
-		out.println("Inside createLogger - Logger is being set up.");
+		out.println("\n" + "Inside createLogger - Logger is being set up. New test beginning.");
 		Logger aLogger = LogManager.getLogger(SMTest.class.getName());
 		verificationErrors = new StringBuffer();
-		aLogger.entry();
+		//aLogger.entry();
 		aLogger.info("Logger has been set up.");
 		return aLogger;
 	}
@@ -158,18 +160,18 @@ public class SMTestUtils {
 				(null, "Plugin Container for Firefox"); // window title
 
 		if (hwnd == null) {
-			System.out.println("Firefoxdialog is not showing");
+			bLogger.info("Firefoxdialog is not showing");
 		}
 		else{
-			System.out.println("Firefoxdialog IS showing. Closing it now.");
+			bLogger.info("Firefoxdialog IS showing. Closing it now.");
 			User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null); 			
 		}
 
 		if (hwndcontainer == null) {
-			System.out.println("FirefoxContainerDialog is not showing");
+			bLogger.info("FirefoxContainerDialog is not showing");
 		}
 		else{
-			System.out.println("Firefoxdialog IS showing. Closing it now.");
+			bLogger.info("Firefoxdialog IS showing. Closing it now.");
 			User32.INSTANCE.SetForegroundWindow(hwndcontainer);   // bring to front
 			User32.INSTANCE.PostMessage(hwndcontainer, WinUser.WM_CLOSE, null, null); 			
 			//User32.INSTANCE.ShowWindow(hwndcontainer, 9 );        // SW_RESTORE

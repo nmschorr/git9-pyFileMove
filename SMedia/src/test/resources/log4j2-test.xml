@@ -3,12 +3,12 @@
 	<Appenders>
 		<Console name="console" target="SYSTEM_OUT">
 			<PatternLayout
-				pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+				pattern="[%-5level] %d{yyyyMMdd-HHmmss} [%t] %c{1}- %msg%n" />
 		</Console>
-		<File name="MyFile" fileName="./logs/gurulogin.log" immediateFlush="false"
+		<File name="MyFile" fileName="./logs/smout.log" immediateFlush="false"
 			append="false">
 			<PatternLayout
-				pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+				pattern="%d{yyyy-MMdd-HH:mm:ss} [%t] %-5level %logger{36}- %msg%n" />
 		</File>
 	</Appenders>
 	
