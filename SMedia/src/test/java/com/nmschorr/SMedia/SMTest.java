@@ -119,7 +119,6 @@ public class SMTest extends SMTestUtils {
 		zDriver.get(guestBookLink);  // get the guestbook page
 		gLogger.info("Requested Guestbook page");
 		mySleep(SLEEPTIME);
-		boolean myboo = isElementPresent(By.className("entry-title")); //  
 
 		String plsSignText = "Please sign our Guestbook";
 		WebElement ele = zDriver.findElement(By.cssSelector("body"));	
@@ -127,8 +126,6 @@ public class SMTest extends SMTestUtils {
 		assertTrue(elementTxt.contains(plsSignText));
 		gLogger.info("Checked for Guestbook page. ok so far.");
 
-		WebElement anotherboo = zDriver.findElement( By.cssSelector("input[type='button']"));
-		WebElement anotherboo2 = zDriver.findElement( By.cssSelector("input[type=button]"));
 		gLogger.info("Should be inside the GuestBook");
 		gLogger.info("Entering GuestBook info for an entry");
 		mySleep(SLEEPTIME);
@@ -164,7 +161,7 @@ public class SMTest extends SMTestUtils {
 		mySleep(SLEEPTIME);
 
 		boolean feedBack = zDriver.findElement(By.cssSelector("body")).getText().contains("Thank you for your entry");	
-		gLogger.info.println("Should be true: value of feedback is "+ feedBack);
+		gLogger.info("Should be true: value of feedback is "+ feedBack);
 		assertTrue(feedBack);
 		gLogger.info("If we got this far, everything is ok");		 
 		mySleep(SLEEPTIME);

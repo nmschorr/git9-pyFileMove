@@ -74,13 +74,9 @@ public class SMTestUtils {
 	
 	protected static void setWindowSize() {
 		//	replaces: zDriver.manage().window().maximize();
-		int screen_height;
-		int screen_width;
-		Toolkit localToolkit = Toolkit.getDefaultToolkit();
-
-		screen_width = (int) localToolkit.getScreenSize().getWidth()-172;
-		screen_height = (int) localToolkit.getScreenSize().getHeight()-392;  // make it shorter so we have some room
-
+		//		Toolkit localToolkit = Toolkit.getDefaultToolkit();
+		//		int screen_width = (int) localToolkit.getScreenSize().getWidth()-172;
+		//		int screen_height = (int) localToolkit.getScreenSize().getHeight()-392;  // make it shorter so we have some room
 		//Dimension screenResolution = new Dimension(screen_width, screen_height );	
 		Dimension winSize = new Dimension(964, 590 );	
 		zDriver.manage().window().setPosition(new Point(0,0));
