@@ -60,19 +60,15 @@ public class SMTest extends SMTestUtils {
 	public void test1Menus() throws Exception {
 		// eClass is an empty class there just for returning the local method name
 		// test logging and menubar     
-		class eClass {};	    
-		printMethodName(eClass.class.getEnclosingMethod());
-		gLogger.info("Starting new test: " + eClass.class.getEnclosingMethod());
+ 		gLogger.info("Starting the actual new test.");
 		checkMainMenubar();
 	}
-
+	
 
 	@Test
 	public void test2Links() throws Exception {
 		// test adding a portfolio
-		class eClass {};	    
-		printMethodName(eClass.class.getEnclosingMethod());
-		gLogger.info("Starting new test: " + eClass.class.getEnclosingMethod());
+ 		gLogger.info("Starting the actual new test.");
 		checkLinks();
 	}
 
@@ -80,9 +76,7 @@ public class SMTest extends SMTestUtils {
 	@Test
 	public void test3Search() throws Exception {
 		// test modifying a portfolio
-		class eClass {};	    
-		printMethodName(eClass.class.getEnclosingMethod());
-		gLogger.info("Starting new test: " + eClass.class.getEnclosingMethod());
+ 		gLogger.info("Starting the actual new test.");
 		checkLinksAndSearch();
 	} 
 
@@ -90,9 +84,7 @@ public class SMTest extends SMTestUtils {
 	@Test
 	public void test4Guestbook() throws Exception {
 		// test deleting a portfolio
-		class eClass {};	    
-		printMethodName(eClass.class.getEnclosingMethod());
-		gLogger.info("Starting new test: " + eClass.class.getEnclosingMethod());
+ 		gLogger.info("Starting the actual new test.");
 		checkGuestBook();
 	} 
 	// end of tests
@@ -111,8 +103,6 @@ public class SMTest extends SMTestUtils {
 	
 	void checkGuestBook() throws Exception {
 		// checks to see that links and search box work
-		class eClass {};	    
-		printMethodName(eClass.class.getEnclosingMethod()); 	
 		zDriver.get(baseUrl);
 		mySleep(SLEEPTIME);
 		setWindowSize();
@@ -170,8 +160,6 @@ public class SMTest extends SMTestUtils {
 	
 	void checkLinksAndSearch() throws Exception {
 		// checks to see that links and search box work
-		class eClass {};	    
-		printMethodName(eClass.class.getEnclosingMethod()); 	
 		zDriver.get(baseUrl);
 		mySleep(SLEEPTIME);
 		setWindowSize();
@@ -231,8 +219,6 @@ public class SMTest extends SMTestUtils {
 
 	void checkMainMenubar() throws Exception {
 		// checks to see that all items in main menubar are functioning ok
-		class eClass {};	    
-		printMethodName(eClass.class.getEnclosingMethod()); 	
 		zDriver.get(baseUrl);
 		mySleep(SLEEPTIME);
 		setWindowSize();
@@ -267,8 +253,6 @@ public class SMTest extends SMTestUtils {
 	
 	void checkLinks() {
 		// checks to see that all links functioning ok
-		class eClass {};	    
-		printMethodName(eClass.class.getEnclosingMethod()); 	
 		zDriver.get(baseUrl);
 		mySleep(SLEEPTIME);
 		setWindowSize();

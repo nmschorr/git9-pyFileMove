@@ -9,7 +9,7 @@
 
 package com.nmschorr.SMedia;
 
-import java.lang.reflect.Method;
+//import java.lang.reflect.Method;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.io.File;
@@ -17,10 +17,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.awt.AWTException;
 import java.awt.Robot;
-import java.awt.Toolkit;
 
 import static java.lang.System.out;
 import static org.junit.Assert.fail;
+
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.Point; 
@@ -47,7 +47,7 @@ public class SMTestUtils {
 	static String signinval;
 	static StringBuffer verificationErrors;
 	static FileInputStream fiStream;
- 	public static Logger bLogger =  LogManager.getLogger(SMTest.class.getName());
+ 	public static Logger bLogger =  LogManager.getLogger("smtrace");
 
 	
 	class AlertThread extends Thread {           // Dismiss the Firefox crash alert
@@ -102,18 +102,12 @@ public class SMTestUtils {
 
 	
 	Logger createLogger()  {
-		out.println("\n" + "Inside createLogger - Logger is being set up. New test beginning.");
+		out.println("\n" + "Inside createLogger - Logger is being set up. New test setup beginning.");
 		Logger aLogger = LogManager.getLogger("smtrace");
 		verificationErrors = new StringBuffer();
-		//aLogger.entry();
 		aLogger.info("Logger has been set up.");
 		return aLogger;
 	}
-
-
-	protected static void printMethodName (Method aMethod) {
-	 	gLogger.info("Running Method: " + aMethod.getName());	    		
-	}	
 
 
 	protected static void mySleep(int timewait) {
