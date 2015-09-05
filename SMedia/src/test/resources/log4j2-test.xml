@@ -9,7 +9,7 @@
 	<RollingFile name="smtrace" fileName="C:\Users\user\git2\SMedia\logs\smtrace.log"
 		filePattern="C:\Users\user\git2\SMedia\logs\smtrace-%d{yyyyMMddHHmmss}.log">
 		<PatternLayout>
-			<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+			<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%t] %M %c{1}- %msg%n
 			</pattern>
 		</PatternLayout>
 		<Policies>

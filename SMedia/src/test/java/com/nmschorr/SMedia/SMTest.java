@@ -343,13 +343,12 @@ public class SMTest extends SMTestUtils {
 
 	@After
 	public void tearDown() throws Exception {
-		AlertThread thread3=new AlertThread();  
+		AlertThread thread3=new AlertThread("thread3");  
 		thread3.start();  
 		gLogger.info("Quitting Webdriver and shutting down");
 		zDriver.quit();
 		mySleep(1);
 		gLogger.info("All done with this test.");
-		//gLogger.exit(false);
 	}
 	
 	
