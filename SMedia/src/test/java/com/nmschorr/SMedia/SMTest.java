@@ -56,7 +56,7 @@ public class SMTest extends SMTestUtils {
 	}		
 
 	
-	@Test
+	//@Test
 	public void test1Menus() throws Exception {
 		// eClass is an empty class there just for returning the local method name
 		// test logging and menubar     
@@ -65,7 +65,7 @@ public class SMTest extends SMTestUtils {
 	}
 	
 
-	@Test
+	//@Test
 	public void test2Links() throws Exception {
 		// test adding a portfolio
  		gLogger.info("Starting the actual new test.");
@@ -81,7 +81,7 @@ public class SMTest extends SMTestUtils {
 	} 
 
 
-	@Test
+	//@Test
 	public void test4Guestbook() throws Exception {
 		// test deleting a portfolio
  		gLogger.info("Starting the actual new test.");
@@ -196,13 +196,17 @@ public class SMTest extends SMTestUtils {
 		gLogger.info("just clicked About Us. Title found is: " + zDriver.getTitle());
 
 		gLogger.info("Testing About Us elements, images, links, etc.");
-		// boolean tempBoo = isElementPresent(By.className("thermometer")); // Thermometer image
 		assertTrue(isElementPresent(By.className("thermometer"))); // Thermometer image
 		checkSocialIcons();
 
 		assertTrue(isElementPresent(By.linkText("LinkedIn profile"))); 
 		zDriver.findElement(By.partialLinkText("resume")).click();  //resume, first link
-		assertThat( zDriver.getTitle(), containsString("Nancy Schorr"))  ;
+
+		mySleep(SLEEPTIME);
+		String pageText = zDriver.findElement(By.cssSelector("body")).getText();	
+		assertTrue(pageText.contains("Nancy22 Schorr"));
+		assertThat( pageText, containsString("Nancy22 Schorr"))  ;
+		
 		zDriver.navigate().back();
 		mySleep(SLEEPTIME);
 
@@ -297,7 +301,6 @@ public class SMTest extends SMTestUtils {
 		gLogger.info("just clicked Precision. Title found is: " + zDriver.getTitle());
 		assertThat( zDriver.getTitle(), containsString("Home Page"))  ;
 		zDriver.navigate().back();
-
 
 		assertEquals("The Wine Dude", zDriver.findElement(By.linkText("The Wine Dude")).getText());
 		zDriver.findElement(By.linkText("The Wine Dude")).click();
