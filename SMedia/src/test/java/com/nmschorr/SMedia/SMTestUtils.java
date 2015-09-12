@@ -113,7 +113,7 @@ public class SMTestUtils {
 	protected static void mySleep(int timewait) {
 		try {
 			//gLogger.info("Inside mySleep() " + "and waiting " + timewait);	
-			Thread.sleep(timewait * 1000);	//sleep is in milliseconds
+			Thread.sleep(timewait * 300);	//sleep is in milliseconds
 		} catch (Exception e) {
 			System.out.println(e);
 		} 

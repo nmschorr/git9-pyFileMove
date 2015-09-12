@@ -43,7 +43,7 @@ public class SMTest extends SMTestUtils {
 	String automationMenuID = "#menu-item-418 > a";
 	String aboutMenuID = "#menu-item-419 > a";
 	String guestBookLink = "http://jetgalaxy.com/wordpress/guestbook/";
-	static final int SLEEPTIME=2;
+	static final int SLEEPTIME=1;
 	static final int LONGSLEEPTIME=5;
 	 
  
@@ -246,7 +246,7 @@ public class SMTest extends SMTestUtils {
 		zDriver.findElement( By.cssSelector(automationMenuID)   ).click();	
 		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Automation. Title found is: " + zDriver.getTitle());
-		assertTrue(zDriver.getTitle().contains("Automation"));
+		assertTrue(zDriver.getTitle().contains("Automated"));
 
 		zDriver.findElement( By.cssSelector(aboutMenuID)   ).click();	
 		mySleep(SLEEPTIME);
