@@ -39,7 +39,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 public class SMTest extends SMTestUtils {
 	String websiteMenuID = "#menu-item-143 > a";
 	String videoMenuID = "#menu-item-141 > a";
-	String socialMenuID = "#menu-item-142 > a";
+	//String socialMenuID = "#menu-item-142 > a";
 	String automationMenuID = "#menu-item-418 > a";
 	String aboutMenuID = "#menu-item-419 > a";
 	String guestBookLink = "http://jetgalaxy.com/wordpress/guestbook/";
@@ -165,13 +165,8 @@ public class SMTest extends SMTestUtils {
 		setWindowSize();
 		gLogger.info("About to test social media page links");
 
-		zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
-
-		zDriver.findElement(By.xpath("//div/a")).click();  //ncgrla meetup
-		mySleep(SLEEPTIME);
-		gLogger.info("just clicked NCGR-LA. Title found is: " + zDriver.getTitle());
-		assertThat( zDriver.getTitle(), containsString("NCGR Los Angeles"))  ;
-		zDriver.navigate().back();
+		//zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
+		zDriver.findElement( By.cssSelector(websiteMenuID)   ).click();	
 
 		// not going to these pages - not sure they allow it
 		gLogger.info("Checking for presense of links on page");
@@ -238,15 +233,11 @@ public class SMTest extends SMTestUtils {
 		gLogger.info("just clicked Video. Title found is: " + zDriver.getTitle());
 		assertTrue(zDriver.getTitle().contains("YouTube"));
 
-		zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
-		mySleep(SLEEPTIME);
-		gLogger.info("just clicked Social Media. Title found is: " + zDriver.getTitle());
-		assertTrue(zDriver.getTitle().contains("Social"));
-
+	
 		zDriver.findElement( By.cssSelector(automationMenuID)   ).click();	
 		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Automation. Title found is: " + zDriver.getTitle());
-		assertTrue(zDriver.getTitle().contains("Automated"));
+		assertTrue(zDriver.getTitle().contains("Automat"));
 
 		zDriver.findElement( By.cssSelector(aboutMenuID)   ).click();	
 		mySleep(SLEEPTIME);
