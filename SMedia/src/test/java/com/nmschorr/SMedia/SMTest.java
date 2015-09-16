@@ -33,7 +33,7 @@ import org.openqa.selenium.WebElement;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.containsString;
-//import static com.nmschorr.SMedia.SMTestUtils;
+
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SMTest extends SMTestUtils {
@@ -55,19 +55,19 @@ public class SMTest extends SMTestUtils {
 	}		
 
 	
-	@Test
+	//@Test
 	public void test1Menus() throws Exception {
 		// eClass is an empty class there just for returning the local method name
 		// test logging and menubar     
- 		gLogger.info("Starting the actual new test.");
+ 		gLogger.info("Starting the actual new test1.");
 		checkMainMenubar();
 	}
 	
 
-	@Test
+	//@Test
 	public void test2Links() throws Exception {
 		// test adding a portfolio
- 		gLogger.info("Starting the actual new test.");
+ 		gLogger.info("Starting the actual new test2.");
 		checkLinks();
 	}
 
@@ -75,15 +75,15 @@ public class SMTest extends SMTestUtils {
 	@Test
 	public void test3Search() throws Exception {
 		// test modifying a portfolio
- 		gLogger.info("Starting the actual new test.");
+ 		gLogger.info("Starting the actual new test3.");
 		checkLinksAndSearch();
 	} 
 
 
-	@Test
+	//@Test
 	public void test4Guestbook() throws Exception {
 		// test deleting a portfolio
- 		gLogger.info("Starting the actual new test.");
+ 		gLogger.info("Starting the actual new test4.");
 		checkGuestBook();
 	} 
 	// end of tests
@@ -182,6 +182,7 @@ public class SMTest extends SMTestUtils {
 		gLogger.info("just clicked About Us. Title found is: " + zDriver.getTitle());
 
 		gLogger.info("Testing About Us elements, images, links, etc.");
+
 		assertTrue(isElementPresent(By.className("thermometer"))); // Thermometer image
 		checkSocialIcons();
 
@@ -192,7 +193,7 @@ public class SMTest extends SMTestUtils {
 		String pageText = zDriver.findElement(By.cssSelector("body")).getText();	
 		//assertTrue(pageText.contains("Nancy Schorr"));  //uncomment to try this method instead of below line
 		assertThat( pageText, containsString("Nancy Schorr"))  ;
-		
+	
 		zDriver.navigate().back();
 		mySleep(SLEEPTIME);
 
