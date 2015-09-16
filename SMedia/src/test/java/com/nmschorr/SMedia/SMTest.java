@@ -54,7 +54,7 @@ public class SMTest extends SMTestUtils {
 	}		
 
 	
-	//@Test
+	@Test
 	public void test1Menus() throws Exception {
 		// eClass is an empty class there just for returning the local method name
 		// test logging and menubar     
@@ -63,7 +63,7 @@ public class SMTest extends SMTestUtils {
 	}
 	
 
-	//@Test
+	@Test
 	public void test2Links() throws Exception {
 		// test adding a portfolio
  		gLogger.info("Starting the actual new test2.");
@@ -79,7 +79,7 @@ public class SMTest extends SMTestUtils {
 	} 
 
 
-	//@Test
+	@Test
 	public void test4Guestbook() throws Exception {
 		// test deleting a portfolio
  		gLogger.info("Starting the actual new test4.");
