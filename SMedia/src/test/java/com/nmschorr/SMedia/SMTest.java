@@ -33,13 +33,12 @@ import org.openqa.selenium.WebElement;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.containsString;
-
+//import static com.nmschorr.SMedia.SMTestUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SMTest extends SMTestUtils {
 	String websiteMenuID = "#menu-item-143 > a";
 	String videoMenuID = "#menu-item-141 > a";
-	//String socialMenuID = "#menu-item-142 > a";
 	String automationMenuID = "#menu-item-418 > a";
 	String aboutMenuID = "#menu-item-419 > a";
 	String guestBookLink = "http://jetgalaxy.com/wordpress/guestbook/";
@@ -165,12 +164,10 @@ public class SMTest extends SMTestUtils {
 		setWindowSize();
 		gLogger.info("About to test social media page links");
 
-		//zDriver.findElement( By.cssSelector(socialMenuID)   ).click();	
 		zDriver.findElement( By.cssSelector(websiteMenuID)   ).click();	
 
 		// not going to these pages - not sure they allow it
 		gLogger.info("Checking for presense of links on page");
-		assertTrue(isElementPresent(By.linkText("Arthyr Chadbourne Fan Page"))); //facebook
 		assertTrue(isElementPresent(By.partialLinkText("Arthyr Chadbourne"))); //facebook
 		assertTrue(isElementPresent(By.partialLinkText("Frank Bukkwyd"))); //facebook
 		assertTrue(isElementPresent(By.id("7557"))); // Bukkwyd link-title won't work because of single quote
@@ -233,7 +230,6 @@ public class SMTest extends SMTestUtils {
 		gLogger.info("just clicked Video. Title found is: " + zDriver.getTitle());
 		assertTrue(zDriver.getTitle().contains("YouTube"));
 
-	
 		zDriver.findElement( By.cssSelector(automationMenuID)   ).click();	
 		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Automation. Title found is: " + zDriver.getTitle());
@@ -256,19 +252,19 @@ public class SMTest extends SMTestUtils {
 		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Websites. Title found is: " + zDriver.getTitle());
 
-		zDriver.findElement(By.cssSelector(".entry>pre>span>a>span")).click();
+		zDriver.findElement(By.linkText("Vitamin Center")).click();
 		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Vitamin Center. Title found is: " + zDriver.getTitle());
-		assertThat( zDriver.getTitle(), containsString("Vitamin Center Agoura Hills"))  ;
+		assertThat( zDriver.getTitle(), containsString("Vitamin Center"))  ;
 		zDriver.navigate().back();
 
-		zDriver.findElement(By.xpath("//div[@id='post-139']/div/pre/span[2]/a/span")).click();
+		zDriver.findElement(By.linkText("NCGR-LA")).click();
 		mySleep(SLEEPTIME);
 		gLogger.info("just clicked NCGR LA. Title found is: " + zDriver.getTitle());
-		assertEquals("NCGR LA", zDriver.getTitle());
+		assertThat( zDriver.getTitle(), containsString("NCGR"))  ;
 		zDriver.navigate().back();
 
-		zDriver.findElement(By.xpath("//div[@id='post-139']/div/pre/span[3]/a/span")).click();
+		zDriver.findElement(By.linkText("Frank Bukkwyd")).click();
 		mySleep(SLEEPTIME);
 		gLogger.info("just clicked Bukkwyd. Title found is: " + zDriver.getTitle());
 		assertThat( zDriver.getTitle(), containsString("Frank Bukkwyd"))  ;
