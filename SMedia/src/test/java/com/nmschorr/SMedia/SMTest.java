@@ -173,12 +173,6 @@ public class SMTest extends SMTestUtils {
 		assertTrue(isElementPresent(By.id("7557"))); // Bukkwyd link-title won't work because of single quote
 		gLogger.info("links all there");
 
-		zDriver.findElement(By.partialLinkText("Social Media Defined")).click(); //wiki
-		mySleep(SLEEPTIME);
-		gLogger.info("just clicked Social Media. Title found is: " + zDriver.getTitle());
-		assertThat( zDriver.getTitle(), containsString("Wikipedia"))  ;
-		zDriver.navigate().back();
-
 		checkSocialIcons();
 
 		//new page
