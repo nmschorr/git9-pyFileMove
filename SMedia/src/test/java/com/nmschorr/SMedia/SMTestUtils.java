@@ -64,6 +64,7 @@ public class SMTestUtils {
 				robot.delay(1000);		
 				Thread.currentThread();
 				Thread.sleep(6000);
+				playWithCrashAlert();
 				dismissFirefoxCrashAlert();  // closes Firefox error alerts
 				Thread.currentThread();
 				Thread.sleep(2000);
@@ -148,6 +149,14 @@ public class SMTestUtils {
 	}
 
 
+    static void playWithCrashAlert() {
+		
+    	HWND hwnd = User32.INSTANCE.FindWindow (null, "Firefox"); // window title
+		HWND hwndcontainer= User32.INSTANCE.FindWindow (null, "Plugin Container for Firefox"); // window title
+	    mySleep(900000);
+    }
+		
+		
 	protected static void dismissFirefoxCrashAlert() {
 		HWND hwnd = User32.INSTANCE.FindWindow
 				(null, "Firefox"); // window title
