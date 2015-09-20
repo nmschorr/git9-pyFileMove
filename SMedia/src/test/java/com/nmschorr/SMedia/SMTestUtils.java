@@ -60,11 +60,14 @@ public class SMTestUtils {
 		
 		@Override
 		public void run(){  
-			System.out.println("2nd thread is running...");  
+			System.out.println("Inside run() of AlertThread method.");  
 			try {		
 				Thread.currentThread();
 				Thread.sleep(6000);
-				//playWithCrashAlert();
+				
+				if (useThreads == false) //demo mode for windows alert bug
+				      playWithCrashAlert();
+				
 				dismissFirefoxCrashAlert();  // closes Firefox error alerts
 				Thread.currentThread();
 				Thread.sleep(2000);
@@ -89,7 +92,8 @@ public class SMTestUtils {
 	protected WebDriver createDriver(Logger tLogger) throws AWTException, InterruptedException {
 		tLogger.info("Just entered createDriver()");
 		tLogger.info("! Starting new FirefoxDriver !");
-				
+		
+		System.out.println("Starting new thread to handle windows alerts");
 		AlertThread tAlertThread = new AlertThread("tAlertThread");  
 		if ( useThreads == true ) {
 		  tAlertThread.start();  

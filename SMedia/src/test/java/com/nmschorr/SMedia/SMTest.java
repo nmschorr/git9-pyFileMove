@@ -30,6 +30,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.containsString;
  
@@ -313,6 +314,7 @@ public class SMTest extends SMTestUtils {
 
 	@After
 	public void tearDown() throws Exception {
+		System.out.println("Starting new thread to handle windows alerts");
 		AlertThread thread3=new AlertThread("thread3");  
 		thread3.start();  
 		gLogger.info("Quitting Webdriver and shutting down");
