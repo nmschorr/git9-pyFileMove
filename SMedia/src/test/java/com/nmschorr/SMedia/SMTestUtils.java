@@ -158,12 +158,12 @@ public class SMTestUtils {
 	protected static void dismissFirefoxCrashAlert() {
 		HWND hwnd = User32.INSTANCE.FindWindow (null, "Firefox"); // window title
 		String containerStr = "Plugin Container for Firefox";
-		HWND hwndcontainer= User32.INSTANCE.FindWindow (null, containerStr); // window title
+		HWND hwndcontainer= User32.INSTANCE.FindWindow (null, containerStr);  
 
 		if (hwnd == null) {
 			bLogger.info("Firefoxdialog is not showing");
 		}
-		else{
+		else {
 			bLogger.info("Firefoxdialog IS showing. Closing it now.");
 			User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null); 			
 		}
@@ -171,7 +171,7 @@ public class SMTestUtils {
 		if (hwndcontainer == null) {
 			bLogger.info("FirefoxContainerDialog is not showing");
 		}
-		else{
+		else {
 			bLogger.info("FirefoxContainerDialog IS showing. Closing it now.");
 			User32.INSTANCE.SetForegroundWindow(hwndcontainer);   // bring to front
 			User32.INSTANCE.PostMessage(hwndcontainer, WinUser.WM_CLOSE, null, null); 			
