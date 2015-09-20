@@ -40,7 +40,7 @@ public class SMTestUtils {
  	public static Logger gLogger;
 	protected final static String baseUrl = "http://jetgalaxy.com/wordpress/";
 	private final static String dirname = "C:\\Users\\user\\git2\\SMedia\\PropertyFiles\\" ;
-	private final static String pname = "schorrmediaprops.properties" ;
+	private final static String pname = "SMedia.properties" ;
 	private final static String propname = dirname + pname ;
 	private final static String outfileName = "E:\\Workspace\\firefox.log";	
 	protected final static Integer WAIT_TIME = 12;
@@ -50,8 +50,9 @@ public class SMTestUtils {
 	static FileInputStream fiStream;
  	public static Logger bLogger =  LogManager.getLogger("smtrace");
  //	
- 	int runningNormally = 1;  // change to 0 to show FireFox alert bug
-//	
+ 	public static boolean useThreads = true;  // change to false to show FireFox alert bug
+ 										   // true is the normal setting
+ 	
 	class AlertThread extends Thread {           // Dismiss the Firefox crash alert
 		public AlertThread (String tname) {
 			super(tname);
@@ -59,7 +60,7 @@ public class SMTestUtils {
 		
 		@Override
 		public void run(){  
-			bLogger.info("2nd thread is running...");  
+			System.out.println("2nd thread is running...");  
 			try {		
 				Thread.currentThread();
 				Thread.sleep(6000);
@@ -90,7 +91,7 @@ public class SMTestUtils {
 		tLogger.info("! Starting new FirefoxDriver !");
 				
 		AlertThread tAlertThread = new AlertThread("tAlertThread");  
-		if ( runningNormally == 1 ) {
+		if ( useThreads == true ) {
 		  tAlertThread.start();  
 		}
 		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
@@ -117,7 +118,7 @@ public class SMTestUtils {
 			System.out.println(e);
 		} 
 	} 
-
+	
 	
 	protected static void createProperties()  {
 		System.out.println("PROPNAME name is" + propname);
@@ -136,6 +137,28 @@ public class SMTestUtils {
 		} 
 	}
 
+	public static  void  initIntegerProps()  {
+		String errorString = "ERROR - no value present";
+		String useThreadStr =  theProperties.getProperty("useThreads", errorString);
+		useThreads = Integer.parseInt(useThreadStr);
+		gLogger.info("The property value is " + useThreadStr );    	
+	}
+
+
+	protected static void initStringProps()  {
+		//String errorString = "ERROR - no value present";
+		String newVal="";
+		//String myval = String.getString("myval");
+		//gLogger.info("The property value for " + val + " is " + intVal );    	
+	}
+
+	public static void checkRunValue()  {
+		String newVal =  theProperties.getProperty("useThreadsString", "error");
+		gLogger.info("The property value is " + newVal ); 
+		if (newVal.equals("0"))
+				useThreads = false;
+		else useThreads = true;
+	}
 
 	protected static void createLogFile (FirefoxProfile fp) throws Exception {
 		File outfile = new File(outfileName);
@@ -156,6 +179,7 @@ public class SMTestUtils {
 		
 		
 	protected static void dismissFirefoxCrashAlert() {
+		bLogger.info("Inside dismissFirefoxCrashAlert");
 		HWND hwnd = User32.INSTANCE.FindWindow (null, "Firefox"); // window title
 		String containerStr = "Plugin Container for Firefox";
 		HWND hwndcontainer= User32.INSTANCE.FindWindow (null, containerStr);  

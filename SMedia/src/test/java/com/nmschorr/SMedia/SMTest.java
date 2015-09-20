@@ -45,9 +45,11 @@ public class SMTest extends SMTestUtils {
 	static final int LONGSLEEPTIME=5;
 	 
  
-	@Before  //run only once before all tests
+	@Before  //run once before each test
 	public void setUp() throws Exception {		
-				//createProperties();  // if we need properties this is where they would get initialized
+		createProperties();  // if we need properties this is where they would get initialized
+		checkRunValue();
+		System.out.println ("value of useThreads is: " + Boolean.toString(useThreads) );
 		gLogger = createLogger();
 		zDriver = createDriver(gLogger);
 		gLogger.info("Logger and Driver setup. Done with setUp().");
