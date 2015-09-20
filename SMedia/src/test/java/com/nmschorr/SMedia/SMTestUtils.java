@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.awt.AWTException;
-import java.awt.Robot;
+//import java.awt.Robot;
 
 import static java.lang.System.out;
 import static org.junit.Assert.fail;
@@ -33,6 +33,7 @@ import com.sun.jna.platform.win32.User32;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.platform.win32.WinUser;
 
+
 // @SuppressWarnings("unused")
 public class SMTestUtils {
 	protected static WebDriver zDriver;
@@ -48,8 +49,9 @@ public class SMTestUtils {
 	static StringBuffer verificationErrors;
 	static FileInputStream fiStream;
  	public static Logger bLogger =  LogManager.getLogger("smtrace");
-
-	
+ //	
+ 	int runningNormally = 1;  // change to 0 to show FireFox alert bug
+//	
 	class AlertThread extends Thread {           // Dismiss the Firefox crash alert
 		public AlertThread (String tname) {
 			super(tname);
@@ -57,32 +59,26 @@ public class SMTestUtils {
 		
 		@Override
 		public void run(){  
-			//System.out.println("2nd thread is running...");  
 			bLogger.info("2nd thread is running...");  
 			try {		
-				Robot robot = new Robot();
-				robot.delay(1000);		
 				Thread.currentThread();
 				Thread.sleep(6000);
-				playWithCrashAlert();
+				//playWithCrashAlert();
 				dismissFirefoxCrashAlert();  // closes Firefox error alerts
 				Thread.currentThread();
 				Thread.sleep(2000);
-				//		following is alternate method
-				//				robot.mouseMove(855, 351);    
-				//				robot.mousePress(InputEvent.BUTTON1_MASK);
-				//				robot.mouseRelease(InputEvent.BUTTON1_MASK);
+					//	following is alternate method for dismissing alert
+					//				Robot robot = new Robot();
+					//				robot.delay(1000);		
+					//				robot.mouseMove(855, 351);    
+					//				robot.mousePress(InputEvent.BUTTON1_MASK);
+					//				robot.mouseRelease(InputEvent.BUTTON1_MASK);
 			} catch (Exception e)      {   System.out.println(e); }
 		}  
 	}
 
 	
 	protected static void setWindowSize() {
-		//	replaces: zDriver.manage().window().maximize();
-		//		Toolkit localToolkit = Toolkit.getDefaultToolkit();
-		//		int screen_width = (int) localToolkit.getScreenSize().getWidth()-172;
-		//		int screen_height = (int) localToolkit.getScreenSize().getHeight()-392;  // make it shorter so we have some room
-		//Dimension screenResolution = new Dimension(screen_width, screen_height );	
 		Dimension winSize = new Dimension(964, 590 );	
 		zDriver.manage().window().setPosition(new Point(0,0));
 		zDriver.manage().window().setSize(winSize);
@@ -93,8 +89,10 @@ public class SMTestUtils {
 		tLogger.info("Just entered createDriver()");
 		tLogger.info("! Starting new FirefoxDriver !");
 				
-		AlertThread thread2=new AlertThread("thread2");  
-		thread2.start();  
+		AlertThread tAlertThread = new AlertThread("tAlertThread");  
+		if ( runningNormally == 1 ) {
+		  tAlertThread.start();  
+		}
 		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
 		tLogger.info("Done creating FirefoxDriver!");
 		localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
@@ -150,18 +148,17 @@ public class SMTestUtils {
 
 
     static void playWithCrashAlert() {
-		
-    	HWND hwnd = User32.INSTANCE.FindWindow (null, "Firefox"); // window title
-		HWND hwndcontainer= User32.INSTANCE.FindWindow (null, "Plugin Container for Firefox"); // window title
-	    mySleep(900000);
+    	HWND hwnd = User32.INSTANCE.FindWindow (null, "Firefox");  
+
+		User32 myuser32= User32.INSTANCE;  
+	    mySleep(900000);  // so we can play with the alert
     }
 		
 		
 	protected static void dismissFirefoxCrashAlert() {
-		HWND hwnd = User32.INSTANCE.FindWindow
-				(null, "Firefox"); // window title
-		HWND hwndcontainer= User32.INSTANCE.FindWindow
-				(null, "Plugin Container for Firefox"); // window title
+		HWND hwnd = User32.INSTANCE.FindWindow (null, "Firefox"); // window title
+		String containerStr = "Plugin Container for Firefox";
+		HWND hwndcontainer= User32.INSTANCE.FindWindow (null, containerStr); // window title
 
 		if (hwnd == null) {
 			bLogger.info("Firefoxdialog is not showing");
@@ -175,10 +172,9 @@ public class SMTestUtils {
 			bLogger.info("FirefoxContainerDialog is not showing");
 		}
 		else{
-			bLogger.info("Firefoxdialog IS showing. Closing it now.");
+			bLogger.info("FirefoxContainerDialog IS showing. Closing it now.");
 			User32.INSTANCE.SetForegroundWindow(hwndcontainer);   // bring to front
 			User32.INSTANCE.PostMessage(hwndcontainer, WinUser.WM_CLOSE, null, null); 			
-			//User32.INSTANCE.ShowWindow(hwndcontainer, 9 );        // SW_RESTORE
 		}
 	}
 
