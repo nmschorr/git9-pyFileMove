@@ -154,7 +154,7 @@ public class SMTestUtils {
 
 	public static void checkRunValue()  {
 		String newVal =  theProperties.getProperty("useThreadsString", "error");
-		gLogger.info("The property value is " + newVal ); 
+		System.out.println("The property value is " + newVal ); 
 		if (newVal.equals("0"))
 				useThreads = false;
 		else useThreads = true;
