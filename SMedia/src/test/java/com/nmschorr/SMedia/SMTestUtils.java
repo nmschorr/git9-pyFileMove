@@ -41,7 +41,7 @@ public class SMTestUtils {
 	protected final static String baseUrl = "http://jetgalaxy.com/wordpress/";
 	private final static String dirname = "C:\\Users\\user\\git2\\SMedia\\PropertyFiles\\" ;
 	private final static String pname = "SMedia.properties" ;
-	private final static String propname = dirname + pname ;
+	private final static String propFileName = dirname + pname ;
 	private final static String outfileName = "E:\\Workspace\\firefox.log";	
 	protected final static Integer WAIT_TIME = 12;
 	static Properties theProperties;
@@ -50,8 +50,8 @@ public class SMTestUtils {
 	static FileInputStream fiStream;
  	public static Logger bLogger =  LogManager.getLogger("smtrace");
  //	
- 	public static boolean useThreads = true;  // change to false to show FireFox alert bug
- 										   // true is the normal setting
+ 	public static boolean showAlertBugMode = false;  // change to true to show FireFox alert bug
+ 										   // false is the normal default setting
  	
 	class AlertThread extends Thread {           // Dismiss the Firefox crash alert
 		public AlertThread (String tname) {
@@ -64,10 +64,7 @@ public class SMTestUtils {
 			try {		
 				Thread.currentThread();
 				Thread.sleep(6000);
-				
-				if (useThreads == false) //demo mode for windows alert bug
-				      playWithCrashAlert();
-				
+							
 				dismissFirefoxCrashAlert();  // closes Firefox error alerts
 				Thread.currentThread();
 				Thread.sleep(2000);
@@ -90,22 +87,26 @@ public class SMTestUtils {
 
 	
 	protected WebDriver createDriver(Logger tLogger) throws AWTException, InterruptedException {
-		tLogger.info("Just entered createDriver()");
-		tLogger.info("! Starting new FirefoxDriver !");
+		tLogger.info("Just entered createDriver() and Starting new FirefoxDriver.");
 		
-		System.out.println("Starting new thread to handle windows alerts");
-		AlertThread tAlertThread = new AlertThread("tAlertThread");  
-		if ( useThreads == true ) {
-		  tAlertThread.start();  
+		if ( showAlertBugMode == false ) {
+			System.out.println("Starting new thread to handle windows alerts");
+			// the following 2 lines will dismiss the Windows crash alert dialog
+			AlertThread tAlertThread = new AlertThread("tAlertThread");  
+			tAlertThread.start();  
 		}
 		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
-		tLogger.info("Done creating FirefoxDriver!");
 		localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
+		tLogger.info("Done creating FirefoxDriver!");
+		if ( showAlertBugMode == false ) {
+			// make wait time long so we can play with the Windows alert 
+			localDriver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS); //for the entire test run
+		}
 		return localDriver;
 	}
 
 	
-	Logger createLogger()  {
+	public static Logger createLogger()  {
 		out.println("\n" + "Inside createLogger - Logger is being set up. New test setup beginning.");
 		Logger aLogger = LogManager.getLogger("smtrace");
 		verificationErrors = new StringBuffer();
@@ -125,8 +126,8 @@ public class SMTestUtils {
 	
 	
 	protected static void createProperties()  {
-		System.out.println("PROPNAME name is" + propname);
-		try {	 fiStream = new FileInputStream(propname);
+		System.out.println("PROPNAME name is: " + propFileName);
+		try {	 fiStream = new FileInputStream(propFileName);
 		} catch (FileNotFoundException e) {  
 			System.out.println(e);
 			fail("failure in createProperties()");
@@ -141,27 +142,12 @@ public class SMTestUtils {
 		} 
 	}
 
-	public static  void  initIntegerProps()  {
-		String errorString = "ERROR - no value present";
-		String useThreadStr =  theProperties.getProperty("useThreads", errorString);
-		useThreads = Integer.parseInt(useThreadStr);
-		gLogger.info("The property value is " + useThreadStr );    	
-	}
-
-
-	protected static void initStringProps()  {
-		//String errorString = "ERROR - no value present";
-		String newVal="";
-		//String myval = String.getString("myval");
-		//gLogger.info("The property value for " + val + " is " + intVal );    	
-	}
-
 	public static void checkRunValue()  {
-		String newVal =  theProperties.getProperty("useThreadsString", "error");
+		String newVal =  theProperties.getProperty("showAlertBugMode", "error");
 		System.out.println("The property value is " + newVal ); 
-		if (newVal.equals("0"))
-				useThreads = false;
-		else useThreads = true;
+		if (newVal.equals("1"))
+			showAlertBugMode = true;
+		else showAlertBugMode = false;
 	}
 
 	protected static void createLogFile (FirefoxProfile fp) throws Exception {
@@ -172,15 +158,6 @@ public class SMTestUtils {
 		fp.setPreference("webdriver.log.driver", "DEBUG");
 		fp.setPreference("webdriver.log.file", outfileName);
 	}
-
-
-    static void playWithCrashAlert() {
-    	HWND hwnd = User32.INSTANCE.FindWindow (null, "Firefox");  
-
-		User32 myuser32= User32.INSTANCE;  
-	    mySleep(900000);  // so we can play with the alert
-    }
-		
 		
 	protected static void dismissFirefoxCrashAlert() {
 		bLogger.info("Inside dismissFirefoxCrashAlert");
@@ -211,5 +188,12 @@ public class SMTestUtils {
 		out.println("Running this next: " + toPrt);
 	}
 }
+
+		//	protected static void initStringProps()  {
+		//		//String errorString = "ERROR - no value present";
+		//		String newVal="";
+		//		//String myval = String.getString("myval");
+		//		//gLogger.info("The property value for " + val + " is " + intVal );    	
+		//	}
 
 

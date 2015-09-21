@@ -25,6 +25,7 @@ import org.junit.runners.MethodSorters;
 import org.junit.AfterClass;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -45,15 +46,21 @@ public class SMTest extends SMTestUtils {
 	static final int SLEEPTIME=1;
 	static final int LONGSLEEPTIME=5;
 	 
- 
+	@BeforeClass  //run once before each testsuite
+	public static void setUpClass() throws Exception  {
+		System.out.println ("Inside @BeforeClass setUpClass()" );
+		createProperties();  //  propertiee initialized
+		checkRunValue();
+		System.out.println ("Value of showAlertBugMode is: " + Boolean.toString(showAlertBugMode) );
+		gLogger = createLogger();
+		gLogger.info("Logger setup. Done with setUpClass().");
+	}	
+	
+
 	@Before  //run once before each test
 	public void setUp() throws Exception {		
-		createProperties();  // if we need properties this is where they would get initialized
-		checkRunValue();
-		System.out.println ("value of useThreads is: " + Boolean.toString(useThreads) );
-		gLogger = createLogger();
 		zDriver = createDriver(gLogger);
-		gLogger.info("Logger and Driver setup. Done with setUp().");
+		gLogger.info("Driver setup. Done with setUp().");
 	}		
 
 	
