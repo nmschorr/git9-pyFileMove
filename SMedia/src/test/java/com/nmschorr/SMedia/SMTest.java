@@ -227,12 +227,10 @@ public class SMTest extends SMTestUtils {
 	void shortTest() throws Exception {
 		// checks to see that all items in main menubar are functioning ok
 		zDriver.get(baseUrl);
-		mySleep(SLEEPTIME);
-		setWindowSize();
 
 		//Websites menuitem
 		zDriver.findElement( By.cssSelector(websiteMenuID)).click();    	    
-		mySleep(SLEEPTIME);
+		//mySleep(SLEEPTIME);
 		gLogger.info("just clicked Websites. Title found is: " + zDriver.getTitle());
 		assertTrue(zDriver.getTitle().contains("Websites"));
 	}
