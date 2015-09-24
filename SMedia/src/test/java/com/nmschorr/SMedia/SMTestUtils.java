@@ -18,12 +18,14 @@ import java.io.FileNotFoundException;
 import java.awt.AWTException;
 //import java.awt.Robot;
 
+
 import static java.lang.System.out;
 import static org.junit.Assert.fail;
 
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.Point; 
+import org.openqa.selenium.WebDriver.Timeouts;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.apache.logging.log4j.LogManager;
@@ -95,12 +97,6 @@ public class SMTestUtils {
 			tAlertThread.start();  
 		}
 		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
-				//		if ( showAlertBugMode == true ) {
-				//			// make wait time long so we can play with the Windows alert 
-				//			localDriver.manage().timeouts().implicitlyWait(90000, TimeUnit.SECONDS); //for the entire test run
-				//		}
-				//		else
-				//			localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
 		myLogger.info("Done creating FirefoxDriver!");
 		return localDriver;
 	}
@@ -109,14 +105,10 @@ public class SMTestUtils {
 	public static void setDriverWaits(WebDriver locDriver) {
 		if ( showAlertBugMode == true ) {
 			// make wait time long so we can play with the Windows alert 
-			locDriver.manage().timeouts().implicitlyWait(90000, TimeUnit.SECONDS); //for the entire test run
+			locDriver.manage().timeouts().implicitlyWait(1200, TimeUnit.SECONDS); //for the entire test run
 		}
 		else
 			locDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
-	
-		System.out.println("printing timeouts ");
-		String timeout=locDriver.manage().timeouts().toString();
-		System.out.println(locDriver.manage().timeouts().toString());
 	}
 	
 	
