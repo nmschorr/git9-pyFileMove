@@ -63,7 +63,7 @@ public class SMTestUtils {
 			System.out.println("Inside run() of AlertThread method.");  
 			try {		
 				Thread.currentThread();
-				Thread.sleep(6000);
+				Thread.sleep(6000);   // a wait to give time for the alert to appear
 							
 				dismissFirefoxCrashAlert();  // closes Firefox error alerts
 				Thread.currentThread();
@@ -96,12 +96,13 @@ public class SMTestUtils {
 			tAlertThread.start();  
 		}
 		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
-		localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
-		tLogger.info("Done creating FirefoxDriver!");
-		if ( showAlertBugMode == false ) {
+		if ( showAlertBugMode == true ) {
 			// make wait time long so we can play with the Windows alert 
-			localDriver.manage().timeouts().implicitlyWait(9000, TimeUnit.SECONDS); //for the entire test run
+			localDriver.manage().timeouts().implicitlyWait(90000, TimeUnit.SECONDS); //for the entire test run
 		}
+		else
+			localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
+		tLogger.info("Done creating FirefoxDriver!");
 		return localDriver;
 	}
 
@@ -162,24 +163,13 @@ public class SMTestUtils {
 	protected static void dismissFirefoxCrashAlert() {
 		bLogger.info("Inside dismissFirefoxCrashAlert");
 		HWND hwnd = User32.INSTANCE.FindWindow (null, "Firefox"); // window title
-		String containerStr = "Plugin Container for Firefox";
-		HWND hwndcontainer= User32.INSTANCE.FindWindow (null, containerStr);  
-
+	
 		if (hwnd == null) {
 			bLogger.info("Firefoxdialog is not showing");
 		}
 		else {
 			bLogger.info("Firefoxdialog IS showing. Closing it now.");
 			User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null); 			
-		}
-
-		if (hwndcontainer == null) {
-			bLogger.info("FirefoxContainerDialog is not showing");
-		}
-		else {
-			bLogger.info("FirefoxContainerDialog IS showing. Closing it now.");
-			User32.INSTANCE.SetForegroundWindow(hwndcontainer);   // bring to front
-			User32.INSTANCE.PostMessage(hwndcontainer, WinUser.WM_CLOSE, null, null); 			
 		}
 	}
 
@@ -195,5 +185,29 @@ public class SMTestUtils {
 		//		//String myval = String.getString("myval");
 		//		//gLogger.info("The property value for " + val + " is " + intVal );    	
 		//	}
+
+//protected static void dismissFirefoxCrashAlert() {
+//	bLogger.info("Inside dismissFirefoxCrashAlert");
+//	HWND hwnd = User32.INSTANCE.FindWindow (null, "Firefox"); // window title
+//	String containerStr = "Plugin Container for Firefox";
+//	HWND hwndcontainer= User32.INSTANCE.FindWindow (null, containerStr);  
+//
+//	if (hwnd == null) {
+//		bLogger.info("Firefoxdialog is not showing");
+//	}
+//	else {
+//		bLogger.info("Firefoxdialog IS showing. Closing it now.");
+//		User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null); 			
+//	}
+//
+//	if (hwndcontainer == null) {
+//		bLogger.info("FirefoxContainerDialog is not showing");
+//	}
+//	else {
+//		bLogger.info("FirefoxContainerDialog IS showing. Closing it now.");
+//		User32.INSTANCE.SetForegroundWindow(hwndcontainer);   // bring to front
+//		User32.INSTANCE.PostMessage(hwndcontainer, WinUser.WM_CLOSE, null, null); 			
+//	}
+//}
 
 

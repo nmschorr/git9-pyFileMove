@@ -63,8 +63,16 @@ public class SMTest extends SMTestUtils {
 		gLogger.info("Driver setup. Done with setUp().");
 	}		
 
-	
 	@Test
+	public void testDemo() throws Exception {
+		// eClass is an empty class there just for returning the local method name
+		// test logging and menubar     
+ 		gLogger.info("Starting the actual new testDemo. Waiting a few seconds.");
+ 		mySleep(10);
+		shortTest();
+	}
+	
+	//@Test
 	public void test1Menus() throws Exception {
 		// eClass is an empty class there just for returning the local method name
 		// test logging and menubar     
@@ -73,7 +81,7 @@ public class SMTest extends SMTestUtils {
 	}
 	
 
-	@Test
+	//@Test
 	public void test2Links() throws Exception {
 		// test adding a portfolio
  		gLogger.info("Starting the actual new test2.");
@@ -81,7 +89,7 @@ public class SMTest extends SMTestUtils {
 	}
 
 
-	@Test
+	//@Test
 	public void test3Search() throws Exception {
 		// test modifying a portfolio
  		gLogger.info("Starting the actual new test3.");
@@ -89,7 +97,7 @@ public class SMTest extends SMTestUtils {
 	} 
 
 
-	@Test
+	//@Test
 	public void test4Guestbook() throws Exception {
 		// test deleting a portfolio
  		gLogger.info("Starting the actual new test4.");
@@ -216,6 +224,18 @@ public class SMTest extends SMTestUtils {
 		gLogger.info("End of tests. All tests complete.");		
 	}
 
+	void shortTest() throws Exception {
+		// checks to see that all items in main menubar are functioning ok
+		zDriver.get(baseUrl);
+		mySleep(SLEEPTIME);
+		setWindowSize();
+
+		//Websites menuitem
+		zDriver.findElement( By.cssSelector(websiteMenuID)).click();    	    
+		mySleep(SLEEPTIME);
+		gLogger.info("just clicked Websites. Title found is: " + zDriver.getTitle());
+		assertTrue(zDriver.getTitle().contains("Websites"));
+	}
 
 	void checkMainMenubar() throws Exception {
 		// checks to see that all items in main menubar are functioning ok
