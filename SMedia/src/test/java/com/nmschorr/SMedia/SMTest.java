@@ -60,6 +60,7 @@ public class SMTest extends SMTestUtils {
 	@Before  //run once before each test
 	public void setUp() throws Exception {		
 		zDriver = createDriver(gLogger);
+		setDriverWaits(zDriver);
 		gLogger.info("Driver setup. Done with setUp().");
 	}		
 
@@ -68,7 +69,6 @@ public class SMTest extends SMTestUtils {
 		// eClass is an empty class there just for returning the local method name
 		// test logging and menubar     
  		gLogger.info("Starting the actual new testDemo. Waiting a few seconds.");
- 		mySleep(10);
 		shortTest();
 	}
 	

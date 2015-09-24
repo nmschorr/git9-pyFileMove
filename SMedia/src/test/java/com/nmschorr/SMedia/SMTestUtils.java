@@ -62,22 +62,63 @@ public class SMTestUtils {
 		public void run(){  
 			System.out.println("Inside run() of AlertThread method.");  
 			try {		
-				Thread.currentThread();
 				Thread.sleep(6000);   // a wait to give time for the alert to appear
-							
+							          // when you call this whatever thread is current will grab it
 				dismissFirefoxCrashAlert();  // closes Firefox error alerts
-				Thread.currentThread();
-				Thread.sleep(2000);
-					//	following is alternate method for dismissing alert
-					//				Robot robot = new Robot();
-					//				robot.delay(1000);		
-					//				robot.mouseMove(855, 351);    
-					//				robot.mousePress(InputEvent.BUTTON1_MASK);
-					//				robot.mouseRelease(InputEvent.BUTTON1_MASK);
-			} catch (Exception e)      {   System.out.println(e); }
+				Thread.sleep(2000);   // give time for alert to go away before continuing other thread
+				} catch (Exception e)      {   System.out.println(e); }
 		}  
 	}
 
+	
+	protected static void dismissFirefoxCrashAlert() {
+		bLogger.info("Inside dismissFirefoxCrashAlert");
+		HWND hwnd = User32.INSTANCE.FindWindow (null, "Firefox"); // window title
+	
+		if (hwnd == null) {
+			bLogger.info("Firefoxdialog is not showing");
+		}
+		else {
+			bLogger.info("Firefoxdialog IS showing. Closing it now.");
+			User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null); 			
+		}
+	}
+	
+		
+	protected WebDriver createDriver(Logger myLogger) throws AWTException, InterruptedException {
+		myLogger.info("Just entered createDriver() and Starting new FirefoxDriver.");
+		
+		if ( showAlertBugMode == false ) {
+			System.out.println("Starting new thread to handle windows alerts");
+					// the following 2 lines will dismiss the Windows crash alert dialog
+			AlertThread tAlertThread = new AlertThread("tAlertThread");  
+			tAlertThread.start();  
+		}
+		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
+				//		if ( showAlertBugMode == true ) {
+				//			// make wait time long so we can play with the Windows alert 
+				//			localDriver.manage().timeouts().implicitlyWait(90000, TimeUnit.SECONDS); //for the entire test run
+				//		}
+				//		else
+				//			localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
+		myLogger.info("Done creating FirefoxDriver!");
+		return localDriver;
+	}
+
+	
+	public static void setDriverWaits(WebDriver locDriver) {
+		if ( showAlertBugMode == true ) {
+			// make wait time long so we can play with the Windows alert 
+			locDriver.manage().timeouts().implicitlyWait(90000, TimeUnit.SECONDS); //for the entire test run
+		}
+		else
+			locDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
+	
+		System.out.println("printing timeouts ");
+		String timeout=locDriver.manage().timeouts().toString();
+		System.out.println(locDriver.manage().timeouts().toString());
+	}
+	
 	
 	protected static void setWindowSize() {
 		Dimension winSize = new Dimension(964, 590 );	
@@ -85,28 +126,7 @@ public class SMTestUtils {
 		zDriver.manage().window().setSize(winSize);
 	}
 
-	
-	protected WebDriver createDriver(Logger tLogger) throws AWTException, InterruptedException {
-		tLogger.info("Just entered createDriver() and Starting new FirefoxDriver.");
-		
-		if ( showAlertBugMode == false ) {
-			System.out.println("Starting new thread to handle windows alerts");
-			// the following 2 lines will dismiss the Windows crash alert dialog
-			AlertThread tAlertThread = new AlertThread("tAlertThread");  
-			tAlertThread.start();  
-		}
-		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
-		if ( showAlertBugMode == true ) {
-			// make wait time long so we can play with the Windows alert 
-			localDriver.manage().timeouts().implicitlyWait(90000, TimeUnit.SECONDS); //for the entire test run
-		}
-		else
-			localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
-		tLogger.info("Done creating FirefoxDriver!");
-		return localDriver;
-	}
 
-	
 	public static Logger createLogger()  {
 		out.println("\n" + "Inside createLogger - Logger is being set up. New test setup beginning.");
 		Logger aLogger = LogManager.getLogger("smtrace");
@@ -160,19 +180,6 @@ public class SMTestUtils {
 		fp.setPreference("webdriver.log.file", outfileName);
 	}
 		
-	protected static void dismissFirefoxCrashAlert() {
-		bLogger.info("Inside dismissFirefoxCrashAlert");
-		HWND hwnd = User32.INSTANCE.FindWindow (null, "Firefox"); // window title
-	
-		if (hwnd == null) {
-			bLogger.info("Firefoxdialog is not showing");
-		}
-		else {
-			bLogger.info("Firefoxdialog IS showing. Closing it now.");
-			User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null); 			
-		}
-	}
-
 	
 	public static void printMe(String toPrt) {
 		out.println("Running this next: " + toPrt);
@@ -209,5 +216,9 @@ public class SMTestUtils {
 //		User32.INSTANCE.PostMessage(hwndcontainer, WinUser.WM_CLOSE, null, null); 			
 //	}
 //}
+//	following is alternate method for dismissing alert
+//				Robot robot = new Robot(); robot.delay(1000);		
+//				robot.mouseMove(855, 351);  robot.mousePress(InputEvent.BUTTON1_MASK);
+//				robot.mouseRelease(InputEvent.BUTTON1_MASK);
 
 
