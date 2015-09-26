@@ -60,7 +60,6 @@ public class SMTest extends SMTestUtils {
 	@Before  //run once before each test
 	public void setUp() throws Exception {		
 		zDriver = createDriver(gLogger);
-		setDriverWaits(zDriver);
 		gLogger.info("Driver setup. Done with setUp().");
 	}		
 
@@ -228,9 +227,7 @@ public class SMTest extends SMTestUtils {
 		// checks to see that all items in main menubar are functioning ok
 		zDriver.get(baseUrl);
 
-		//Websites menuitem
 		zDriver.findElement( By.cssSelector(websiteMenuID)).click();    	    
-		//mySleep(SLEEPTIME);
 		gLogger.info("just clicked Websites. Title found is: " + zDriver.getTitle());
 		assertTrue(zDriver.getTitle().contains("Websites"));
 	}

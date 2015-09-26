@@ -9,16 +9,12 @@
 
 package com.nmschorr.SMedia;
 
-//import java.lang.reflect.Method;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.awt.AWTException;
-//import java.awt.Robot;
-
-
 import static java.lang.System.out;
 import static org.junit.Assert.fail;
 
@@ -97,21 +93,12 @@ public class SMTestUtils {
 			tAlertThread.start();  
 		}
 		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
+		localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
 		myLogger.info("Done creating FirefoxDriver!");
 		return localDriver;
 	}
 
-	
-	public static void setDriverWaits(WebDriver locDriver) {
-		if ( showAlertBugMode == true ) {
-			// make wait time long so we can play with the Windows alert 
-			locDriver.manage().timeouts().implicitlyWait(1200, TimeUnit.SECONDS); //for the entire test run
-		}
-		else
-			locDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
-	}
-	
-	
+		
 	protected static void setWindowSize() {
 		Dimension winSize = new Dimension(964, 590 );	
 		zDriver.manage().window().setPosition(new Point(0,0));
