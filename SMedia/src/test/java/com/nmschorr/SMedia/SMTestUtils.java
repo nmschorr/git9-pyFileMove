@@ -15,13 +15,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.awt.AWTException;
+
 import static java.lang.System.out;
 import static org.junit.Assert.fail;
 
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.Point; 
 import org.openqa.selenium.WebDriver.Timeouts;
+import org.openqa.selenium.WebDriver.Timeouts.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.apache.logging.log4j.LogManager;
@@ -92,9 +95,11 @@ public class SMTestUtils {
 			AlertThread tAlertThread = new AlertThread("tAlertThread");  
 			tAlertThread.start();  
 		}
-		WebDriver localDriver = new FirefoxDriver();	 // using this to see if bug goes away
+		FirefoxProfile p = new FirefoxProfile();
+		p.setPreference("webdriver.log.file", "C:\\tmp\\firefox_console.log");
+		WebDriver localDriver = new FirefoxDriver(p);	 // using this to see if bug goes away
 		localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
-		myLogger.info("Done creating FirefoxDriver!");
+	    myLogger.info("Done creating FirefoxDriver!");
 		return localDriver;
 	}
 
