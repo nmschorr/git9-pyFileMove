@@ -50,10 +50,24 @@ public class SMTestUtils {
 	static StringBuffer verificationErrors;
 	static FileInputStream fiStream;
  	public static Logger bLogger =  LogManager.getLogger("smtrace");
- //	
  	public static boolean showAlertBugMode = false;  // change to true to show FireFox alert bug
  										   // false is the normal default setting
+
  	
+ //----11111---first need this -------
+ 		protected static void dismissFirefoxCrashAlert() {
+ 			bLogger.info("Inside dismissFirefoxCrashAlert");
+ 			HWND hwnd = User32.INSTANCE.FindWindow (null, "Firefox"); // window title
+ 		
+ 			if (hwnd == null) {
+ 				bLogger.info("Firefoxdialog is not showing");
+ 			}
+ 			else {
+ 				bLogger.info("Firefoxdialog IS showing. Closing it now.");
+ 				User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null); 			
+ 			}
+ 		}
+ //----222222------need class to create 2nd thread----
 	class AlertThread extends Thread {           // Dismiss the Firefox crash alert
 		public AlertThread (String tname) {
 			super(tname);
@@ -72,20 +86,7 @@ public class SMTestUtils {
 	}
 
 	
-	protected static void dismissFirefoxCrashAlert() {
-		bLogger.info("Inside dismissFirefoxCrashAlert");
-		HWND hwnd = User32.INSTANCE.FindWindow (null, "Firefox"); // window title
-	
-		if (hwnd == null) {
-			bLogger.info("Firefoxdialog is not showing");
-		}
-		else {
-			bLogger.info("Firefoxdialog IS showing. Closing it now.");
-			User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null); 			
-		}
-	}
-	
-		
+//---33333----need place to run second thread-------		
 	protected WebDriver createDriver(Logger myLogger) throws AWTException, InterruptedException {
 		myLogger.info("Just entered createDriver() and Starting new FirefoxDriver.");
 		
@@ -104,6 +105,7 @@ public class SMTestUtils {
 	}
 
 		
+	
 	protected static void setWindowSize() {
 		Dimension winSize = new Dimension(964, 590 );	
 		zDriver.manage().window().setPosition(new Point(0,0));
@@ -113,7 +115,9 @@ public class SMTestUtils {
 
 	public static Logger createLogger()  {
 		out.println("\n" + "Inside createLogger - Logger is being set up. New test setup beginning.");
-		Logger aLogger = LogManager.getLogger("smtrace");
+		//Logger aLogger = LogManager.getLogger("root");
+		Logger aLogger = LogManager.getRootLogger();
+	 
 		verificationErrors = new StringBuffer();
 		aLogger.info("Logger has been set up.");
 		return aLogger;

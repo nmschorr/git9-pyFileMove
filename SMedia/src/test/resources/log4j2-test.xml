@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="trace">
+
+<Configuration status="warn">
 	<Appenders>
 		<Console name="console" target="SYSTEM_OUT">
 			<PatternLayout
 				pattern="[%-5level] %d{yyyyMMdd-HHmmss} [%t] %M- %msg%n" />
 		</Console>
-	
-	<RollingFile name="smtrace" fileName="C:\Users\user\git2\SMedia\logs\smtrace.log"
+		
+
+	<RollingFile name="rollingfile" fileName="C:\Users\user\git2\SMedia\logs\smtrace.log"
 		filePattern="C:\Users\user\git2\SMedia\logs\smtrace-%d{yyyyMMddHHmmss}.log">
 		<PatternLayout>
 			<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss} [%t] %M- %msg%n
 			</pattern>
 		</PatternLayout>
 		<Policies>
-		 <OnStartupTriggeringPolicy />
-				
+		  <OnStartupTriggeringPolicy />				
 		</Policies>
 	</RollingFile>
 
 	</Appenders>
 
 	<Loggers>
-	
-		<Root level="all" additivity="false">
-			<AppenderRef ref="smtrace" level="all" />
-			<AppenderRef ref="console" />
+		<Root level="all">
+			<AppenderRef ref="console" level="all"/>
+			<AppenderRef ref="rollingfile" level="all"/>
 		</Root>
 	</Loggers>
 </Configuration>
