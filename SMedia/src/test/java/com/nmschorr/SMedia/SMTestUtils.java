@@ -88,10 +88,10 @@ public class SMTestUtils {
 	
 //---33333----need place to run second thread-------		
 	protected WebDriver createDriver(Logger myLogger) throws AWTException, InterruptedException {
-		myLogger.info("Just entered createDriver() and Starting new FirefoxDriver.");
+		myLogger.debug("Just entered createDriver() and Starting new FirefoxDriver.");
 		
 		if ( showAlertBugMode == false ) {
-			System.out.println("Starting new thread to handle windows alerts");
+			myLogger.debug("Starting new thread to handle windows alerts");
 					// the following 2 lines will dismiss the Windows crash alert dialog
 			AlertThread tAlertThread = new AlertThread("tAlertThread");  
 			tAlertThread.start();  
@@ -100,7 +100,7 @@ public class SMTestUtils {
 		p.setPreference("webdriver.log.file", "C:\\tmp\\firefox_console.log");
 		WebDriver localDriver = new FirefoxDriver(p);	 // using this to see if bug goes away
 		localDriver.manage().timeouts().implicitlyWait(WAIT_TIME, TimeUnit.SECONDS); //for the entire test run
-	    myLogger.info("Done creating FirefoxDriver!");
+	    myLogger.debug("Done creating FirefoxDriver!");
 		return localDriver;
 	}
 
@@ -114,9 +114,8 @@ public class SMTestUtils {
 
 
 	public static Logger createLogger()  {
-		out.println("\n" + "Inside createLogger - Logger is being set up. New test setup beginning.");
-		//Logger aLogger = LogManager.getLogger("root");
 		Logger aLogger = LogManager.getRootLogger();
+		aLogger.debug("\n" + "Inside createLogger - Logger is being set up. New test setup beginning.");
 	 
 		verificationErrors = new StringBuffer();
 		aLogger.info("Logger has been set up.");
@@ -138,7 +137,7 @@ public class SMTestUtils {
 		System.out.println("PROPNAME name is: " + propFileName);
 		try {	 fiStream = new FileInputStream(propFileName);
 		} catch (FileNotFoundException e) {  
-			System.out.println(e);
+			out.println(e);
 			fail("failure in createProperties()");
 		}
 		try {

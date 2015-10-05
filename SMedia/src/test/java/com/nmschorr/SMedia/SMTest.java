@@ -49,11 +49,11 @@ public class SMTest extends SMTestUtils {
 	@BeforeClass  //run once before each testsuite
 	public static void setUpClass() throws Exception  {
 		System.out.println ("Inside @BeforeClass setUpClass()" );
+		gLogger = createLogger();
 		createProperties();  //  propertiee initialized
 		checkRunValue();
-		System.out.println ("Value of showAlertBugMode is: " + Boolean.toString(showAlertBugMode) );
-		gLogger = createLogger();
-		gLogger.info("Logger setup. Done with setUpClass().");
+		gLogger.info("Value of showAlertBugMode is: " + Boolean.toString(showAlertBugMode) );
+		gLogger.info("Done with setUpClass().");
 	}	
 	
 
@@ -61,6 +61,7 @@ public class SMTest extends SMTestUtils {
 	public void setUp() throws Exception {		
 		zDriver = createDriver(gLogger);
 		gLogger.info("Driver setup. Done with setUp().");
+		gLogger.trace("If you see this message then trace logging is on.");
 	}		
 
 	@Test
@@ -336,7 +337,7 @@ public class SMTest extends SMTestUtils {
 
 	@After
 	public void tearDown() throws Exception {
-		System.out.println("Starting new thread to handle windows alerts");
+		gLogger.debug("Starting new thread to handle windows alerts");
 		AlertThread thread3=new AlertThread("thread3");  
 		thread3.start();  
 		gLogger.info("Quitting Webdriver and shutting down");
@@ -348,6 +349,6 @@ public class SMTest extends SMTestUtils {
 	
 	@AfterClass
 	public static void afterClass() {
-		System.out.println("Done with Test Suite. Goodbye.");
+		gLogger.info("Done with Test Suite. Goodbye.");
 	}
 }

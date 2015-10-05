@@ -7,7 +7,6 @@
 				pattern="[%-5level] %d{yyyyMMdd-HHmmss} [%t] %M- %msg%n" />
 		</Console>
 		
-
 	<RollingFile name="rollingfile" fileName="C:\Users\user\git2\SMedia\logs\smtrace.log"
 		filePattern="C:\Users\user\git2\SMedia\logs\smtrace-%d{yyyyMMddHHmmss}.log">
 		<PatternLayout>
