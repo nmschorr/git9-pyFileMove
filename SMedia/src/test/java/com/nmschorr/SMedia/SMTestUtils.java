@@ -27,6 +27,7 @@ import org.openqa.selenium.WebDriver.Timeouts;
 import org.openqa.selenium.WebDriver.Timeouts.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -77,7 +78,7 @@ public class SMTestUtils {
 		public void run(){  
 			System.out.println("Inside run() of AlertThread method.");  
 			try {		
-				Thread.sleep(6000);   // a wait to give time for the alert to appear
+				Thread.sleep(9000);   // a wait to give time for the alert to appear
 							          // when you call this whatever thread is current will grab it
 				dismissFirefoxCrashAlert();  // closes Firefox error alerts
 				Thread.sleep(2000);   // give time for alert to go away before continuing other thread
@@ -122,6 +123,17 @@ public class SMTestUtils {
 		return aLogger;
 	}
 
+	protected static void createLogFile (FirefoxProfile fp) throws Exception {
+		File outfile = new File(outfileName);
+		if (!outfile.exists())  
+			outfile.createNewFile();
+
+		fp.setPreference("webdriver.log.driver", "DEBUG");
+		fp.setPreference("webdriver.log.file", outfileName);
+	}
+
+	
+
 
 	protected static void mySleep(int timewait) {
 		try {
@@ -158,14 +170,6 @@ public class SMTestUtils {
 		else showAlertBugMode = false;
 	}
 
-	protected static void createLogFile (FirefoxProfile fp) throws Exception {
-		File outfile = new File(outfileName);
-		if (!outfile.exists())  
-			outfile.createNewFile();
-
-		fp.setPreference("webdriver.log.driver", "DEBUG");
-		fp.setPreference("webdriver.log.file", outfileName);
-	}
 		
 	
 	public static void printMe(String toPrt) {
