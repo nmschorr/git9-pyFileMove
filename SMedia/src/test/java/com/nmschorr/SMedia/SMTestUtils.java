@@ -68,6 +68,7 @@ public class SMTestUtils {
  				User32.INSTANCE.PostMessage(hwnd, WinUser.WM_CLOSE, null, null); 			
  			}
  		}
+ 		
  //----222222------need class to create 2nd thread----
 	class AlertThread extends Thread {           // Dismiss the Firefox crash alert
 		public AlertThread (String tname) {
@@ -78,7 +79,7 @@ public class SMTestUtils {
 		public void run(){  
 			System.out.println("Inside run() of AlertThread method.");  
 			try {		
-				Thread.sleep(9000);   // a wait to give time for the alert to appear
+				Thread.sleep(6000);   // a wait to give time for the alert to appear
 							          // when you call this whatever thread is current will grab it
 				dismissFirefoxCrashAlert();  // closes Firefox error alerts
 				Thread.sleep(2000);   // give time for alert to go away before continuing other thread
