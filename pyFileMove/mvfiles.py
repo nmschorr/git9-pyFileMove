@@ -10,11 +10,21 @@ Created on Nov 22, 2015
 import re
 import os
 import shutil
+import sys
+sys.dont_write_bytecode = True   #prevents .pyc files
 
-from fileslist import dirTypes
-
+sys.path.append(os.path.abspath("E:\\Workspace\\PrivateFiles\\"))
 if __name__ == '__main__':   pass
 
+from fileslist import *
+
+
+impfiles=sys.modules.keys()
+for i in impfiles :
+    if re.search("fileslist", str(i)):
+        print "yes its here: " + str(i)
+
+print "sys.path is: " + str(sys.path)
 
 workDir= 'C:\\Users\\user\\Desktop\\MYDOCS'
 outDir='C:\\Users\\user\\Desktop\\moved'
