@@ -11,33 +11,33 @@ import re
 import os
 import shutil
 import sys
-PYTHONDONTWRITEBYTECODE = True   #prevents .pyc files
+PYTHONDONTWRITEBYTECODE = True   #prevents bytecode .pyc files from being created
 
-sys.path.append(os.path.abspath("E:\\Workspace\\PrivateFiles\\"))
+## you can put the fileslist.py file here: 
+sys.path.append(os.path.abspath("E:\\Workspace\\PrivateFiles\\")) 
+
 if __name__ == '__main__':   pass
 
-from fileslist import *
+from fileslist import dirNames
 
-
-impfiles=sys.modules.keys()
+impfiles=sys.modules.keys()  ## print out the python modules we're using
 for i in impfiles :
-    if re.search("fileslist", str(i)):
+    if re.search("fileslist", str(i)):  # make sure fileslist.py can be found
         print "yes its here: " + str(i)
 
-print "sys.path is: " + str(sys.path)
+print "sys.path is: " + str(sys.path)  ## just for fun
 
-workDir= 'C:\\Users\\user\\Desktop\\MYDOCS'
-outDir='C:\\Users\\user\\Desktop\\moved'
-quotes = '"'
+inDirToSort= 'C:\\Users\\user\\Desktop\\MYDOCS'  ## where your files to be sorted are
+outDir='C:\\Users\\user\\Desktop\\moved'    ## where you are sorting to
  
 def mywalk(inputDir):
     for rootDir, subDirs, eachFile in os.walk(inputDir):
-        fullFilePathName=[rootDir,subDirs,eachFile]     #--------ss note1
+        fullFilePathName=[rootDir,subDirs,eachFile]      
         print "-------------  working on " + str(fullFilePathName)
        
         for efile in eachFile:
             print "!!-----------------------------starting over --newval equals: " +  efile
-            for fName in dirTypes:
+            for fName in dirNames:
                 print "fName is: " + fName
              
                 if re.search(fName, efile, re.IGNORECASE ):
@@ -56,7 +56,7 @@ def mywalk(inputDir):
                     break
                 
                         
-mywalk(workDir)
+mywalk(inDirToSort)
 
 print "end of program"
 
