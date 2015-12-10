@@ -11,7 +11,7 @@ import re
 import os
 import shutil
 import sys
-sys.dont_write_bytecode = True   #prevents .pyc files
+PYTHONDONTWRITEBYTECODE = True   #prevents .pyc files
 
 sys.path.append(os.path.abspath("E:\\Workspace\\PrivateFiles\\"))
 if __name__ == '__main__':   pass
