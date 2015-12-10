@@ -37,23 +37,28 @@ def mywalk(inputDir):
        
         for efile in eachFile:
             print "!!-----------------------------starting over --newval equals: " +  efile
-            for fName in dirNames:
-                print "fName is: " + fName
+            for dirNameItem in dirNames:
+                print "dirNameItem is: " + dirNameItem
              
-                if re.search(fName, efile, re.IGNORECASE ):
+                if re.search(dirNameItem, efile, re.IGNORECASE ):
                     print "FOUND MATCH. efile is: " + str(efile)
                    
                     oldpath =  os.path.join(rootDir, efile)
-                    newdir =  "c:/Users/user/Desktop/moved/" + fName
-                    print "rootDir is: " + rootDir
-                   
-                    print "oldpath is: " + oldpath
+                    newdir =  "c:/Users/user/Desktop/moved/" + dirNameItem
+                    
+                    print "rootDir is: " + rootDir +" oldpath is: " + oldpath
                     print "newdir is: " + newdir
-                    print(  os.path.isfile(oldpath) )                 
-                    print(  os.path.isdir(newdir) )                 
-                    shutil.move(oldpath, newdir)
+                    print(  os.path.isfile(oldpath) )    ## make sure they're there              
+                    print(  os.path.isdir(newdir) ) 
+                    
+                    if dirNameItem == 'test' :     ## an exception to the rule
+                        print "found test"                
+                        shutil.move(oldpath, "C:\\Users\\user\\Desktop\\moved\\exceptions")
+                    else :
+                        shutil.move(oldpath, newdir)
+                        
                     print "-------done with a loop"
-                    break
+                    break  ## breaking because there is no sense in continuing with this item
                 
                         
 mywalk(inDirToSort)
