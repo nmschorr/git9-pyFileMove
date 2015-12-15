@@ -163,16 +163,7 @@ def tryNM(myIP) :
     
     print "going to print has_tcp23: "
     print str(nm[myIP].has_tcp(23) )
-    
-    #print "going to print tcp22: "
-    #print str(nm[myIP]['tcp'][22] )
-    
-    #print "going to print tcp23: "
-    #print str(nm[myIP].tcp(23) )
-    
-    #print "going to print scaninfo22: "
-    #print str(nm[myIP]['tcp'][22]['state']   )
-    
+        
     for host in nm.all_hosts():
         print('Host : %s (%s)' % (host, nm[host].hostname()))
         print('State : %s' % nm[host].state())
