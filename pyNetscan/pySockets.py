@@ -8,7 +8,6 @@ import netaddr
 import nmap
 import sys
 
-
 wdtvlive = '192.168.1.68'     ## port 80, 139, 443 open
 uraniaAddy = '192.168.1.76'
 network = "192.168.1.250/24"
