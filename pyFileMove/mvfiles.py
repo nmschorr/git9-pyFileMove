@@ -27,19 +27,15 @@ sys.path.append(os.path.abspath("E:\\Workspace\\PrivateFiles\\")) ## this is whe
 
 if __name__ == '__main__':   pass
 
-#import fileslist
-
 from fileslist import dirNames
 
 
 desktopLoc ='C:\\Users\\user\\Desktop'
-#inDirToSort= 'C:\\Users\\user\\Desktop\\MYDOCS'  ## where your files to be sorted are
 inDirToSort = desktopLoc + "\\MYDOCS"  ## where your files to be sorted are
 outDir = desktopLoc + '\\movedFinance'    ## where you are sorting to
 
 print "inDirToSort : " + inDirToSort
 
-## you can put the fileslist.py file here: 
 
 impfiles=sys.modules.keys()  ## print out the python modules we're using
 for i in impfiles :
@@ -50,39 +46,43 @@ print "sys.path is: " + str(sys.path) + "\n" ## just for fun
 
  
 def mywalk(inputDir):
-    for rootDir, subDirs, eachFiles in os.walk(inputDir):
-        fullFilePathName=[rootDir,subDirs,eachFiles]      
-        print "-------------  working on " + str(fullFilePathName)
-       
-        for eachFile in eachFiles:
-            print "!!-----------------------------starting over --newval equals: " +  eachFile
-            for dirTypeItem in dirNames:
-                print "dirTypeItem is: " + dirTypeItem
-             
-                if re.search(dirTypeItem, eachFile, re.IGNORECASE ):
-                    print "FOUND MATCH. eachFile is: " + str(eachFile)
-                   
-                    oldpath =  os.path.join(rootDir, eachFile)
-                    newdir =  outDir + "\\" + dirTypeItem
-                    ##newdir =  "c:\\Users\\user\\Desktop\\moved\\" + dirTypeItem
-                  
-                    print "rootDir is: " + rootDir +" oldpath is: " + oldpath
-                    print "newdir is: " + newdir
-                    print "os.path.isfile(oldpath): " + str(  os.path.isfile(oldpath) )    ## make sure they're there              
-                    print "os.path.isdir(newdir): " + str(  os.path.isdir(newdir) ) 
+    myyDir = "C:\Users\user\Desktop\MYDOCS"
+    for eachFiles in os.listdir(myyDir):
+
+        print "!!-----------------------------starting over --newval equals: " +  eachFile
+        
+        for dirTypeItem in dirNames:
+                # print "dirTypeItem is: " + dirTypeItem
+
+            if re.search(dirTypeItem, eachFile, re.IGNORECASE ):
+                print "FOUND MATCH. eachFile is: " + str(eachFile)
+               
+                oldpath =  os.path.join(rootDir, eachFile)
+                newdir =  outDir + "\\" + dirTypeItem
+                ##newdir =  "c:\\Users\\user\\Desktop\\moved\\" + dirTypeItem
+              
+                print "rootDir is: " + rootDir +" oldpath is: " + oldpath
+                print "newdir is: " + newdir
+                print "os.path.isfile(oldpath): " + str(  os.path.isfile(oldpath) )    ## make sure they're there              
+                print "os.path.isdir(newdir): " + str(  os.path.isdir(newdir) ) 
+                
+                ### need to check here for new dir before moving
+                newDirexists = os.path.exists(newdir)
+                print "val of new dir exists:  "   + str(newDirexists)              
+               
+                try :
                     
-                    try :
-                        
-                        if dirTypeItem == 'test' :     ## an exception to the rule
-                            print "found test"                
-                            shutil.move(oldpath, "C:\\Users\\user\\Desktop\\moved\\exceptions")
-                        else :
-                            shutil.move(oldpath, newdir)
-                    except Exception, e: 
-                        print "exception caught: " + str(e)
-                        
-                    print "-------done with a loop" + "\n"
-                    break  ## breaking because there is no sense in continuing with this item
+                    if dirTypeItem == 'test' :     ## an exception to the rule
+                        print "found test"                
+                        # shutil.move(oldpath, "C:\\Users\\user\\Desktop\\moved\\exceptions")
+                    else :
+                        print "would do" + str(oldpath) + " plus: " + str(newdir)
+                       ## shutil.move(oldpath, newdir)
+                except Exception, e: 
+                    print "exception caught: " + str(e)
+                    
+                print "-------done with a loop" + "\n"
+                break  ## breaking because there is no sense in continuing with this item
                 
                         
 mywalk(inDirToSort)
