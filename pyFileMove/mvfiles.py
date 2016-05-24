@@ -30,63 +30,72 @@ if __name__ == '__main__':   pass
 from fileslist import dirNames
 
 
-desktopLoc ='C:\\Users\\user\\Desktop'
-inDirToSort = desktopLoc + "\\MYDOCS"  ## where your files to be sorted are
-outDir = desktopLoc + '\\movedFinance'    ## where you are sorting to
-
-print "inDirToSort : " + inDirToSort
+inDir =  "C:\\Users\\user\\Desktop\\MYDOCS"  ## where your files to be sorted are
+outDir = "C:\\Users\\user\\Desktop\\movedFinance"    ## where you are sorting to
 
 
 impfiles=sys.modules.keys()  ## print out the python modules we're using
-for i in impfiles :
-    if re.search("fileslist", str(i)):  # make sure fileslist.py can be found
-        print "Next module imported: " + str(i)
 
-print "sys.path is: " + str(sys.path) + "\n" ## just for fun
+for i in impfiles :
+    
+    if re.search("fileslist", str(i)):  # make sure fileslist.py can be found
+        print str(i);
+
+    #print "sys.path is: " + str(sys.path) + "\n" ## just for fun
 
  
 def mywalk(inputDir):
-    myyDir = "C:\Users\user\Desktop\MYDOCS"
-    for eachFiles in os.listdir(myyDir):
-
-        print "!!-----------------------------starting over --newval equals: " +  eachFile
-        
+    print " "
+    
+    for eachFile in os.listdir(inputDir):
+        #print "here now"
+        inFilenameWPath =  os.path.join(inputDir, eachFile)
+      
         for dirTypeItem in dirNames:
-                # print "dirTypeItem is: " + dirTypeItem
+            #print "inside for loop"
+            #print "dirTypeItem : " + str(dirTypeItem) + " dirNames: " + str(dirNames)
+            
+            
 
             if re.search(dirTypeItem, eachFile, re.IGNORECASE ):
-                print "FOUND MATCH. eachFile is: " + str(eachFile)
-               
-                oldpath =  os.path.join(rootDir, eachFile)
-                newdir =  outDir + "\\" + dirTypeItem
-                ##newdir =  "c:\\Users\\user\\Desktop\\moved\\" + dirTypeItem
-              
-                print "rootDir is: " + rootDir +" oldpath is: " + oldpath
-                print "newdir is: " + newdir
-                print "os.path.isfile(oldpath): " + str(  os.path.isfile(oldpath) )    ## make sure they're there              
-                print "os.path.isdir(newdir): " + str(  os.path.isdir(newdir) ) 
+                print ""
+                print "New loop. Filename is: " + eachFile + " dirTypeItem: " + str(dirTypeItem)
+
+             
+                newOutDir =  outDir + "\\" + dirTypeItem
+                outFilenameWPath =  os.path.join(newOutDir, eachFile)               
+                newDirExists = os.path.isdir(newOutDir)
                 
-                ### need to check here for new dir before moving
-                newDirexists = os.path.exists(newdir)
-                print "val of new dir exists:  "   + str(newDirexists)              
+                
+                
+                sameNewFilenameAlreadyExists = os.path.exists(outFilenameWPath)
                
-                try :
+              
+                print "Does newOutDir exist?   " + str(  newDirExists ) 
+                if not newDirExists :
+                    print "  ERROR!!! Destination dir not there! Can't move to location :" + str(outFilenameWPath)
+                    print "  Can't move file: " + str(eachFile)
                     
-                    if dirTypeItem == 'test' :     ## an exception to the rule
-                        print "found test"                
-                        # shutil.move(oldpath, "C:\\Users\\user\\Desktop\\moved\\exceptions")
-                    else :
-                        print "would do" + str(oldpath) + " plus: " + str(newdir)
-                       ## shutil.move(oldpath, newdir)
-                except Exception, e: 
-                    print "exception caught: " + str(e)
+                if sameNewFilenameAlreadyExists :
+                    print "  ERROR!! same filename Already exists : " + str(outFilenameWPath) + " - skipping"
+                               
+                if (newDirExists and not sameNewFilenameAlreadyExists) :
                     
-                print "-------done with a loop" + "\n"
-                break  ## breaking because there is no sense in continuing with this item
+                    try :
+                        print "--> Going to move " + str(inFilenameWPath) + " to " + str(newOutDir)
+                        shutil.move(inFilenameWPath, newOutDir)
+                        
+                    except Exception, e: 
+                        print "Exception caught: " + str(e)
+                
+                ## end of newDirexists   
+                #print "-------done with a loop" + "\n"
+        
+        ##break  ## breaking because there is no sense in continuing with this item
                 
                         
-mywalk(inDirToSort)
+mywalk(inDir)
 
-print "end of program"
+print "End of Program"
 
 
