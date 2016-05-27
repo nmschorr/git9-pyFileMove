@@ -21,6 +21,7 @@ import sys
 import re
 import shutil
 import traceback
+import time
 
 sys.path.append(os.path.abspath("E:\\Workspace\\PrivateFiles\\")) ## this is where the list
                                     ### of file types is kept
@@ -32,7 +33,8 @@ from fileslist import dirNames
 
 inDir =  "C:\\Users\\user\\Desktop\\MYDOCS"  ## where your files to be sorted are
 outDir = "C:\\Users\\user\\Desktop\\movedFinance"    ## where you are sorting to
-
+changed_list = []
+unchanged_list = []
 
 impfiles=sys.modules.keys()  ## print out the python modules we're using
 
@@ -49,7 +51,7 @@ def mywalk(inputDir):
     
     for eachFile in os.listdir(inputDir):
         #print "here now"
-        inFilenameWPath =  os.path.join(inputDir, eachFile)
+        origFilenameWPath =  os.path.join(inputDir, eachFile)
       
         for dirTypeItem in dirNames:
             #print "inside for loop"
@@ -63,27 +65,40 @@ def mywalk(inputDir):
 
              
                 newOutDir =  outDir + "\\" + dirTypeItem
-                outFilenameWPath =  os.path.join(newOutDir, eachFile)               
-                newDirExists = os.path.isdir(newOutDir)
-                
-                
-                
-                sameNewFilenameAlreadyExists = os.path.exists(outFilenameWPath)
+                newFilenameWPath =  os.path.join(newOutDir, eachFile)               
+                newDirExistsBoolean = os.path.isdir(newOutDir)
+                  
+                sameNewFnamAlreadyExistsBoo = os.path.exists(newFilenameWPath)
                
               
-                print "Does newOutDir exist?   " + str(  newDirExists ) 
-                if not newDirExists :
-                    print "  ERROR!!! Destination dir not there! Can't move to location :" + str(outFilenameWPath)
+                print "Does newOutDir exist? :   " + str(  newDirExistsBoolean ) 
+                if not newDirExistsBoolean :
                     print "  Can't move file: " + str(eachFile)
-                    
-                if sameNewFilenameAlreadyExists :
-                    print "  ERROR!! same filename Already exists : " + str(outFilenameWPath) + " - skipping"
-                               
-                if (newDirExists and not sameNewFilenameAlreadyExists) :
+                    print "  ERROR!!! Destination dir " + '\"' +str(newOutDir)+ '\"' + " not there! Can't move to file-name-location : \"" + str(newFilenameWPath)+"\""
+                    unchanged_list.append(str(origFilenameWPath))
+
+                if sameNewFnamAlreadyExistsBoo :
+                    print "  ERROR!! same filename Already exists : " + str(newFilenameWPath) + " - skipping"
+                    unchanged_list.append(str(origFilenameWPath))
+           
+                if (newDirExistsBoolean and not sameNewFnamAlreadyExistsBoo) :
                     
                     try :
-                        print "--> Going to move " + str(inFilenameWPath) + " to " + str(newOutDir)
-                        shutil.move(inFilenameWPath, newOutDir)
+                        print "-----> GOING TO MOVE \"" + str(origFilenameWPath) + "\" to \"" + str(newOutDir)+"\""
+                        shutil.move(origFilenameWPath, newOutDir)
+                        time.sleep(.3)
+                        newChangeExistsBoo = os.path.exists(newFilenameWPath)
+                        print "newChangeExistsBoo " + str(newChangeExistsBoo)
+                        print "------------->>check for filename: " + str(newFilenameWPath)
+                        
+                        
+                        if newChangeExistsBoo :
+                            print "write successful!"
+                            changed_list.append(str(newFilenameWPath))
+                        else :
+                            print "write failed!"
+                            unchanged_list.append(str(origFilenameWPath))
+
                         
                     except Exception, e: 
                         print "Exception caught: " + str(e)
@@ -96,6 +111,14 @@ def mywalk(inputDir):
                         
 mywalk(inDir)
 
-print "End of Program"
+print "\nHere's what got changed:"
+for s in changed_list :
+    print s
+    
+print "\nHere's what didn't change:"
+for s in unchanged_list :
+    print s
+
+print "\nEnd of Program"
 
 
