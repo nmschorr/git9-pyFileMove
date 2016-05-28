@@ -13,9 +13,11 @@ Created on Nov 22, 2015
 ##    the regular system PATH
 ## PYTHONPATH=C:\Python27;C:\Python27\libs;C:\Python27\Lib;C:\Python27\DLLs;C:\Python27\Scripts;C:\Python27\Lib\site-packages;
 ##    C:\Python27\lib\site-packages;C:\Python27\lib
-
+## this file uses tabs that are equal to four spaces
+## using \ for line continuation
+     
 PYTHONDONTWRITEBYTECODE = True   #prevents bytecode .pyc files from being created
-
+     
 import os
 import sys
 import re
@@ -24,73 +26,63 @@ import traceback
 import time
 
 sys.path.append(os.path.abspath("E:\\Workspace\\PrivateFiles\\")) ## this is where the list
-                                    ### of file types is kept
-
-if __name__ == '__main__':   pass
-
-from fileslist import dirNames
-
+from fileslist import dirNames  ## this line must be after sys.path.append
+                                             ### of file types is kept
+if __name__ == "__main__":   pass
 
 inDir =  "C:\\Users\\user\\Desktop\\MYDOCS"  ## where your files to be sorted are
-outDir = "C:\\Users\\user\\Desktop\\movedFinance"    ## where you are sorting to
+outDir = "C:\\Users\\user\\Desktop\\movedFinance"     ## where you are sorting to
+impfiles=sys.modules.keys()  ## print out the python modules we're using
 changed_list = []
 unchanged_list = []
+_DQ = "\"" ##double quote "
 
-impfiles=sys.modules.keys()  ## print out the python modules we're using
+print "\n"
 
 for i in impfiles :
-    
     if re.search("fileslist", str(i)):  # make sure fileslist.py can be found
         print str(i);
+        #print "sys.path is: " + str(sys.path) + "\n" ## just for fun
 
-    #print "sys.path is: " + str(sys.path) + "\n" ## just for fun
-
- 
 def mywalk(inputDir):
-    print " "
-    
     for eachFile in os.listdir(inputDir):
         #print "here now"
         origFilenameWPath =  os.path.join(inputDir, eachFile)
       
         for dirTypeItem in dirNames:
-            #print "inside for loop"
             #print "dirTypeItem : " + str(dirTypeItem) + " dirNames: " + str(dirNames)
             
-            
-
             if re.search(dirTypeItem, eachFile, re.IGNORECASE ):
-                print ""
-                print "New loop. Filename is: " + eachFile + " dirTypeItem: " + str(dirTypeItem)
-
-             
+                print "\nNew loop. Filename is: " + _DQ + eachFile + _DQ + " and dirtype = " \
+                    + _DQ + str(dirTypeItem) + _DQ
                 newOutDir =  outDir + "\\" + dirTypeItem
                 newFilenameWPath =  os.path.join(newOutDir, eachFile)               
                 newDirExistsBoolean = os.path.isdir(newOutDir)
-                  
                 sameNewFnamAlreadyExistsBoo = os.path.exists(newFilenameWPath)
-               
-              
                 print "Does newOutDir exist? :   " + str(  newDirExistsBoolean ) 
+                
                 if not newDirExistsBoolean :
-                    print "  Can't move file: " + str(eachFile)
-                    print "  ERROR!!! Destination dir " + '\"' +str(newOutDir)+ '\"' + " not there! Can't move to file-name-location : \"" + str(newFilenameWPath)+"\""
+                    print "  Can't move file: " + _DQ + str(eachFile) + _DQ
+                    print "  ERROR!!! Destination dir " + _DQ + str(newOutDir) + _DQ \
+                        + " is not there! Can't move to file-name-location : " \
+                        +_DQ + str(newFilenameWPath) + _DQ
                     unchanged_list.append(str(origFilenameWPath))
 
                 if sameNewFnamAlreadyExistsBoo :
-                    print "  ERROR!! same filename Already exists : " + str(newFilenameWPath) + " - skipping"
+                    print "  ERROR!! same destination filename already exists : " \
+                        + _DQ + str(newFilenameWPath) + _DQ  + " - skipping"
                     unchanged_list.append(str(origFilenameWPath))
            
                 if (newDirExistsBoolean and not sameNewFnamAlreadyExistsBoo) :
-                    
                     try :
-                        print "-----> GOING TO MOVE \"" + str(origFilenameWPath) + "\" to \"" + str(newOutDir)+"\""
+                        print "-----> GOING TO MOVE " + _DQ + str(origFilenameWPath) +_DQ + " to: " \
+                            +_DQ + str(newOutDir) + _DQ
                         shutil.move(origFilenameWPath, newOutDir)
-                        time.sleep(.3)
+                        time.sleep(.7)  ## give it 7/10ths of a second to move the file
                         newChangeExistsBoo = os.path.exists(newFilenameWPath)
-                        print "newChangeExistsBoo " + str(newChangeExistsBoo)
-                        print "------------->>check for filename: " + str(newFilenameWPath)
-                        
+                        print "New file is there now = " + str(newChangeExistsBoo)
+                        print "------------->>Check manually for filename: " \
+                            + _DQ + str(newFilenameWPath) +_DQ
                         
                         if newChangeExistsBoo :
                             print "write successful!"
@@ -99,15 +91,10 @@ def mywalk(inputDir):
                             print "write failed!"
                             unchanged_list.append(str(origFilenameWPath))
 
-                        
                     except Exception, e: 
                         print "Exception caught: " + str(e)
                 
-                ## end of newDirexists   
-                #print "-------done with a loop" + "\n"
-        
-        ##break  ## breaking because there is no sense in continuing with this item
-                
+                ## end of newDirexists                   
                         
 mywalk(inDir)
 
