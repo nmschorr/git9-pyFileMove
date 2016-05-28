@@ -35,7 +35,7 @@ outDir = "C:\\Users\\user\\Desktop\\movedFinance"     ## where you are sorting t
 impfiles=sys.modules.keys()  ## print out the python modules we're using
 changed_list = []
 unchanged_list = []
-_DQ = "\"" ##double quote "
+DQT = "\"" ##double quote "
 
 print "\n"
 
@@ -53,8 +53,8 @@ def mywalk(inputDir):
             #print "dirTypeItem : " + str(dirTypeItem) + " dirNames: " + str(dirNames)
             
             if re.search(dirTypeItem, eachFile, re.IGNORECASE ):
-                print "\nNew loop. Filename is: " + _DQ + eachFile + _DQ + " and dirtype = " \
-                    + _DQ + str(dirTypeItem) + _DQ
+                print "\nNew loop. Filename is: " + DQT + eachFile + DQT + " and dirtype = " \
+                    + DQT + str(dirTypeItem) + DQT
                 newOutDir =  outDir + "\\" + dirTypeItem
                 newFilenameWPath =  os.path.join(newOutDir, eachFile)               
                 newDirExistsBoolean = os.path.isdir(newOutDir)
@@ -62,27 +62,27 @@ def mywalk(inputDir):
                 print "Does newOutDir exist? :   " + str(  newDirExistsBoolean ) 
                 
                 if not newDirExistsBoolean :
-                    print "  Can't move file: " + _DQ + str(eachFile) + _DQ
-                    print "  ERROR!!! Destination dir " + _DQ + str(newOutDir) + _DQ \
+                    print "  Can't move file: " + DQT + str(eachFile) + DQT
+                    print "  ERROR!!! Destination dir " + DQT + str(newOutDir) + DQT \
                         + " is not there! Can't move to file-name-location : " \
-                        +_DQ + str(newFilenameWPath) + _DQ
+                        +DQT + str(newFilenameWPath) + DQT
                     unchanged_list.append(str(origFilenameWPath))
 
                 if sameNewFnamAlreadyExistsBoo :
                     print "  ERROR!! same destination filename already exists : " \
-                        + _DQ + str(newFilenameWPath) + _DQ  + " - skipping"
+                        + DQT + str(newFilenameWPath) + DQT  + " - skipping"
                     unchanged_list.append(str(origFilenameWPath))
            
                 if (newDirExistsBoolean and not sameNewFnamAlreadyExistsBoo) :
                     try :
-                        print "-----> GOING TO MOVE " + _DQ + str(origFilenameWPath) +_DQ + " to: " \
-                            +_DQ + str(newOutDir) + _DQ
+                        print "-----> GOING TO MOVE " + DQT + str(origFilenameWPath) +DQT + " to: " \
+                            +DQT + str(newOutDir) + DQT
                         shutil.move(origFilenameWPath, newOutDir)
                         time.sleep(.7)  ## give it 7/10ths of a second to move the file
                         newChangeExistsBoo = os.path.exists(newFilenameWPath)
                         print "New file is there now = " + str(newChangeExistsBoo)
                         print "------------->>Check manually for filename: " \
-                            + _DQ + str(newFilenameWPath) +_DQ
+                            + DQT + str(newFilenameWPath) +DQT
                         
                         if newChangeExistsBoo :
                             print "write successful!"
