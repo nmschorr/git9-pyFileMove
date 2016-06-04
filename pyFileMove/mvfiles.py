@@ -44,7 +44,7 @@ for i in impfiles :
         print str(i);
         #print "sys.path is: " + str(sys.path) + "\n" ## just for fun
 
-def mywalk(inputDir):
+def listDirs(inputDir):
     for eachFile in os.listdir(inputDir):
         #print "here now"
         origFilenameWPath =  os.path.join(inputDir, eachFile)
@@ -96,7 +96,7 @@ def mywalk(inputDir):
                 
                 ## end of newDirexists                   
                         
-mywalk(inDir)
+listDirs(inDir)
 
 print "\nHere's what got changed:"
 for s in changed_list :
