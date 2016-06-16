@@ -8,11 +8,11 @@ import netaddr
 import nmap
 import sys
 
-wdtvlive = '192.168.1.68'     ## port 80, 139, 443 open
-uraniaAddy = '192.168.1.76'
+wdtvlive = '192.168.1.64'     ## port 80, 139, 443 open
+uraniaAddy = '192.168.1.73'
 network = "192.168.1.250/24"
-deliaAddy = '192.168.1.69'
-
+deliaAddy = '192.168.1.65'
+userPC = '192.168.1.68'
 
 ########################### findHosts()#####################
 def  findHosts(innerNetwork):
@@ -51,12 +51,12 @@ def portCheck(remoteServerIP) :
     
     print "hostname is %s" % str(hostName[0])
     for tport in range(1,1025):  
-        # print "working on port: " + str(tport)
+        print "working on port: " + str(tport)
         msock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         msock.settimeout(2)
         result = msock.connect_ex((remoteServerIP, tport))
         sys.stdout.write(str(tport)+" ")
-        #print "result of sock connect on port {0} - {1}".format(str(tport),str(result))
+        print "result of sock connect on port {0} - {1}".format(str(tport),str(result))
         if result == 0 :
             print ''
             print "Port {}: \t Open".format(tport)
@@ -94,9 +94,9 @@ def checkUp(hostAddy):
        
     except socket.error as err:
         aaa = str(err)
-        #print "aaa : " + aaa
+        print "aaa : " + aaa
         if "timed out" in aaa :
-            #print "timed out!!!"
+            print "timed out!!!"
             myout = 1
         
         if myout == 0 :   
@@ -119,7 +119,7 @@ def checkPort(hostAddy):
         aaa = str(err)
         #print "aaa : " + aaa
         if "timed out" in aaa :
-            #print "timed out!!!"
+            print "timed out!!!"
             myout = 1
         
         if myout == 0 :   
@@ -172,9 +172,9 @@ def tryNM(myIP) :
     
             lport = nm[host][proto].keys()
             lport.sort()
-            #for pport in lport:
+            for pport in lport:
                 #''
-                #print ('port : %s state : %s' % (pport, nm[host][proto][pport]['state']) )
+                print ('port : %s state : %s' % (pport, nm[host][proto][pport]['state']) )
     print "all done with network map"
     
 ############# execute section ######################################
@@ -183,8 +183,8 @@ def tryNM(myIP) :
 print "Going to show info about hosts alive in local network."
 
 # hosts = findHosts(network)
-##checkUp(uraniaAddy)
-#portCheck(wdtvlive)
-tryNM(wdtvlive)
+checkUp(userPC)
+portCheck(userPC)
+tryNM(userPC)
 tryNM(deliaAddy)
 
