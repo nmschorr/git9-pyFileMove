@@ -5,10 +5,7 @@ from distutils.core import setup
 import py2exe
 
                                             #data_files=[]
-
 setup ( 
-                                            #name = 'E:\Workspace\astrofiles\astfiles.py', 
-       console = ['astfiles.py']
-                                               #name=["E:astrofiles"]
+       console = ['nfitoaaf.py']
                                                #options = {'includes':['sys','glob', 'os', 'datetime']}
                   )
