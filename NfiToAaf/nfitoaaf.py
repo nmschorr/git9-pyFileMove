@@ -22,7 +22,7 @@ pymsgbox.confirm("Put nfi files in C:\\astin - new aaf files will be in C:\\asto
 PYTHONDONTWRITEBYTECODE = True   #prevents bytecode .pyc files from being created
 import sys
 import datetime
-import nfitoastmods
+import nfitoaafmods
 import os
 #import re
 
