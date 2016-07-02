@@ -54,7 +54,7 @@ def prtExitEarlyStatements():
     print ccNLINE + "ERROR!! nfi files not there. Program exiting early. "
     print '  Please put C:\\astin\\filename.nfi there and start over.'
     print '  Can be any filename as long as it ends with \".nfi\"'
-    pymsgbox.alert("ERROR!! No files in C:\\astin", "Astrofiles Aborted")
+    pymsgbox.alert("ERROR!! No files in C:\\astin", "NfiToAaf Aborted")
 
 #2------------------- chkFixDirs() ----------------------------------
 ### check both dirs present; if inDirToChg not there, stop & give error  

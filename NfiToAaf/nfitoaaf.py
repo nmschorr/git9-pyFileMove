@@ -9,7 +9,7 @@ Created on Nov 22, 2015, May 25, 2016
 
 
 import pymsgbox
-pymsgbox.confirm("Put nfi files in C:\\astin - new aaf files will be in C:\\astout", 'Welcome to Astrofiles',["Start Converting", 'Cancel'])
+pymsgbox.confirm("Put nfi files in C:\\astin - new aaf files will be in C:\\astout", 'Welcome to Nfitoaaf',["Start Converting", 'Cancel'])
 #response = pymsgbox.prompt('What is your name?')
 
 
@@ -75,7 +75,7 @@ def splitNfiFile(inFile):
                 
     fileexists = os.path.exists(theInfile)
     if not fileexists :
-        pymsgbox.alert("ERROR!! No aaf files in C:\\astin", 'Astrofiles Aborted')
+        pymsgbox.alert("ERROR!! No aaf files in C:\\astin", 'Nfitoaaf Aborted')
     
     theLines = open( theInfile ).read().splitlines()
     for myLine in theLines :
@@ -243,7 +243,7 @@ def writeOutFileContent(FINAL_OUTFILE,fname,lname,tdate,tm,tzone,tlat,tlong,tGen
 indirExists2 = os.path.exists(cInputDIR)
     
 if indirExists2 is not True :
-    pymsgbox.alert("ERROR!! Directory C:\\astin not there!", "Astrofiles Aborted")
+    pymsgbox.alert("ERROR!! Directory C:\\astin not there!", "Nfitoaaf Aborted")
     quit()
 
 
@@ -259,7 +259,7 @@ mylength = locInFileList
 for f in locInFileList:
     splitNfiFile(f)
     #target_FILE.close()
-pymsgbox.alert("If program worked, new aaf files will be in C:\\astout", 'Astrofiles Finished')
+pymsgbox.alert("If program worked, new aaf files will be in C:\\astout", 'Nfitoaaf Finished')
 
 print NLINE + "end of program"
 
