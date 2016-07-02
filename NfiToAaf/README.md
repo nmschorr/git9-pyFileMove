@@ -4,7 +4,7 @@ Author:  Nancy Schorr
 
 Design concept:  Axel Becker
 
-Date: June 1, 2016
+Date: June 1, 2016 
 
 Runs on Windows 7 64-bit only. 
 
