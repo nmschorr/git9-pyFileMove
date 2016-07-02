@@ -1,3 +1,5 @@
+Program Name: NfiToAaf
+
 Author:  Nancy Schorr
 
 Design concept:  Axel Becker
@@ -10,9 +12,9 @@ Unzip the zip file to anywhere you like.
 
 It creates a folder called "dist".
 
-Inside "dist" is a file called "astfiles.exe".
+Inside "dist" is a file called "nfitoaaf.exe".
 
-Double click on astfiles.exe to run it.
+Double click on nfitoaaf.exe to run it.
 
 This program translates "nfi" files into "aaf" files.
 
