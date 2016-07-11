@@ -15,11 +15,10 @@ import java.net.*;
 import java.nio.charset.*;
 import java.net.URL;
 import org.apache.commons.io.IOUtils;
+import org.json.*;
 import org.json.simple.parser.JSONParser;
- 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
@@ -36,7 +35,10 @@ public class TestRestsJson {
 			JSONParser parser = new JSONParser();
 			String myFilenm = "C:\\jasondata2.json";
 			Object fileObject = parser.parse(new FileReader(myFilenm));
-			JSONObject jsonObject = (JSONObject) fileObject;
+			String[] mylist = {"id", "name"};
+			
+			
+			JSONObject jsonObject = new JSONObject(fileObject,mylist);
 			System.out.println("Here's the json object:");
 			System.out.println(jsonObject.toString());
 			System.out.println("Here's the json object again:");
