@@ -1,13 +1,11 @@
+/* TestRestsJson by Nancy Schorr, 2016
+ Demonstrates use of apis to read text file and store it as a Json object for further manipulation
+*/
 
 
 import java.io.*;
 import org.json.*;
 import java.util.Scanner;
-//import java.net.*;
-//import java.nio.charset.*;
-//import java.net.URL;
-//import org.apache.commons.io.IOUtils;
-
 
 
 public class TestRestsJson {
