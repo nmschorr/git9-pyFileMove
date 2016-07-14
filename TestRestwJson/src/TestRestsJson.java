@@ -2,10 +2,12 @@
  Demonstrates use of apis to read text file and store it as a Json object for further manipulation
 */
 
+package com.nmschorr;
 
 import java.io.*;
 import org.json.*;
 import java.util.Scanner;
+import java.util.*;
 
 
 public class TestRestsJson {
@@ -26,15 +28,22 @@ public class TestRestsJson {
 			Scanner myScanner = new Scanner(myFile);
 			
 			myString = myScanner.useDelimiter(myDelim2).next();
-			System.out.println(myString);
+			//System.out.println(myString);
 			
 			JSONArray myArry = new JSONArray(myString); 
+			JSONObject j = myArry.optJSONObject(0);
+			System.out.println("--------------------");
+			System.out.println(j.toString());
+			System.out.println("--------------------");
+			ArrayList<String> a = new ArrayList<String>();
+			//String[] ms = (String[])myArry;
+			
 			myScanner.close();
 
 			for(int i=0; i<myArry.length(); i++){
 				JSONObject jsonObj  = myArry.getJSONObject(i);
-				System.out.println("Value of id:" + jsonObj.get("id"));
-				System.out.println("Done with record");
+				//System.out.println("Value of id:" + jsonObj.get("id"));
+				//System.out.println("Done with record");
 			}			
 			
 		} catch (Exception e) { 
