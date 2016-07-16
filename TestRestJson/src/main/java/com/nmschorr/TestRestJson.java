@@ -25,36 +25,24 @@ public class TestRestJson {
 	public static void main(String[] args) {
 		System.setProperty("http.agent", "Chrome");
 		System.out.println("Here's new stuff");
+
+
 		
 		try {
 							//scanFileContentsString = readScanFile();  // read from file
 							//readJson(scanFileContentsString); 
 			URL myUrl = new URL(myUrlString);
-			HttpURLConnection urlConnection = (HttpURLConnection) myUrl.openConnection(); 
+			HttpURLConnection urlConnection = (HttpURLConnection) myUrl.openConnection(); 			
+			InputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());
+			InputStreamReader newStreamReader = new InputStreamReader(bufferedInputStream);			
+			BufferedReader bufReader = new BufferedReader(newStreamReader);
 			
-						//InputStream inputStream = new InputStream(myUrl);
-			InputStream newInputStream = new BufferedInputStream(urlConnection.getInputStream());
-			
-			//Reader      reader      = new InputStreamReader(newInputStream);
-											//			int dataCounter = reader.read();
-											//			
-											//			out.println ("value of dataCounter: " + dataCounter);
-											//			while(dataCounter != -1){
-											//			    char theChar = (char) dataCounter;
-											//			    //out.print(theChar);
-											//			    int x = 1;
-											//			    out.print("" + x);
-											//			    dataCounter = reader.read();
-											//			}
-										//reader.close();  		
-			
-			BufferedReader breader = new BufferedReader(new InputStreamReader(newInputStream));
-			StringBuilder bresult = new StringBuilder();
-			String bline;
-			while((bline = breader.readLine()) != null) {
-			    bresult.append(bline);
+			StringBuilder myStrBuilder = new StringBuilder();
+			String builderLine;
+			while((builderLine = bufReader.readLine()) != null) {
+			    myStrBuilder.append(builderLine);
 			}
-			System.out.println(bresult.toString());		
+			System.out.println(myStrBuilder.toString());		
 			
 			out.println("\nalmost done ");
 			
