@@ -8,7 +8,13 @@ import java.io.*;
 import org.json.*;
 import java.util.Scanner;
 import java.util.*;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
+import javax.ws.rs.client.*;
 
+//import javax.ws.rs.Path;
+//import javax.ws.rs.Produces;
+//import javax.ws.rs.GET;
 
 public class TestRestJson {
 	public static String myFilenm = "C:\\jasondata2.json";
@@ -55,7 +61,15 @@ public class TestRestJson {
 		}//while
 	}
 
-
+	public static void restJersey () throws Exception {
+		Client client = ClientBuilder.newClient();
+		WebTarget target = client.target("http://foo").path("bar");
+		Invocation.Builder invocationBuilder = target.request(MediaType.TEXT_PLAIN_TYPE);
+		Response response = invocationBuilder.get();
+	}
+	
+	
+	
 	public static String myScanner() throws FileNotFoundException {
 		final Scanner myScanner;
 		String locString = new String(" ");
