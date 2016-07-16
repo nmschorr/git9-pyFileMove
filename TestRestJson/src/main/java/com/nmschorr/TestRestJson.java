@@ -8,8 +8,10 @@ package com.nmschorr;
 import java.io.*;
 import org.json.*;
 import java.util.*;
-import java.net.URL;
-import org.apache.commons.io.*;
+import java.net.*;
+import org.apache.commons.io.*;   // for IOUtils
+import org.apache.commons.io.input.*;   // for IOUtils
+import java.nio.charset.StandardCharsets;
 import static java.lang.System.out;
 
 public class TestRestJson {
@@ -18,36 +20,54 @@ public class TestRestJson {
 	public static String myDelim2 = "\\Z";
 	public static String myUrlString = "http://jsonplaceholder.typicode.com/albums";
 	//public static Map<Integer, String> myMap = new HashMap<>();
- 
+
 
 	public static void main(String[] args) {
 		System.setProperty("http.agent", "Chrome");
-		InputStream mystream=null;
+		System.out.println("Here's new stuff");
 		
 		try {
-			//scanFileContentsString = readScanFile();  // read from file
-			//readJson(scanFileContentsString);   			
-			System.out.println("Here's new stuff");
-			 
-			URL myNewUrl = new URL( myUrlString );
-			Object myUrlObj = myNewUrl.getContent();
-			out.println(myUrlObj.toString());
+							//scanFileContentsString = readScanFile();  // read from file
+							//readJson(scanFileContentsString); 
+			URL myUrl = new URL(myUrlString);
+			HttpURLConnection urlConnection = (HttpURLConnection) myUrl.openConnection(); 
+			
+						//InputStream inputStream = new InputStream(myUrl);
+			InputStream newInputStream = new BufferedInputStream(urlConnection.getInputStream());
+			
+			//Reader      reader      = new InputStreamReader(newInputStream);
+											//			int dataCounter = reader.read();
+											//			
+											//			out.println ("value of dataCounter: " + dataCounter);
+											//			while(dataCounter != -1){
+											//			    char theChar = (char) dataCounter;
+											//			    //out.print(theChar);
+											//			    int x = 1;
+											//			    out.print("" + x);
+											//			    dataCounter = reader.read();
+											//			}
+										//reader.close();  		
+			
+			BufferedReader breader = new BufferedReader(new InputStreamReader(newInputStream));
+			StringBuilder bresult = new StringBuilder();
+			String bline;
+			while((bline = breader.readLine()) != null) {
+			    bresult.append(bline);
+			}
+			System.out.println(bresult.toString());		
+			
+			out.println("\nalmost done ");
 			
 			
-			
-			
-			mystream = new URL( myUrlString ).openStream();
 
-		   // System.out.println( IOUtils.toString( mystream ) );
-		  //  String myString2 = IOUtils.toString( mystream );
+		   System.out.println( "" );
 		    
-		//	System.out.println("new string" + myString2);
 				
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
     	finally {
-	      IOUtils.closeQuietly(mystream);
+	      //IOUtils.closeQuietly(in);
 	    }			 
 		System.out.println("Program Finished");
 	}
