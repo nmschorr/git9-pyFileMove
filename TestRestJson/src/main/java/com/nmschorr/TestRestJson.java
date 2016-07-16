@@ -10,14 +10,14 @@ import org.json.*;
 import java.util.*;
 import java.net.URL;
 import org.apache.commons.io.*;
+import static java.lang.System.out;
 
 public class TestRestJson {
-	public static String myFilenm = "C:\\jasondata2.json";
-	public static String myString = null;
+	public static String scanFileContentsString = null;
 	public static String myDelim = "\\r";
 	public static String myDelim2 = "\\Z";
-	public static Map<Integer, String> f = new HashMap<>();
-	public static String jUrl = "http://jsonplaceholder.typicode.com/albums";
+	public static String myUrlString = "http://jsonplaceholder.typicode.com/albums";
+	//public static Map<Integer, String> myMap = new HashMap<>();
  
 
 	public static void main(String[] args) {
@@ -25,18 +25,23 @@ public class TestRestJson {
 		InputStream mystream=null;
 		
 		try {
-			myString = myScanner();
-			readJson(myString);
+			//scanFileContentsString = readScanFile();  // read from file
+			//readJson(scanFileContentsString);   			
 			System.out.println("Here's new stuff");
 			 
-			mystream = new URL( jUrl ).openStream();
+			URL myNewUrl = new URL( myUrlString );
+			Object myUrlObj = myNewUrl.getContent();
+			out.println(myUrlObj.toString());
+			
+			
+			
+			
+			mystream = new URL( myUrlString ).openStream();
 
-		    System.out.println( IOUtils.toString( mystream ) );
-		    String myString2 = IOUtils.toString( mystream );
+		   // System.out.println( IOUtils.toString( mystream ) );
+		  //  String myString2 = IOUtils.toString( mystream );
 		    
-		    //readJson(myString);
-			System.out.println("new string");
-			System.out.println(myString2);
+		//	System.out.println("new string" + myString2);
 				
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -48,6 +53,7 @@ public class TestRestJson {
 	}
 
 	static void readJson(String myStr) throws Exception {
+		// this method just plays around with converting JSON objects: use debugger to see them
 		List<Object> myArrayList = new ArrayList<Object>();
 
 		JSONArray myJsonArry = new JSONArray(myStr); 
@@ -73,10 +79,11 @@ public class TestRestJson {
 	}
 	 
 	
-	public static String myScanner() throws FileNotFoundException {
+	public static String readScanFile() throws FileNotFoundException {
+		final String myJsonFileName = "C:\\jasondata2.json";
 		final Scanner myScanner;
-		String locString = new String(" ");
-		File myFile = new File(myFilenm);
+		String locString = new String("");  // new empty string
+		File myFile = new File(myJsonFileName);
 		myScanner = new Scanner(myFile);
 		locString = myScanner.useDelimiter(myDelim2).next();
 		myScanner.close();			
