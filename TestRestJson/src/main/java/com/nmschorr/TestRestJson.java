@@ -5,24 +5,25 @@
 
 package com.nmschorr;
 
+import static java.lang.System.out;
+
 import java.io.*;
 import org.json.*;
 import java.util.*;
 import java.net.*;
-import org.apache.commons.io.*;   // for IOUtils
-import org.apache.commons.io.input.*;   // for IOUtils
-import java.nio.charset.StandardCharsets;
-import static java.lang.System.out;
+
+//import org.apache.commons.io.*;   // for IOUtils
+//import org.apache.commons.io.input.*;   // for IOUtils
+//import java.nio.charset.StandardCharsets;
 
 public class TestRestJson {
 	public static String scanFileContentsString = null;
 	public static String myDelim = "\\r";
 	public static String myDelim2 = "\\Z";
 	public static String myUrlString = "http://jsonplaceholder.typicode.com/albums";
-	//public static Map<Integer, String> myMap = new HashMap<>();
+	static Exception e;
 
-
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		System.setProperty("http.agent", "Chrome");
 		System.out.println("Here's new stuff");
 
@@ -47,6 +48,28 @@ public class TestRestJson {
 			out.println("\nalmost done ");
 			
 			
+			JSONObject js1 = new JSONObject( "{\"a\": 1, \"b\": \"str\", \"dob\":\"/Date(1463667774000+0000)/\"}");
+
+			Iterator<String> keys = js1.keys();
+			while(keys.hasNext()){
+				Object aObj = js1.get(keys.next());
+				if(aObj instanceof Integer){
+					System.out.println(aObj+" is Integer");
+				}else if(aObj instanceof String){
+					if (aObj.toString().startsWith("/Date")) {
+						System.out.println(aObj+" is Date");
+					}	
+					else
+					System.out.println(aObj+" is String");
+				}else if(aObj instanceof Date){
+					System.out.println(aObj+" is Date");
+				}
+			}
+					                
+			 String str = "/Date(1463667774000-9000)/";
+		     Date date = new Date(Long.parseLong(str.replaceAll(".*?(\\d+).*", "$1")));
+		     System.out.println("1st "+ date);					                
+					                
 
 		   System.out.println( "" );
 		    
