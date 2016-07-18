@@ -67,23 +67,19 @@ public class TestRestJson {
 
 		JSONArray myJsonArry = new JSONArray(longJsonString); 
 		List<Object> myArrayList = new ArrayList<Object>(toList(myJsonArry));
-				
 		Collection<Map<String,String>> mapsCol = new HashSet<Map<String,String>>();	
-	
+		Object myTempObj;
+		
 		for (int i=0; i < myArrayList.size(); i++) {
 			mapsCol.add((HashMap<String, String>)myArrayList.get(i));
-			
-			
-			//map =  (HashMap<String, String>) arryListObject.get(i);  // shows casting of Object to HashMap
-			//mapsCol.add( new HashMap<String, String>(arryListObject.get(i));
-		}
-		//Object arryListObject = myArrayList.get(0);   // to test and look at it in debugger
+			}
 		
 		JSONObject myJsonObj = myJsonArry.optJSONObject(0);
 		Iterator<Object> myJsonItr = myJsonArry.iterator();
 
 		while(myJsonItr.hasNext()) {
 			Object myObj = myJsonItr.next();
+			
 			System.out.println("myJsonArry element obj" + myObj + " ");
 			System.out.println("--------------------" + myJsonObj.toString());
 			//ArrayList<String> a = new ArrayList<String>();
