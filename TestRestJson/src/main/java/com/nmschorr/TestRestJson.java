@@ -8,9 +8,9 @@ package com.nmschorr;
 import static java.lang.System.out;
 
 import java.io.*;
-import org.json.*;
-import java.util.*;
 import java.net.*;
+import java.util.*;
+import org.json.*;
 
 //import org.apache.commons.io.*;   // for IOUtils
 //import org.apache.commons.io.input.*;   // for IOUtils
@@ -25,54 +25,30 @@ public class TestRestJson {
 
 	public static void main(String[] args) throws Exception {
 		System.setProperty("http.agent", "Chrome");
-		System.out.println("Here's new stuff");
+		System.out.println("Beginning...");
 
-
+		String builderLine;
+		
+		URL myUrl = new URL(myUrlString);
+		HttpURLConnection httpConnection = (HttpURLConnection) myUrl.openConnection(); 			
+		BufferedInputStream bufferedInputStream = new BufferedInputStream(httpConnection.getInputStream());
+		InputStreamReader inputStreamReader= new InputStreamReader(bufferedInputStream);			
+		BufferedReader bufReader = new BufferedReader(inputStreamReader);
+		
+		StringBuilder myStrBuilder = new StringBuilder();
+		while((builderLine = bufReader.readLine()) != null) {
+		    myStrBuilder.append(builderLine);
+		}
+		System.out.println(myStrBuilder.toString());		
+		
+		out.println("\nalmost done ");
 		
 		try {
-							//scanFileContentsString = readScanFile();  // read from file
-							//readJson(scanFileContentsString); 
-			URL myUrl = new URL(myUrlString);
-			HttpURLConnection urlConnection = (HttpURLConnection) myUrl.openConnection(); 			
-			InputStream bufferedInputStream = new BufferedInputStream(urlConnection.getInputStream());
-			InputStreamReader newStreamReader = new InputStreamReader(bufferedInputStream);			
-			BufferedReader bufReader = new BufferedReader(newStreamReader);
-			
-			StringBuilder myStrBuilder = new StringBuilder();
-			String builderLine;
-			while((builderLine = bufReader.readLine()) != null) {
-			    myStrBuilder.append(builderLine);
-			}
-			System.out.println(myStrBuilder.toString());		
-			
-			out.println("\nalmost done ");
-			
-			
-			JSONObject js1 = new JSONObject( "{\"a\": 1, \"b\": \"str\", \"dob\":\"/Date(1463667774000+0000)/\"}");
+			//scanFileContentsString = readScanFile();  // read from file
+			//readJson(scanFileContentsString); 
 
-			Iterator<String> keys = js1.keys();
-			while(keys.hasNext()){
-				Object aObj = js1.get(keys.next());
-				if(aObj instanceof Integer){
-					System.out.println(aObj+" is Integer");
-				}else if(aObj instanceof String){
-					if (aObj.toString().startsWith("/Date")) {
-						System.out.println(aObj+" is Date");
-					}	
-					else
-					System.out.println(aObj+" is String");
-				}else if(aObj instanceof Date){
-					System.out.println(aObj+" is Date");
-				}
-			}
-					                
-			 String str = "/Date(1463667774000-9000)/";
-		     Date date = new Date(Long.parseLong(str.replaceAll(".*?(\\d+).*", "$1")));
-		     System.out.println("1st "+ date);					                
-					                
-
-		   System.out.println( "" );
-		    
+			readJson(myStrBuilder.toString()); 
+			System.out.println( "" );  // placeholder for debugger
 				
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -83,14 +59,15 @@ public class TestRestJson {
 		System.out.println("Program Finished");
 	}
 
-	static void readJson(String myStr) throws Exception {
+	static void readJson(String longJsonString) throws Exception {
 		// this method just plays around with converting JSON objects: use debugger to see them
 		List<Object> myArrayList = new ArrayList<Object>();
 
-		JSONArray myJsonArry = new JSONArray(myStr); 
+		JSONArray myJsonArry = new JSONArray(longJsonString); 
 		myArrayList = toList(myJsonArry);
-		Object arryListObject = myArrayList.get(0);
-		HashMap<String,String> arryListObject2 = (HashMap<String, String>) myArrayList.get(0); // shows casting of Object to HashMap
+		
+		Object arryListObject = myArrayList.get(0);   // to test and look at it in debugger
+		HashMap<String,String> myArryListHashMap = (HashMap<String, String>) myArrayList.get(0); // shows casting of Object to HashMap
 		 
 		HashMap<String, String> map = (HashMap<String, String>) arryListObject;  // shows casting of Object to HashMap
 		
@@ -159,6 +136,36 @@ public class TestRestJson {
 		return list;
 	}
 
+	// this was code used to test a question
+	public static void testDateQuestion() throws Exception {
+
+		
+		
+		JSONObject js1 = new JSONObject( "{\"a\": 1, \"b\": \"str\", \"dob\":\"/Date(1463667774000+0000)/\"}");
+
+		Iterator<String> keys = js1.keys();
+		while(keys.hasNext()){
+			Object aObj = js1.get(keys.next());
+			if(aObj instanceof Integer){
+				System.out.println(aObj+" is Integer");
+			}else if(aObj instanceof String){
+				if (aObj.toString().startsWith("/Date")) {
+					System.out.println(aObj+" is Date");
+				}	
+				else
+				System.out.println(aObj+" is String");
+			}else if(aObj instanceof Date){
+				System.out.println(aObj+" is Date");
+			}
+		}
+				                
+		 String str = "/Date(1463667774000-9000)/";
+	     Date date = new Date(Long.parseLong(str.replaceAll(".*?(\\d+).*", "$1")));
+	     System.out.println("1st "+ date);					                
+	}				                
+
+
+	
 }	//class
 
 
