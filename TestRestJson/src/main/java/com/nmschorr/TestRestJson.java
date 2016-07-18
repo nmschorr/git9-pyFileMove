@@ -61,15 +61,23 @@ public class TestRestJson {
 
 	static void readJson(String longJsonString) throws Exception {
 		// this method just plays around with converting JSON objects: use debugger to see them
-		List<Object> myArrayList = new ArrayList<Object>();
+		//List<Object> myArrayList = new ArrayList<Object>();
+		//HashMap<String, String> map = new HashMap<String, String>();  // shows casting of Object to HashMap
+		//Map<String,String> mapsObj = new HashMap<String,String>();	
 
 		JSONArray myJsonArry = new JSONArray(longJsonString); 
-		myArrayList = toList(myJsonArry);
-		
-		Object arryListObject = myArrayList.get(0);   // to test and look at it in debugger
-		HashMap<String,String> myArryListHashMap = (HashMap<String, String>) myArrayList.get(0); // shows casting of Object to HashMap
-		 
-		HashMap<String, String> map = (HashMap<String, String>) arryListObject;  // shows casting of Object to HashMap
+		List<Object> myArrayList = new ArrayList<Object>(toList(myJsonArry));
+				
+		Collection<Map<String,String>> mapsCol = new HashSet<Map<String,String>>();	
+	
+		for (int i=0; i < myArrayList.size(); i++) {
+			mapsCol.add((HashMap<String, String>)myArrayList.get(i));
+			
+			
+			//map =  (HashMap<String, String>) arryListObject.get(i);  // shows casting of Object to HashMap
+			//mapsCol.add( new HashMap<String, String>(arryListObject.get(i));
+		}
+		//Object arryListObject = myArrayList.get(0);   // to test and look at it in debugger
 		
 		JSONObject myJsonObj = myJsonArry.optJSONObject(0);
 		Iterator<Object> myJsonItr = myJsonArry.iterator();
