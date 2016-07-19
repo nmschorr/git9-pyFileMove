@@ -12,10 +12,6 @@ import java.net.*;
 import java.util.*;
 import org.json.*;
 
-//import org.apache.commons.io.*;   // for IOUtils
-//import org.apache.commons.io.input.*;   // for IOUtils
-//import java.nio.charset.StandardCharsets;
-
 public class TestRestJson {
 	public static String scanFileContentsString = null;
 	public static String myDelim = "\\r";
@@ -28,13 +24,10 @@ public class TestRestJson {
 		System.out.println("Beginning...");
 
 		String builderLine;
-		
-		URL myUrl = new URL(myUrlString);
-		HttpURLConnection httpConnection = (HttpURLConnection) myUrl.openConnection(); 			
-		BufferedInputStream bufferedInputStream = new BufferedInputStream(httpConnection.getInputStream());
-		InputStreamReader inputStreamReader= new InputStreamReader(bufferedInputStream);			
-		BufferedReader bufReader = new BufferedReader(inputStreamReader);
-		
+
+		BufferedReader bufReader = new BufferedReader(
+		        new InputStreamReader(new URL(myUrlString).openStream()));	
+				
 		StringBuilder myStrBuilder = new StringBuilder();
 		while((builderLine = bufReader.readLine()) != null) {
 		    myStrBuilder.append(builderLine);
