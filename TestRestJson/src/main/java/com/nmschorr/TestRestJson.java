@@ -96,41 +96,41 @@ public class TestRestJson {
 	}  //myScanner()
 	
 
-	// from: http://stackoverflow.com/questions/21720759/convert-a-json-string-to-a-hashmap
+	// partially from: http://stackoverflow.com/questions/21720759/convert-a-json-string-to-a-hashmap
 	public static Map<String, Object> toMap(JSONObject object) throws JSONException {
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> myMap = new HashMap<String, Object>();
 
 		Iterator<String> keysItr = object.keys();
-		while(keysItr.hasNext()) {
-			String key = keysItr.next();
-			Object value = object.get(key);
+		while (keysItr.hasNext()) {
+			String myKey = keysItr.next();
+			Object myVal = object.get(myKey);
 
-			if(value instanceof JSONArray) {
-				value = toList((JSONArray) value);
+			if (myVal instanceof JSONArray) {
+				myVal = toList((JSONArray) myVal);
 			}
 
-			else if(value instanceof JSONObject) {
-				value = toMap((JSONObject) value);
+			else if (myVal instanceof JSONObject) {
+				myVal = toMap((JSONObject) myVal);
 			}
-			map.put(key, value);
+			myMap.put(myKey, myVal);
 		}
-		return map;
+		return myMap;
 	}
 
-	// from: http://stackoverflow.com/questions/21720759/convert-a-json-string-to-a-hashmap
-	public static List<Object> toList(JSONArray array) throws JSONException {
-		List<Object> list = new ArrayList<Object>();
-		for(int i = 0; i < array.length(); i++) {
-			Object value = array.get(i);
-			if(value instanceof JSONArray) {
-				value = toList((JSONArray) value);
+	// partically from: http://stackoverflow.com/questions/21720759/convert-a-json-string-to-a-hashmap
+	public static List<Object> toList(JSONArray myJArray) throws JSONException {
+		List<Object> myList = new ArrayList<Object>();
+		for(int i = 0; i < myJArray.length(); i++) {
+			Object myObject= myJArray.get(i);
+			if (myObject instanceof JSONArray) {
+				myObject = toList((JSONArray) myObject);
 			}
-			else if(value instanceof JSONObject) {
-				value = toMap((JSONObject) value);
+			else if(myObject instanceof JSONObject) {
+				myObject = toMap((JSONObject) myObject);
 			}
-			list.add(value);
+			myList.add(myObject);
 		}
-		return list;
+		return myList;
 	}
 	
 }	//class
