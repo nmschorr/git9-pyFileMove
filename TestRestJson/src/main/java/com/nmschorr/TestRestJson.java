@@ -75,7 +75,7 @@ public class TestRestJson {
 			
 			System.out.println("myJsonArry element obj" + myObj + " ");
 			System.out.println("--------------------" + myJsonObj.toString());
-			//ArrayList<String> a = new ArrayList<String>();
+			
 			for(int i=0; i<myJsonArry.length(); i++){
 				JSONObject jsonObj  = myJsonArry.getJSONObject(i);
 			} //for
