@@ -6,9 +6,17 @@ Design concept:  Axel Becker
 
 Date: June 1, 2016 
 
-This program translates "nfi" files into "aaf" files.
+This program translates ".nfi" files into ".aaf" files. Argus 4 is a program used mostly in Europe. The .nfi files contain the stored data for Argus 4. A typical line from an Argus .nfi file looks like this:
+
+$a1452041420561600000E4345N01056EMAXXXXXLeonardo Da Vinci
 
 You MUST put the nfi files to be converted into:  'C:\astin'    
+
+.nfi output looks like this:
+
+#A93:Da Vinci,Leonardo,M,14.04.1452,20:56:16,*,*
+#B93:*,43N45,010E56,00E00,0
+#COM:
 
 The results will show up in 'C:\astout'. This is where you are sorting to, and it's created for you if it's not there.
 
