@@ -24,3 +24,5 @@ The files will be in a subfolder named with the timestamp of the time it's creat
 
 The compiled exe version runs on Windows 7 64-bit only. Unzip the zip file to anywhere you like. It creates a folder called "dist". Inside "dist" is a file called "nfitoaaf.exe". Double click on nfitoaaf.exe to run it.
 
+
+
