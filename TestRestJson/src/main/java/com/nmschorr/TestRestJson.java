@@ -88,31 +88,17 @@ public class TestRestJson {
 		return locString;
 	}  //myScanner()
 
-<<<<<<< HEAD
 	// for this and toList below: thanks to: http://stackoverflow.com/questions/21720759/convert-a-json-string-to-a-hashmap
 	public static Map<String, Object> toMap(JSONObject object) throws JSONException {
 		Map<String, Object> myMap = new HashMap<String, Object>();
-=======
-	// partially from: http://stackoverflow.com/questions/21720759/convert-a-json-string-to-a-hashmap
-	public static Map<String, Object> toMap(JSONObject object) throws JSONException {
-		Map<String, Object> myMap = new HashMap<String, Object>();
-
->>>>>>> 8c77af7af5acf01717fe43bdbd4d92556134efb7
 		Iterator<String> keysItr = object.keys();
 		while (keysItr.hasNext()) {
 			String myKey = keysItr.next();
 			Object myVal = object.get(myKey);
-<<<<<<< HEAD
-			if (myVal instanceof JSONArray) {
-				myVal = toList((JSONArray) myVal);
-			}
-=======
 
 			if (myVal instanceof JSONArray) {
 				myVal = toList((JSONArray) myVal);
 			}
-
->>>>>>> 8c77af7af5acf01717fe43bdbd4d92556134efb7
 			else if (myVal instanceof JSONObject) {
 				myVal = toMap((JSONObject) myVal);
 			}
@@ -121,10 +107,6 @@ public class TestRestJson {
 		return myMap;
 	}
 
-<<<<<<< HEAD
-=======
-	// partically from: http://stackoverflow.com/questions/21720759/convert-a-json-string-to-a-hashmap
->>>>>>> 8c77af7af5acf01717fe43bdbd4d92556134efb7
 	public static List<Object> toList(JSONArray myJArray) throws JSONException {
 		List<Object> myList = new ArrayList<Object>();
 		for(int i = 0; i < myJArray.length(); i++) {
@@ -132,11 +114,7 @@ public class TestRestJson {
 			if (myObject instanceof JSONArray) {
 				myObject = toList((JSONArray) myObject);
 			}
-<<<<<<< HEAD
 			else if (myObject instanceof JSONObject) {
-=======
-			else if(myObject instanceof JSONObject) {
->>>>>>> 8c77af7af5acf01717fe43bdbd4d92556134efb7
 				myObject = toMap((JSONObject) myObject);
 			}
 			myList.add(myObject);
