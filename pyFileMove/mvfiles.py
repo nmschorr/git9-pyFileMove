@@ -61,7 +61,7 @@ def listDirs(inputDir):
                 sameNewFnamAlreadyExistsBoo = os.path.exists(newFilenameWPath)
                 print "Does newOutDir exist? :   " + str(  newDirExistsBoolean ) 
                 
-                if not newDirExistsBoolean :    ## of it's not there - create it
+                if not newDirExistsBoolean :    ## of it's not there - then create it
                     print "  Can't move file: " + DQT + str(eachFile) + DQT
                     print "  Destination dir " + DQT + str(newOutDir) + DQT \
                         + " is not there. Going to make it. " \
