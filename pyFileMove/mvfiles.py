@@ -61,12 +61,15 @@ def listDirs(inputDir):
                 sameNewFnamAlreadyExistsBoo = os.path.exists(newFilenameWPath)
                 print "Does newOutDir exist? :   " + str(  newDirExistsBoolean ) 
                 
-                if not newDirExistsBoolean :
+                if not newDirExistsBoolean :    ## of it's not there - create it
                     print "  Can't move file: " + DQT + str(eachFile) + DQT
-                    print "  ERROR!!! Destination dir " + DQT + str(newOutDir) + DQT \
-                        + " is not there! Can't move to file-name-location : " \
+                    print "  Destination dir " + DQT + str(newOutDir) + DQT \
+                        + " is not there. Going to make it. " \
                         +DQT + str(newFilenameWPath) + DQT
-                    unchanged_list.append(str(origFilenameWPath))
+                    os.mkdir(newOutDir)
+                    time.sleep(.9)  ## give it 9/10ths of a second to create dir
+                    newDirExistsBoolean = os.path.isdir(newOutDir)  ## it should be there now
+                    ##unchanged_list.append(str(origFilenameWPath))
 
                 if sameNewFnamAlreadyExistsBoo :
                     print "  ERROR!! same destination filename already exists : " \
