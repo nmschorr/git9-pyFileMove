@@ -30,7 +30,8 @@ from fileslist import dirNames  ## this line must be after sys.path.append
                                              ### of file types is kept
 if __name__ == "__main__":   pass
 
-inDir =  "C:\\Users\\user\\Desktop\\MYDOCS"  ## where your files to be sorted are
+#inDir =  "C:\\Users\\user\\Desktop\\MYDOCS"  ## where your files to be sorted are
+inDir =  "E:\\NancyPrivateMagicSugarSyncE\\FinanceMain-copy\\pdf"
 outDir = "C:\\Users\\user\\Desktop\\movedFinance"     ## where you are sorting to
 impfiles=sys.modules.keys()  ## print out the python modules we're using
 changed_list = []
