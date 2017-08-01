@@ -1,0 +1,11 @@
+ckage com.schorr2;
+
+import com.schorr2.testSibling;
+
+public class testTryCast {
+	public static void main(String[] args) {
+		testParent newParent = new testParent();
+		testSibling newSibling = new testSibling();
+		testSiblingTWO newSiblingTWO = (testSiblingTWO)newSibling;
+	}
+}
