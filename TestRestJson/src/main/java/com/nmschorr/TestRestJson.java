@@ -106,7 +106,7 @@ public class TestRestJson {
 		}
 		return myMap;
 	}
-
+  
 	public static List<Object> toList(JSONArray myJArray) throws JSONException {
 		List<Object> myList = new ArrayList<Object>();
 		for(int i = 0; i < myJArray.length(); i++) {
