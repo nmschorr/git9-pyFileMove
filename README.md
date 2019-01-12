@@ -2,6 +2,11 @@ pyFileMove README.me
 Author:  Nancy Schorr
 Date:    12/9/2015
 
+Note: as of 1/12/19 - this is older code, written while I was still a java
+dev. It needs to have it's variables, etc reworded in Pythonese.
+
+
+
 This program uses Python to sort a directory of files into subdirectories. 
 
 You need to create a file called "fileslist.py" in the the same directory as this file
